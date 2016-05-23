@@ -26,7 +26,7 @@ for filename in $(ls $dirFiles); do
 
 	# exist file in $HOME: backup it in a dotfiles_old directory
         if [ -f $HOME/$file ];then
-	    mv $HOME/$file $dirAtual/dotfiles_old
+	    mv $HOME/$file $dirAtual/dotfiles-emacs_old
 
 	    # log message: backup
 	    echo "Backup de $HOME em $dirAtual/dotfiles_old"
