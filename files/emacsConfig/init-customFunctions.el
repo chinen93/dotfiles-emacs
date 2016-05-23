@@ -8,7 +8,7 @@
   (interactive)
 
   ;; Compile pchinen.el so emacs starts up faster
-  (byte-compile-file "/home/pchinen/git/dotfiles/files/pchinen.el"))
+  (byte-compile-file "~/.pchinen.el"))
 ;; defun my-bcompile-pchinen.el END
 
 
