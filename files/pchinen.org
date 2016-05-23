@@ -1,0 +1,200 @@
+#+TITLE:  Pchinen emacs Org
+#+AUTHOR: Pedro Chinen
+#+EMAIL:  ph.u.chinen@gmail.com
+#+DATE    : 2016-04-03
+
+* Header
+  #+begin_src emacs-lisp
+    (message " ===============================================  Inicialização das Configurações  ================================================")
+  #+end_src
+* Custom Functions
+  [[file:emacsConfig/init-customFunctions.el]]
+  #+begin_src emacs-lisp
+    (require 'init-customFunctions)
+  #+end_src
+* Key Binding
+  [[file:emacsConfig/init-keyBinding.el]]
+  #+begin_src emacs-lisp
+    (require 'init-keyBinding)
+  #+end_src
+* Basic Configuration
+  - Show matching parenthesis. 
+  - Current line & column of cursor in the mode line (bar at the bottom)
+  - Change "yes or no" to "y or n"
+  - Set initial scratch lines
+  - Always follow syslink files
+  - Remove tool-bar and scroll-bar
+  - Don't show start-up-message
+    
+    https://github.com/purcell/exec-path-from-shell
+    [[file:emacsConfig/init-basicConfig.el]]
+    #+begin_src emacs-lisp
+     (require 'init-basicConfig)
+    #+end_src
+** Backup
+   Create an directory to store all the backup files that normally would stay with the original file
+   [[file:emacsConfig/init-backup.el]]
+   #+begin_src emacs-lisp
+     (require 'init-backup)
+   #+end_src
+** Bookmark
+   Save bookmark in files so it is easier to go back to them later
+   file:emacsConfig/init-bookmark.el
+   #+begin_src emacs-lisp
+     (require 'init-bookmark)
+   #+end_src
+** History
+   Save minibuffer history
+   [[file:emacsConfig/init-history.el]]
+   #+begin_src emacs-lisp
+     (require 'init-history)
+   #+end_src
+** First initialization
+   If is the first time openning emacs. Start server
+   [[file:emacsConfig/init-firstInit.el]]
+   #+begin_src emacs-lisp
+     (require 'init-firstInit)
+   #+end_src
+** TODO Themes
+   The theme being used is Monokai
+   [[file:emacsConfig/init-themes.el]]
+   #+begin_src emacs-lisp
+     (require 'init-themes)
+   #+end_src
+* File Modes
+  [[file:emacsConfig/init-filesMode.el]]
+  #+begin_src emacs-lisp
+    (require 'init-filesMode)
+  #+end_src
+  
+* Hooks for specific modes
+  [[file:emacsConfig/init-hooks.el]]
+  #+begin_src emacs-lisp
+    (require 'init-hooks)
+  #+end_src
+** Python
+*** Jedi
+    https://pypi.python.org/pypi/jedi
+    For Jedi to work is necessary to install jedi first with 'pip install jedi'
+    and upgrade its code in '.emacs.d/elpa/jedi-code-....' with 'pip install --upgrade directory'
+    this two commands must be executed as system root
+
+* TODO Company
+  [[%20%20%20http://company-mode.github.io/][company-mode]]
+  [[file:emacsConfig/init-company.el]]
+  #+begin_src emacs-lisp
+    (require 'init-company)
+  #+end_src
+  
+* TODO Calculator2
+  [[https://www.gnu.org/software/emacs/manual/html_mono/calc.html][calc-mode]]
+  [[file:emacsConfig/init-calcmode.el]]
+  #+begin_src emacs-lisp
+    (require 'init-calcmode)
+  #+end_src
+* Dired
+  [[http://www.gnu.org/software/emacs/manual/html_node/emacs/Dired.html][Dired - Manual]]
+  [[file:emacsConfig/init-dired.el]]
+  #+begin_src emacs-lisp
+    (require 'init-dired)
+  #+end_src
+* Expand Region
+  Expand Region "teste1-teste2-teste3"
+  first use : 'teste1'
+  second use: 'teste1-teste2-teste3'
+  third use : '"teste1-teste2-teste3"'
+  and so on...
+  [[file:emacsConfig/init-expandRegion.el]]
+  #+begin_src emacs-lisp
+    (require 'init-expandRegion)
+  #+end_src
+  https://github.com/magnars/expand-region.el
+* TODO Flycheck
+  http://www.flycheck.org/en/latest/
+  [[file:emacsConfig/init-flycheck.el]]
+  #+begin_src emacs-lisp
+    (require 'init-flycheck)
+  #+end_src
+* Helm
+  https://github.com/emacs-helm/helm
+  [[file:emacsConfig/init-helm.el]]
+  #+begin_src emacs-lisp
+    (require 'init-helm)
+  #+end_src
+** Helm-Swoop
+   https://github.com/ShingoFukuyama/helm-swoop
+   [[file:emacsConfig/init-helmSwoop.el]]
+   #+begin_src emacs-lisp
+     (require 'init-helmSwoop)
+   #+end_src
+** Helm-describe key
+   https://github.com/emacs-helm/helm-descbinds
+   [[file:emacsConfig/init-helmDescribeKey.el]]
+   #+begin_src emacs-lisp
+     (require 'init-helmDescribeKey)
+   #+end_src
+   
+* TODO Keyfreq
+  https://github.com/dacap/keyfreq
+  [[file:emacsConfig/init-keyfreq.el]]
+  #+begin_src emacs-lisp
+    (require 'init-keyfreq)
+  #+end_src
+* TODO Magit
+  https://github.com/magit/magit
+  https://www.youtube.com/watch?v=vQO7F2Q9DwA
+  [[file:emacsConfig/init-magit.el]]
+  #+begin_src emacs-lisp
+    (require 'init-magit)
+  #+end_src
+* TODO Multiple Cursor
+  https://github.com/magnars/multiple-cursors.el
+  [[file:emacsConfig/init-multipleCursor.el]]
+  #+begin_src emacs-lisp
+    (require 'init-multipleCursor)
+  #+end_src
+* Nyan Cat
+  https://www.emacswiki.org/emacs/NyanMode
+  [[file:emacsConfig/init-nyanCat.el]]
+  Nyan Cat is used like an scroll bar. But horizontally
+  
+  #+begin_src emacs-lisp
+    (require 'init-nyanCat)
+  #+end_src
+* Org mode
+  http://orgmode.org/
+  [[file:emacsConfig/init-orgmode.el]]
+  Basic Configuration for Org mode with some keybindings and stuff
+  #+begin_src emacs-lisp  
+     (require 'init-orgmode)
+  #+end_src
+* Re Build
+  https://masteringemacs.org/article/re-builder-interactive-regexp-builder
+  [[file:emacsConfig/init-regex.el]]
+  #+begin_src emacs-lisp
+    (require 'init-regex)
+  #+end_src
+* TODO YASnippet
+  [[https://en.wikipedia.org/wiki/Snippet_%2528programming%2529][Snippet]]
+  [[https://github.com/capitaomorte/yasnippet][YASnippet]]
+  http://capitaomorte.github.io/yasnippet
+  [[file:emacsConfig/init-yasnippet.el]]
+  #+begin_src emacs-lisp
+   (require 'init-yasnippet)
+  #+end_src
+* Footnotes
+#+begin_src emacs-lisp
+  (message " ===============================================  Fim das Configurações  ================================================")
+#+end_src
+  
+* How to?
+** Kill multiple buffers
+   - Open buffer list with (helm-buffers-list) 'C-x b'
+   - Choose the buffers that you want to kill with 'C-spc'. They will change color
+   - Finally press 'M-D' to kill all the buffers selected
+** Insert timestamp
+   - Press 'C-c .'
+   - A Calendar will be displayed and you can choose the date wanted
+
+
+

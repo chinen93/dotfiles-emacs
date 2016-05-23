@@ -1,0 +1,10 @@
+# -*- mode: snippet -*'-
+# name: unittest
+# key: test
+# --
+def testShould${1:DoSomething}(self):
+    """Should $1"""
+    # done?
+    # self.assertIs()
+    pass
+# testShould$1()

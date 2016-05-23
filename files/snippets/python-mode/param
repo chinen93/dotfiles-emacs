@@ -1,0 +1,7 @@
+# -*- mode: snippet -*'-
+# name: param
+# key: param
+# --
+:param ${1:param}: ${2:I am param}
+:type  $1: ${3:None}
+$0

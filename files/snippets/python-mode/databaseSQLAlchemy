@@ -1,0 +1,23 @@
+# -*- mode: snippet -*'-
+# name: database SQLAlchemy
+# key: database
+# --
+#
+# IMPORTS
+#
+from ${1:projectis}.db.base import Base
+from sqlalchemy import Column
+from sqlalchemy import Integer
+from sqlalchemy import String
+
+
+#
+# CODE
+#
+class ${2:Some}Table(Base):
+
+    # set table name
+    __tablename__ = '${3:some}_table'
+    # set columns
+    # set relationships
+# $2Table

@@ -1,0 +1,11 @@
+# -*- mode: snippet -*'-
+# name: define function
+# key: def
+# --
+def ${1:function}(self):
+    """
+    ${2:I do something}
+    """
+    pass
+    $0
+# $1()
