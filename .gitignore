@@ -1,0 +1,8 @@
+# gitignore <dotfiles-emacs>
+
+# backup folder
+dotfiles-emacs_old
+
+# elips compiled files
+*.elc
+
