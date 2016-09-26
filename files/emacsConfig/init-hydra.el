@@ -144,11 +144,19 @@
       "
  ^Org mode^
 -^--------^-----------
- _t_: set tag
-
+ _T_: set tag
+ _d_: set deadline
+ _s_: set schedule date
+ _c_: capture
+ _a_: archive
 "
-      ("t" org-set-tags-command)
-
+      ("T" org-set-tags-command :color blue)
+      ("d" org-deadline :color blue)
+      ("s" org-schedule :color blue)
+      ("t" org-time-stamp-inactive :color blue)
+      ("c" org-capture :color blue)
+      ("a" org-archive-subtree :color blue)
+      
       ;; move around text
       ("<right>" forward-char)
       ("<left>" backward-char)
