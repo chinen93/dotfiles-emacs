@@ -5,6 +5,6 @@
 
 #+QUESTION:     ${1:What is Something?}
 #+AUTHOR:       ${2:Pedro Chinen}
-#+DATE-CREATED: `(format-time-string "%Y-%m-%d")`
-#+DATE-UPDATED: `(format-time-string "%Y-%m-%d")`
+#+DATE-CREATED: [`(format-time-string "%Y-%m-%d %a")`]
+#+DATE-UPDATED: [`(format-time-string "%Y-%m-%d %a")`]
 $0
