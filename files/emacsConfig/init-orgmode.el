@@ -52,7 +52,22 @@
  '(("n" "Agenda and all TODO's"
     ((agenda "" nil)
      (alltodo "" nil))
-    nil)))
+    nil)
+   ("b" "Tasks for the week and Agenda"
+    ((tags "week"
+	   ;; settings for tags command
+	   ;; sort result with TODOS first and DONE last
+	   ((org-agenda-sorting-strategy '(todo-state-down))
+	    ;; remove tags when displaying
+	    (org-agenda-remove-tags t)
+	    ;; label this search to "Tarefas da semana"
+	    (org-agenda-overriding-header "Tarefas da Semana\n")
+	    ;; removes the filename of the task
+	    (org-agenda-prefix-format "")
+	    ))
+     (agenda "" nil))
+    nil)
+))
 
 ;; Agenda show next 7 days and previous 3 days
 (setq org-agenda-span 10
@@ -64,13 +79,9 @@
   "Create a list of this week and todo items"
   (interactive)
 
-  (org-agenda nil "n")
+  (org-agenda nil "b")
   (delete-other-windows)
 )
 ;; defun my-week-and-todo-list END
 
 (provide 'init-orgmode)
-
-
-
-
