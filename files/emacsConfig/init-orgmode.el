@@ -37,8 +37,8 @@
 ;; Set org agenda files
 (setq org-agenda-files '("~/Dropbox/Organizador.org"))
 
-;; Record time when TODO item is DONE
-(setq org-log-done 'time)
+;; Record a note when TODO item is DONE
+(setq org-log-done 'note)
 
 ;; Follows links when press <ENTER> on them
 (setq org-return-follows-link t)
@@ -54,7 +54,18 @@
      (alltodo "" nil))
     nil)
    ("b" "Tasks for the week and Agenda"
-    ((tags "week"
+    ((tags "day"
+	   ;; settings for tags command
+	   ;; sort result with TODOS first and DONE last
+	   ((org-agenda-sorting-strategy '(todo-state-down))
+	    ;; remove tags when displaying
+	    (org-agenda-remove-tags t)
+	    ;; label this search to "Tarefas da semana"
+	    (org-agenda-overriding-header "Tarefas da Dia\n")
+	    ;; removes the filename of the task
+	    (org-agenda-prefix-format "")
+	    ))
+     (tags "week"
 	   ;; settings for tags command
 	   ;; sort result with TODOS first and DONE last
 	   ((org-agenda-sorting-strategy '(todo-state-down))
