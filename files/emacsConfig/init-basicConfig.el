@@ -40,6 +40,8 @@
 	    (exec-path-from-shell-initialize)))
 
 
+(setq confirm-kill-emacs 'yes-or-no-p)
+
 ;; Define new prefix command
 (define-prefix-command 'my-prefix-command)
 (global-set-key (kbd "C-v") 'my-prefix-command)
