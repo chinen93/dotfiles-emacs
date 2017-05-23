@@ -14,7 +14,7 @@
 	  ("gnu" . "http://elpa.gnu.org/packages/")
 	  ("marmalade" . "http://marmalade-repo.org/packages/")))
 	  
-(defun my/install-packages ()
+(defun my-install-packages ()
   (interactive)
   (unless package-archive-contents
     (package-refresh-contents))
@@ -27,7 +27,7 @@
 (package-initialize nil)
 (setq package-enable-at-startup nil)
 
-(my/install-packages)
+(my-install-packages)
 
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
@@ -42,7 +42,7 @@
 (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
 
 
-(defun my/reload-dot-emacs ()
+(defun my-reload-dot-emacs ()
     "Save the .emacs buffer if needed, then reaload .emacs."
     (interactive)
     (let ((dot-emacs "~/.emacs"))
@@ -89,3 +89,20 @@
 
 (require 'init-hydra)
 (message " Fim das Configurações ")
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-agenda-files
+   (quote
+    ("~/Dropbox/Notes/pocket.org" "~/Dropbox/Organizador.org")))
+ '(package-selected-packages
+   (quote
+    (hydra yasnippet monokai-theme zenburn-theme nyan-mode multiple-cursors magit keyfreq company-jedi helm-swoop helm-descbinds helm flycheck expand-region company exec-path-from-shell use-package))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

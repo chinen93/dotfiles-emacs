@@ -12,13 +12,13 @@
     (load-theme 'monokai t)
     (set-background-color "#121212")))
 
-(defun my/change-theme()
+(defun my-change-theme()
   (interactive)
   (message "Theme Changed")
   )
 
 (when window-system 
-  (my/change-theme)
+  (my-change-theme)
   )
 
 (provide 'init-themes)
