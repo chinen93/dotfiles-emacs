@@ -7,6 +7,10 @@
   :config
   (progn
     (message "Yasnippet - Loaded")
+
+    ;; Surppress yasnippet backquote changes
+    (setq warning-suppress-types '(yasnippet backquote-change))
+
     ;; Change add Directories when looking for snippets
     (setq yas-snippet-dirs
 	  ;; Personal Collection
