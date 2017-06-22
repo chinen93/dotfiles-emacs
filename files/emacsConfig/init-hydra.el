@@ -30,14 +30,17 @@
     (defhydra hydra-launcher (:color amaranth
                                      :hint nil)
       "
- ^Functions^       ^Other Menus^       ^Org^
--^---------^-------^-----------^-------^---^---------
- _f_: find file    _z_: zoom           _m_: agenda    
- _s_: sort lines   _b_: buffer         _c_: capture   
- _p_: trim right   _v_: bookmarks                     
- _w_: whitespace   _g_: magit status                  
- ^ ^               _d_: display                       
- ^ ^               _y_: YASnippet                     
+ ^Functions^         ^Other Menus^       ^Org^
+-^---------^---------^-----------^-------^---^---------
+ _0_: delete window  _z_: zoom           _m_: agenda    
+ _1_: only 1 window  _b_: buffer         _c_: capture
+ _2_: divide horiz   _v_: bookmarks                  
+ _3_: divide vertc   _g_: magit status               
+ _s_: sort lines     _d_: display                        
+ _p_: trim right     _y_: YASnippet                      
+ _w_: whitespace        
+ ^ ^                    
+ ^ ^                    
 
 "
       ;; commands to exec in actual buffer
@@ -46,15 +49,19 @@
       ("w" whitespace-mode)
 
       ;; commands to exit hydra-launcher
+      ("0" delete-window :color blue)
+      ("1" delete-other-windows :color blue)
+      ("2" split-window-below :color blue)
+      ("3" split-window-right :color blue)
+
       ("m" org-agenda :color blue)
       ("b" buffer-menu :color blue)
       ("c" org-capture :color blue)
       ("d" hydra-display/body :color blue)
-      ("f" helm-find-files :color blue)
       ("g" magit-status :color blue)
       ("v" helm-bookmarks :color blue)
       ("z" hydra-zoom/body :color blue)
-      ("y" yas-insert-snippet :color blue)
+      ("y" hydra-yasnippet/body :color blue)
 
       ;; move around text
       ("<right>" forward-char)
@@ -70,6 +77,45 @@
       ("q" nil "cancel" :color blue))
     (global-set-key (kbd "M-q") 'hydra-launcher/body)
     ;;; Hydra launcher END
+
+    ;;; Hydra Yasnippet BEGIN
+(defhydra hydra-functions (:color blue :hint nil)
+  "
+        ^Useful Functions^
+-----------------------------
+ Actions:
+
+ _s_: sort lines    
+ _p_: trim right    
+ _r_: reload dot emacs
+
+"
+  ("p" my-trim-right)
+  ("r" my-reload-dot-emacs)
+  ("s" sort-lines)
+  ("q" nil "cancel" :color blue))
+    ;;; Hydra Yasnippet END
+
+
+    ;;; Hydra Yasnippet BEGIN
+(defhydra hydra-yasnippet (:color blue :hint nil)
+  "
+        ^YASnippets^
+-----------------------------
+ Actions:
+
+_i_nsert snippet
+_v_isit snippet files
+_n_ew
+_r_eload all
+
+"
+  ("i" yas-insert-snippet)
+  ("v" yas-visit-snippet-file :color blue)
+  ("n" yas-new-snippet)
+  ("r" yas-reload-all)
+  ("q" nil "cancel" :color blue))
+    ;;; Hydra Yasnippet END
 
 
     ;;; Hydra display BEGIN
@@ -137,59 +183,5 @@
     (define-key Buffer-menu-mode-map "." 'hydra-buffer-menu/body)
     ;;; Hydra menu buffer END
 
-
-    ;;; Hydra org BEGIN
-    (defhydra hydra-org (:color amaranth
-                                :hint nil)
-      "
- ^Org mode^
--^--------^-----------
- _T_: set tag
- _d_: set deadline
- _s_: set schedule date
- _c_: capture
- _a_: archive
-"
-      ("T" org-set-tags-command :color blue)
-      ("d" org-deadline :color blue)
-      ("s" org-schedule :color blue)
-      ("t" org-time-stamp-inactive :color blue)
-      ("c" org-capture :color blue)
-      ("a" org-archive-subtree :color blue)
-      
-      ;; move around text
-      ("<right>" forward-char)
-      ("<left>" backward-char)
-      ("<down>" next-line)
-      ("<up>" previous-line)
-      ("<home>" move-beginning-of-line)
-      ("<end>" move-end-of-line)
-      ("<tab>" org-cycle)
-      ("<RET>" nil :color blue)
-      ("<ESC>" nil :color blue)
-
-      ("q" nil "cancel" :color blue))
-    (define-key org-mode-map (kbd "M-a") 'hydra-org/body)
-    ;;; Hydra org END
-
-
-    ;;; Hydra elisp BEGIN
-    (defhydra hydra-elisp (:color amaranth
-                                  :hint nil)
-      "
- ^Lisp^
--^----^-----------
- _r_: eval region
- _R_: eval buffer
-
-"
-      ("r" eval-region)
-      ("R" eval-buffer)
-
-      ("q" nil "cancel" :color blue))
-    (define-key lisp-mode-map (kbd "M-a") 'hydra-elisp/body)
-    ;;; Hydra elisp END
-
-
-    ))
+))
 (provide 'init-hydra)
