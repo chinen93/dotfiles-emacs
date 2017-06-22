@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: ADEPT
+# key: ADEPT
+# --
+
+`(org-insert-heading)``(org-do-demote)`Analogy
+`(org-insert-heading)`Diagram
+`(org-insert-heading)`Example
+`(org-insert-heading)`Plain English
+`(org-insert-heading)`Technical Definition
