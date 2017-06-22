@@ -109,13 +109,13 @@ timestamp after it."
     ;; Go to the first positon in the buffer
     (goto-char (point-min))
 
-    ;; Search for the string "DATE-UPDATED: "
+    ;; Search for the string DATE-UPDATED: [2017-06-13 Tue])
     (if (not (null (search-forward-regexp "DATE-UPDATED: " nil t)))
-
-	;; Text is found: Save the beginning of the text after it
+	
+	;; Save the begin to where to delete.
 	(let ((begin (point)))
-	 
-	  ;; Go to the final of the date
+
+	  ;; Search for the next ']' the end of a date.
 	  (search-forward "]")
 
 	  ;; Delete the date described as [year-month=day DayofWeek]
@@ -131,13 +131,60 @@ timestamp after it."
 (defun my-orgp ()
   "Check this file is an org file, is it is execute some functions"
 
-  (if (string-match "\\.org" buffer-file-name)
-      (my-update-org-timestamp)))
+  ;; Add hook before save
+  (add-hook 'before-save-hook 'my-update-org-timestamp))
 
-;; Add hook before save
-(add-hook 'before-save-hook 'my-orgp)
+;; Add hook to org mode
+(add-hook 'org-mode-hook 'my-orgp)
+
+(defun my-org-toggle-timestamp(beforeList afterList) 
+  "Toggle a time stamp to active and inactive, vice versa"
+
+  ;; Don't change the cursor position
+  (save-excursion
+    
+    ;; Narrow to the begin-end of line
+    (narrow-to-region (progn 
+			(beginning-of-line)
+			(point))
+		      (progn
+			(end-of-line)
+			(point)))
+
+    ;; search for begin-end of DATE
+    (let ((begin (search-backward (first beforeList) nil t))
+	  (end (search-forward (first (rest beforeList)) nil t)))
+
+      ;; if a DATE is found
+      (if (and (not (not begin)) (not (not end)))
+	  (progn 
+
+	    ;; change character for the appropriate one
+	    (delete-region begin (+ begin 1))
+	    (goto-char begin)
+	    (insert (first afterList))
+	    
+	    ;; change character for the appropriate one
+	    (goto-char end)
+	    (delete-region (- end 1) end)
+	    (insert (first (rest afterList))))))
+
+    ;; Widen buffer
+    (widen)))
 
 
+(defun my-org-active-timestamp ()
+  "Active a timestamp, change [date] to <date>"
+  (interactive)
+  
+  (my-org-toggle-timestamp '("[" "]") '("<" ">")))
+
+
+(defun my-org-inactive-timestamp ()
+  "Inactive a timestamp, change <date> to [date]"
+  (interactive)
+  
+  (my-org-toggle-timestamp '("<" ">") '("[" "]")))
 
 
 (provide 'init-orgmode)
