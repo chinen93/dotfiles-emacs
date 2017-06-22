@@ -39,8 +39,14 @@
   :config (progn
 	    (exec-path-from-shell-initialize)))
 
-
+;; Confirm Emacs before exiting
 (setq confirm-kill-emacs 'yes-or-no-p)
+
+;; Delete selected text when something is inserted and a mark is active
+(delete-selection-mode 1)
+
+;; When yanking with mouse, don't move the point. Just yank it.
+(setq mouse-yank-at-point t) 
 
 ;; Define new prefix command
 (define-prefix-command 'my-prefix-command)
