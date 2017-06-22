@@ -57,13 +57,10 @@
 (setq load-path (cons (expand-file-name "~/.emacsConfig")
 		      load-path))
 
-
-
 (message " Inicialização das Configurações ")
 (require 'init-basicConfig)
 (require 'init-customFunctions)
 (require 'init-keyBinding)
-
 (require 'init-backup)
 (require 'init-bookmark)
 (require 'init-calcmode)
@@ -85,10 +82,11 @@
 (require 'init-orgmode)
 (require 'init-regex)
 (require 'init-themes)
+(require 'init-try)
 (require 'init-yasnippet)
-
 (require 'init-hydra)
 (message " Fim das Configurações ")
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
