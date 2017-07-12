@@ -35,7 +35,7 @@
 (setq org-default-notes-file "~/Documents/Capture.org")
 
 ;; Set org agenda files
-(setq org-agenda-files '("~/Dropbox/Organizador.org"))
+(setq org-agenda-files '("~/Dropbox/Organizador.org" "~/Dropbox/Notes"))
 
 ;; Record a note when TODO item is DONE
 (setq org-log-done 'note)
@@ -49,34 +49,23 @@
 
 ;; Set new filter for agenda views
 (setq org-agenda-custom-commands
- '(("n" "Agenda and all TODO's"
+ '(
+   ;; Custom command to show done task from previous week
+   ("b" "DONE from this week" 
+    ;; Use normal agenda
+    ((agenda ""
+	     ;; Put some configurations on this agenda
+	     ;; Show closed tasks and show 7 days starting today
+	     ((org-agenda-log-mode-items '(closed))
+	      (org-agenda-span 7)
+	      (org-agenda-start-day "-6d")
+	      (org-agenda-show-log t)
+	      (org-agenda-window-setup 'other-window)))) 
+    nil)
+   ;; Custom agenda that show all the TODO tasks
+   ("n" "Agenda and all TODO's"
     ((agenda "" nil)
      (alltodo "" nil))
-    nil)
-   ("b" "Tasks for the week and Agenda"
-    ((tags "day"
-	   ;; settings for tags command
-	   ;; sort result with TODOS first and DONE last
-	   ((org-agenda-sorting-strategy '(todo-state-down))
-	    ;; remove tags when displaying
-	    (org-agenda-remove-tags t)
-	    ;; label this search to "Tarefas da semana"
-	    (org-agenda-overriding-header "Tarefas da Dia\n")
-	    ;; removes the filename of the task
-	    (org-agenda-prefix-format "")
-	    ))
-     (tags "week"
-	   ;; settings for tags command
-	   ;; sort result with TODOS first and DONE last
-	   ((org-agenda-sorting-strategy '(todo-state-down))
-	    ;; remove tags when displaying
-	    (org-agenda-remove-tags t)
-	    ;; label this search to "Tarefas da semana"
-	    (org-agenda-overriding-header "Tarefas da Semana\n")
-	    ;; removes the filename of the task
-	    (org-agenda-prefix-format "")
-	    ))
-     (agenda "" nil))
     nil)
 ))
 
@@ -109,7 +98,7 @@ timestamp after it."
     ;; Go to the first positon in the buffer
     (goto-char (point-min))
 
-    ;; Search for the string DATE-UPDATED: [2017-06-13 Tue])
+    ;; Search for the string DATE-UPDATED: [2017-06-29 Thu])
     (if (not (null (search-forward-regexp "DATE-UPDATED: " nil t)))
 	
 	;; Save the begin to where to delete.
