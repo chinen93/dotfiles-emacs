@@ -12,6 +12,16 @@
 (line-number-mode 1)
 (setq column-number-mode t)
 
+;; Set encoding charset
+(set-language-environment 'utf-8)
+(set-keyboard-coding-system 'utf-8-mac) ; For old Carbon emacs on OS X only
+(setq locale-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(unless (eq system-type 'windows-nt)
+  (set-selection-coding-system 'utf-8))
+(prefer-coding-system 'utf-8)
+
 ;; Change (yes/no) to (y/n)
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -33,11 +43,13 @@
 ;; Don't show start up message
 (setq inhibit-startup-message t)
 
-;; A GNU Emacs library to ensure environment variables inside Emacs look the same as in the user's shell.
-(use-package exec-path-from-shell
-  :ensure t
-  :config (progn
-	    (exec-path-from-shell-initialize)))
+;; Check this if config is in Linux
+(unless (eq system-type 'windows-nt)
+  ;; A GNU Emacs library to ensure environment variables inside Emacs look the same as in the user's shell.
+  (use-package exec-path-from-shell
+    :ensure t
+    :config (progn
+	      (exec-path-from-shell-initialize))))
 
 ;; Confirm Emacs before exiting
 (setq confirm-kill-emacs 'yes-or-no-p)

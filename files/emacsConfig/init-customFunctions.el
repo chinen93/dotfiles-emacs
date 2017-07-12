@@ -2,6 +2,16 @@
 ;; Custom Functions
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; defun my-load-hydra-helm-windows BEGIN
+(defun my-load-hydra-helm-windows ()
+  "Load hydra and helm configurations properly on Windows"
+  (interactive)
+  
+  (load-file "~/.emacsConfig/init-hydra.el")
+  (load-file "~/.emacsConfig/init-helm.el"))
+;; defun my-load-hydra-helm-windows END
+
+
 ;; defun my-bcompile-pchinen.el BEGIN
 (defun my-bcompile-pchinen.el ()
   "Compile the pchinen.el to initializate faster"
