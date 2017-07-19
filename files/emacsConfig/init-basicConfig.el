@@ -32,8 +32,14 @@
 ;***********************************************          
 ")
 
-;; Follow version controlled files without ask
-(setq vc-follow-symlinks t)
+;; Check this if config is in Linux
+(unless (not (eq system-type 'windows-nt))
+  (setq initial-scratch-message (concat initial-scratch-message "\n (my-load-hydra-helm-windows)"))
+  )
+
+;; Don't follow version controlled files change it locally.
+;; Git will know that the file has changed.
+(setq vc-follow-symlinks nil)
 
 ;; Remove tool bar at top and scroll bar at right
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -59,6 +65,9 @@
 
 ;; When yanking with mouse, don't move the point. Just yank it.
 (setq mouse-yank-at-point t) 
+
+;; Used for formatting time values
+(setq system-time-locale "C")
 
 ;; Define new prefix command
 (define-prefix-command 'my-prefix-command)
