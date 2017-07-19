@@ -9,15 +9,7 @@ MKLINK /H %emacsDirectory%\init.el %gitDirectory%\emacs
 ECHO --------------------------------------------------------
 ECHO Moving Emacs Initial File into Position
 MKLINK /D %APPDATA%\.emacsConfig %gitDirectory%\emacsConfig
+MKLINK /D %APPDATA%\.snippets %gitDirectory%\snippets
 ECHO --------------------------------------------------------
-
-
-
-
-ECHO USE MKLINK TO CREATE SOFT LINKS TO FOLDERS AND HARD LINKS TO FILES
-ECHO TO USES MKLINK ITS NECESSARY TO EXECUTE THIS SCRIPT AS ADMINISTRATOR
-
-cd %gitDirectory%
-dir
 
 PAUSE
