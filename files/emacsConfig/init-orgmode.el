@@ -3,6 +3,16 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (require 'org)
+(require 'org-id)
+
+;; If `org-store-link` is called directly don't create IDs if it already exist
+(setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
+
+;; Provide refile targets as paths. Level3 headlin = level1/level2/leve3
+(setq org-refile-use-outline-path 'file)
+
+;; Load paths to refile in a single go
+(setq org-outline-path-complete-in-steps nil)
 
 ;; Support to languages in #-begin_src #end_src code
 (org-babel-do-load-languages
@@ -74,6 +84,19 @@
       org-agenda-start-on-weekday nil
       org-agenda-start-day "-3d")
 
+
+;; ===================================================================
+;; Functions
+;; ===================================================================
+
+;; defun org-id-complete-link BEGIN
+(defun org-id-complete-link (&optional arg)
+  "Create an id: link using completion"
+  (concat "id:"
+          (org-id-get-with-outline-path-completion)))
+;; defun org-id-complete-link END
+
+
 ;; defun my-week-and-todo-list BEGIN
 (defun my-week-and-todo-list ()
   "Create a list of this week and todo items"
@@ -87,7 +110,7 @@
 ;; defun my-week-and-todo-list END
 
 
-;; defun pc-study/update-timestamp BEGIN
+;; defun my-update-org-timestamp BEGIN
 (defun my-update-org-timestamp ()
   "Search for the string 'DATE-UPDATED' and chage the inactive 
 timestamp after it."
@@ -98,7 +121,7 @@ timestamp after it."
     ;; Go to the first positon in the buffer
     (goto-char (point-min))
 
-    ;; Search for the string DATE-UPDATED: [2017-06-29 Thu])
+    ;; Search for the string DATE-UPDATED: [2017-07-19 Wed])
     (if (not (null (search-forward-regexp "DATE-UPDATED: " nil t)))
 	
 	;; Save the begin to where to delete.
@@ -115,17 +138,20 @@ timestamp after it."
 
       ;; Text is not found: Message and do nothing
       (message "DATE-UPDATED does not exist in this buffer"))))
-;; defun pc-study/update-timestamp END
+;; defun my-update-org-timestamp END
 
-(defun my-orgp ()
-  "Check this file is an org file, is it is execute some functions"
 
-  ;; Add hook before save
-  (add-hook 'before-save-hook 'my-update-org-timestamp))
+;; defun my-add-ids-to-headings BEGIN
+(defun my-add-ids-to-headings ()
+  "Insert ids to every heading in the file. If it already has one do nothing"
+  (save-excursion
+    (goto-char (point-max))
+    (while (outline-previous-heading)
+      (org-id-get-create))))
+;; defun my-add-ids-to-headings END
 
-;; Add hook to org mode
-(add-hook 'org-mode-hook 'my-orgp)
 
+;; defun my-org-toggle-timestamp BEGIN
 (defun my-org-toggle-timestamp(beforeList afterList) 
   "Toggle a time stamp to active and inactive, vice versa"
 
@@ -160,20 +186,43 @@ timestamp after it."
 
     ;; Widen buffer
     (widen)))
+;; defun my-org-toggle-timestamp END
 
 
+;; defun my-org-active-timestamp BEGIN
 (defun my-org-active-timestamp ()
   "Active a timestamp, change [date] to <date>"
   (interactive)
   
   (my-org-toggle-timestamp '("[" "]") '("<" ">")))
+;; defun my-org-active-timestamp END
 
 
+;; defun my-org-inactive-timestamp BEGIN
 (defun my-org-inactive-timestamp ()
   "Inactive a timestamp, change <date> to [date]"
   (interactive)
   
   (my-org-toggle-timestamp '("<" ">") '("[" "]")))
+;; defun my-org-inactive-timestamp END
 
+;; ===================================================================
+;; Hooks
+;; ===================================================================
+
+;; defun my-org-hook-function BEGIN
+(defun my-org-hook-function ()
+  "Check this file is an org file, is it is execute some functions"
+
+  ;; Add hook before save
+  (add-hook 'before-save-hook 
+	    (when (and (eq major-mode 'org-mode)
+		       (eq buffer-read-only nil))
+	      'my-update-org-timestamp
+	      'my-add-ids-to-headings)))
+;; defun my-org-hook-function END
+
+;; Add hook to org mode
+(add-hook 'org-mode-hook 'my-org-hook-function)
 
 (provide 'init-orgmode)
