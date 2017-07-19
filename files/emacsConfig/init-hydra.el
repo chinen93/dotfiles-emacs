@@ -30,38 +30,42 @@
     (defhydra hydra-launcher (:color amaranth
                                      :hint nil)
       "
- ^Functions^         ^Other Menus^       ^Org^
--^---------^---------^-----------^-------^---^---------
- _0_: delete window  _z_: zoom           _m_: agenda    
- _1_: only 1 window  _b_: buffer         _c_: capture
- _2_: divide horiz   _v_: bookmarks                  
- _3_: divide vertc   _g_: magit status               
- _s_: sort lines     _d_: display                        
- _p_: trim right     _y_: YASnippet                      
- _w_: whitespace        
- ^ ^                    
- ^ ^                    
-
+ ^Functions^          ^Window^            ^Other Menus^   ^Org^         ^Help^
+-^---------^----------^------^------------^-----------^---^---^---------^----^-------
+ _s_: sort lines      _0_: delete window  _z_: zoom       _m_: Agenda   _6_: function
+ _p_: trim right      _1_: only 1 window  _b_: buffer     _c_: Capture  _7_: variable
+ _w_: whitespace      _2_: divide horiz   _v_: bookmarks  ^ ^           _8_: mode
+ _r_: revert buffer   _3_: divide vertc   _g_: magit      ^ ^           _9_: view lossage
+ _t_: truncate lines  _4_: other window   _y_: YASnippet  ^ ^           _0_: view Messages
+ _f_: fill paragraph
 "
       ;; commands to exec in actual buffer
       ("p" my-trim-right)
       ("s" sort-lines)
       ("w" whitespace-mode)
+      ("r" revert-buffer)
+      ("t" toggle-truncate-lines)
+      ("f" endless-fill-or-unfill)
 
       ;; commands to exit hydra-launcher
       ("0" delete-window :color blue)
       ("1" delete-other-windows :color blue)
       ("2" split-window-below :color blue)
       ("3" split-window-right :color blue)
+      ("4" other-window)
 
       ("m" org-agenda :color blue)
       ("b" buffer-menu :color blue)
       ("c" org-capture :color blue)
-      ("d" hydra-display/body :color blue)
       ("g" magit-status :color blue)
       ("v" helm-bookmarks :color blue)
       ("z" hydra-zoom/body :color blue)
       ("y" hydra-yasnippet/body :color blue)
+      ("6" describe-function :color blue)
+      ("7" describe-variable :color blue)
+      ("8" describe-mode :color blue)
+      ("9" view-lossage :color blue)
+      ("0" view-echo-area-messages :color blue)
 
       ;; move around text
       ("<right>" forward-char)
