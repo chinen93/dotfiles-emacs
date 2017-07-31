@@ -45,7 +45,8 @@
 (setq org-default-notes-file "~/Documents/Capture.org")
 
 ;; Set org agenda files
-(setq org-agenda-files '("~/Dropbox/Organizador.org" "~/Dropbox/Notes"))
+(setq org-agenda-files (list (concat my-dropbox-folder "/Organizador.org")
+			     (concat my-dropbox-folder "/Notes")))
 
 ;; Record a note when TODO item is DONE
 (setq org-log-done 'note)
@@ -95,6 +96,16 @@
   (concat "id:"
           (org-id-get-with-outline-path-completion)))
 ;; defun org-id-complete-link END
+
+
+;; defun my-add-org-agenda BEGIN
+(defun my-add-org-agenda ()
+  "Check if current file is in `org-agenda-files`: If not add it"
+  (interactive)
+  (unless (member (buffer-file-name) (org-agenda-files))
+    (org-agenda-file-to-front)))
+
+;; defun my-add-org-agenda END
 
 
 ;; defun my-week-and-todo-list BEGIN
@@ -206,6 +217,16 @@ timestamp after it."
   (my-org-toggle-timestamp '("<" ">") '("[" "]")))
 ;; defun my-org-inactive-timestamp END
 
+
+;; defun my-org-refile BEGIN
+(defun my-org-refile ()
+  "Do a `org-refile` with targets as `org-agenda-files` "
+  (interactive)
+  (let ((org-refile-targets '((org-agenda-files :maxlevel . 5)))
+	(org-outline-path-complete-in-steps t))
+    (org-refile)))
+;; defun my-org-refile END
+
 ;; ===================================================================
 ;; Hooks
 ;; ===================================================================
@@ -214,12 +235,12 @@ timestamp after it."
 (defun my-org-hook-function ()
   "Check this file is an org file, is it is execute some functions"
 
-  ;; Add hook before save
-  (add-hook 'before-save-hook 
-	    (when (and (eq major-mode 'org-mode)
-		       (eq buffer-read-only nil))
-	      'my-update-org-timestamp
-	      'my-add-ids-to-headings)))
+  (when (and (eq major-mode 'org-mode)
+	     (eq buffer-read-only nil))
+    ;; Add hook before save
+    ;; (add-hook 'before-save-hook 'my-add-org-agenda)
+    (add-hook 'before-save-hook 'my-update-org-timestamp)
+    (add-hook 'before-save-hook 'my-add-ids-to-headings)))
 ;; defun my-org-hook-function END
 
 ;; Add hook to org mode
