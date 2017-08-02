@@ -32,8 +32,9 @@
 ;***********************************************          
 ")
 
-;; Follow version controlled files without ask
-(setq vc-follow-symlinks t)
+;; Don't follow version controlled files change it locally.
+;; Git will know that the file has changed.
+(setq vc-follow-symlinks nil)
 
 ;; Remove tool bar at top and scroll bar at right
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -43,13 +44,30 @@
 ;; Don't show start up message
 (setq inhibit-startup-message t)
 
-;; Check this if config is in Linux
+;; Set Dropbox folder
+(setq my-dropbox-folder "~/Dropbox")
+
+;; Config for Linux Only
 (unless (eq system-type 'windows-nt)
+ 
   ;; A GNU Emacs library to ensure environment variables inside Emacs look the same as in the user's shell.
   (use-package exec-path-from-shell
     :ensure t
     :config (progn
 	      (exec-path-from-shell-initialize))))
+
+;; Config for Windows Only
+(unless (not (eq system-type 'windows-nt))
+  ;; Dropbox is in another folder
+  (setq my-dropbox-folder 
+	(concat (substring (shell-command-to-string "ECHO %USERPROFILE%") 
+			   0 
+			   -1)
+		"\\Dropbox"))
+
+  ;; Add function on Scratch buffer to load hydra and helm configurations
+  (setq initial-scratch-message 
+	(concat initial-scratch-message "\n (my-load-hydra-helm-windows)")))
 
 ;; Confirm Emacs before exiting
 (setq confirm-kill-emacs 'yes-or-no-p)
@@ -59,6 +77,9 @@
 
 ;; When yanking with mouse, don't move the point. Just yank it.
 (setq mouse-yank-at-point t) 
+
+;; Used for formatting time values
+(setq system-time-locale "C")
 
 ;; Define new prefix command
 (define-prefix-command 'my-prefix-command)

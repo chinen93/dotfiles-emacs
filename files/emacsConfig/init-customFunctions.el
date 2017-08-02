@@ -6,57 +6,10 @@
 (defun my-load-hydra-helm-windows ()
   "Load hydra and helm configurations properly on Windows"
   (interactive)
-  
-  (load-file "~/.emacsConfig/init-hydra.el")
-  (load-file "~/.emacsConfig/init-helm.el"))
+
+  (load-file "~/emacsConfig/init-hydra.el")
+  (load-file "~/emacsConfig/init-helm.el"))
 ;; defun my-load-hydra-helm-windows END
-
-
-;; defun my-bcompile-pchinen.el BEGIN
-(defun my-bcompile-pchinen.el ()
-  "Compile the pchinen.el to initializate faster"
-  (interactive)
-
-  ;; Compile pchinen.el so emacs starts up faster
-  (byte-compile-file "~/.pchinen.el"))
-;; defun my-bcompile-pchinen.el END
-
-
-;; defun my-open-initial-files BEGIN
-(defun my-open-initial-files ()
-  "Open some files in the initialization. Can be replaced by bookmarks"
-  (interactive)
-
-  ;; help file exist?: open it
-  (if (file-exists-p "~/git/org/help.org")
-      (find-file "~/git/org/help.org"))
-
-  ;; pchinen.org exist?: open it
-  (if (file-exists-p "~/.pchinen.org")
-      (find-file "~/.pchinen.org"))
-
-  ;; Vulcanet User
-  (if (equal (user-login-name) "pedro")
-
-      ;; Vulcanet notes exist?: open it
-      (if (file-exists-p "~/vulcanet.org")
-          (find-file "~/vulcanet.org"))))
-;; defun my-open-initial-files END
-
-
-;; defun my-find-function BEGIN
-(defun my-find-function ()
-  "Find every function in actual file with helm-swoop"
-  (interactive)
-
-  ;; set syntax for python
-  (setq-local python-function-syntax "\\(#\\|def\\)")
-
-  ;; Concatenate every function syntax
-  (setq-local function-syntax (concat python-function-syntax))
-
-  (helm-swoop :$query function-syntax))
-;; defun my-find-function END
 
 
 ;; defun my-trim-right BEGIN
@@ -81,6 +34,10 @@
   (end-of-line))
 ;; defun my-trim-right END
 
+
+;; ===================================================================
+;; Functions from Internet
+;; ===================================================================
 
 ;; defun xah-cut-line-or-region BEGIN
 (defun xah-cut-line-or-region ()
@@ -144,6 +101,7 @@
 
 
 ;; defun xah-new-empty-buffer BEGIN
+;; URL: http://ergoemacs.org/emacs/emacs_new_empty_buffer.html
 (defun xah-new-empty-buffer ()
   "Open a new empty buffer."
   (interactive)
@@ -173,6 +131,7 @@
 
 
 ;; defun xah-forward-block BEGIN
+;; URL: http://ergoemacs.org/emacs/emacs_move_by_paragraph.html
 (defun xah-forward-block (&optional my-n)
   "Move cursor forward to the beginning of the next text block.
    A text block is separated by blank lines"
@@ -216,6 +175,7 @@
                     
 
 ;; defun xah-backward-block BEGIN
+;; URL: http://ergoemacs.org/emacs/emacs_move_by_paragraph.html
 (defun xah-backward-block (&optional my-n)
   "Move cursor backward to previous text block.
 See: `xah-forward-block'"
@@ -269,5 +229,26 @@ See: `xah-forward-block'"
       ;; add 1 to my-i
       (setq my-i (1+ my-i)))))
 ;; defun xah-backward-block END
+
+
+;; defun endless-fill-or-unfill END
+;; URL: http://endlessparentheses.com/fill-and-unfill-paragraphs-with-a-single-key.html?source=rss
+(defun endless-fill-or-unfill ()
+  "Like `fill-paragraph', but unfill if used twice."
+  (interactive)
+  ;; Make fill-column as big as the buffer, so it will unfill or the normal size
+  (let ((fill-column
+	 ;; Simple way to make an toggle function, check if the last command was
+	 ;; this command
+	 (if (eq last-command 'endless-fill-or-unfill)
+	     ;; If true, make fill-column as big as it can be
+	     ;; remove this command from the history
+	     (progn (setq this-command nil)
+		    (point-max))
+	   ;; If not, just set fill-column as default
+	   fill-column)))
+    ;; Call fill-paragraph, because it uses fill-column
+    (call-interactively #'fill-paragraph)))
+;; defun endless-fill-or-unfill END
 
 (provide 'init-customFunctions)
