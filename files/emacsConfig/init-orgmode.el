@@ -98,16 +98,6 @@
 ;; defun org-id-complete-link END
 
 
-;; defun my-add-org-agenda BEGIN
-(defun my-add-org-agenda ()
-  "Check if current file is in `org-agenda-files`: If not add it"
-  (interactive)
-  (unless (member (buffer-file-name) (org-agenda-files))
-    (org-agenda-file-to-front)))
-
-;; defun my-add-org-agenda END
-
-
 ;; defun my-week-and-todo-list BEGIN
 (defun my-week-and-todo-list ()
   "Create a list of this week and todo items"
@@ -153,8 +143,9 @@ timestamp after it."
 
 
 ;; defun my-add-ids-to-headings BEGIN
-(defun my-add-ids-to-headings ()
+(defun my-add-ids-to-all-headings ()
   "Insert ids to every heading in the file. If it already has one do nothing"
+  (interactive)
   (save-excursion
     (goto-char (point-max))
     (while (outline-previous-heading)
@@ -217,33 +208,24 @@ timestamp after it."
   (my-org-toggle-timestamp '("<" ">") '("[" "]")))
 ;; defun my-org-inactive-timestamp END
 
-
-;; defun my-org-refile BEGIN
-(defun my-org-refile ()
-  "Do a `org-refile` with targets as `org-agenda-files` "
-  (interactive)
-  (let ((org-refile-targets '((org-agenda-files :maxlevel . 5)))
-	(org-outline-path-complete-in-steps t))
-    (org-refile)))
-;; defun my-org-refile END
-
 ;; ===================================================================
 ;; Hooks
 ;; ===================================================================
+;; List of hooks for org-mode: http://orgmode.org/tmp/worg/org-configs/org-hooks.html
 
 ;; defun my-org-hook-function BEGIN
 (defun my-org-hook-function ()
   "Check this file is an org file, is it is execute some functions"
 
-  (when (and (eq major-mode 'org-mode)
-	     (eq buffer-read-only nil))
-    ;; Add hook before save
-    ;; (add-hook 'before-save-hook 'my-add-org-agenda)
-    (add-hook 'before-save-hook 'my-update-org-timestamp)
-    (add-hook 'before-save-hook 'my-add-ids-to-headings)))
+  ;; Add hook before save
+  (add-hook 'before-save-hook 
+	    (when (and (eq major-mode 'org-mode)
+		       (eq buffer-read-only nil))
+	      'my-update-org-timestamp)))
 ;; defun my-org-hook-function END
 
 ;; Add hook to org mode
 (add-hook 'org-mode-hook 'my-org-hook-function)
+(add-hook 'org-insert-heading-hook 'org-id-get-create)
 
 (provide 'init-orgmode)
