@@ -8,18 +8,28 @@ ECHO Moving Emacs Configuration Files Folder into Position
 IF EXIST %emacsDirectory%\init.el (
    DEL %emacsDirectory%\init.el
 )
-MKLINK /H %emacsDirectory%\init.el %gitDirectory%\emacs
-ECHO --------------------------------------------------------
-ECHO Moving Emacs Initial File into Position
-IF EXIST %APPDATA%\.emacsConfig (
-   RMDIR %APPDATA%\.emacsConfig
-)
-MKLINK /D %APPDATA%\.emacsConfig %gitDirectory%\emacsConfig
 
-IF EXIST %APPDATA%\.snippets (
-   RMDIR %APPDATA%\.snippets
-)
-MKLINK /D %APPDATA%\.snippets %gitDirectory%\snippets
+COPY /Y %gitDirectory%\emacs %emacsDirectory%\init.el
 ECHO --------------------------------------------------------
+ECHO Moving Emacs Configuration Folder into Position
+IF EXIST %APPDATA%\emacsConfig (
+   RMDIR %APPDATA%\emacsConfig
+)
+
+XCOPY %gitDirectory%\emacsConfig %APPDATA%\emacsConfig /E /I /H
+
+IF EXIST %APPDATA%\emacsSnippets (
+   RMDIR %APPDATA%\emacsSnippets
+)
+
+XCOPY %gitDirectory%\emacsSnippets %APPDATA%\emacsSnippets /E /I /H
+
+ECHO --------------------------------------------------------
+ECHO Remove read-only attribute from %emacsDirectory%
+
+ATTRIB -R %emacsDirectory%
+
+ECHO --------------------------------------------------------
+
 
 PAUSE
