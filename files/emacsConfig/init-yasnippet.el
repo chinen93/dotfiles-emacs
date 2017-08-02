@@ -14,7 +14,7 @@
     ;; Change add Directories when looking for snippets
     (setq yas-snippet-dirs
 	  ;; Personal Collection
-	  '("~/.snippets"))
+	  '("~/emacsSnippets"))
 
     ;; Undefine default keys binding
     (define-key yas-minor-mode-map (kbd "<tab>") nil)

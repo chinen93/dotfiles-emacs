@@ -7,8 +7,8 @@
   "Load hydra and helm configurations properly on Windows"
   (interactive)
 
-  (load-file "~/.emacsConfig/init-hydra.el")
-  (load-file "~/.emacsConfig/init-helm.el"))
+  (load-file "~/emacsConfig/init-hydra.el")
+  (load-file "~/emacsConfig/init-helm.el"))
 ;; defun my-load-hydra-helm-windows END
 
 
