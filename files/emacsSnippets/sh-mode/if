@@ -1,0 +1,33 @@
+# -*- mode: snippet -*-
+# name: if statement with help
+# key: if
+# --
+if [ -eq $0 ]; then
+
+   # String Comparison
+   # =
+   # !=
+   # -n Str1, true if Str1 not null
+   # -z Str1, true if Str1 is null
+   #
+   # Numeric Comparison
+   # -eq, equal
+   # -ne, not equal
+   # -gt, greater than
+   # -lt, lesser than
+   # -le, lesser or equal
+   # ! expr, negation of expr
+   #
+   # File Conditionals
+   # -d file, file is directory
+   # -f file, is a file
+   # -e file, file exist
+   # -s file, has a non-zero size
+   # -u file, is user id set
+   # -g file, is group id set
+   # -r file, is file readable
+   # -w file, is writable
+   # -x file, is executable
+
+   echo
+fi
