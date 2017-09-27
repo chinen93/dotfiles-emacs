@@ -50,6 +50,10 @@
 
 ;; Record a note when TODO item is DONE
 (setq org-log-done 'note)
+(setq org-log-repeat 'note)
+(add-to-list 'org-modules "org-habit")
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "WORKING(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
 
 ;; Follows links when press <ENTER> on them
 (setq org-return-follows-link t)
@@ -122,7 +126,7 @@ timestamp after it."
     ;; Go to the first positon in the buffer
     (goto-char (point-min))
 
-    ;; Search for the string DATE-UPDATED: [2017-07-19 Wed])
+    ;; Search for the string DATE-UPDATED: [2017-08-14 Mon])
     (if (not (null (search-forward-regexp "DATE-UPDATED: " nil t)))
 	
 	;; Save the begin to where to delete.

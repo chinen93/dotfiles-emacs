@@ -54,15 +54,21 @@
 (add-to-list 'auto-mode-alist '(".emacs" . lisp-mode))
 (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
-(setq load-path (cons (expand-file-name "~/emacsConfig") load-path))
+(setq load-path (cons (expand-file-name "~/emacsConfig")
+		      load-path ))
 
 (message " Inicialização das Configurações ")
+
+(message "Basic Configurations")
 (require 'init-backup)
 (require 'init-basicConfig)
+(require 'init-customFunctions)
+(require 'init-keyBinding)
+
+(message "Configurations for packages")
 (require 'init-bookmark)
 (require 'init-calcmode)
 (require 'init-company)
-(require 'init-customFunctions)
 (require 'init-dired)
 (require 'init-expandRegion)
 (require 'init-filesMode)
@@ -72,8 +78,8 @@
 (require 'init-history)
 (require 'init-hooks)
 (require 'init-hydra)
-(require 'init-keyBinding)
 (require 'init-keyfreq)
+(require 'init-macro)
 (require 'init-multipleCursor)
 (require 'init-nyanCat)
 (require 'init-orgmode)
