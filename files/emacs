@@ -74,6 +74,7 @@
 (require 'init-filesMode)
 (require 'init-firstInit)
 (require 'init-flycheck)
+(require 'init-fun)
 (require 'init-helm)
 (require 'init-history)
 (require 'init-hooks)
@@ -81,11 +82,15 @@
 (require 'init-keyfreq)
 (require 'init-macro)
 (require 'init-multipleCursor)
+(require 'init-nov)
 (require 'init-nyanCat)
 (require 'init-orgmode)
+(require 'init-programming)
+(require 'init-rainbow)
 (require 'init-regex)
 (require 'init-themes)
 (require 'init-try)
+(require 'init-words)
 (require 'init-yasnippet)
 
 ;; If not in windows require these configs
