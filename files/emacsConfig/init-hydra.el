@@ -10,6 +10,9 @@
   :config
   (progn
 
+    (require 'init-customFunctions)
+    (require 'init-fun)
+
     ;;; Hydra Zoom BEGIN
     (defhydra hydra-zoom (:color pink)
       "
@@ -32,19 +35,15 @@
       "
  ^Functions^          ^Window^            ^Other Menus^   ^Org^         ^Help^
 -^---------^----------^------^------------^-----------^---^---^---------^----^-------
- _s_: sort lines      _0_: delete window  _z_: zoom       _m_: Agenda   _6_: function
- _p_: trim right      _1_: only 1 window  _b_: buffer     _c_: Capture  _7_: variable
- _w_: whitespace      _2_: divide horiz   _v_: bookmarks  ^ ^           _8_: mode
- _r_: revert buffer   _3_: divide vertc   _g_: magit      ^ ^           _9_: view lossage
- _t_: truncate lines  _4_: other window   _y_: YASnippet  ^ ^           _0_: view Messages
- _f_: fill paragraph  ^ ^                 _(_: macro
+ _w_: whitespace      _0_: delete window  _z_: zoom       _m_: Agenda   _6_: function
+ _f_: functions menu  _1_: only 1 window  _b_: buffer     _c_: Capture  _7_: variable
+ ^ ^                  _2_: divide horiz   _v_: bookmarks  ^ ^           _8_: mode
+ ^ ^                  _3_: divide vertc   _g_: magit      ^ ^           _9_: view lossage
+ ^ ^                  _4_: other window   _y_: YASnippet  ^ ^           _0_: view Messages
+ ^ ^                  ^ ^                 _(_: macro
 "
       ;; commands to exec in actual buffer
-      ("f" endless-fill-or-unfill)
-      ("p" my-trim-right)
-      ("r" revert-buffer)
-      ("s" sort-lines)
-      ("t" toggle-truncate-lines)
+      ("f" hydra-functions/body :color blue)
       ("w" whitespace-mode)
 
       ;; commands to exit hydra-launcher
@@ -86,20 +85,50 @@
     ;;; Hydra launcher END
 
     ;;; Hydra Yasnippet BEGIN
-    (defhydra hydra-functions (:color blue :hint nil)
+    (defhydra hydra-functions (:color amaranth :hint nil)
       "
         ^Useful Functions^
------------------------------
- Actions:
+-^--------^----------------^--------^--------------------------
+ ^Actions:^                ^Internet^
 
- _s_: sort lines    
- _p_: trim right    
- _r_: reload dot emacs
+ _s_: Sort lines           _i_: Word of The day
+ _p_: Trim right           _g_: Google This
+ _r_: Reload dot emacs     _h_: Google Translate This
+ _t_: Truncate lines       _d_: Define Word  
+ _f_: Fill paragraph
+ _k_: Open file
+ _l_: Open Terminal in folder
 
 "
       ("p" my-trim-right)
+
       ("r" my-reload-dot-emacs)
       ("s" sort-lines)
+      ("t" toggle-truncate-lines)
+      ("f" endless-fill-or-unfill)
+      ("k" xah-open-in-external-app :color blue)
+      ("l" xah-open-in-terminal :color blue)
+      
+
+
+      ("i" wotd-select :color blue)
+      ("g" google-this-ray :color blue)
+      ("h" google-translate-smooth-translate :color blue)
+      ("d" define-word-at-point :color blue)
+
+
+
+      ;; move around text
+      ("<right>" forward-char)
+      ("<left>" backward-char)
+      ("<down>" next-line)
+      ("<up>" previous-line)
+      ("C-<SPC>" set-mark-command)
+      ("<home>" move-beginning-of-line)
+      ("<end>" move-end-of-line)
+      ("<RET>" nil :color blue)
+      ("<ESC>" nil :color blue)
+
       ("q" nil "cancel" :color blue))
     ;;; Hydra Yasnippet END
 
