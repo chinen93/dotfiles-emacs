@@ -10,6 +10,9 @@
   :config
   (progn
 
+    (require 'init-customFunctions)
+    (require 'init-fun)
+
     ;;; Hydra Zoom BEGIN
     (defhydra hydra-zoom (:color pink)
       "
@@ -32,20 +35,16 @@
       "
  ^Functions^          ^Window^            ^Other Menus^   ^Org^         ^Help^
 -^---------^----------^------^------------^-----------^---^---^---------^----^-------
- _s_: sort lines      _0_: delete window  _z_: zoom       _m_: Agenda   _6_: function
- _p_: trim right      _1_: only 1 window  _b_: buffer     _c_: Capture  _7_: variable
- _w_: whitespace      _2_: divide horiz   _v_: bookmarks  ^ ^           _8_: mode
- _r_: revert buffer   _3_: divide vertc   _g_: magit      ^ ^           _9_: view lossage
- _t_: truncate lines  _4_: other window   _y_: YASnippet  ^ ^           _0_: view Messages
- _f_: fill paragraph
+ _w_: whitespace      _0_: delete window  _z_: zoom       _m_: Agenda   _6_: function
+ _f_: functions menu  _1_: only 1 window  _b_: buffer     _c_: Capture  _7_: variable
+ ^ ^                  _2_: divide horiz   _v_: bookmarks  ^ ^           _8_: mode
+ ^ ^                  _3_: divide vertc   _g_: magit      ^ ^           _9_: view lossage
+ ^ ^                  _4_: other window   _y_: YASnippet  ^ ^           _0_: view Messages
+ ^ ^                  ^ ^                 _(_: macro
 "
       ;; commands to exec in actual buffer
-      ("p" my-trim-right)
-      ("s" sort-lines)
+      ("f" hydra-functions/body :color blue)
       ("w" whitespace-mode)
-      ("r" revert-buffer)
-      ("t" toggle-truncate-lines)
-      ("f" endless-fill-or-unfill)
 
       ;; commands to exit hydra-launcher
       ("0" delete-window :color blue)
@@ -54,18 +53,21 @@
       ("3" split-window-right :color blue)
       ("4" other-window)
 
-      ("m" org-agenda :color blue)
-      ("b" buffer-menu :color blue)
       ("c" org-capture :color blue)
+      ("m" org-agenda :color blue)
+
+      ("(" hydra-macro/body :color blue)
+      ("b" buffer-menu :color blue)
       ("g" magit-status :color blue)
       ("v" helm-bookmarks :color blue)
-      ("z" hydra-zoom/body :color blue)
       ("y" hydra-yasnippet/body :color blue)
+      ("z" hydra-zoom/body :color blue)
+
+      ("0" view-echo-area-messages :color blue)
       ("6" describe-function :color blue)
       ("7" describe-variable :color blue)
       ("8" describe-mode :color blue)
       ("9" view-lossage :color blue)
-      ("0" view-echo-area-messages :color blue)
 
       ;; move around text
       ("<right>" forward-char)
@@ -83,27 +85,57 @@
     ;;; Hydra launcher END
 
     ;;; Hydra Yasnippet BEGIN
-(defhydra hydra-functions (:color blue :hint nil)
-  "
+    (defhydra hydra-functions (:color amaranth :hint nil)
+      "
         ^Useful Functions^
------------------------------
- Actions:
+-^--------^----------------^--------^--------------------------
+ ^Actions:^                ^Internet^
 
- _s_: sort lines    
- _p_: trim right    
- _r_: reload dot emacs
+ _s_: Sort lines           _i_: Word of The day
+ _p_: Trim right           _g_: Google This
+ _r_: Reload dot emacs     _h_: Google Translate This
+ _t_: Truncate lines       _d_: Define Word  
+ _f_: Fill paragraph
+ _k_: Open file
+ _l_: Open Terminal in folder
 
 "
-  ("p" my-trim-right)
-  ("r" my-reload-dot-emacs)
-  ("s" sort-lines)
-  ("q" nil "cancel" :color blue))
+      ("p" my-trim-right)
+
+      ("r" my-reload-dot-emacs)
+      ("s" sort-lines)
+      ("t" toggle-truncate-lines)
+      ("f" endless-fill-or-unfill)
+      ("k" xah-open-in-external-app :color blue)
+      ("l" xah-open-in-terminal :color blue)
+      
+
+
+      ("i" wotd-select :color blue)
+      ("g" google-this-ray :color blue)
+      ("h" google-translate-smooth-translate :color blue)
+      ("d" define-word-at-point :color blue)
+
+
+
+      ;; move around text
+      ("<right>" forward-char)
+      ("<left>" backward-char)
+      ("<down>" next-line)
+      ("<up>" previous-line)
+      ("C-<SPC>" set-mark-command)
+      ("<home>" move-beginning-of-line)
+      ("<end>" move-end-of-line)
+      ("<RET>" nil :color blue)
+      ("<ESC>" nil :color blue)
+
+      ("q" nil "cancel" :color blue))
     ;;; Hydra Yasnippet END
 
 
     ;;; Hydra Yasnippet BEGIN
-(defhydra hydra-yasnippet (:color blue :hint nil)
-  "
+    (defhydra hydra-yasnippet (:color blue :hint nil)
+      "
         ^YASnippets^
 -----------------------------
  Actions:
@@ -114,11 +146,11 @@ _n_ew
 _r_eload all
 
 "
-  ("i" yas-insert-snippet)
-  ("v" yas-visit-snippet-file :color blue)
-  ("n" yas-new-snippet)
-  ("r" yas-reload-all)
-  ("q" nil "cancel" :color blue))
+      ("i" yas-insert-snippet)
+      ("v" yas-visit-snippet-file :color blue)
+      ("n" yas-new-snippet)
+      ("r" yas-reload-all)
+      ("q" nil "cancel" :color blue))
     ;;; Hydra Yasnippet END
 
 
@@ -187,5 +219,29 @@ _r_eload all
     (define-key Buffer-menu-mode-map "." 'hydra-buffer-menu/body)
     ;;; Hydra menu buffer END
 
-))
+    
+    (defhydra hydra-macro (:color amaranth :hint nil)
+      "
+ ^Basic^
+-^-----^--------------------------------------
+ _j_: Create new macro
+ _k_: End creation of new macro
+ _e_: Execute last macro
+ _n_: Insert Counter
+ _h_: Show last macro as elisp
+
+"
+
+      ("j" kmacro-start-macro :color blue)
+      ("k" kmacro-end-macro :colocr blue)
+      ("e" kmacro-end-or-call-macro-repeat)
+      ("n" kmacro-insert-counter)
+      ("h" elmacro-show-last-macro :color blue)
+            
+      ("q" nil "quit" :color blue))
+
+   ))
+;; use-package END
+
+
 (provide 'init-hydra)

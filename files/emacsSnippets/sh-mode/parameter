@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: Parameters
+# key: parameters
+# --
+if [ $# -ne 0 ]; then
+   # \$0 = name of program
+   # \$1 = first parameter
+   # \$2 = second parameter
+   # ...
+   echo
+fi

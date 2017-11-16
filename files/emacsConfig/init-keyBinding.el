@@ -168,6 +168,7 @@
 ;; (global-set-key (kbd "C-b"))
 (global-set-key (kbd "C-n") 'xah-new-empty-buffer)
 ;; (global-set-key (kbd "C-m")) ;; in emacs C-m is the same as RET
+(global-set-key (kbd "<C-tab>") 'other-window)
 
 ;;;; Set every single key chord: start with M-
 ;; (global-set-key (kbd "M-q"))

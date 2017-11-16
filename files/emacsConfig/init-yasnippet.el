@@ -21,8 +21,8 @@
     (define-key yas-minor-mode-map (kbd "TAB") nil)
 
     ;; Create new key binding
-    (define-key yas-minor-mode-map (kbd "<C-tab>") 'yas-expand)
-    (define-key yas-minor-mode-map (kbd "C-v s") 'yas-insert-snippet)
+    ;; (define-key yas-minor-mode-map (kbd "<C-tab>") 'yas-expand)
+    ;; (define-key yas-minor-mode-map (kbd "C-v s") 'yas-insert-snippet)
 
     ;; Enable yasnippet mode globally
     (yas-global-mode)

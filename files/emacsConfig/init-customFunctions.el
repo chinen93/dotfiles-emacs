@@ -2,17 +2,20 @@
 ;; Custom Functions
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; defun my-load-hydra-helm-windows BEGIN
+;;=========================================================
+;; defun my-load-hydra-helm-windows
+;;=========================================================
 (defun my-load-hydra-helm-windows ()
   "Load hydra and helm configurations properly on Windows"
   (interactive)
 
   (load-file "~/emacsConfig/init-hydra.el")
   (load-file "~/emacsConfig/init-helm.el"))
-;; defun my-load-hydra-helm-windows END
 
 
-;; defun my-trim-right BEGIN
+;;=========================================================
+;; defun my-trim-right
+;;=========================================================
 (defun my-trim-right ()
   "Remove all the whitespaces right to the last char"
   (interactive)
@@ -32,14 +35,15 @@
   ;; go to previous line and go to the end of it
   (previous-line)
   (end-of-line))
-;; defun my-trim-right END
 
 
 ;; ===================================================================
 ;; Functions from Internet
 ;; ===================================================================
 
-;; defun xah-cut-line-or-region BEGIN
+;;=========================================================
+;; defun xah-cut-line-or-region
+;;=========================================================
 (defun xah-cut-line-or-region ()
   "Cut current line, or text selection.
    When `universal-argument' is called first,
@@ -97,10 +101,11 @@
 
          ;; end of line
          (line-end-position))))))
-;; defun xah-cut-line-or-region END
 
 
-;; defun xah-new-empty-buffer BEGIN
+;;=========================================================
+;; defun xah-new-empty-buffer
+;;=========================================================
 ;; URL: http://ergoemacs.org/emacs/emacs_new_empty_buffer.html
 (defun xah-new-empty-buffer ()
   "Open a new empty buffer."
@@ -127,10 +132,11 @@
 
     ;; set variable buffer-other-save 't'
     (setq buffer-other-save t)))
-;; defun xah-new-empty-buffer END
 
 
-;; defun xah-forward-block BEGIN
+;;=========================================================
+;; defun xah-forward-block
+;;=========================================================
 ;; URL: http://ergoemacs.org/emacs/emacs_move_by_paragraph.html
 (defun xah-forward-block (&optional my-n)
   "Move cursor forward to the beginning of the next text block.
@@ -171,10 +177,11 @@
 
      ;; repeat my-n times for successive occurrences
      my-n)))
-;; defun xah-forward-block END
                     
 
-;; defun xah-backward-block BEGIN
+;;=========================================================
+;; defun xah-backward-block
+;;=========================================================
 ;; URL: http://ergoemacs.org/emacs/emacs_move_by_paragraph.html
 (defun xah-backward-block (&optional my-n)
   "Move cursor backward to previous text block.
@@ -228,10 +235,11 @@ See: `xah-forward-block'"
 
       ;; add 1 to my-i
       (setq my-i (1+ my-i)))))
-;; defun xah-backward-block END
 
 
-;; defun endless-fill-or-unfill END
+;;=========================================================
+;; defun endless-fill-or-unfill
+;;=========================================================
 ;; URL: http://endlessparentheses.com/fill-and-unfill-paragraphs-with-a-single-key.html?source=rss
 (defun endless-fill-or-unfill ()
   "Like `fill-paragraph', but unfill if used twice."
@@ -249,6 +257,59 @@ See: `xah-forward-block'"
 	   fill-column)))
     ;; Call fill-paragraph, because it uses fill-column
     (call-interactively #'fill-paragraph)))
-;; defun endless-fill-or-unfill END
+
+;;=========================================================
+;; defun xah-open-in-external-app
+;;=========================================================
+(defun xah-open-in-external-app ()
+  "Open the current file or dired marked files in external app.
+The app is chosen from your OS's preference.
+URL `http://ergoemacs.org/emacs/emacs_dired_open_file_in_ext_apps.html'
+Version 2016-10-15"
+  (interactive)
+  (let* (($file-list
+          (if (string-equal major-mode "dired-mode")
+              (dired-get-marked-files)
+            (list (buffer-file-name))))
+         ($do-it-p (if (<= (length $file-list) 5)
+                       t
+                     (y-or-n-p "Open more than 5 files? "))))
+    (when $do-it-p
+      (cond
+       ((string-equal system-type "windows-nt")
+        (mapc
+         (lambda ($fpath)
+           (w32-shell-execute "open" (replace-regexp-in-string "/" "\\" $fpath t t))) $file-list))
+       ((string-equal system-type "darwin")
+        (mapc
+         (lambda ($fpath)
+           (shell-command
+            (concat "open " (shell-quote-argument $fpath))))  $file-list))
+       ((string-equal system-type "gnu/linux")
+        (mapc
+         (lambda ($fpath) (let ((process-connection-type nil))
+                            (start-process "" nil "xdg-open" $fpath))) $file-list))))))
+
+
+
+;;=========================================================
+;; defun xah-open-in-terminal
+;;=========================================================
+(defun xah-open-in-terminal ()
+  "Open the current dir in a new terminal window.
+URL `http://ergoemacs.org/emacs/emacs_dired_open_file_in_ext_apps.html'
+Version 2015-12-10"
+  (interactive)
+  (cond
+   ((string-equal system-type "windows-nt")
+    (message "Microsoft Windows not supported. File a bug report or pull request."))
+   ((string-equal system-type "darwin")
+    (message "Mac not supported. File a bug report or pull request."))
+   ((string-equal system-type "gnu/linux")
+    (let ((process-connection-type nil))
+      (start-process "" nil "x-terminal-emulator"
+                     (concat "--working-directory=" default-directory) )))))
+
+
 
 (provide 'init-customFunctions)

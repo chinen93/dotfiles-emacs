@@ -11,22 +11,17 @@
 ;; Provide refile targets as paths. Level3 headlin = level1/level2/leve3
 (setq org-refile-use-outline-path 'file)
 
+;; Place tags directly after headline text, with only one space in between
+(setq org-tags-column 0)
+
 ;; Load paths to refile in a single go
 (setq org-outline-path-complete-in-steps nil)
 
 ;; Support to languages in #-begin_src #end_src code
 (org-babel-do-load-languages
  'org-babel-load-languages
- '(
-   (sh . t)
+ '((sh . t)
    (python . t)
-   (R . t)
-   (ruby . t)
-   (ditaa . t)
-   (dot . t)
-   (octave . t)
-   (sqlite . t)
-   (perl . t)
    (latex . t)))
 
 ;; Templates for source blocks 
@@ -50,6 +45,10 @@
 
 ;; Record a note when TODO item is DONE
 (setq org-log-done 'note)
+(setq org-log-repeat 'note)
+(add-to-list 'org-modules "org-habit")
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "WORKING(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
 
 ;; Follows links when press <ENTER> on them
 (setq org-return-follows-link t)
@@ -78,12 +77,19 @@
     ((agenda "" nil)
      (alltodo "" nil))
     nil)
+
+   ("w" "Working on tasks"
+    ((todo "WORKING" nil))
+    nil nil)
 ))
 
 ;; Agenda show next 7 days and previous 3 days
 (setq org-agenda-span 10
       org-agenda-start-on-weekday nil
       org-agenda-start-day "-3d")
+
+
+(setq org-icalendar-timezone "America/Sao_Paulo")
 
 
 ;; ===================================================================
@@ -122,7 +128,7 @@ timestamp after it."
     ;; Go to the first positon in the buffer
     (goto-char (point-min))
 
-    ;; Search for the string DATE-UPDATED: [2017-07-19 Wed])
+    ;; Search for the string DATE-UPDATED: [2017-10-16 Mon])
     (if (not (null (search-forward-regexp "DATE-UPDATED: " nil t)))
 	
 	;; Save the begin to where to delete.
@@ -227,5 +233,6 @@ timestamp after it."
 ;; Add hook to org mode
 (add-hook 'org-mode-hook 'my-org-hook-function)
 (add-hook 'org-insert-heading-hook 'org-id-get-create)
+
 
 (provide 'init-orgmode)
