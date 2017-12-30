@@ -8,7 +8,7 @@ SET gitDirectory=%USERPROFILE%\Documents\git\dotfiles-emacs\files\
 ECHO --------------------------------------------------------
 ECHO Moving Emacs Configuration Files Folder into Position
 
-COPY /Y %emacsDirectory%\init.el %gitDirectory%\emacs 
+COPY /Y %emacsDirectory%\init.el %gitDirectory%\emacsWindows 
 ECHO --------------------------------------------------------
 ECHO Moving Emacs Configuration Folder into Position
 
