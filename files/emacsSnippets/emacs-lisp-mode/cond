@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: cond
+# key: cond
+# --
+(cond
+ ('condition
+  'body)
+ (t
+  'body))

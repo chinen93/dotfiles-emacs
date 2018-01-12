@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: ert-deftest
+# key: ert-deftest
+# --
+(ert-deftest test-name ()
+  (should (equal (my-func) 'func-return)))
+

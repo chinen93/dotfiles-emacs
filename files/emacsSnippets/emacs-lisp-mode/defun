@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: defun
+# key: defun
+# --
+(defun function-name (param1 param2)
+  "Docstring for the function.
+PARAM1 is the fisrt parameter that do X.
+PARAM2 is the second parameter that do Y.
+"
+  'body)
