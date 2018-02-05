@@ -20,7 +20,7 @@
 ;; Support to languages in #-begin_src #end_src code
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((sh . t)
+ '((shell . t)
    (python . t)
    (latex . t)))
 
@@ -29,6 +29,9 @@
       '(("l"
 	 "#+begin_src emacs-lisp\n?\n#+end_src"
 	 "<src lang=\"emacs-lisp\">             \n?\n</src>")
+        ("s"
+	 "#+begin_src sh\n?\n#+end_src"
+	 "<src lang=\"shell\">             \n?\n</src>")
 	("t"
 	 "#+begin_src text\n?\n#+end_src"
 	 "<src lang=\"text\">\n?\n</src>")))
@@ -128,7 +131,7 @@ timestamp after it."
     ;; Go to the first positon in the buffer
     (goto-char (point-min))
 
-    ;; Search for the string DATE-UPDATED: [2017-10-16 Mon])
+    ;; Search for the string DATE-UPDATED: [2018-02-05 Mon])
     (if (not (null (search-forward-regexp "DATE-UPDATED: " nil t)))
 	
 	;; Save the begin to where to delete.
