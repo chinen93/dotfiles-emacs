@@ -18,11 +18,11 @@
 (setq org-outline-path-complete-in-steps nil)
 
 ;; Support to languages in #-begin_src #end_src code
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((shell . t)
-   (python . t)
-   (latex . t)))
+;; (org-babel-do-load-languages
+;;  'org-babel-load-languages
+;;  '((shell . t)
+;;    (python . t)
+;;    (latex . t)))
 
 ;; Templates for source blocks 
 (setq org-structure-template-alist
@@ -42,9 +42,12 @@
 ;; Set where captured notes will be stored
 (setq org-default-notes-file "~/Documents/Capture.org")
 
+;; Set dropbox folder
+(setq org-dropbox-folder "~/Dropbox")
+
 ;; Set org agenda files
-(setq org-agenda-files (list (concat my-dropbox-folder "/Organizador.org")
-			     (concat my-dropbox-folder "/Notes")))
+(setq org-agenda-files (list (concat org-dropbox-folder "/Organizador.org")
+			     (concat org-dropbox-folder "/Notes")))
 
 ;; Record a note when TODO item is DONE
 (setq org-log-done 'note)
@@ -112,11 +115,12 @@
   "Create a list of this week and todo items"
   (interactive)
 
-  ;; Get the Agenda indexed by 'b'
-  (org-agenda nil "b")
+  ;; Get the Agenda indexed by 'n'
+  (org-agenda nil "n")
 
   ;; Remove other windows so this is the only one visible
-  (delete-other-windows))
+  (delete-other-windows)
+)
 ;; defun my-week-and-todo-list END
 
 
@@ -131,7 +135,7 @@ timestamp after it."
     ;; Go to the first positon in the buffer
     (goto-char (point-min))
 
-    ;; Search for the string DATE-UPDATED: [2018-02-05 Mon])
+    ;; Search for the string DATE-UPDATED: [2018-02-10 Sat])
     (if (not (null (search-forward-regexp "DATE-UPDATED: " nil t)))
 	
 	;; Save the begin to where to delete.
