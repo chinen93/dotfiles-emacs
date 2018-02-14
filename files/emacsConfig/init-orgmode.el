@@ -115,12 +115,14 @@
   "Create a list of this week and todo items"
   (interactive)
 
+  ;; Add a theme.
+  (load-theme 'tango)
+
   ;; Get the Agenda indexed by 'n'
   (org-agenda nil "n")
 
   ;; Remove other windows so this is the only one visible
-  (delete-other-windows)
-)
+  (delete-other-windows))
 ;; defun my-week-and-todo-list END
 
 
@@ -135,7 +137,7 @@ timestamp after it."
     ;; Go to the first positon in the buffer
     (goto-char (point-min))
 
-    ;; Search for the string DATE-UPDATED: [2018-02-10 Sat])
+    ;; Search for the string DATE-UPDATED: [2018-02-14 Wed])
     (if (not (null (search-forward-regexp "DATE-UPDATED: " nil t)))
 	
 	;; Save the begin to where to delete.
