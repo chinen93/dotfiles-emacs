@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: quote
+# key: quote
+# --
+> ${0:quote}

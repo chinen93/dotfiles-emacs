@@ -81,6 +81,7 @@
 (require 'init-hydra)
 (require 'init-keyfreq)
 (require 'init-macro)
+(require 'init-markdown)
 (require 'init-multipleCursor)
 (require 'init-nov)
 (require 'init-nyanCat)
