@@ -197,5 +197,6 @@
 ;; (global-set-key (kbd "M-b"))
 ;; (global-set-key (kbd "M-n"))
 ;; (global-set-key (kbd "M-m"))
+(global-set-key (kbd "M-0") 'undo)
 
 (provide 'init-keyBinding)
