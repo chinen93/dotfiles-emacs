@@ -93,14 +93,16 @@
 
  _s_: Sort lines           _i_: Word of The day
  _p_: Trim right           _g_: Google This
- _r_: Reload dot emacs     _h_: Google Translate This
- _t_: Truncate lines       _d_: Define Word  
+ _P_: Trim all whitespace  _h_: Google Translate This
+ _r_: Reload dot emacs     _d_: Define Word   
+ _t_: Truncate lines      
  _f_: Fill paragraph
  _k_: Open file
  _l_: Open Terminal in folder
 
 "
       ("p" my-trim-right)
+      ("P" (delete-trailing-whitespace))
 
       ("r" my-reload-dot-emacs)
       ("s" sort-lines)
