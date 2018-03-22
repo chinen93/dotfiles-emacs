@@ -1,63 +1,14 @@
 ;;===================================================================
-;;    Install Packages
+;; Initial Configuration for EM
 ;;====================================================================
-(setq my-package-list '(use-package
-			org))
-			
-(require 'package)
-(package-initialize)
-
-(setq package-archives
-	'(("melpa-stable" . "https://stable.melpa.org/packages/")
-	  ("melpa" . "https://melpa.org/packages/")
-	  ("org" . "http://orgmode.org/elpa/")
-	  ("gnu" . "http://elpa.gnu.org/packages/")
-	  ("marmalade" . "http://marmalade-repo.org/packages/")))
-	  
-(defun my-install-packages ()
-  (interactive)
-  (unless package-archive-contents
-    (package-refresh-contents))
-  (package-initialize)
-  ;; install
-  (dolist(i-package my-package-list)
-    (unless (package-installed-p i-package)
-      (package-install i-package))))
-
-(package-initialize nil)
-(setq package-enable-at-startup nil)
-
-(my-install-packages)
-
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
-(require 'use-package)
-(setq use-package-verbose t)
-(setq load-prefer-newer t)
-
-(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
-(setq delete-old-versions -1)
-(setq version-control t)
-(setq vc-make-backup-files t)
-(setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
-
-
-(defun my-reload-dot-emacs ()
-    "Save the .emacs buffer if needed, then reaload .emacs."
-    (interactive)
-    (let ((dot-emacs "~/.emacs"))
-      (and (get-file-buffer dot-emacs)
-           (save-buffer (get-file-buffer dot-emacs)))
-      (load-file dot-emacs))
-    (message "Re-initialized!"))
-
-(add-to-list 'auto-mode-alist '(".emacs" . lisp-mode))
-(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
 (setq load-path (cons (expand-file-name "~/emacsConfig")
 		      load-path ))
 
 (message " Inicialização das Configurações ")
+
+;; (package-initialize)
+(require 'init-setup-package)
 
 (message "Basic Configurations")
 (require 'init-backup)
