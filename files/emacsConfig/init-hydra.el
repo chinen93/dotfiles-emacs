@@ -5,88 +5,82 @@
 ;; DATE_UPDATE: 2016-07-13
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(use-package hydra
-  :ensure t
-  :config
-  (progn
-
-    (require 'init-customFunctions)
-    (require 'init-fun)
+(require-package 'hydra)
 
     ;;; Hydra Zoom BEGIN
-    (defhydra hydra-zoom (:color pink)
-      "
+(defhydra hydra-zoom (:color pink)
+  "
  ^Zoom^
 -^----^-----------------------------------------------------
 "
-      ("=" text-scale-increase nil)
-      ("+" text-scale-increase "in")
-      ("-" text-scale-decrease "out")
-      ("0" (text-scale-set 0) "remove")
+  ("=" text-scale-increase nil)
+  ("+" text-scale-increase "in")
+  ("-" text-scale-decrease "out")
+  ("0" (text-scale-set 0) "remove")
 
-      ("q" nil "quit" :color blue)
-      ("l" hydra-launcher/body "return" :color blue))
+  ("q" nil "quit" :color blue)
+  ("l" hydra-launcher/body "return" :color blue))
     ;;; Hydra Zoom END
 
 
     ;;; Hydra launcher BEGIN
-    (defhydra hydra-launcher (:color amaranth
-                                     :hint nil)
-      "
+(defhydra hydra-launcher (:color amaranth :hint nil)
+  "
  ^Functions^          ^Window^            ^Other Menus^   ^Org^         ^Help^
 -^---------^----------^------^------------^-----------^---^---^---------^----^-------
  _w_: whitespace      _0_: delete window  _z_: zoom       _m_: Agenda   _6_: function
  _f_: functions menu  _1_: only 1 window  _b_: buffer     _c_: Capture  _7_: variable
- ^ ^                  _2_: divide horiz   _v_: bookmarks  ^ ^           _8_: mode
+ _V_: bookmark set    _2_: divide horiz   _v_: bookmarks  ^ ^           _8_: mode
  ^ ^                  _3_: divide vertc   _g_: magit      ^ ^           _9_: view lossage
  ^ ^                  _4_: other window   _y_: YASnippet  ^ ^           _0_: view Messages
  ^ ^                  ^ ^                 _(_: macro
 "
-      ;; commands to exec in actual buffer
-      ("f" hydra-functions/body :color blue)
-      ("w" whitespace-mode)
+  ;; commands to exec in actual buffer
+  ("f" hydra-functions/body :color blue)
+  ("w" whitespace-mode)
+  ("V" bookmark-set :color blue)
 
-      ;; commands to exit hydra-launcher
-      ("0" delete-window :color blue)
-      ("1" delete-other-windows :color blue)
-      ("2" split-window-below :color blue)
-      ("3" split-window-right :color blue)
-      ("4" other-window)
+  ;; commands to exit hydra-launcher
+  ("0" delete-window :color blue)
+  ("1" delete-other-windows :color blue)
+  ("2" split-window-below :color blue)
+  ("3" split-window-right :color blue)
+  ("4" other-window)
 
-      ("c" org-capture :color blue)
-      ("m" org-agenda :color blue)
+  ("c" org-capture :color blue)
+  ("m" org-agenda :color blue)
 
-      ("(" hydra-macro/body :color blue)
-      ("b" buffer-menu :color blue)
-      ("g" magit-status :color blue)
-      ("v" helm-bookmarks :color blue)
-      ("y" hydra-yasnippet/body :color blue)
-      ("z" hydra-zoom/body :color blue)
+  ("(" hydra-macro/body :color blue)
+  ("b" buffer-menu :color blue)
+  ("g" magit-status :color blue)
+  ("v" helm-bookmarks :color blue)
+  ("y" hydra-yasnippet/body :color blue)
+  ("z" hydra-zoom/body :color blue)
 
-      ("0" view-echo-area-messages :color blue)
-      ("6" describe-function :color blue)
-      ("7" describe-variable :color blue)
-      ("8" describe-mode :color blue)
-      ("9" view-lossage :color blue)
+  ("0" view-echo-area-messages :color blue)
+  ("6" describe-function :color blue)
+  ("7" describe-variable :color blue)
+  ("8" describe-mode :color blue)
+  ("9" view-lossage :color blue)
 
-      ;; move around text
-      ("<right>" forward-char)
-      ("<left>" backward-char)
-      ("<down>" next-line)
-      ("<up>" previous-line)
-      ("C-<SPC>" set-mark-command)
-      ("<home>" move-beginning-of-line)
-      ("<end>" move-end-of-line)
-      ("<RET>" nil :color blue)
-      ("<ESC>" nil :color blue)
+  ;; move around text
+  ("<right>" forward-char)
+  ("<left>" backward-char)
+  ("<down>" next-line)
+  ("<up>" previous-line)
+  ("C-<SPC>" set-mark-command)
+  ("<home>" move-beginning-of-line)
+  ("<end>" move-end-of-line)
+  ("<RET>" nil :color blue)
+  ("<ESC>" nil :color blue)
 
-      ("q" nil "cancel" :color blue))
-    (global-set-key (kbd "M-q") 'hydra-launcher/body)
+  ("q" nil "cancel" :color blue))
+(global-set-key (kbd "M-q") 'hydra-launcher/body)
     ;;; Hydra launcher END
 
     ;;; Hydra Yasnippet BEGIN
-    (defhydra hydra-functions (:color amaranth :hint nil)
-      "
+(defhydra hydra-functions (:color amaranth :hint nil)
+  "
         ^Useful Functions^
 -^--------^----------------^--------^--------------------------
  ^Actions:^                ^Internet^
@@ -100,42 +94,38 @@
  _l_: Open Terminal in folder
 
 "
-      ("p" my-trim-right)
+  ("p" my-trim-right)
 
-      ("r" my-reload-dot-emacs)
-      ("s" sort-lines)
-      ("t" toggle-truncate-lines)
-      ("f" endless-fill-or-unfill)
-      ("k" xah-open-in-external-app :color blue)
-      ("l" xah-open-in-terminal :color blue)
-      
+  ("r" my-reload-dot-emacs)
+  ("s" sort-lines)
+  ("t" toggle-truncate-lines)
+  ("f" endless-fill-or-unfill)
+  ("k" xah-open-in-external-app :color blue)
+  ("l" xah-open-in-terminal :color blue)
+  
+  ("i" wotd-select :color blue)
+  ("g" google-this-ray :color blue)
+  ("h" google-translate-smooth-translate :color blue)
+  ("d" define-word-at-point :color blue)
 
+  ;; move around text
+  ("<right>" forward-char)
+  ("<left>" backward-char)
+  ("<down>" next-line)
+  ("<up>" previous-line)
+  ("C-<SPC>" set-mark-command)
+  ("<home>" move-beginning-of-line)
+  ("<end>" move-end-of-line)
+  ("<RET>" nil :color blue)
+  ("<ESC>" nil :color blue)
 
-      ("i" wotd-select :color blue)
-      ("g" google-this-ray :color blue)
-      ("h" google-translate-smooth-translate :color blue)
-      ("d" define-word-at-point :color blue)
-
-
-
-      ;; move around text
-      ("<right>" forward-char)
-      ("<left>" backward-char)
-      ("<down>" next-line)
-      ("<up>" previous-line)
-      ("C-<SPC>" set-mark-command)
-      ("<home>" move-beginning-of-line)
-      ("<end>" move-end-of-line)
-      ("<RET>" nil :color blue)
-      ("<ESC>" nil :color blue)
-
-      ("q" nil "cancel" :color blue))
+  ("q" nil "cancel" :color blue))
     ;;; Hydra Yasnippet END
 
 
     ;;; Hydra Yasnippet BEGIN
-    (defhydra hydra-yasnippet (:color blue :hint nil)
-      "
+(defhydra hydra-yasnippet (:color blue :hint nil)
+  "
         ^YASnippets^
 -----------------------------
  Actions:
@@ -146,18 +136,17 @@ _n_ew
 _r_eload all
 
 "
-      ("i" yas-insert-snippet)
-      ("v" yas-visit-snippet-file :color blue)
-      ("n" yas-new-snippet)
-      ("r" yas-reload-all)
-      ("q" nil "cancel" :color blue))
+  ("i" yas-insert-snippet)
+  ("v" yas-visit-snippet-file :color blue)
+  ("n" yas-new-snippet)
+  ("r" yas-reload-all)
+  ("q" nil "cancel" :color blue))
     ;;; Hydra Yasnippet END
 
 
     ;;; Hydra display BEGIN
-    (defhydra hydra-display (:color pink
-                                    :hint nil)
-      "
+(defhydra hydra-display (:color pink :hint nil)
+  "
  ^Window^            ^Frame^
 -^------^------------^-----^---------
  _o_: other          _M-o_: other
@@ -167,26 +156,25 @@ _r_eload all
  _0_: delete this
 
 "
-      ;; window
-      ("1" delete-other-windows)
-      ("2" split-window-below)
-      ("3" split-window-right)
-      ("o" other-window)
-      ("0" delete-window)
+  ;; window
+  ("1" delete-other-windows)
+  ("2" split-window-below)
+  ("3" split-window-right)
+  ("o" other-window)
+  ("0" delete-window)
 
-      ;; frame
-      ("M-n" make-frame)
-      ("M-o" other-frame)
+  ;; frame
+  ("M-n" make-frame)
+  ("M-o" other-frame)
 
-      ("q" nil "quit" :color blue)
-      ("l" hydra-launcher/body "return" :color blue))
+  ("q" nil "quit" :color blue)
+  ("l" hydra-launcher/body "return" :color blue))
     ;;; Hydra display END
 
 
     ;;; Hydra menu buffer BEGIN
-    (defhydra hydra-buffer-menu (:color pink
-                                        :hint nil)
-      "
+(defhydra hydra-buffer-menu (:color pink :hint nil)
+  "
  ^Mark^             ^Unmark^           ^Actions^          ^Search^
 -^----^-------------^------^-----------^-------^----------^------^---------
  _m_: mark          _u_: unmark        _x_: execute       _R_: re-isearch
@@ -196,32 +184,32 @@ _r_eload all
  _~_: modified
  
 "
-      ("m" Buffer-menu-mark)
-      ("u" Buffer-menu-unmark)
-      ("U" Buffer-menu-backup-unmark)
-      ("d" Buffer-menu-delete)
-      ("D" Buffer-menu-delete-backwards)
-      ("s" Buffer-menu-save)
-      ("~" Buffer-menu-not-modified)
-      ("x" Buffer-menu-execute)
-      ("b" Buffer-menu-bury)
-      ("T" Buffer-menu-toggle-files-only)
-      ("O" Buffer-menu-multi-occur :color blue)
-      ("I" Buffer-menu-isearch-buffers :color blue)
-      ("R" Buffer-menu-isearch-buffers-regexp :color blue)
-      ("v" Buffer-menu-select "select" :color blue)
-      ("o" Buffer-menu-other-window "other-window" :color blue)
+  ("m" Buffer-menu-mark)
+  ("u" Buffer-menu-unmark)
+  ("U" Buffer-menu-backup-unmark)
+  ("d" Buffer-menu-delete)
+  ("D" Buffer-menu-delete-backwards)
+  ("s" Buffer-menu-save)
+  ("~" Buffer-menu-not-modified)
+  ("x" Buffer-menu-execute)
+  ("b" Buffer-menu-bury)
+  ("T" Buffer-menu-toggle-files-only)
+  ("O" Buffer-menu-multi-occur :color blue)
+  ("I" Buffer-menu-isearch-buffers :color blue)
+  ("R" Buffer-menu-isearch-buffers-regexp :color blue)
+  ("v" Buffer-menu-select "select" :color blue)
+  ("o" Buffer-menu-other-window "other-window" :color blue)
 
-      ("g" revert-buffer)
+  ("g" revert-buffer)
 
-      ("c" nil "cancel")
-      ("q" quit-window "quit" :color blue))
-    (define-key Buffer-menu-mode-map "." 'hydra-buffer-menu/body)
+  ("c" nil "cancel")
+  ("q" quit-window "quit" :color blue))
+(define-key Buffer-menu-mode-map "." 'hydra-buffer-menu/body)
     ;;; Hydra menu buffer END
 
-    
-    (defhydra hydra-macro (:color amaranth :hint nil)
-      "
+
+(defhydra hydra-macro (:color amaranth :hint nil)
+  "
  ^Basic^
 -^-----^--------------------------------------
  _j_: Create new macro
@@ -232,15 +220,13 @@ _r_eload all
 
 "
 
-      ("j" kmacro-start-macro :color blue)
-      ("k" kmacro-end-macro :colocr blue)
-      ("e" kmacro-end-or-call-macro-repeat)
-      ("n" kmacro-insert-counter)
-      ("h" elmacro-show-last-macro :color blue)
-            
-      ("q" nil "quit" :color blue))
-
-   ))
+  ("j" kmacro-start-macro :color blue)
+  ("k" kmacro-end-macro :colocr blue)
+  ("e" kmacro-end-or-call-macro-repeat)
+  ("n" kmacro-insert-counter)
+  ("h" elmacro-show-last-macro :color blue)
+  
+  ("q" nil "quit" :color blue))
 ;; use-package END
 
 
