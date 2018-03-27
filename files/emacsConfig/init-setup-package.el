@@ -19,42 +19,37 @@
              (garbage-collect)) 
           t)
 
-(defvar my-package-list '(use-package
-                          org))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Purcell's way to install packages on emacs
+;; https://github.com/purcell/emacs.d/blob/a8481a2179ba2c38e51c28504a04713dd33b1fa2/lisp/init-elpa.el#L48
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun require-package (package &optional min-version no-refresh)
+  "Install given PACKAGE, optionally requiring MIN-VERSION.
+If NO-REFRESH is non-nil, the available package lists will not be
+re-downloaded in order to locate PACKAGE."
+  (if (package-installed-p package min-version)
+      t
+    (if (or (assoc package package-archive-contents) no-refresh)
+        (if (boundp 'package-selected-packages)
+            ;; Record this as a package the user installed explicitly
+            (package-install package nil)
+          (package-install package))
+      (progn
+        (package-refresh-contents)
+        (require-package package min-version t)))))
 
-(setq package-archives
-      '(("melpa-stable" . "https://stable.melpa.org/packages/")
-	("melpa" . "https://melpa.org/packages/")
-	("org" . "http://orgmode.org/elpa/")
-	("gnu" . "http://elpa.gnu.org/packages/")
-	("marmalade" . "http://marmalade-repo.org/packages/")))
+;; If not in windows require these configs
+(unless (eq system-type 'windows-nt)
 
-(defun my-install-packages ()
-  (interactive)
-  (unless package-archive-contents
-    (package-refresh-contents))
-  (package-initialize)
-  ;; install
-  (dolist(i-package my-package-list)
-    (unless (package-installed-p i-package)
-      (package-install i-package))))
+  (setq package-archives
+	'(("melpa-stable" . "https://stable.melpa.org/packages/")
+	  ("melpa" . "https://melpa.org/packages/")
+	  ("org" . "http://orgmode.org/elpa/")
+	  ("gnu" . "http://elpa.gnu.org/packages/")
+	  ("marmalade" . "http://marmalade-repo.org/packages/")))
 
-(my-install-packages)
-
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
-
-(require 'use-package)
-(setq use-package-verbose t)
-(setq load-prefer-newer t)
-
-(defun my-reload-dot-emacs ()
-  "Save the .emacs buffer if needed, then reaload .emacs."
-  (interactive)
-  (let ((dot-emacs "~/.emacs"))
-    (and (get-file-buffer dot-emacs)
-	 (save-buffer (get-file-buffer dot-emacs)))
-    (load-file dot-emacs))
-  (message "Re-initialized!"))
+  (require-package 'use-package)
+  (setq use-package-verbose t)
+  (setq load-prefer-newer t))
 
 (provide 'init-setup-package)
