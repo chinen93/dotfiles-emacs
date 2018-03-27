@@ -13,12 +13,12 @@
 (add-hook 'prog-mode-hook 'infer-indentation-style)
 
 
-(use-package haskell-mode
-  :ensure t
-  :config
-  (progn
-    (message "Haskell mode - Loaded")
-    ))
+;; (use-package haskell-mode
+;;   :ensure t
+;;   :config
+;;   (progn
+;;     (message "Haskell mode - Loaded")
+;;     ))
 
 
 (provide 'init-programming)
