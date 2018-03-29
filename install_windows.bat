@@ -9,7 +9,7 @@ IF EXIST %emacsDirectory%\init.el (
    DEL %emacsDirectory%\init.el
 )
 
-COPY /Y %gitDirectory%\emacsWindows %emacsDirectory%\init.el
+COPY /Y %gitDirectory%\emacs %emacsDirectory%\init.el
 ECHO --------------------------------------------------------
 ECHO Moving Emacs Configuration Folder into Position
 IF EXIST %APPDATA%\emacsConfig (
