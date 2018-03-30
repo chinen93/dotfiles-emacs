@@ -53,7 +53,7 @@
   ("(" hydra-macro/body :color blue)
   ("b" buffer-menu :color blue)
   ("g" magit-status :color blue)
-  ("v" helm-bookmarks :color blue)
+  ("v" bookmark-bmenu-list :color blue)
   ("y" hydra-yasnippet/body :color blue)
   ("z" hydra-zoom/body :color blue)
 
