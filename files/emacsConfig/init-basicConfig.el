@@ -63,11 +63,7 @@
 	(concat (substring (shell-command-to-string "ECHO %USERPROFILE%") 
 			   0 
 			   -1)
-		"\\Dropbox"))
-
-  ;; Add function on Scratch buffer to load hydra and helm configurations
-  (setq initial-scratch-message 
-	(concat initial-scratch-message "\n (my-load-hydra-helm-windows)")))
+		"\\Dropbox")))
 
 ;; Confirm Emacs before exiting
 (setq confirm-kill-emacs 'yes-or-no-p)
