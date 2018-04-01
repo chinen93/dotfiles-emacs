@@ -57,7 +57,7 @@
 	      (exec-path-from-shell-initialize))))
 
 ;; Config for Windows Only
-(unless (not (eq system-type 'windows-nt))
+(when (eq system-type 'windows-nt)
   ;; Dropbox is in another folder
   (setq my-dropbox-folder 
 	(concat (substring (shell-command-to-string "ECHO %USERPROFILE%") 
