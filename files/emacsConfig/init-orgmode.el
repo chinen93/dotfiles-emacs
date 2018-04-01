@@ -45,6 +45,10 @@
 ;; Set dropbox folder
 (setq org-dropbox-folder "~/Dropbox")
 
+;; Only set this org variable if there no other variable for the dropbox folder
+(unless (null my-dropbox-folder)
+  (setq org-dropbox-folder my-dropbox-folder))  
+
 ;; Set org agenda files
 (setq org-agenda-files (list (concat org-dropbox-folder "/Organizador.org")
 			     (concat org-dropbox-folder "/Notes")))
