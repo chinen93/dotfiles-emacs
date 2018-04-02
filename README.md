@@ -38,6 +38,12 @@ All the configurations files are stored here. They have this format
 **init-*PACKAGE*.el** where *PACKAGE* is the mode or package the
 configurations is about.
 
+Most of the packages are installed and configurated by
+[use-package](https://github.com/jwiegley/use-package). The ones that
+aren't are buildins inside emacs. Those are the ones used when
+configurating the Windows environment because I don't know how to
+install packages on Windows.
+
 ## files/emacsSnippets/
 
 Snippets for [Yasnippet](https://joaotavora.github.io/yasnippet/) are
@@ -46,9 +52,6 @@ without them first so I could really get only the ones I needed.
 
 ## files/emacs
 
-In this file I initialize the **package-archives** to know where to
-get packages from. After that I install
-[use-package](https://github.com/jwiegley/use-package) if it isn't
-installed yet so the other configuration files can use it. And finally
-I require all my configuration files.
-
+This file is only for loading my others configurations files. It is
+the first file that emacs opens. And the default file when
+configurations are made using the **customize** functions.

@@ -57,17 +57,13 @@
 	      (exec-path-from-shell-initialize))))
 
 ;; Config for Windows Only
-(unless (not (eq system-type 'windows-nt))
+(when (eq system-type 'windows-nt)
   ;; Dropbox is in another folder
   (setq my-dropbox-folder 
 	(concat (substring (shell-command-to-string "ECHO %USERPROFILE%") 
 			   0 
 			   -1)
-		"\\Dropbox"))
-
-  ;; Add function on Scratch buffer to load hydra and helm configurations
-  (setq initial-scratch-message 
-	(concat initial-scratch-message "\n (my-load-hydra-helm-windows)")))
+		"\\Dropbox")))
 
 ;; Confirm Emacs before exiting
 (setq confirm-kill-emacs 'yes-or-no-p)
