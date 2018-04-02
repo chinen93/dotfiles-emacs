@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: calendar
+# key: calendar
+# --
+| HORARIO | Dom | Seg | Ter | Qua | Qui | Sex | Sab |
+|---------+-----+-----+-----+-----+-----+-----+-----|

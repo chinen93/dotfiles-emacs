@@ -60,18 +60,19 @@
 (defhydra hydra-functions (:color amaranth :hint nil)
   "
         ^Useful Functions^
--^--------^----------------
- ^Actions:^                
+-^--------^------------------------------------------------
+ ^Actions:^
 
- _s_: Sort lines           
- _p_: Trim right           
- _t_: Truncate lines       
+ _s_: Sort lines                _P_: Trim all whitespace
+ _p_: Trim right
+ _t_: Truncate lines
  _f_: Fill paragraph
  _k_: Open file
  _l_: Open Terminal in folder
 
 "
   ("p" my-trim-right)
+  ("P" (delete-trailing-whitespace))
 
   ("s" sort-lines)
   ("t" toggle-truncate-lines)
@@ -129,7 +130,7 @@ _r_eload all
   ("k" kmacro-end-macro :colocr blue)
   ("e" kmacro-end-or-call-macro-repeat)
   ("n" kmacro-insert-counter)
-  
+
   ("q" nil "quit" :color blue))
     ;;; Hydra Macro END
 
