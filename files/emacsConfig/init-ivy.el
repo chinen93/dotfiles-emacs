@@ -2,6 +2,7 @@
 ;; IVY configuration
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require-package 'ivy)
+(require-package 'counsel)
 
 (ivy-mode 1)
 ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
