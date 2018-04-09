@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: init-file
+# key: init
+# --
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; ${1:TESTE} Package
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package ${2:PACKAGE-NAME}
+  :ensure t
+  :config
+  (progn
+    ;; configs here
+    $0
+    (message "$1 - Loaded"))
+
+(provide 'init-$2)
