@@ -12,6 +12,6 @@
   (progn
     ;; configs here
     $0
-    (message "$1 - Loaded"))
+    (message "$1 - Loaded")))
 
 (provide 'init-$2)
