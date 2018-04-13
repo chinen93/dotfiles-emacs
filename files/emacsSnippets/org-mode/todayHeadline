@@ -2,5 +2,7 @@
 # name: today headline
 # key: todayhead
 # --
-* `(format-time-string "%Y-%m-%d")`
+* Conversa: `(format-time-string "%Y-%m-%d")`
+
+  <`(format-time-string "%Y-%m-%d %a")`>
 $0
