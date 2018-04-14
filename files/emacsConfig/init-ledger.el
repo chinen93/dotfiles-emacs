@@ -20,9 +20,10 @@
             (ledger-mode-clean-buffer)
             (line-move (- curr-line 1)))))
 
-    (add-hook 'before-save-hook 'aw/clean-ledger-on-save)
-    
-    (eval-after-load 'ledger-mode
-      (define-key ledger-mode-map (kbd "M-q") nil))))
+    (add-hook 'before-save-hook 'aw/clean-ledger-on-save)))
 
-(provide 'init-ledger-mode)
+(eval-after-load 'ledger-mode
+  (define-key ledger-mode-map (kbd "M-q") nil))
+
+
+(provide 'init-ledger)

@@ -41,6 +41,7 @@
   (require 'init-helmSwoop)
   (require 'init-hooks)
   (require 'init-keyfreq)
+  (require 'init-ledger)	
   (require 'init-macro)
   (require 'init-magit)
   (require 'init-markdown)
