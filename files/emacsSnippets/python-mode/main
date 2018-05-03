@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: main
+# key: main
+# --
+if __name__ == "__main__":
+    main()
+else:
+    raise "This script should be called as a single program"
