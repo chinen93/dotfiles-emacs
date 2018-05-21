@@ -20,7 +20,19 @@ import unittest
 #
 
 class unitTestClass(unittest.TestCase):
+
+    def setUp(self):
+        """Set up things for every test"""
+	pass
+    # setUp()
+
+
+    def tearDown(self):
+        """Tear Down things for every test"""
+        pass
+    # tearDown()
     
+
     def testShouldDoSomething(self):
         """Should do Something"""
 	pass
