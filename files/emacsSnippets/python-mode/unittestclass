@@ -1,0 +1,29 @@
+# -*- mode: snippet -*-
+# name: unittestclass
+# key: unittestclass
+# --
+#
+# IMPORTS
+#
+import sys
+sys.path.append('../src/')
+
+import unittest
+
+#
+# CONSTANTS
+#
+
+
+#
+# CODE
+#
+
+class unitTestClass(unittest.TestCase):
+    
+    def testShouldDoSomething(self):
+        """Should do Something"""
+	pass
+    # testShouldDoSomething()
+    
+# unitTestClass
