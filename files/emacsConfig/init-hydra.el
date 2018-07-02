@@ -88,15 +88,15 @@
  _s_: Sort lines           _i_: Word of The day
  _p_: Trim right           _g_: Google This
  _P_: Trim all whitespace  _h_: Google Translate This
- _r_: Reload dot emacs     _d_: Define Word   
- _t_: Truncate lines      
+ _r_: Reload dot emacs     _d_: Define Word
+ _t_: Truncate lines
  _f_: Fill paragraph
  _k_: Open file
  _l_: Open Terminal in folder
 
 "
   ("p" my-trim-right)
-  ("P" (delete-trailing-whitespace))
+  ("P" (user--clean-buffer))
 
   ("r" my-reload-dot-emacs)
   ("s" sort-lines)
@@ -104,7 +104,7 @@
   ("f" endless-fill-or-unfill)
   ("k" xah-open-in-external-app :color blue)
   ("l" xah-open-in-terminal :color blue)
-  
+
   ("i" wotd-select :color blue)
   ("g" google-this-ray :color blue)
   ("h" google-translate-smooth-translate :color blue)
@@ -184,7 +184,7 @@ _r_eload all
  _d_: delete        ^ ^                _g_: refresh       _O_: multi-occur
  _D_: delete up     ^ ^                _T_: files only: % -28`Buffer-menu-files-only
  _~_: modified
- 
+
 "
   ("m" Buffer-menu-mark)
   ("u" Buffer-menu-unmark)
@@ -227,7 +227,7 @@ _r_eload all
   ("e" kmacro-end-or-call-macro-repeat)
   ("n" kmacro-insert-counter)
   ("h" elmacro-show-last-macro :color blue)
-  
+
   ("q" nil "quit" :color blue))
 ;; use-package END
 

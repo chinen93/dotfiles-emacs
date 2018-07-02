@@ -177,7 +177,7 @@
 
      ;; repeat my-n times for successive occurrences
      my-n)))
-                    
+
 
 ;;=========================================================
 ;; defun xah-backward-block
@@ -246,15 +246,15 @@ See: `xah-forward-block'"
   (interactive)
   ;; Make fill-column as big as the buffer, so it will unfill or the normal size
   (let ((fill-column
-	 ;; Simple way to make an toggle function, check if the last command was
-	 ;; this command
-	 (if (eq last-command 'endless-fill-or-unfill)
-	     ;; If true, make fill-column as big as it can be
-	     ;; remove this command from the history
-	     (progn (setq this-command nil)
-		    (point-max))
-	   ;; If not, just set fill-column as default
-	   fill-column)))
+         ;; Simple way to make an toggle function, check if the last command was
+         ;; this command
+         (if (eq last-command 'endless-fill-or-unfill)
+             ;; If true, make fill-column as big as it can be
+             ;; remove this command from the history
+             (progn (setq this-command nil)
+                    (point-max))
+           ;; If not, just set fill-column as default
+           fill-column)))
     ;; Call fill-paragraph, because it uses fill-column
     (call-interactively #'fill-paragraph)))
 
@@ -291,7 +291,6 @@ Version 2016-10-15"
                             (start-process "" nil "xdg-open" $fpath))) $file-list))))))
 
 
-
 ;;=========================================================
 ;; defun xah-open-in-terminal
 ;;=========================================================
@@ -310,6 +309,84 @@ Version 2015-12-10"
       (start-process "" nil "x-terminal-emulator"
                      (concat "--working-directory=" default-directory) )))))
 
+;;=========================================================
+;; user--skim-buffer
+;; url: https://pastebin.com/Uu072Yqj
+;;=========================================================
+(defun user--skim-buffer (lines seconds)
+  "Scrolls the buffer `lines` every `seconds`, which allows for roughly skimming over a buffer."
+  (interactive "nScroll lines: \nnEvery seconds: ")
+  (while (not (= (point) (point-max)))
+    (scroll-up-line lines)
+    (end-of-line)
+    (sit-for seconds)))
 
+;;=========================================================
+;; user--clean-buffer
+;; url: https://pastebin.com/Uu072Yqj
+;;=========================================================
+(defun user--clean-buffer () "Cleans the buffer by re-indenting, changing tabs to spaces, and removing trailing whitespace."
+  (interactive)
+
+  ;; Remove whitespace from the ends of lines
+  (delete-trailing-whitespace) 
+
+  ;; Replace more than 2 newlines with 2 newlines
+  (save-excursion 
+    (replace-regexp "^\n\\{3,\\}" "\n\n" nil (point-min) (point-max)))
+
+  ;; Turn tabs into spaces
+  (untabify (point-min) (point-max))) 
+
+;;=========================================================
+;; user--make-temp-file
+;; url: https://pastebin.com/Uu072Yqj
+;;=========================================================
+(defun user--make-temp-file (name)
+  "Creates a temporary file in the system temp directory, for various purposes."
+  (interactive "sFile name:")
+  (generate-new-buffer name)
+  (switch-to-buffer name)
+  (write-file (concat temporary-file-directory name)))
+
+
+;;=========================================================
+;;
+;; url: https://github.com/lunaryorn/old-emacs-configuration/blob/master/lisp/lunaryorn-files.el
+;;=========================================================
+(defun lunaryorn-delete-file-and-buffer ()
+  "Delete the current file and kill the buffer."
+  (interactive)
+  (let ((filename (buffer-file-name)))
+    (cond
+     ((not filename) (kill-buffer))
+     ((vc-backend filename) (vc-delete-file filename))
+     (t
+      (delete-file filename)
+      (kill-buffer)))))
+
+(defun lunaryorn-rename-file-and-buffer ()
+  "Rename the current file and buffer."
+  (interactive)
+  (let* ((filename (buffer-file-name))
+         (old-name (if filename
+                       (file-name-nondirectory filename)
+                     (buffer-name)))
+         (new-name (read-file-name "New name: " nil nil nil old-name)))
+    (cond
+     ((not (and filename (file-exists-p filename))) (rename-buffer new-name))
+     ((vc-backend filename) (vc-rename-file filename new-name))
+     (t
+      (rename-file filename new-name 'force-overwrite)
+      (set-visited-file-name new-name 'no-query 'along-with-file)))))
+
+
+(defun lunaryorn-current-file ()
+  "Gets the \"file\" of the current buffer.
+The file is the buffer's file name, or the `default-directory' in
+`dired-mode'."
+  (if (derived-mode-p 'dired-mode)
+      default-directory
+    (buffer-file-name)))
 
 (provide 'init-customFunctions)
