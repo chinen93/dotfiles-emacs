@@ -6,7 +6,7 @@
 ;; -l : use a long listing format.
 ;; -H : follow symbolic links.
 ;; --group-directories-first : directory before files.
-(setq dired-listing-switches "-Alh --group-directories-first --sort=extension")
+(setq dired-listing-switches "-alH --group-directories-first")
 
 (defun xah-dired-mode-setup ()
   "to be run as hook for `dired-mode'."
