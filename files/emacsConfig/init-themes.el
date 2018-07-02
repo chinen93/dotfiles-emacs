@@ -8,17 +8,32 @@
   :ensure t
   :config
   (progn
-    (message "Monokai Theme - Loaded")
-    (load-theme 'monokai t)
+    (message "Monokai Theme - Loaded")))
+
+(defun sakshamsharma-setTheme (themeName)
+  "Set the theme to THEMENAME."
+  (interactive "sWhat theme do you want to use? ")
+  (when (display-graphic-p)
+    (load-theme (intern themeName) t)
     (set-background-color "#121212")))
 
-(defun my-change-theme()
-  (interactive)
-  (message "Theme Changed")
-  )
+(defun sakshamsharma-setFont (fntName)
+  "Set the font to FNTNAME."
+  (interactive "sWhat font name do you want to set? ")
+  (set-face-attribute 'default nil
+                      :family fntName
+                      :height 100
+                      :weight 'normal
+                      :width 'normal))
 
-(when window-system 
-  (my-change-theme)
-  )
+(defun sakshamsharma-frameActions ()
+  "Do actions to set up appearance of frame."
+  (interactive)
+  (let ((myTheme "monokai") (myFont "DejaVu Sans Mono"))
+    ;; (disableBells)
+    (sakshamsharma-setTheme myTheme)
+    (sakshamsharma-setFont myFont)))
+
+(sakshamsharma-frameActions)
 
 (provide 'init-themes)
