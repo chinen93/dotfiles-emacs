@@ -50,8 +50,11 @@
   (setq org-dropbox-folder my-dropbox-folder))  
 
 ;; Set org agenda files
-(setq org-agenda-files (list (concat org-dropbox-folder "/Organizador.org")
-			     (concat org-dropbox-folder "/Notes")))
+(setq org-agenda-files (list (concat org-dropbox-folder "/Organizador.org")))
+
+(setq org-refile-targets
+      '((nil :maxlevel . 3)
+        (org-agenda-files :maxlevel . 3)))
 
 ;; Record a note when TODO item is DONE
 (setq org-log-done 'note)
@@ -82,15 +85,27 @@
 	      (org-agenda-show-log t)
 	      (org-agenda-window-setup 'other-window)))) 
     nil)
+
    ;; Custom agenda that show all the TODO tasks
    ("n" "Agenda and all TODO's"
-    ((agenda "" nil)
+    ((agenda "" 
+             ((org-agenda-span 16)
+              (org-agenda-start-day "-2d")))
      (alltodo "" nil))
     nil)
 
+   ;; Custom agenda to show working todo
    ("w" "Working on tasks"
     ((todo "WORKING" nil))
     nil nil)
+
+   ;; Custom agenda to show agenda and todo for every note
+   ("l" "Agenda and all TODO's"
+    ((agenda "" 
+             ((org-agenda-files '("~/Dropbox/Organizador.org" "~/Dropbox/Notes"))))
+     (alltodo "" 
+             ((org-agenda-files '("~/Dropbox/Organizador.org" "~/Dropbox/Notes")))))
+    nil)
 ))
 
 ;; Agenda show next 7 days and previous 3 days
@@ -120,7 +135,7 @@
   (interactive)
 
   ;; Add a theme.
-  (load-theme 'tango)
+  ;; (load-theme 'tango)
 
   ;; Get the Agenda indexed by 'n'
   (org-agenda nil "n")
@@ -141,7 +156,7 @@ timestamp after it."
     ;; Go to the first positon in the buffer
     (goto-char (point-min))
 
-    ;; Search for the string DATE-UPDATED: [2018-02-14 Wed])
+    ;; Search for the string DATE-UPDATED: [2018-07-02 Mon])
     (if (not (null (search-forward-regexp "DATE-UPDATED: " nil t)))
 	
 	;; Save the begin to where to delete.
