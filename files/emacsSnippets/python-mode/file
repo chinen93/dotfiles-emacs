@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: open file
+# key: file
+# --
+with open("filename", "r") as f:
+    ${0:pass}

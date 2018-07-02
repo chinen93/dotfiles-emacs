@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: class
+# key: class
+# --
+class Class:
+    """
+    I am a class
+    """
+    pass
+# class
