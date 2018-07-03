@@ -34,6 +34,7 @@
  ^ ^                  _3_: divide vertc   _g_: magit      ^ ^           _9_: view lossage
  ^ ^                  _4_: other window   _y_: YASnippet  ^ ^           _0_: view Messages
  ^ ^                  ^ ^                 _(_: macro
+ ^ ^                  ^ ^                 _l_: ledger
 "
   ;; commands to exec in actual buffer
   ("f" hydra-functions/body :color blue)
@@ -51,6 +52,7 @@
   ("m" org-agenda :color blue)
 
   ("(" hydra-macro/body :color blue)
+  ("l" ledger-report :color blue)
   ("b" buffer-menu :color blue)
   ("g" magit-status :color blue)
   ("v" bookmark-bmenu-list :color blue)
