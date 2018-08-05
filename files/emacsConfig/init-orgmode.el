@@ -150,29 +150,33 @@
   "Search for the string 'DATE-UPDATED' and chage the inactive 
 timestamp after it."
 
-  ;; Save excursion so the pointer isn't changed
-  (save-excursion
+  ;; Check to see if this is an Org mode file
+  (when (and (eq major-mode 'org-mode)
+             (eq buffer-read-only nil))
 
-    ;; Go to the first positon in the buffer
-    (goto-char (point-min))
+    ;; Save excursion so the pointer isn't changed
+    (save-excursion
 
-    ;; Search for the string DATE-UPDATED: [2018-07-02 Mon])
-    (if (not (null (search-forward-regexp "DATE-UPDATED: " nil t)))
-	
-	;; Save the begin to where to delete.
-	(let ((begin (point)))
+      ;; Go to the first positon in the buffer
+      (goto-char (point-min))
 
-	  ;; Search for the next ']' the end of a date.
-	  (search-forward "]")
+      ;; Search for the string DATE-UPDATED: [2017-01-01 Sun])
+      (if (not (null (search-forward-regexp "DATE-UPDATED: " nil t)))
+          
+          ;; Save the begin to where to delete.
+          (let ((begin (point)))
 
-	  ;; Delete the date described as [year-month=day DayofWeek]
-	  (delete-region begin (point))
+            ;; Search for the next ']' the end of a date.
+            (search-forward "]")
 
-	  ;; Insert date of today
-	  (org-insert-time-stamp (current-time) nil t))
+            ;; Delete the date described as [year-month=day DayofWeek]
+            (delete-region begin (point))
 
-      ;; Text is not found: Message and do nothing
-      (message "DATE-UPDATED does not exist in this buffer"))))
+            ;; Insert date of today
+            (org-insert-time-stamp (current-time) nil t))
+
+        ;; Text is not found: Message and do nothing
+        (message "DATE-UPDATED does not exist in this buffer")))))
 ;; defun my-update-org-timestamp END
 
 
@@ -252,10 +256,7 @@ timestamp after it."
   "Check this file is an org file, is it is execute some functions"
 
   ;; Add hook before save
-  (add-hook 'before-save-hook 
-	    (when (and (eq major-mode 'org-mode)
-		       (eq buffer-read-only nil))
-	      'my-update-org-timestamp)))
+  (add-hook 'before-save-hook 'my-update-org-timestamp))
 ;; defun my-org-hook-function END
 
 ;; Add hook to org mode
