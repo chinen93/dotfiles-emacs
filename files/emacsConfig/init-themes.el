@@ -3,8 +3,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Load theme
-(use-package zenburn-theme :ensure t)
+(use-package zenburn-theme 
+  :defer 1
+  :ensure t)
+
 (use-package monokai-theme
+  :defer 1
   :ensure t
   :config
   (progn
@@ -14,15 +18,14 @@
   "Set the theme to THEMENAME."
   (interactive "sWhat theme do you want to use? ")
   (when (display-graphic-p)
-    (load-theme (intern themeName) t)
-    (set-background-color "#121212")))
+    (load-theme (intern themeName) t)))
 
 (defun sakshamsharma-setFont (fntName)
   "Set the font to FNTNAME."
   (interactive "sWhat font name do you want to set? ")
   (set-face-attribute 'default nil
                       :family fntName
-                      :height 100
+                      :height 105
                       :weight 'normal
                       :width 'normal))
 

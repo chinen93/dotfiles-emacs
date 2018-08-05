@@ -5,6 +5,15 @@
 (setq load-path (cons (expand-file-name "~/emacsConfig")
 		      load-path ))
 
+;; Use a hook so the message doesn't get clobbered by other messages.
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "Emacs ready in %s with %d garbage collections."
+                     (format "%.2f seconds"
+                             (float-time
+                              (time-subtract after-init-time before-init-time)))
+                     gcs-done)))
+
 (message " Inicialização das Configurações ")
 
 ;; (package-initialize)
@@ -48,6 +57,7 @@
   (require 'init-multipleCursor)
   (require 'init-nov)
   (require 'init-nyanCat)
+  (require 'init-orgmodeLanguages)
   (require 'init-programming)
   (require 'init-rainbow)
   (require 'init-regex)

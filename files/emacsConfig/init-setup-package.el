@@ -5,17 +5,17 @@
 (require 'package)
 (package-initialize)
 
-(setq package-enable-at-startup nil
-      file-name-handler-alist nil
-      message-log-max 16384
-      gc-cons-threshold 402653184
-      gc-cons-percentage 0.6
-      auto-window-vscroll nil)
+(setq package-enable-at-startup nil)
+(setq file-name-handler-alist nil)
+(setq message-log-max 16384)
+(setq gc-cons-threshold (* 50 1000 1000))
+(setq gc-cons-percentage 0.6)
+(setq auto-window-vscroll nil)
 
 (add-hook 'after-init-hook
           `(lambda ()
-             (setq gc-cons-threshold 800000
-                   gc-cons-percentage 0.1)
+             (setq gc-cons-threshold (* 2 1000 1000))
+             (setq gc-cons-percentage 0.1)
              (garbage-collect)) 
           t)
 
