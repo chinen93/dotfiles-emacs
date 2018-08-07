@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: function doc
+# key: function
+# --
+/*
+  Function Description: 
+
+  Parameters: 
+
+  Return: 
+*/

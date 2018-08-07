@@ -15,6 +15,11 @@
    org-babel-expand-body:sh
 
    org-babel-execute:bash
-   org-babel-expand-body:bash))
+   org-babel-expand-body:bash)
+
+  :config 
+  (progn
+    (add-to-list 'org-babel-load-languages '(shell . t))
+    ))
 
 (provide 'init-orgmodeLanguages)

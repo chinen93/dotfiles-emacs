@@ -3,15 +3,17 @@
 # key: init
 # --
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; ${1:TESTE} Package
+;; $0
+;;
+;; DATE_CREATE: `(format-time-string "%Y-%m-%d")`
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package ${2:PACKAGE-NAME}
+  :defer t
   :ensure t
   :config
   (progn
     ;; configs here
-    $0
     (message "$1 - Loaded")))
 
-(provide 'init-$2)
+(provide '`(insert (file-name-sans-extension (buffer-name)))`)

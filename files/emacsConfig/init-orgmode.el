@@ -20,7 +20,8 @@
 ;; Support to languages in #-begin_src #end_src code
 ;; (org-babel-do-load-languages
 ;;  'org-babel-load-languages
-;;  '((shell . t)
+;;  '((emacs-lisp . t)
+;;    (shell . t)
 ;;    (python . t)
 ;;    (latex . t)))
 
