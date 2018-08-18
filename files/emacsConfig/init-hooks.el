@@ -16,7 +16,6 @@
 	  (progn 
 	    ;; use the python 3.1
 	    (setq py-python-command "/usr/bin/python3.1")
-	    (when (fboundp 'electric-indent-mode) (electric-indent-mode -1))
 	    
 	    (use-package company-jedi
 	      :ensure t

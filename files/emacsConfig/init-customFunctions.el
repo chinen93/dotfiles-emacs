@@ -329,14 +329,14 @@ Version 2015-12-10"
   (interactive)
 
   ;; Remove whitespace from the ends of lines
-  (delete-trailing-whitespace) 
+  (delete-trailing-whitespace)
 
   ;; Replace more than 2 newlines with 2 newlines
-  (save-excursion 
+  (save-excursion
     (replace-regexp "^\n\\{3,\\}" "\n\n" nil (point-min) (point-max)))
 
   ;; Turn tabs into spaces
-  (untabify (point-min) (point-max))) 
+  (untabify (point-min) (point-max)))
 
 ;;=========================================================
 ;; user--make-temp-file
@@ -388,5 +388,24 @@ The file is the buffer's file name, or the `default-directory' in
   (if (derived-mode-p 'dired-mode)
       default-directory
     (buffer-file-name)))
+
+;;=========================================================
+;; Grep notes
+;;=========================================================
+(defun my-grep-notes (regex)
+  "Use FIND-GREP in my notes directory."
+
+  (interactive "sWhat to SEARCH for? ")
+  (if (< (length regex) 3)
+      (message "Too Short. Try Again!!")
+    (progn
+      (let* ((notes-dir "~/Dropbox/Notes/")
+             (my-find-c (concat "find " notes-dir  " -type f -exec "))
+             (my-grep-c (concat "grep --color -nH -i -e " regex " {} +"))
+             (command (concat my-find-c my-grep-c)))
+
+        ;; find . -type f -exec grep --color -nH -e javascript {} +
+        (grep-find command)
+        (switch-to-buffer-other-frame "*grep*")))))
 
 (provide 'init-customFunctions)
