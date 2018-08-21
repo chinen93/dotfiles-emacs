@@ -1,0 +1,44 @@
+# -*- mode: snippet -*-
+# name: unittestclass
+# key: unittestclass
+# --
+# https://docs.python.org/3/library/unittest.html#assert-methods
+########################################################################
+
+#
+# IMPORTS
+#
+import sys
+sys.path.append('../src/')
+
+import unittest
+
+#
+# CONSTANTS
+#
+
+
+#
+# CODE
+#
+
+class unitTestClass(unittest.TestCase):
+
+    def setUp(self):
+        """Set up things for every test"""
+	pass
+    # setUp()
+
+
+    def tearDown(self):
+        """Tear Down things for every test"""
+        pass
+    # tearDown()
+    
+
+    def testShouldDoSomething(self):
+        """Should do Something"""
+	pass
+    # testShouldDoSomething()
+    
+# unitTestClass

@@ -46,7 +46,7 @@
 (global-unset-key (kbd "C-r"))
 (global-unset-key (kbd "C-t"))
 ;; (global-unset-key (kbd "C-u")) ;; digit-argument
-;; (global-unset-key (kbd "C-i")) ;; In emacs C-i is the sama as TAB
+;; (global-unset-key (kbd "C-i")) ;; In emacs C-i is the same as TAB
 (global-unset-key (kbd "C-o"))
 (global-unset-key (kbd "C-p"))
 (global-unset-key (kbd "C-a"))
@@ -129,13 +129,7 @@
 (global-set-key (kbd "M-v") 'my-prefix-command)
 
 ;;;; Key binding using my prefix command
-(global-set-key (kbd "M-v M-s") 'save-buffer)
 (global-set-key (kbd "M-v M-f") 'find-file)
-(global-set-key (kbd "M-v TAB") 'list-buffers)
-
-;;;; Key binding using super
-(global-set-key (kbd "s-q") 'other-window)
-(global-set-key (kbd "s-w") 'delete-window)
 
 ;;;; Key binding special keys
 (global-set-key (kbd "<prior>") 'xah-backward-block)
@@ -150,9 +144,9 @@
 ;; (global-set-key (kbd "C-u")) ;; digit-argument
 ;; (global-set-key (kbd "C-i")) ;; In emacs C-i is the sama as TAB
 ;; (global-set-key (kbd "C-o"))
-(global-set-key (kbd "C-p") 'my-trim-right)
+;; (global-set-key (kbd "C-p"))
 ;; (global-set-key (kbd "C-a"))
-(global-set-key (kbd "C-s") 'isearch-forward-regexp) 
+(global-set-key (kbd "C-s") 'isearch-forward-regexp)
 ;; (global-set-key (kbd "C-d"))
 ;; (global-set-key (kbd "C-f"))
 ;; (global-set-key (kbd "C-g")) ;; keyboard-quit

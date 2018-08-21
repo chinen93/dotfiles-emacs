@@ -20,7 +20,7 @@
 ;; Save hist for kill rings, search rings and regex search rings
 (setq savehist-additional-variables
       '(kill-ring
-	search-ring
-	regexp-search-ring))
+        search-ring
+        regexp-search-ring))
 
 (provide 'init-history)

@@ -1,11 +1,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Hydra
-;;
+;; 
 ;; DATE_CREATE: 2016-06-29
-;; DATE_UPDATE: 2016-07-13
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (require-package 'hydra)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     ;;; Hydra Zoom BEGIN
 (defhydra hydra-zoom (:color pink)
@@ -22,18 +23,63 @@
   ("l" hydra-launcher/body "return" :color blue))
     ;;; Hydra Zoom END
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    ;;; Hydra Narrow Widen BEGIN
+(defhydra hydra-narrow-widen (:color pink)
+  "
+ ^Narrow Widen^
+-^----^-----------------------------------------------------
+ _w_: Widen
+ _n_: Narrow to Region
+"
+  ("w" widen "Widen")
+  ("n" narrow-to-region "Narrow region")
+
+  ("q" nil "quit" :color blue)
+  ("l" hydra-launcher/body "return" :color blue))
+    ;;; Hydra Narrow Widen END
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    ;;; Hydra Help BEGIN
+(defhydra hydra-help (:color pink)
+  "
+ ^Help^
+-^----^-----------------------------------------------------
+ _f_: function     
+ _v_: variable     
+ _m_: mode         
+ _l_: view lossage 
+ _M_: view Messages
+
+"
+  ("M" view-echo-area-messages :color blue)
+  ("f" describe-function :color blue)
+  ("v" describe-variable :color blue)
+  ("m" describe-mode :color blue)
+  ("l" view-lossage :color blue)
+
+  ("q" nil "quit" :color blue)
+  ("l" hydra-launcher/body "return" :color blue))
+    ;;; Hydra Help END
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     ;;; Hydra launcher BEGIN
 (defhydra hydra-launcher (:color amaranth :hint nil)
   "
- ^Functions^          ^Window^            ^Other Menus^   ^Org^         ^Help^
--^---------^----------^------^------------^-----------^---^---^---------^----^-------
- _w_: whitespace      _0_: delete window  _z_: zoom       _m_: Agenda   _6_: function
- _f_: functions menu  _1_: only 1 window  _b_: buffer     _c_: Capture  _7_: variable
- _V_: bookmark set    _2_: divide horiz   _v_: bookmarks  ^ ^           _8_: mode
- ^ ^                  _3_: divide vertc   _g_: magit      ^ ^           _9_: view lossage
- ^ ^                  _4_: other window   _y_: YASnippet  ^ ^           _0_: view Messages
- ^ ^                  ^ ^                 _(_: macro
+ ^Functions^          ^Window^            ^Other Menus^  
+-^---------^----------^------^------------^-----------^-------
+ _w_: whitespace      _0_: delete window  _z_: zoom      
+ _f_: functions menu  _1_: only 1 window  _b_: buffer    
+ _V_: bookmark set    _2_: divide horiz   _v_: bookmarks 
+ ^ ^                  _3_: divide vertc   _g_: magit     
+ _m_: Agenda          _4_: other window   _y_: YASnippet 
+ _c_: Capture         ^ ^                 _(_: macro
+ ^ ^                  ^ ^                 _l_: ledger
+ ^ ^                  ^ ^                 _h_: help
+ ^ ^                  ^ ^                 _N_: Narrow Widen
 "
   ;; commands to exec in actual buffer
   ("f" hydra-functions/body :color blue)
@@ -50,18 +96,16 @@
   ("c" org-capture :color blue)
   ("m" org-agenda :color blue)
 
+  ;; Other menus
   ("(" hydra-macro/body :color blue)
+  ("l" ledger-report :color blue)
   ("b" buffer-menu :color blue)
   ("g" magit-status :color blue)
   ("v" bookmark-bmenu-list :color blue)
   ("y" hydra-yasnippet/body :color blue)
   ("z" hydra-zoom/body :color blue)
-
-  ("0" view-echo-area-messages :color blue)
-  ("6" describe-function :color blue)
-  ("7" describe-variable :color blue)
-  ("8" describe-mode :color blue)
-  ("9" view-lossage :color blue)
+  ("N" hydra-narrow-widen/body :color blue)
+  ("h" hydra-help/body :color blue)
 
   ;; move around text
   ("<right>" forward-char)
@@ -78,7 +122,9 @@
 (global-set-key (kbd "M-q") 'hydra-launcher/body)
     ;;; Hydra launcher END
 
-    ;;; Hydra Yasnippet BEGIN
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+    ;;; Hydra functions BEGIN
 (defhydra hydra-functions (:color amaranth :hint nil)
   "
         ^Useful Functions^
@@ -88,15 +134,15 @@
  _s_: Sort lines           _i_: Word of The day
  _p_: Trim right           _g_: Google This
  _P_: Trim all whitespace  _h_: Google Translate This
- _r_: Reload dot emacs     _d_: Define Word   
- _t_: Truncate lines      
+ _r_: Reload dot emacs     _d_: Define Word
+ _t_: Truncate lines
  _f_: Fill paragraph
  _k_: Open file
  _l_: Open Terminal in folder
 
 "
   ("p" my-trim-right)
-  ("P" (delete-trailing-whitespace))
+  ("P" (user--clean-buffer))
 
   ("r" my-reload-dot-emacs)
   ("s" sort-lines)
@@ -104,7 +150,7 @@
   ("f" endless-fill-or-unfill)
   ("k" xah-open-in-external-app :color blue)
   ("l" xah-open-in-terminal :color blue)
-  
+
   ("i" wotd-select :color blue)
   ("g" google-this-ray :color blue)
   ("h" google-translate-smooth-translate :color blue)
@@ -122,8 +168,9 @@
   ("<ESC>" nil :color blue)
 
   ("q" nil "cancel" :color blue))
-    ;;; Hydra Yasnippet END
+    ;;; Hydra functions END
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     ;;; Hydra Yasnippet BEGIN
 (defhydra hydra-yasnippet (:color blue :hint nil)
@@ -145,6 +192,7 @@ _r_eload all
   ("q" nil "cancel" :color blue))
     ;;; Hydra Yasnippet END
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     ;;; Hydra display BEGIN
 (defhydra hydra-display (:color pink :hint nil)
@@ -173,6 +221,7 @@ _r_eload all
   ("l" hydra-launcher/body "return" :color blue))
     ;;; Hydra display END
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     ;;; Hydra menu buffer BEGIN
 (defhydra hydra-buffer-menu (:color pink :hint nil)
@@ -184,7 +233,7 @@ _r_eload all
  _d_: delete        ^ ^                _g_: refresh       _O_: multi-occur
  _D_: delete up     ^ ^                _T_: files only: % -28`Buffer-menu-files-only
  _~_: modified
- 
+
 "
   ("m" Buffer-menu-mark)
   ("u" Buffer-menu-unmark)
@@ -209,7 +258,9 @@ _r_eload all
 (define-key Buffer-menu-mode-map "." 'hydra-buffer-menu/body)
     ;;; Hydra menu buffer END
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+    ;;; Hydra macro BEGIN
 (defhydra hydra-macro (:color amaranth :hint nil)
   "
  ^Basic^
@@ -227,9 +278,10 @@ _r_eload all
   ("e" kmacro-end-or-call-macro-repeat)
   ("n" kmacro-insert-counter)
   ("h" elmacro-show-last-macro :color blue)
-  
-  ("q" nil "quit" :color blue))
-;; use-package END
 
+  ("q" nil "quit" :color blue))
+    ;;; Hydra macro END
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (provide 'init-hydra)

@@ -4,7 +4,5 @@
 # --
 def testShould${1:DoSomething}(self):
     """Should $1"""
-    # done?
-    # self.assertIs()
-    pass
+    self.fail("Not Implemented")
 # testShould$1()

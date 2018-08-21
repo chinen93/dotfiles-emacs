@@ -3,22 +3,40 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Load theme
-(use-package zenburn-theme :ensure t)
+(use-package zenburn-theme
+  :defer 1
+  :ensure t)
+
 (use-package monokai-theme
+  :defer 1
   :ensure t
   :config
   (progn
-    (message "Monokai Theme - Loaded")
-    (load-theme 'monokai t)
-    (set-background-color "#121212")))
+    (message "Monokai Theme - Loaded")))
 
-(defun my-change-theme()
+(defun sakshamsharma-setTheme (themeName)
+  "Set the theme to THEMENAME."
+  (interactive "sWhat theme do you want to use? ")
+  (when (display-graphic-p)
+    (load-theme (intern themeName) t)))
+
+(defun sakshamsharma-setFont (fntName)
+  "Set the font to FNTNAME."
+  (interactive "sWhat font name do you want to set? ")
+  (set-face-attribute 'default nil
+                      :family fntName
+                      :height 105
+                      :weight 'normal
+                      :width 'normal))
+
+(defun sakshamsharma-frameActions ()
+  "Do actions to set up appearance of frame."
   (interactive)
-  (message "Theme Changed")
-  )
+  (let ((myTheme "monokai") (myFont "DejaVu Sans Mono"))
+    ;; (disableBells)
+    (sakshamsharma-setTheme myTheme)
+    (sakshamsharma-setFont myFont)))
 
-(when window-system 
-  (my-change-theme)
-  )
+(sakshamsharma-frameActions)
 
 (provide 'init-themes)

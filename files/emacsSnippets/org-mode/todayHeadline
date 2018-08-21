@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: today headline
+# key: todayhead
+# --
+* Conversa: `(format-time-string "%Y-%m-%d")`
+
+  <`(format-time-string "%Y-%m-%d %a")`>
+$0

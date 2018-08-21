@@ -31,7 +31,7 @@
 
 ;;     (require 'google-translate-smooth-ui)
 
-;;     (setq google-translate-translation-directions-alist 
+;;     (setq google-translate-translation-directions-alist
 ;;           '( ("en" . "pt") ("pt" . "en")))
 ;;     ))
 

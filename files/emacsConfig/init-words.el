@@ -4,6 +4,7 @@
 
 
 (use-package define-word
+  :defer 2
   :ensure t
   :config
   (progn
@@ -12,6 +13,7 @@
 
 
 (use-package string-inflection
+  :defer 2
   :ensure t
   :config
   (progn

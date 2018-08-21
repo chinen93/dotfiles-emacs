@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: transacao
+# key: transacao
+# --
+`(format-time-string "%Y/%m/%d")`
+    Expenses:                        R$ 00.00
+    Assets:                         R$ -00.00

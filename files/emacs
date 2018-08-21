@@ -5,6 +5,15 @@
 (setq load-path (cons (expand-file-name "~/emacsConfig")
 		      load-path ))
 
+;; Use a hook so the message doesn't get clobbered by other messages.
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "Emacs ready in %s with %d garbage collections."
+                     (format "%.2f seconds"
+                             (float-time
+                              (time-subtract after-init-time before-init-time)))
+                     gcs-done)))
+
 (message " Inicialização das Configurações ")
 
 ;; (package-initialize)
@@ -33,6 +42,7 @@
 
   (message "Configurations for packages")
 
+  (require 'init-diminish)
   (require 'init-expandRegion)
   (require 'init-flycheck)
   (require 'init-fun)
@@ -40,13 +50,16 @@
   (require 'init-helmDescribeKey)
   (require 'init-helmSwoop)
   (require 'init-hooks)
+  (require 'init-javascript)
   (require 'init-keyfreq)
+  (require 'init-ledger)	
   (require 'init-macro)
   (require 'init-magit)
   (require 'init-markdown)
   (require 'init-multipleCursor)
   (require 'init-nov)
   (require 'init-nyanCat)
+  (require 'init-orgmodeLanguages)
   (require 'init-programming)
   (require 'init-rainbow)
   (require 'init-regex)
@@ -55,3 +68,17 @@
   (require 'init-words))
 
 (message " Fim das Configurações ")
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (magit zenburn-theme yasnippet use-package try string-inflection rainbow-delimiters org-plus-contrib nyan-mode nov multiple-cursors monokai-theme markdown-mode ledger-mode keyfreq js2-mode hydra helm-swoop helm-descbinds flycheck expand-region exec-path-from-shell elmacro diminish define-word counsel company-jedi))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
