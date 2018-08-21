@@ -81,6 +81,15 @@
  ^ ^                  ^ ^                 _h_: help
  ^ ^                  ^ ^                 _N_: Narrow Widen
 "
+
+;;  Functions         Window             Other Menus    Hydra Menus       
+;; --------------------------------------------------------------------
+;;  w: whitespace     0: delete window   b: buffer      z: zoom           
+;;  V: bookmark set   1: only 1 window   v: bookmarks   y: YASnippet      
+;;  p: trim spaces    2: divide horiz    g: magit       h: help           
+;;                    3: divide vertc    l: ledger      f: functions      
+;;  c: Capture        4: other window    m: Agenda      (: macro          
+
   ;; commands to exec in actual buffer
   ("f" hydra-functions/body :color blue)
   ("w" whitespace-mode)
@@ -283,5 +292,8 @@ _r_eload all
     ;;; Hydra macro END
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Ideia from:
+;; https://dfeich.github.io/www/org-mode/emacs/2018/05/10/context-hydra.html
 
 (provide 'init-hydra)
