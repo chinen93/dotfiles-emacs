@@ -31,10 +31,29 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 ;; Set initial message for *scratch* buffer
-(setq initial-scratch-message "
-;***********************************************
-;******************* SCRATCH *******************
-;***********************************************
+(setq initial-scratch-message 
+";***************************************************************
+;*************************** SCRATCH ***************************
+;***************************************************************
+
+;| Copy & Paste                                                |
+;|-------------------------------------------------------------|
+;| M-1 : cut line                     | M-3 : paste clipboard  |
+
+;| New command prefix (C-v) and (M-v)                          |
+;|-------------------------------------------------------------|
+;| M-v M-f : find-file                                         |
+
+;| Useful keybindings                                          |
+;|------------------------------------+------------------------|
+;| C-r : backward regex               | C-s   : forward regex  |
+;| C-n : new buffer                   | C-TAB : other-window   |
+;| C-0 : undo                         | M-q   : Hydra Launcher |
+
+;| Open Hydra Launcher - More commands inside !!               |
+;|------------------------------------+------------------------|
+;| M-q   : Hydra Launcher                                      |
+
 ")
 
 ;; Don't follow version controlled files change it locally.
@@ -82,10 +101,5 @@
 
 ;; Used for formatting time values
 (setq system-time-locale "C")
-
-;; Define new prefix command
-(define-prefix-command 'my-prefix-command)
-(global-set-key (kbd "C-v") 'my-prefix-command)
-(global-set-key (kbd "M-v") 'my-prefix-command)
 
 (provide 'init-basicConfig)
