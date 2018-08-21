@@ -5,7 +5,7 @@
 (use-package diminish
   :defer 3
   :ensure t
-  :config 
+  :config
   (progn
     (diminish 'ivy-mode)
     (diminish 'company-mode)

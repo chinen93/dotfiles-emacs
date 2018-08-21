@@ -3,7 +3,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Load theme
-(use-package zenburn-theme 
+(use-package zenburn-theme
   :defer 1
   :ensure t)
 

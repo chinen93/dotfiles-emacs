@@ -17,7 +17,7 @@
    org-babel-execute:bash
    org-babel-expand-body:bash)
 
-  :config 
+  :config
   (progn
     (add-to-list 'org-babel-load-languages '(shell . t))
     ))

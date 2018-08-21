@@ -16,7 +16,7 @@
           `(lambda ()
              (setq gc-cons-threshold (* 2 1000 1000))
              (setq gc-cons-percentage 0.1)
-             (garbage-collect)) 
+             (garbage-collect))
           t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -42,11 +42,11 @@ re-downloaded in order to locate PACKAGE."
 (unless (eq system-type 'windows-nt)
 
   (setq package-archives
-	'(("melpa-stable" . "https://stable.melpa.org/packages/")
-	  ("melpa" . "https://melpa.org/packages/")
-	  ("org" . "http://orgmode.org/elpa/")
-	  ("gnu" . "http://elpa.gnu.org/packages/")
-	  ("marmalade" . "http://marmalade-repo.org/packages/")))
+        '(("melpa-stable" . "https://stable.melpa.org/packages/")
+          ("melpa" . "https://melpa.org/packages/")
+          ("org" . "http://orgmode.org/elpa/")
+          ("gnu" . "http://elpa.gnu.org/packages/")
+          ("marmalade" . "http://marmalade-repo.org/packages/")))
 
   (require-package 'use-package)
   (setq use-package-verbose t)

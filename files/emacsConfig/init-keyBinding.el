@@ -152,7 +152,7 @@
 ;; (global-set-key (kbd "C-o"))
 (global-set-key (kbd "C-p") 'my-trim-right)
 ;; (global-set-key (kbd "C-a"))
-(global-set-key (kbd "C-s") 'isearch-forward-regexp) 
+(global-set-key (kbd "C-s") 'isearch-forward-regexp)
 ;; (global-set-key (kbd "C-d"))
 ;; (global-set-key (kbd "C-f"))
 ;; (global-set-key (kbd "C-g")) ;; keyboard-quit

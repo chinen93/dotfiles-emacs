@@ -1,6 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Hydra
-;;
+;; 
 ;; DATE_CREATE: 2016-06-29
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -192,6 +192,7 @@ _r_eload all
   ("q" nil "cancel" :color blue))
     ;;; Hydra Yasnippet END
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
     ;;; Hydra display BEGIN
 (defhydra hydra-display (:color pink :hint nil)
@@ -259,6 +260,7 @@ _r_eload all
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+    ;;; Hydra macro BEGIN
 (defhydra hydra-macro (:color amaranth :hint nil)
   "
  ^Basic^
@@ -278,7 +280,8 @@ _r_eload all
   ("h" elmacro-show-last-macro :color blue)
 
   ("q" nil "quit" :color blue))
-;; use-package END
+    ;;; Hydra macro END
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (provide 'init-hydra)

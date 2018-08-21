@@ -7,11 +7,7 @@
   :init
   (progn
     (message "Magit - Loaded")
-    
+
     ))
 
 (provide 'init-magit)
-
-
-
-

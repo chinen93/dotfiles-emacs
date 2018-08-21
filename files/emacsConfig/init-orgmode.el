@@ -25,17 +25,17 @@
 ;;    (python . t)
 ;;    (latex . t)))
 
-;; Templates for source blocks 
+;; Templates for source blocks
 (setq org-structure-template-alist
       '(("l"
-	 "#+begin_src emacs-lisp\n?\n#+end_src"
-	 "<src lang=\"emacs-lisp\">             \n?\n</src>")
+         "#+begin_src emacs-lisp\n?\n#+end_src"
+         "<src lang=\"emacs-lisp\">             \n?\n</src>")
         ("s"
-	 "#+begin_src sh\n?\n#+end_src"
-	 "<src lang=\"shell\">             \n?\n</src>")
-	("t"
-	 "#+begin_src text\n?\n#+end_src"
-	 "<src lang=\"text\">\n?\n</src>")))
+         "#+begin_src sh\n?\n#+end_src"
+         "<src lang=\"shell\">             \n?\n</src>")
+        ("t"
+         "#+begin_src text\n?\n#+end_src"
+         "<src lang=\"text\">\n?\n</src>")))
 
 ;; Set org directory
 (setq org-directory "~/git/org")
@@ -48,10 +48,21 @@
 
 ;; Only set this org variable if there no other variable for the dropbox folder
 (unless (null my-dropbox-folder)
-  (setq org-dropbox-folder my-dropbox-folder))  
+  (setq org-dropbox-folder my-dropbox-folder))
 
 ;; Set org agenda files
 (setq org-agenda-files (list (concat org-dropbox-folder "/Organizador.org")))
+
+(setq org-agenda-include-all-todo nil)
+(setq org-agenda-skip-scheduled-if-done t)
+(setq org-agenda-skip-deadline-if-done t)
+(setq org-agenda-include-diary t)
+(setq org-agenda-columns-add-appointments-to-effort-sum t)
+(setq org-agenda-custom-commands nil)
+(setq org-agenda-default-appointment-duration 60)
+(setq org-agenda-mouse-1-follows-link t)
+(setq org-agenda-skip-unavailable-files t)
+(setq org-agenda-use-time-grid nil)
 
 (setq org-refile-targets
       '((nil :maxlevel . 3)
@@ -73,41 +84,41 @@
 
 ;; Set new filter for agenda views
 (setq org-agenda-custom-commands
- '(
-   ;; Custom command to show done task from previous week
-   ("b" "DONE from this week" 
-    ;; Use normal agenda
-    ((agenda ""
-	     ;; Put some configurations on this agenda
-	     ;; Show closed tasks and show 7 days starting today
-	     ((org-agenda-log-mode-items '(closed))
-	      (org-agenda-span 7)
-	      (org-agenda-start-day "-6d")
-	      (org-agenda-show-log t)
-	      (org-agenda-window-setup 'other-window)))) 
-    nil)
+      '(
+        ;; Custom command to show done task from previous week
+        ("b" "DONE from this week"
+         ;; Use normal agenda
+         ((agenda ""
+                  ;; Put some configurations on this agenda
+                  ;; Show closed tasks and show 7 days starting today
+                  ((org-agenda-log-mode-items '(closed))
+                   (org-agenda-span 7)
+                   (org-agenda-start-day "-6d")
+                   (org-agenda-show-log t)
+                   (org-agenda-window-setup 'other-window))))
+         nil)
 
-   ;; Custom agenda that show all the TODO tasks
-   ("n" "Agenda and all TODO's"
-    ((agenda "" 
-             ((org-agenda-span 16)
-              (org-agenda-start-day "-2d")))
-     (alltodo "" nil))
-    nil)
+        ;; Custom agenda that show all the TODO tasks
+        ("n" "Agenda and all TODO's"
+         ((agenda ""
+                  ((org-agenda-span 16)
+                   (org-agenda-start-day "-2d")))
+          (alltodo "" nil))
+         nil)
 
-   ;; Custom agenda to show working todo
-   ("w" "Working on tasks"
-    ((todo "WORKING" nil))
-    nil nil)
+        ;; Custom agenda to show working todo
+        ("w" "Working on tasks"
+         ((todo "WORKING" nil))
+         nil nil)
 
-   ;; Custom agenda to show agenda and todo for every note
-   ("l" "Agenda and all TODO's"
-    ((agenda "" 
-             ((org-agenda-files '("~/Dropbox/Organizador.org" "~/Dropbox/Notes"))))
-     (alltodo "" 
-             ((org-agenda-files '("~/Dropbox/Organizador.org" "~/Dropbox/Notes")))))
-    nil)
-))
+        ;; Custom agenda to show agenda and todo for every note
+        ("l" "Agenda and all TODO's"
+         ((agenda ""
+                  ((org-agenda-files '("~/Dropbox/Organizador.org" "~/Dropbox/Notes"))))
+          (alltodo ""
+                   ((org-agenda-files '("~/Dropbox/Organizador.org" "~/Dropbox/Notes")))))
+         nil)
+        ))
 
 ;; Agenda show next 7 days and previous 3 days
 (setq org-agenda-span 10
@@ -115,20 +126,12 @@
       org-agenda-start-day "-3d")
 
 
-(setq org-icalendar-timezone "America/Sao_Paulo")
+(setq org-icalendar-timezone "America/New_York")
 
 
 ;; ===================================================================
 ;; Functions
 ;; ===================================================================
-
-;; defun org-id-complete-link BEGIN
-(defun org-id-complete-link (&optional arg)
-  "Create an id: link using completion"
-  (concat "id:"
-          (org-id-get-with-outline-path-completion)))
-;; defun org-id-complete-link END
-
 
 ;; defun my-week-and-todo-list BEGIN
 (defun my-week-and-todo-list ()
@@ -148,7 +151,7 @@
 
 ;; defun my-update-org-timestamp BEGIN
 (defun my-update-org-timestamp ()
-  "Search for the string 'DATE-UPDATED' and chage the inactive 
+  "Search for the string 'DATE-UPDATED' and chage the inactive
 timestamp after it."
 
   ;; Check to see if this is an Org mode file
@@ -163,7 +166,7 @@ timestamp after it."
 
       ;; Search for the string DATE-UPDATED: [2017-01-01 Sun])
       (if (not (null (search-forward-regexp "DATE-UPDATED: " nil t)))
-          
+
           ;; Save the begin to where to delete.
           (let ((begin (point)))
 
@@ -193,37 +196,37 @@ timestamp after it."
 
 
 ;; defun my-org-toggle-timestamp BEGIN
-(defun my-org-toggle-timestamp(beforeList afterList) 
+(defun my-org-toggle-timestamp(beforeList afterList)
   "Toggle a time stamp to active and inactive, vice versa"
 
   ;; Don't change the cursor position
   (save-excursion
-    
+
     ;; Narrow to the begin-end of line
-    (narrow-to-region (progn 
-			(beginning-of-line)
-			(point))
-		      (progn
-			(end-of-line)
-			(point)))
+    (narrow-to-region (progn
+                        (beginning-of-line)
+                        (point))
+                      (progn
+                        (end-of-line)
+                        (point)))
 
     ;; search for begin-end of DATE
     (let ((begin (search-backward (first beforeList) nil t))
-	  (end (search-forward (first (rest beforeList)) nil t)))
+          (end (search-forward (first (rest beforeList)) nil t)))
 
       ;; if a DATE is found
       (if (and (not (not begin)) (not (not end)))
-	  (progn 
+          (progn
 
-	    ;; change character for the appropriate one
-	    (delete-region begin (+ begin 1))
-	    (goto-char begin)
-	    (insert (first afterList))
-	    
-	    ;; change character for the appropriate one
-	    (goto-char end)
-	    (delete-region (- end 1) end)
-	    (insert (first (rest afterList))))))
+            ;; change character for the appropriate one
+            (delete-region begin (+ begin 1))
+            (goto-char begin)
+            (insert (first afterList))
+
+            ;; change character for the appropriate one
+            (goto-char end)
+            (delete-region (- end 1) end)
+            (insert (first (rest afterList))))))
 
     ;; Widen buffer
     (widen)))
@@ -234,7 +237,7 @@ timestamp after it."
 (defun my-org-active-timestamp ()
   "Active a timestamp, change [date] to <date>"
   (interactive)
-  
+
   (my-org-toggle-timestamp '("[" "]") '("<" ">")))
 ;; defun my-org-active-timestamp END
 
@@ -243,7 +246,7 @@ timestamp after it."
 (defun my-org-inactive-timestamp ()
   "Inactive a timestamp, change <date> to [date]"
   (interactive)
-  
+
   (my-org-toggle-timestamp '("<" ">") '("[" "]")))
 ;; defun my-org-inactive-timestamp END
 
