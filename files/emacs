@@ -34,8 +34,8 @@
 (require 'init-history)
 (require 'init-hydra)
 (require 'init-ivy)
-(require 'init-javascript)
 (require 'init-orgmode)
+(require 'init-secrets)
 (require 'init-yasnippet)
 
 ;; If not in windows require these configs
@@ -76,7 +76,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (magit zenburn-theme yasnippet use-package try string-inflection rainbow-delimiters org-plus-contrib nyan-mode nov multiple-cursors monokai-theme markdown-mode ledger-mode keyfreq js2-mode hydra helm-swoop helm-descbinds flycheck expand-region exec-path-from-shell elmacro diminish define-word counsel company-jedi))))
+    (js2-mode magit zenburn-theme yasnippet use-package try string-inflection rainbow-delimiters org-plus-contrib nyan-mode nov multiple-cursors monokai-theme markdown-mode ledger-mode keyfreq hydra helm-swoop helm-descbinds flycheck expand-region exec-path-from-shell elmacro diminish define-word counsel company-jedi))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
