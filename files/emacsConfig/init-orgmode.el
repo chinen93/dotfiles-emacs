@@ -108,7 +108,10 @@
 
         ;; Custom agenda to show working todo
         ("w" "Working on tasks"
-         ((todo "WORKING" nil))
+         ((agenda ""
+                  ((org-agenda-span 4)
+                   (org-agenda-start-day "-1d")))
+          (todo "WORKING" nil))
          nil nil)
 
         ;; Custom agenda to show agenda and todo for every note
