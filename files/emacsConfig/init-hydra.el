@@ -87,7 +87,7 @@
  _p_: trim spaces    _2_: divide horiz    _g_: magit       _h_: help
  ^ ^                 _3_: divide vertc    _l_: ledger      _f_: functions
  _c_: Capture        _4_: other window    _m_: Agenda      _(_: macro
- ^ ^                 ^ ^                  ^ ^              _r_: rectangle
+ _n_: Narrow Widen   ^ ^                  ^ ^              _r_: rectangle
 
 "
 
@@ -96,6 +96,7 @@
   ("f" hydra-functions/body :color blue)
   ("w" whitespace-mode)
   ("V" bookmark-set :color blue)
+  ("n" narrow-or-widen-dwim :color blue)
 
   ;; commands to exit hydra-launcher
   ("0" delete-window :color blue)
@@ -297,7 +298,16 @@ https://dfeich.github.io/www/org-mode/emacs/2018/05/10/context-hydra.html
   (interactive)
   (cl-case major-mode
     ('Buffer-menu-mode (hydra-buffer-menu/body))
-    ('org-mode (hydra-org/body))
+    ('org-mode (let* ((elem (org-element-context))
+		      (etype (car elem))
+		      (type (org-element-property :type elem)))
+		 (cl-case etype
+		   (src-block (hydra-babel-helper/body))
+		   (link (hydra-org-link-helper/body))
+		   ((table-row table-cell) (hydra-org-table-helper/body) )
+		   (t (message "No specific hydra for %s/%s" etype type)
+		      (hydra-org/body))))
+               )
     (t (message "No hydra for this major mode: %s" major-mode))))
 
 (global-set-key (kbd "<f9>") 'hydra-context-launcher)
@@ -354,5 +364,67 @@ https://dfeich.github.io/www/org-mode/emacs/2018/05/10/context-hydra.html
 
   ("q" nil "quit" :color blue))
     ;;; Hydra Org END
+
+(defhydra hydra-org-link-helper (:color pink :hint nil)
+  "
+org link helper
+_i_ backward slurp     _o_ forward slurp    _n_ next link
+_j_ backward barf      _k_ forward barf     _p_ previous link
+_t_ terminal at path
+_q_ quit
+"
+  ("i" org-link-edit-backward-slurp)
+  ("o" org-link-edit-forward-slurp)
+  ("j" org-link-edit-backward-barf)
+  ("k" org-link-edit-forward-barf)
+  ("n" org-next-link)
+  ("p" org-previous-link)
+  ("t" dfeich/gnome-terminal-at-link :color blue)
+  ("q" nil :color blue))
+
+(defhydra hydra-org-table-helper (:color pink :hint nil)
+  "
+org table helper
+_r_ recalculate     _w_ wrap region      _c_ toggle coordinates
+_i_ iterate table   _t_ transpose        _D_ toggle debugger
+_B_ iterate buffer  _E_ export table     
+_e_ eval formula    _s_ sort lines       _d_ edit field
+_q_ quit
+"
+  ("E" org-table-export :color blue)
+  ("s" org-table-sort-lines)
+  ("d" org-table-edit-field)
+  ("e" org-table-eval-formula)
+  ("r" org-table-recalculate)
+  ("i" org-table-iterate)
+  ("B" org-table-iterate-buffer-tables)
+  ("w" org-table-wrap-region)
+  ("D" org-table-toggle-formula-debugger)
+  ("t" org-table-transpose-table-at-point)
+
+  ("c" org-table-toggle-coordinate-overlays :color blue)
+  ("q" nil :color blue))
+
+(defhydra hydra-babel-helper (:color pink :hint nil)
+  "
+org babel src block helper functions
+_n_ next       _i_ info           _I_ insert header
+_p_ prev       _c_ check
+_h_ goto head  _E_ expand
+^ ^            _s_ split
+_q_ quit       _r_ remove result  _e_ examplify region
+"
+  ("i" org-babel-view-src-block-info)
+  ("I" org-babel-insert-header-arg)
+  ("c" org-babel-check-src-block :color blue)
+  ("s" org-babel-demarcate-block :color blue)
+  ("n" org-babel-next-src-block)
+  ("p" org-babel-previous-src-block)
+  ("E" org-babel-expand-src-block :color blue)
+  ("e" org-babel-examplify-region :color blue)
+  ("r" org-babel-remove-result :color blue)
+  ("h" org-babel-goto-src-block-head)
+  ("q" nil :color blue))
+
 
 (provide 'init-hydra)
