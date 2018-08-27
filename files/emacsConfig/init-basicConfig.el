@@ -32,27 +32,27 @@
 
 ;; Set initial message for *scratch* buffer
 (setq initial-scratch-message 
-";***************************************************************
-;*************************** SCRATCH ***************************
-;***************************************************************
+";;***************************************************************
+;;*************************** SCRATCH ***************************
+;;***************************************************************
 
-;| Copy & Paste                                                |
-;|-------------------------------------------------------------|
-;| M-1 : cut line                     | M-3 : paste clipboard  |
+;;| Copy & Paste                                                |
+;;|-------------------------------------------------------------|
+;;| M-1 : cut line                     | M-3 : paste clipboard  |
 
-;| New command prefix (C-v) and (M-v)                          |
-;|-------------------------------------------------------------|
-;| M-v M-f : find-file                                         |
+;;| New command prefix (C-v) and (M-v)                          |
+;;|-------------------------------------------------------------|
+;;| M-v M-f : find-file                                         |
 
-;| Useful keybindings                                          |
-;|------------------------------------+------------------------|
-;| C-r : backward regex               | C-s   : forward regex  |
-;| C-n : new buffer                   | C-TAB : other-window   |
-;| C-0 : undo                         | M-q   : Hydra Launcher |
+;;| Useful keybindings                                          |
+;;|------------------------------------+------------------------|
+;;| C-r : backward regex               | C-s   : forward regex  |
+;;| C-n : new buffer                   | C-TAB : other-window   |
+;;| C-0 : undo                         | M-q   : Hydra Launcher |
 
-;| Open Hydra Launcher - More commands inside !!               |
-;|------------------------------------+------------------------|
-;| M-q   : Hydra Launcher                                      |
+;;| Open Hydra Launcher - More commands inside !!               |
+;;|------------------------------------+------------------------|
+;;| M-q   : Hydra Launcher                                      |
 
 ")
 
