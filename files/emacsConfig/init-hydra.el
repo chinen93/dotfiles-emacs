@@ -358,9 +358,14 @@ https://dfeich.github.io/www/org-mode/emacs/2018/05/10/context-hydra.html
  _s_: Store Link
  _l_: Insert Link
 
+ _r_: Refile
+ _t_: Insert Tag
+
 "
   ("s" org-store-link nil :color blue)
   ("l" org-insert-link nil  :color blue)
+  ("r" org-refile nil  :color blue)
+  ("t" org-set-tags-command nil  :color blue)
 
   ("q" nil "quit" :color blue))
     ;;; Hydra Org END

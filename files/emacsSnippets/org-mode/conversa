@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: Conversa
+# key: conversa
+# --
+* Conversa: `(format-time-string "%Y-%m-%d")`
+<`(format-time-string "%Y-%m-%d %a")`>
+$0

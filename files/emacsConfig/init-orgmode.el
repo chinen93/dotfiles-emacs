@@ -4,18 +4,40 @@
 
 (require 'org)
 (require 'org-id)
+(require 'org-contacts)
+
+;; Set org directory
+(setq org-directory "~/git/org")
+
+;; Set where captured notes will be stored
+(setq org-default-notes-file "~/Documents/Capture.org")
+
+;; Set dropbox folder
+(setq org-dropbox-folder "~/Dropbox")
+
+;; Only set this org variable if there no other variable for the dropbox folder
+(unless (null my-dropbox-folder)
+  (setq org-dropbox-folder my-dropbox-folder))
+
+;; Set org agenda files
+(setq org-agenda-files 
+      (list (concat org-dropbox-folder "/Organizador.org")
+            (concat org-dropbox-folder "/Notes/Projetos.org")))
 
 ;; If `org-store-link` is called directly don't create IDs if it already exist
 (setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
 
-;; Provide refile targets as paths. Level3 headlin = level1/level2/leve3
-(setq org-refile-use-outline-path 'file)
-
 ;; Place tags directly after headline text, with only one space in between
 (setq org-tags-column 0)
 
+;; Provide refile targets as paths. Level3 headlin = level1/level2/leve3
+(setq org-refile-use-outline-path 'file)
+
 ;; Load paths to refile in a single go
 (setq org-outline-path-complete-in-steps nil)
+
+(setq org-refile-targets
+      '((nil :maxlevel . 3)))
 
 ;; Support to languages in #-begin_src #end_src code
 ;; (org-babel-do-load-languages
@@ -37,22 +59,6 @@
          "#+begin_src text\n?\n#+end_src"
          "<src lang=\"text\">\n?\n</src>")))
 
-;; Set org directory
-(setq org-directory "~/git/org")
-
-;; Set where captured notes will be stored
-(setq org-default-notes-file "~/Documents/Capture.org")
-
-;; Set dropbox folder
-(setq org-dropbox-folder "~/Dropbox")
-
-;; Only set this org variable if there no other variable for the dropbox folder
-(unless (null my-dropbox-folder)
-  (setq org-dropbox-folder my-dropbox-folder))
-
-;; Set org agenda files
-(setq org-agenda-files (list (concat org-dropbox-folder "/Organizador.org")))
-
 (setq org-agenda-include-all-todo nil)
 (setq org-agenda-skip-scheduled-if-done t)
 (setq org-agenda-skip-deadline-if-done t)
@@ -64,14 +70,9 @@
 (setq org-agenda-skip-unavailable-files t)
 (setq org-agenda-use-time-grid nil)
 
-(setq org-refile-targets
-      '((nil :maxlevel . 3)
-        (org-agenda-files :maxlevel . 3)))
-
 ;; Record a note when TODO item is DONE
 (setq org-log-done 'note)
 (setq org-log-repeat 'note)
-(add-to-list 'org-modules "org-habit")
 (setq org-todo-keywords
       '((sequence "TODO(t)" "WORKING(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
 
@@ -252,6 +253,17 @@ timestamp after it."
 
   (my-org-toggle-timestamp '("<" ">") '("[" "]")))
 ;; defun my-org-inactive-timestamp END
+
+;; https://emacs.stackexchange.com/questions/30303/how-to-remove-org-id-drawer-location-file-entry
+(defun org-id-remove-entry ()
+"Remove/delete the ID entry and update the databases.
+Update the `org-id-locations' global hash-table, and update the
+`org-id-locations-file'.  `org-id-track-globally' must be `t`."
+(interactive)
+  (save-excursion
+    (org-back-to-heading t)
+    (when (org-entry-delete (point) "ID")
+      (org-id-update-id-locations nil 'silent))))
 
 ;; ===================================================================
 ;; Hooks
