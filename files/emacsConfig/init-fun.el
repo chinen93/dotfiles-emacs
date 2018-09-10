@@ -42,4 +42,16 @@
 ;;     (message "Google This - Loaded")
 ;;     ))
 
+(use-package goto-addr
+  ;; http://xenodium.com/#actionable-urls-in-emacs-buffers
+  :hook ((compilation-mode . goto-address-mode)
+         (prog-mode . goto-address-prog-mode)
+         (eshell-mode . goto-address-mode)
+         (shell-mode . goto-address-mode))
+  :bind (:map goto-address-highlight-keymap
+              ("<RET>" . goto-address-at-point)
+              ("M-<RET>" . newline))
+  :commands (goto-address-prog-mode
+             goto-address-mode))
+
 (provide 'init-fun)

@@ -5,6 +5,8 @@
 ;; Set default file where bookmarks will be saved.
 (setq bookmark-default-file  "~/emacsBookmark.el")
 
+(file-exists-p "~/Dropbox")
+
 ;; Save bookmarks every time you make or delete a bookmark.
 (setq bookmark-save-flag 1)
 

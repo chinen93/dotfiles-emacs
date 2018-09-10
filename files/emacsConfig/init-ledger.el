@@ -27,6 +27,8 @@
                                   my-ledger-file)
       "Beginning of every command has to be this")
 
+    ;; Clear ledger reports before adding some more
+    (setq ledger-reports nil)
 
     ;; Add more reports
     (ledger-reports-add "Balance Assets"
@@ -43,6 +45,11 @@
                         (concat my-ledger-cmd
                                 " "
                                 "balance --period 'this month' Expenses"))
+
+    (ledger-reports-add "Balance Expenses Last Month"
+                        (concat my-ledger-cmd
+                                " "
+                                "balance --period 'last month' Expenses"))
 
     (ledger-reports-add "Register This Month"
                         (concat my-ledger-cmd

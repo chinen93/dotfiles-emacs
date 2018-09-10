@@ -22,7 +22,8 @@
 ;; Set org agenda files
 (setq org-agenda-files 
       (list (concat org-dropbox-folder "/Organizador.org")
-            (concat org-dropbox-folder "/Notes/Projetos.org")))
+            (concat org-dropbox-folder "/Notes/Projetos.org")
+            (concat org-dropbox-folder "/Contacts.org")))
 
 ;; If `org-store-link` is called directly don't create IDs if it already exist
 (setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
@@ -62,7 +63,6 @@
 (setq org-agenda-include-all-todo nil)
 (setq org-agenda-skip-scheduled-if-done t)
 (setq org-agenda-skip-deadline-if-done t)
-(setq org-agenda-include-diary t)
 (setq org-agenda-columns-add-appointments-to-effort-sum t)
 (setq org-agenda-custom-commands nil)
 (setq org-agenda-default-appointment-duration 60)

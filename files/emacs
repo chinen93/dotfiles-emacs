@@ -3,7 +3,7 @@
 ;;====================================================================
 
 (setq load-path (cons (expand-file-name "~/emacsConfig")
-		      load-path ))
+                      load-path ))
 
 ;; Use a hook so the message doesn't get clobbered by other messages.
 (add-hook 'emacs-startup-hook
@@ -47,20 +47,21 @@
   (require 'init-expandRegion)
   (require 'init-flycheck)
   (require 'init-fun)
+  (require 'init-ggtags)
   ;; (require 'init-helm)
   (require 'init-helmDescribeKey)
   (require 'init-helmSwoop)
   (require 'init-hooks)
   (require 'init-javascript)
   (require 'init-keyfreq)
-  (require 'init-ledger)	
+  (require 'init-ledger)
   (require 'init-macro)
   (require 'init-magit)
   (require 'init-markdown)
   (require 'init-multipleCursor)
   (require 'init-nov)
   (require 'init-nyanCat)
-  (require 'init-orgmodeLanguages)
+  (require 'init-orgmodeExtras)
   (require 'init-programming)
   (require 'init-rainbow)
   (require 'init-regex)
@@ -76,7 +77,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (js2-mode magit zenburn-theme yasnippet use-package try string-inflection rainbow-delimiters org-plus-contrib nyan-mode nov multiple-cursors monokai-theme markdown-mode ledger-mode keyfreq hydra helm-swoop helm-descbinds flycheck expand-region exec-path-from-shell elmacro diminish define-word counsel company-jedi))))
+    (ggtags js2-mode magit zenburn-theme yasnippet use-package try string-inflection rainbow-delimiters org-plus-contrib nyan-mode nov multiple-cursors monokai-theme markdown-mode ledger-mode keyfreq hydra helm-swoop helm-descbinds flycheck expand-region exec-path-from-shell elmacro diminish define-word counsel company-jedi))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
