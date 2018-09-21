@@ -102,4 +102,7 @@
 ;; Used for formatting time values
 (setq system-time-locale "C")
 
+;; Don't delete file, but move to trash instead
+(setq delete-by-moving-to-trash t)
+
 (provide 'init-basicConfig)
