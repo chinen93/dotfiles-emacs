@@ -88,6 +88,7 @@
  ^ ^                 _3_: divide vertc    _l_: ledger      _f_: functions
  _c_: Capture        _4_: other window    _m_: Agenda      _(_: macro
  _n_: Narrow Widen   ^ ^                  ^ ^              _r_: rectangle
+ _e_: Hydra Context
 
 "
 
@@ -97,6 +98,7 @@
   ("w" whitespace-mode)
   ("V" bookmark-set :color blue)
   ("n" narrow-or-widen-dwim :color blue)
+  ("e" hydra-context-launcher :color blue)
 
   ;; commands to exit hydra-launcher
   ("0" delete-window :color blue)
@@ -309,8 +311,6 @@ https://dfeich.github.io/www/org-mode/emacs/2018/05/10/context-hydra.html
 		      (hydra-org/body))))
                )
     (t (message "No hydra for this major mode: %s" major-mode))))
-
-(global-set-key (kbd "<f9>") 'hydra-context-launcher)
     ;;; Hydra Context END
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
