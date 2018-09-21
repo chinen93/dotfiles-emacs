@@ -40,14 +40,6 @@
 (setq org-refile-targets
       '((nil :maxlevel . 3)))
 
-;; Support to languages in #-begin_src #end_src code
-;; (org-babel-do-load-languages
-;;  'org-babel-load-languages
-;;  '((emacs-lisp . t)
-;;    (shell . t)
-;;    (python . t)
-;;    (latex . t)))
-
 ;; Templates for source blocks
 (setq org-structure-template-alist
       '(("l"
