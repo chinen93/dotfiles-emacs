@@ -2,7 +2,34 @@
 ;; Initial Configuration for EM
 ;;====================================================================
 
-(setq load-path (cons (expand-file-name "~/emacsConfig")
+(require 'cl-lib)
+
+(defvar emacs-config-dir "~/emacsConfig/" 
+  "Directory where configuration is stored")
+
+(defvar inits-config '("init-setup-package.org"
+		       "init-basicConfig.org"
+		       "init-keyBinding.org")
+  "Initial order of configurations to be loaded because they have 
+dependencies among the others")
+
+(defun regexp-filter (regexp list)
+  "Filter LIST of strings with REGEXP."
+  (let (new)
+    (dolist (string list)
+      (when (string-match regexp string)
+        (setq new (cons string new))))
+    (nreverse new)))
+
+(dolist (file (regexp-filter "\.org$" (directory-files emacs-config-dir)))
+  (unless (cl-member file inits-config :test 'string=)
+    (setq inits-config (append inits-config (list file)))))
+
+(defvar config-org-files inits-config
+ "Files from which emacs will be applied `tangle-config-org` function
+To transform those org files into acturla elisp files.")
+
+(setq load-path (cons (expand-file-name emacs-config-dir)
                       load-path ))
 
 ;; Use a hook so the message doesn't get clobbered by other messages.
@@ -16,60 +43,84 @@
 
 (message " Inicialização das Configurações ")
 
-;; (package-initialize)
-(require 'init-setup-package)
+;;; bootstrap.el
+;;
+;; Author: Adrien Brochard
+;; URL:    https://github.com/abrochard/emacs-config
+;;
+;; kickstart the config by pulling the latest
+;; and tangle the org files into .el
+;;
+;; Heavily inspired by the great http://www.holgerschurig.de/en/emacs-efficiently-untangling-elisp/
+;; Thanks a lot to him
 
-(message "Basic Configurations")
-(require 'init-keyBinding)
+(defvar config-load-path (file-name-directory emacs-config-dir))
+(defvar config-use-fallback nil)
 
-(require 'init-backup)
-(require 'init-basicConfig)
-(require 'init-bookmark)
-(require 'init-calcmode)
-(require 'init-company)
-(require 'init-customFunctions)
-(require 'init-dired)
-(require 'init-filesMode)
-(require 'init-firstInit)
-(require 'init-history)
-(require 'init-hydra)
-(require 'init-ivy)
-(require 'init-orgmode)
-(require 'init-secrets)
-(require 'init-yasnippet)
+;; Startup metrics
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "Emacs ready in %s with %d garbage collections."
+                     (format "%.2f seconds"
+                             (float-time
+                              (time-subtract after-init-time before-init-time)))
+                     gcs-done)))
 
-;; If not in windows require these configs
-(unless (eq system-type 'windows-nt)
 
-  (message "Configurations for packages")
+(defun tangle-config-org (orgfile elfile)
+  "This function will write all source blocks from an org file into a el file that are
+- not marked as :tangle no
+- have a source-code of =emacs-lisp="
+  (let* ((body-list ())
+         (gc-cons-threshold most-positive-fixnum)
+         (org-babel-src-block-regexp   (concat
+                                        ;; (1) indentation                 (2) lang
+                                        "^\\([ \t]*\\)#\\+begin_src[ \t]+\\([^ \f\t\n\r\v]+\\)[ \t]*"
+                                        ;; (3) switches
+                                        "\\([^\":\n]*\"[^\"\n*]*\"[^\":\n]*\\|[^\":\n]*\\)"
+                                        ;; (4) header arguments
+                                        "\\([^\n]*\\)\n"
+                                        ;; (5) body
+                                        "\\([^\000]*?\n\\)??[ \t]*#\\+end_src")))
+    (with-temp-buffer
+      (insert-file-contents orgfile)
+      (goto-char (point-min))
+      (while (re-search-forward org-babel-src-block-regexp nil t)
+        (let ((lang (match-string 2))
+              (args (match-string 4))
+              (body (match-string 5)))
+          (when (and (string= lang "emacs-lisp")
+                     (not (string-match-p ":tangle\\s-+no" args)))
+              (add-to-list 'body-list body)))))
+    (with-temp-file elfile
+      (insert (format ";; Don't edit this file, edit %s instead ...\n\n" orgfile))
+      (apply 'insert (reverse body-list)))
+    (message "Wrote %s ..." elfile)))
 
-  (require 'init-diminish)
-  (require 'init-expandRegion)
-  (require 'init-flycheck)
-  (require 'init-fun)
-  (require 'init-ggtags)
-  ;; (require 'init-helm)
-  (require 'init-helmDescribeKey)
-  (require 'init-helmSwoop)
-  (require 'init-hooks)
-  (require 'init-javascript)
-  (require 'init-keyfreq)
-  (require 'init-ledger)
-  (require 'init-macro)
-  (require 'init-magit)
-  (require 'init-markdown)
-  (require 'init-multipleCursor)
-  (require 'init-nov)
-  (require 'init-nyanCat)
-  (require 'init-orgmodeExtras)
-  (require 'init-programming)
-  (require 'init-rainbow)
-  (require 'init-regex)
-  (require 'init-themes)
-  (require 'init-try)
-  (require 'init-words))
+(defun bootstrap-config ()
+  "Tangle files if needed."
+  (dolist (file config-org-files)
+    (let ((orgfile (concat config-load-path file))
+          (elfile (concat config-load-path "elisp/" (replace-regexp-in-string ".org" ".el" file))))
+      (when (or (not (file-exists-p elfile))
+                (file-newer-than-file-p orgfile elfile))
+        (tangle-config-org orgfile elfile))
+      (load-file elfile))))
+
+(defun bootstrap-config-fallback ()
+  "Just in case."
+  (package-initialize)
+  (require 'org)
+  (dolist (file config-org-files)
+    (org-babel-load-file (concat config-load-path file))))
+
+
+(if (not config-use-fallback)
+    (bootstrap-config)
+  (bootstrap-config-fallback))
 
 (message " Fim das Configurações ")
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

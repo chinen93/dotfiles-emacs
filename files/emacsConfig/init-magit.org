@@ -1,0 +1,15 @@
+#+BEGIN_SRC emacs-lisp
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; Magit
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+  (use-package magit
+    :ensure t
+    :init
+    (progn
+      (message "Magit - Loaded")
+
+      ))
+
+  (provide 'init-magit)
+#+END_SRC
