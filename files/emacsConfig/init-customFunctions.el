@@ -400,8 +400,9 @@ The file is the buffer's file name, or the `default-directory' in
       (message "Too Short. Try Again!!")
     (progn
       (let* ((notes-dir "~/Dropbox/Notes/")
+             (regex-treated (replace-regexp-in-string " " ".*" regex))
              (my-find-c (concat "find " notes-dir  " -type f -exec "))
-             (my-grep-c (concat "grep --color -nH -i -e " regex " {} +"))
+             (my-grep-c (concat "grep --color -nH -i -e '" regex-treated "' {} +"))
              (command (concat my-find-c my-grep-c)))
 
         ;; find . -type f -exec grep --color -nH -e javascript {} +
