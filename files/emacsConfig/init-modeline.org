@@ -1,0 +1,63 @@
+#+TITLE:        Mode Line Configurations
+#+AUTHOR:       Pedro Chinen
+#+DATE-CREATED: [2018-09-23 Sun]
+#+DATE-UPDATED: [2018-09-24 Mon]
+
+* Show More Info
+:PROPERTIES:
+:ID:       03a863ae-0cb0-4cad-9d41-a2c24021b913
+:END:
+#+begin_src emacs-lisp
+  ;; Show number of line and column
+  (line-number-mode 1)
+  (setq column-number-mode t)
+#+end_src
+
+* Load Package: Diminish
+:PROPERTIES:
+:ID:       138ac899-9c43-4ff8-954d-2e40b27a09e7
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package diminish
+    :ensure t)
+#+END_SRC
+
+** Configure
+:PROPERTIES:
+:ID:       c9aba3b8-52ac-415a-9668-2445ffd41cd9
+:END:
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'diminish)
+    (diminish 'ivy-mode)
+    (diminish 'company-mode)
+    (diminish 'elmacro-mode)
+    (diminish 'yas-global-mode)
+    (diminish 'yas-minor-mode)
+    (diminish 'flycheck-mode " FC")
+    (diminish 'auto-revert-mode)
+
+    (diminish 'helm))
+#+END_SRC
+
+* Load Package: Nyan Cat
+:PROPERTIES:
+:ID:       f2dcede5-e561-4ef5-9832-2bb34d3e63e0
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package nyan-mode
+    :ensure t)
+#+END_SRC
+
+** Configure
+:PROPERTIES:
+:ID:       8558203f-ebb1-41de-aa53-e0283e24d701
+:END:
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'nyan-mode)
+    ;; Max length of the nyan rainbow trail
+    (setq nyan-bar-length 10)
+
+    ;; start nyan mode
+    (nyan-mode 1))
+#+END_SRC
+

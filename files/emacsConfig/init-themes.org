@@ -1,0 +1,73 @@
+#+TITLE:        Themes Configurations
+#+AUTHOR:       Pedro Chinen
+#+DATE-CREATED: [2018-09-24 Mon]
+#+DATE-UPDATED: [2018-09-24 Mon]
+
+* Load Package: Zenburn
+:PROPERTIES:
+:ID:       c39c049d-3c1c-4f96-8f82-fa80f41c385e
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package zenburn-theme
+    :ensure t)
+#+END_SRC
+
+* Load Package: Monokai
+:PROPERTIES:
+:ID:       6742532e-84c8-4fba-8b58-094002df97de
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package monokai-theme
+    :ensure t)
+#+END_SRC
+
+* Helper Functions
+:PROPERTIES:
+:ID:       d2d2479d-783c-4c73-b5ef-5f52eda7f244
+:END:
+
+** Set Theme
+:PROPERTIES:
+:ID:       9fb64727-0c7e-4f23-a7c5-57662a36ddc1
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defun sakshamsharma-setTheme (themeName)
+    "Set the theme to THEMENAME."
+    (interactive "sWhat theme do you want to use? ")
+    (when (display-graphic-p)
+      (load-theme (intern themeName) t)))
+#+END_SRC
+
+** Set Font
+:PROPERTIES:
+:ID:       dd1e38f4-877f-4b69-8558-b3238c305e26
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defun sakshamsharma-setFont (fntName)
+    "Set the font to FNTNAME."
+    (interactive "sWhat font name do you want to set? ")
+    (set-face-attribute 'default nil
+                        :family fntName
+                        :height 105
+                        :weight 'normal
+                        :width 'normal))
+
+#+END_SRC
+
+** Set Theme and Font on Startup
+:PROPERTIES:
+:ID:       94e488a7-f590-4ba2-89c4-30c00f9596bb
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defun sakshamsharma-frameActions ()
+    "Do actions to set up appearance of frame."
+    (interactive)
+    (let ((myTheme "monokai") (myFont "DejaVu Sans Mono"))
+      ;; (disableBells)
+      (sakshamsharma-setTheme myTheme)
+      (sakshamsharma-setFont myFont)))
+
+  (sakshamsharma-frameActions)
+#+END_SRC
+
+

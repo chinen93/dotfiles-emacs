@@ -1,15 +1,18 @@
+#+TITLE:        Magit Configuration
+#+AUTHOR:       Pedro Chinen
+#+DATE-CREATED: [2018-09-23 Sun]
+#+DATE-UPDATED: [2018-09-23 Sun]
+
+* Load Package: Magit
+:PROPERTIES:
+:ID:       d43d28de-6016-4f12-9505-236e9dcbbbf3
+:END:
 #+BEGIN_SRC emacs-lisp
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; Magit
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
   (use-package magit
-    :ensure t
-    :init
-    (progn
-      (message "Magit - Loaded")
-
-      ))
-
-  (provide 'init-magit)
+    :ensure t)
 #+END_SRC
+
+* TODO Configuration
+:PROPERTIES:
+:ID:       36033a21-bb12-406d-9ebb-b4b85b91b2c4
+:END:

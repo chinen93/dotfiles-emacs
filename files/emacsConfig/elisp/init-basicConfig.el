@@ -1,110 +1,128 @@
 ;; Don't edit this file, edit ~/emacsConfig/init-basicConfig.org instead ...
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Basic Configuration
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; Set initial message for *scratch* buffer
+  (setq initial-scratch-message "
+  ;; ***************************************************************
+  ;; *************************** SCRATCH ***************************
+  ;; ***************************************************************
 
-;; See the matching pair of parentheses and others characters
-(show-paren-mode t)
+  ;; | Copy & Paste                                                |
+  ;; |-------------------------------------------------------------|
+  ;; | M-1 : cut line                     | M-3 : paste clipboard  |
 
-;; Remove every warning, bell or visual
-(setq ring-bell-function 'ignore)
+  ;; | New command prefix (C-v) and (M-v)                          |
+  ;; |-------------------------------------------------------------|
+  ;; | M-v M-f : find-file                                         |
 
-;; Show number of line and column
-(line-number-mode 1)
-(setq column-number-mode t)
+  ;; | Useful keybindings                                          |
+  ;; |------------------------------------+------------------------|
+  ;; | C-r : backward regex               | C-s   : forward regex  |
+  ;; | C-n : new buffer                   | C-TAB : other-window   |
+  ;; | C-0 : undo                         | M-q   : Hydra Launcher |
 
-;; Don't indent automatically. Go to the beginning of the newline
-(electric-indent-mode -1)
+  ;; | Open Hydra Launcher - More commands inside !!               |
+  ;; |------------------------------------+------------------------|
+  ;; | M-q   : Hydra Launcher                                      |
 
-;; Set encoding charset
-(set-language-environment 'utf-8)
+  ")
+  ;; Set encoding charset
+  (set-language-environment 'utf-8)
 
-;; For old Carbon emacs on OS X only
-(set-keyboard-coding-system 'utf-8-mac)
-(setq locale-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(unless (eq system-type 'windows-nt)
-  (set-selection-coding-system 'utf-8))
-(prefer-coding-system 'utf-8)
+  ;; For old Carbon emacs on OS X only
+  (set-keyboard-coding-system 'utf-8-mac)
+  (setq locale-coding-system 'utf-8)
+  (set-default-coding-systems 'utf-8)
+  (set-terminal-coding-system 'utf-8)
+  (unless (eq system-type 'windows-nt)
+    (set-selection-coding-system 'utf-8))
+  (prefer-coding-system 'utf-8)
+  ;; See the matching pair of parentheses and others characters
+  (show-paren-mode t)
 
-;; Change (yes/no) to (y/n)
-(fset 'yes-or-no-p 'y-or-n-p)
+  ;; Remove every warning, bell or visual
+  (setq ring-bell-function 'ignore)
 
-;; Set initial message for *scratch* buffer
-(setq initial-scratch-message 
-";;***************************************************************
-;;*************************** SCRATCH ***************************
-;;***************************************************************
+  ;; Remove tool bar at top and scroll bar at right
+  (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+  (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
-;;| Copy & Paste                                                |
-;;|-------------------------------------------------------------|
-;;| M-1 : cut line                     | M-3 : paste clipboard  |
+  ;; Don't show start up message
+  (setq inhibit-startup-message t)
+  ;; Change (yes/no) to (y/n)
+  (fset 'yes-or-no-p 'y-or-n-p)
+  ;; Confirm Emacs before exiting
+  (setq confirm-kill-emacs 'yes-or-no-p)
+  ;; Don't indent automatically. Go to the beginning of the newline
+  (electric-indent-mode -1)
+  ;; When yanking with mouse, don't move the point. Just yank it.
+  (setq mouse-yank-at-point t)
+  ;; Delete selected text when something is inserted and a mark is active
+  (delete-selection-mode 1)
 
-;;| New command prefix (C-v) and (M-v)                          |
-;;|-------------------------------------------------------------|
-;;| M-v M-f : find-file                                         |
+  ;; Don't delete file, but move to trash instead
+  (setq delete-by-moving-to-trash t)
+  ;; Don't follow version controlled files change it locally.
+  ;; Git will know that the file has changed.
+  (setq vc-follow-symlinks nil)
+  ;; Set Dropbox folder
+  (setq my-dropbox-folder "~/Dropbox")
 
-;;| Useful keybindings                                          |
-;;|------------------------------------+------------------------|
-;;| C-r : backward regex               | C-s   : forward regex  |
-;;| C-n : new buffer                   | C-TAB : other-window   |
-;;| C-0 : undo                         | M-q   : Hydra Launcher |
+  ;; Config for Windows Only
+  (when (eq system-type 'windows-nt)
+    ;; Dropbox is in another folder
+    (setq my-dropbox-folder
+          (concat (substring (shell-command-to-string "ECHO %USERPROFILE%")
+                             0
+                             -1)
+                  "\\Dropbox")))
+  (setq auto-mode-alist
+        (append
+         ;; File name (within directory) starts with a dot.
+         '((".bashrc" . shell-script-mode)
+           (".bash_aliases" . shell-script-mode)
+           (".bash_profile" . shell-script-mode)
+           (".screenrc" . shell-script-mode)
+           (".ledgerrc" . shell-script-mode)
 
-;;| Open Hydra Launcher - More commands inside !!               |
-;;|------------------------------------+------------------------|
-;;| M-q   : Hydra Launcher                                      |
+           ;; css mode
+           (".scss" . css-mode)
 
-")
+           ;; File name has no dot.
+           ("/[^\\./]*\\'" . fundamental-mode)
 
-;; Don't follow version controlled files change it locally.
-;; Git will know that the file has changed.
-(setq vc-follow-symlinks nil)
+           ;; File name ends in ‘.C’.
+           ("\\.C\\'" . c++-mode))
+         auto-mode-alist))
+  ;; Set directory to hold history
+  (setq savehist-file "~/.emacs.d/savehist")
 
-;; Remove tool bar at top and scroll bar at right
-(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+  ;; Start mode
+  (savehist-mode 1)
 
+  ;; FIXME
+  (setq history-length t)
 
-;; Don't show start up message
-(setq inhibit-startup-message t)
+  ;; Delete duplicated history
+  (setq history-delete-duplicates t)
 
-;; Set Dropbox folder
-(setq my-dropbox-folder "~/Dropbox")
+  ;; Save minibuffer history
+  (setq savehist-save-minibuffer-history 1)
 
-;; Config for Linux Only
-(unless (eq system-type 'windows-nt)
+  ;; Save hist for kill rings, search rings and regex search rings
+  (setq savehist-additional-variables
+        '(kill-ring
+          search-ring
+          regexp-search-ring))
+  (require 'server)
+  (unless (server-running-p)
+    (server-start))
+  ;; -a : show all entries even those "hidden".
+  ;; -l : use a long listing format.
+  ;; -H : follow symbolic links.
+  ;; --group-directories-first : directory before files.
+  (setq dired-listing-switches "-alH --group-directories-first")
 
-  ;; A GNU Emacs library to ensure environment variables inside Emacs
-  ;; look the same as in the user's shell.
-  (use-package exec-path-from-shell
-    :ensure t
-    :config (progn
-              (exec-path-from-shell-initialize))))
-
-;; Config for Windows Only
-(when (eq system-type 'windows-nt)
-  ;; Dropbox is in another folder
-  (setq my-dropbox-folder
-        (concat (substring (shell-command-to-string "ECHO %USERPROFILE%")
-                           0
-                           -1)
-                "\\Dropbox")))
-
-;; Confirm Emacs before exiting
-(setq confirm-kill-emacs 'yes-or-no-p)
-
-;; Delete selected text when something is inserted and a mark is active
-(delete-selection-mode 1)
-
-;; When yanking with mouse, don't move the point. Just yank it.
-(setq mouse-yank-at-point t)
-
-;; Used for formatting time values
-(setq system-time-locale "C")
-
-;; Don't delete file, but move to trash instead
-(setq delete-by-moving-to-trash t)
-
-(provide 'init-basicConfig)
+  (defun xah-dired-mode-setup ()
+    "to be run as hook for `dired-mode'."
+    (dired-hide-details-mode 1))
+  (add-hook 'dired-mode-hook 'xah-dired-mode-setup)

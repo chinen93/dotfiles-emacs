@@ -1,21 +1,38 @@
-#+BEGIN_SRC emacs-lisp
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; Backup
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+#+TITLE:        Backup Configuration
+#+AUTHOR:       Pedro Chinen
+#+DATE-CREATED: [2018-09-22 Sat]
+#+DATE-UPDATED: [2018-09-22 Sat]
 
+* Set Default Directory 
+:PROPERTIES:
+:ID:       a5f317bc-1b74-410b-89fb-07ebeb91b44f
+:END:
+#+BEGIN_SRC emacs-lisp
   ;; Set directory to hold backup files
   (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+#+END_SRC
 
+* Where to Add Auto Saved Files
+:PROPERTIES:
+:ID:       b46630ef-a0a3-4ec3-8d47-104c057070cb
+:END:
+#+BEGIN_SRC emacs-lisp
   ;; Set transform to apply to buffer file name before making auto-save
   ;; file name.
   (setq auto-save-file-name-transforms
 	'((".*" "~/.emacs.d/auto-save-list/" t)))
+#+END_SRC
 
+* Configurations
+:PROPERTIES:
+:ID:       bb2f8725-32f0-44af-ac1c-ca45a9565b0b
+:END:
+#+BEGIN_SRC emacs-lisp
   ;; Backup by copying, delete old verions and backup version controlled
   ;; files.
   (setq backup-by-copying t)
   (setq delete-old-versions t)
   (setq version-control t)
-
-  (provide 'init-backup)
 #+END_SRC
+
+

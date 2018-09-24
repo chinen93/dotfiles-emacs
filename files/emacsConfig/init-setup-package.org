@@ -1,11 +1,31 @@
-#+BEGIN_SRC emacs-lisp
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; Setup Packages
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+#+TITLE:        Setup Package Configuration
+#+AUTHOR:       Pedro Chinen
+#+DATE-CREATED: [2018-09-22 Sat]
+#+DATE-UPDATED: [2018-09-24 Mon]
 
+#+BEGIN_SRC emacs-lisp
   (require 'package)
   (package-initialize)
+#+END_SRC
 
+* Set Packages Archives
+:PROPERTIES:
+:ID:       f43abcb0-7fdc-40f3-a161-dc9217ceab98
+:END:
+#+BEGIN_SRC emacs-lisp
+  (setq package-archives
+        '(("melpa-stable" . "https://stable.melpa.org/packages/")
+          ("melpa" . "https://melpa.org/packages/")
+          ("org" . "http://orgmode.org/elpa/")
+          ("gnu" . "http://elpa.gnu.org/packages/")
+          ("marmalade" . "http://marmalade-repo.org/packages/")))
+#+END_SRC
+
+* Config Some Things
+:PROPERTIES:
+:ID:       ffa9c9e2-8aad-442a-8aac-4315a81aad9e
+:END:
+#+BEGIN_SRC emacs-lisp
   (setq package-enable-at-startup nil)
   (setq file-name-handler-alist nil)
   (setq message-log-max 16384)
@@ -14,12 +34,18 @@
   (setq auto-window-vscroll nil)
 
   (add-hook 'after-init-hook
-	    `(lambda ()
-	       (setq gc-cons-threshold (* 2 1000 1000))
-	       (setq gc-cons-percentage 0.1)
-	       (garbage-collect))
-	    t)
+            `(lambda ()
+               (setq gc-cons-threshold (* 2 1000 1000))
+               (setq gc-cons-percentage 0.1)
+               (garbage-collect))
+            t)
+#+END_SRC
 
+* Purcell's Way to Install Packages
+:PROPERTIES:
+:ID:       15764119-011e-4999-8682-03d21e1ee5b5
+:END:
+#+BEGIN_SRC emacs-lisp
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   ;; Purcell's way to install packages on emacs
   ;; https://github.com/purcell/emacs.d/blob/a8481a2179ba2c38e51c28504a04713dd33b1fa2/lisp/init-elpa.el#L48
@@ -29,30 +55,27 @@
   If NO-REFRESH is non-nil, the available package lists will not be
   re-downloaded in order to locate PACKAGE."
     (if (package-installed-p package min-version)
-	t
+        t
       (if (or (assoc package package-archive-contents) no-refresh)
-	  (if (boundp 'package-selected-packages)
-	      ;; Record this as a package the user installed explicitly
-	      (package-install package nil)
-	    (package-install package))
-	(progn
-	  (package-refresh-contents)
-	  (require-package package min-version t)))))
+          (if (boundp 'package-selected-packages)
+              ;; Record this as a package the user installed explicitly
+              (package-install package nil)
+            (package-install package))
+        (progn
+          (package-refresh-contents)
+          (require-package package min-version t)))))
+#+END_SRC
 
+* Load Package *use-package*
+:PROPERTIES:
+:ID:       a90bf7d2-6946-4c3a-a3f8-8a3f2cb68b8c
+:END:
+#+BEGIN_SRC emacs-lisp
   ;; If not in windows require these configs
   (unless (eq system-type 'windows-nt)
-
-    (setq package-archives
-	  '(("melpa-stable" . "https://stable.melpa.org/packages/")
-	    ("melpa" . "https://melpa.org/packages/")
-	    ("org" . "http://orgmode.org/elpa/")
-	    ("gnu" . "http://elpa.gnu.org/packages/")
-	    ("marmalade" . "http://marmalade-repo.org/packages/")))
 
     (require-package 'use-package)
     (setq use-package-verbose t)
     (setq load-prefer-newer t))
-
-  (provide 'init-setup-package)
-
 #+END_SRC
+

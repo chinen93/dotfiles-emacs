@@ -1,21 +1,26 @@
-#+BEGIN_SRC emacs-lisp
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; Bookmark
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+#+TITLE:        Bookmark Configurations
+#+AUTHOR:       Pedro Chinen
+#+DATE-CREATED: [2018-09-22 Sat]
+#+DATE-UPDATED: [2018-09-22 Sat]
 
+* Bookmark File 
+:PROPERTIES:
+:ID:       d72c25e0-8b1c-474f-a228-89dfb8a5da4d
+:END:
+#+BEGIN_SRC emacs-lisp
   ;; Set default file where bookmarks will be saved.
   (setq bookmark-default-file  "~/emacsBookmark.el")
+#+END_SRC
 
-  (file-exists-p "~/Dropbox")
-
+* Some Configurations
+:PROPERTIES:
+:ID:       779ef6b3-ea52-4796-9f0a-4be19af7f482
+:END:
+#+BEGIN_SRC emacs-lisp
   ;; Save bookmarks every time you make or delete a bookmark.
   (setq bookmark-save-flag 1)
 
   ;; Bookmarks are displayed in LIFO order
   (setq bookmark-sort-flag nil)
-
-  ;; (global-set-key (kbd "M-v M-p") 'bookmark-bmenu-list)
-  (global-set-key (kbd "M-v M-l") 'bookmark-set)
-
-  (provide 'init-bookmark)
 #+END_SRC
+

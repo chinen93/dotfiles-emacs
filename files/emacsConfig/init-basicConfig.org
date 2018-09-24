@@ -1,110 +1,236 @@
+#+TITLE:        Basic Configuration
+#+AUTHOR:       Pedro Chinen
+#+DATE-CREATED: [2018-09-21 Fri]
+#+DATE-UPDATED: [2018-09-24 Mon]
+
+* Scratch Buffer
+:PROPERTIES:
+:ID:       d4c6c814-f72e-41a1-9930-007d52730ae3
+:END:
+
 #+BEGIN_SRC emacs-lisp
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Basic Configuration
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  ;; Set initial message for *scratch* buffer
+  (setq initial-scratch-message "
+  ;; ***************************************************************
+  ;; *************************** SCRATCH ***************************
+  ;; ***************************************************************
 
-;; See the matching pair of parentheses and others characters
-(show-paren-mode t)
+  ;; | Copy & Paste                                                |
+  ;; |-------------------------------------------------------------|
+  ;; | M-1 : cut line                     | M-3 : paste clipboard  |
 
-;; Remove every warning, bell or visual
-(setq ring-bell-function 'ignore)
+  ;; | New command prefix (C-v) and (M-v)                          |
+  ;; |-------------------------------------------------------------|
+  ;; | M-v M-f : find-file                                         |
 
-;; Show number of line and column
-(line-number-mode 1)
-(setq column-number-mode t)
+  ;; | Useful keybindings                                          |
+  ;; |------------------------------------+------------------------|
+  ;; | C-r : backward regex               | C-s   : forward regex  |
+  ;; | C-n : new buffer                   | C-TAB : other-window   |
+  ;; | C-0 : undo                         | M-q   : Hydra Launcher |
 
-;; Don't indent automatically. Go to the beginning of the newline
-(electric-indent-mode -1)
+  ;; | Open Hydra Launcher - More commands inside !!               |
+  ;; |------------------------------------+------------------------|
+  ;; | M-q   : Hydra Launcher                                      |
 
-;; Set encoding charset
-(set-language-environment 'utf-8)
-
-;; For old Carbon emacs on OS X only
-(set-keyboard-coding-system 'utf-8-mac)
-(setq locale-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(unless (eq system-type 'windows-nt)
-  (set-selection-coding-system 'utf-8))
-(prefer-coding-system 'utf-8)
-
-;; Change (yes/no) to (y/n)
-(fset 'yes-or-no-p 'y-or-n-p)
-
-;; Set initial message for *scratch* buffer
-(setq initial-scratch-message 
-";;***************************************************************
-;;*************************** SCRATCH ***************************
-;;***************************************************************
-
-;;| Copy & Paste                                                |
-;;|-------------------------------------------------------------|
-;;| M-1 : cut line                     | M-3 : paste clipboard  |
-
-;;| New command prefix (C-v) and (M-v)                          |
-;;|-------------------------------------------------------------|
-;;| M-v M-f : find-file                                         |
-
-;;| Useful keybindings                                          |
-;;|------------------------------------+------------------------|
-;;| C-r : backward regex               | C-s   : forward regex  |
-;;| C-n : new buffer                   | C-TAB : other-window   |
-;;| C-0 : undo                         | M-q   : Hydra Launcher |
-
-;;| Open Hydra Launcher - More commands inside !!               |
-;;|------------------------------------+------------------------|
-;;| M-q   : Hydra Launcher                                      |
-
-")
-
-;; Don't follow version controlled files change it locally.
-;; Git will know that the file has changed.
-(setq vc-follow-symlinks nil)
-
-;; Remove tool bar at top and scroll bar at right
-(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-
-
-;; Don't show start up message
-(setq inhibit-startup-message t)
-
-;; Set Dropbox folder
-(setq my-dropbox-folder "~/Dropbox")
-
-;; Config for Linux Only
-(unless (eq system-type 'windows-nt)
-
-  ;; A GNU Emacs library to ensure environment variables inside Emacs
-  ;; look the same as in the user's shell.
-  (use-package exec-path-from-shell
-    :ensure t
-    :config (progn
-              (exec-path-from-shell-initialize))))
-
-;; Config for Windows Only
-(when (eq system-type 'windows-nt)
-  ;; Dropbox is in another folder
-  (setq my-dropbox-folder
-        (concat (substring (shell-command-to-string "ECHO %USERPROFILE%")
-                           0
-                           -1)
-                "\\Dropbox")))
-
-;; Confirm Emacs before exiting
-(setq confirm-kill-emacs 'yes-or-no-p)
-
-;; Delete selected text when something is inserted and a mark is active
-(delete-selection-mode 1)
-
-;; When yanking with mouse, don't move the point. Just yank it.
-(setq mouse-yank-at-point t)
-
-;; Used for formatting time values
-(setq system-time-locale "C")
-
-;; Don't delete file, but move to trash instead
-(setq delete-by-moving-to-trash t)
-
-(provide 'init-basicConfig)
+  ")
 #+END_SRC
+
+* Encoding Charset
+:PROPERTIES:
+:ID:       f59e7297-4e09-498d-8c47-703673a6f5da
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  ;; Set encoding charset
+  (set-language-environment 'utf-8)
+
+  ;; For old Carbon emacs on OS X only
+  (set-keyboard-coding-system 'utf-8-mac)
+  (setq locale-coding-system 'utf-8)
+  (set-default-coding-systems 'utf-8)
+  (set-terminal-coding-system 'utf-8)
+  (unless (eq system-type 'windows-nt)
+    (set-selection-coding-system 'utf-8))
+  (prefer-coding-system 'utf-8)
+#+END_SRC
+
+* Better Visual
+:PROPERTIES:
+:ID:       40501f1f-b111-4789-992f-c658bd924d15
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  ;; See the matching pair of parentheses and others characters
+  (show-paren-mode t)
+
+  ;; Remove every warning, bell or visual
+  (setq ring-bell-function 'ignore)
+
+  ;; Remove tool bar at top and scroll bar at right
+  (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+  (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+
+  ;; Don't show start up message
+  (setq inhibit-startup-message t)
+#+END_SRC
+
+** Prompt yes-no
+:PROPERTIES:
+:ID:       e61fdcf3-d5ef-437f-b13a-efdeab15013e
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  ;; Change (yes/no) to (y/n)
+  (fset 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+
+** Ask before leaving Emacs
+:PROPERTIES:
+:ID:       61a27609-0794-4195-aca4-b39c0a633541
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  ;; Confirm Emacs before exiting
+  (setq confirm-kill-emacs 'yes-or-no-p)
+#+END_SRC
+
+* Global Identation
+:PROPERTIES:
+:ID:       bb472086-0d4c-4779-9b79-4a4929de4a6e
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  ;; Don't indent automatically. Go to the beginning of the newline
+  (electric-indent-mode -1)
+#+END_SRC
+
+* Mouse
+:PROPERTIES:
+:ID:       bacabf25-5984-4e0d-8f5d-042ec3f02da1
+:END:
+#+BEGIN_SRC emacs-lisp
+  ;; When yanking with mouse, don't move the point. Just yank it.
+  (setq mouse-yank-at-point t)
+#+END_SRC
+
+* Delete Things
+:PROPERTIES:
+:ID:       78566d3b-c8ae-4ca1-b106-73ad2c7cf238
+:END:
+#+BEGIN_SRC emacs-lisp
+  ;; Delete selected text when something is inserted and a mark is active
+  (delete-selection-mode 1)
+
+  ;; Don't delete file, but move to trash instead
+  (setq delete-by-moving-to-trash t)
+#+END_SRC
+
+* Syslinks
+:PROPERTIES:
+:ID:       eabe8ead-fcc1-412d-9cdc-da74407d1758
+:END:
+#+BEGIN_SRC emacs-lisp
+  ;; Don't follow version controlled files change it locally.
+  ;; Git will know that the file has changed.
+  (setq vc-follow-symlinks nil)
+#+END_SRC
+
+* Global Variables
+:PROPERTIES:
+:ID:       d53815ee-b64e-40f0-9b3a-8be0d6db288e
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  ;; Set Dropbox folder
+  (setq my-dropbox-folder "~/Dropbox")
+
+  ;; Config for Windows Only
+  (when (eq system-type 'windows-nt)
+    ;; Dropbox is in another folder
+    (setq my-dropbox-folder
+          (concat (substring (shell-command-to-string "ECHO %USERPROFILE%")
+                             0
+                             -1)
+                  "\\Dropbox")))
+#+END_SRC
+
+* TODO Files Modes
+:PROPERTIES:
+:ID:       31c397d5-4b33-49c1-b850-6892b872c131
+:END:
+#+BEGIN_SRC emacs-lisp
+  (setq auto-mode-alist
+        (append
+         ;; File name (within directory) starts with a dot.
+         '((".bashrc" . shell-script-mode)
+           (".bash_aliases" . shell-script-mode)
+           (".bash_profile" . shell-script-mode)
+           (".screenrc" . shell-script-mode)
+           (".ledgerrc" . shell-script-mode)
+
+           ;; css mode
+           (".scss" . css-mode)
+
+           ;; File name has no dot.
+           ("/[^\\./]*\\'" . fundamental-mode)
+
+           ;; File name ends in ‘.C’.
+           ("\\.C\\'" . c++-mode))
+         auto-mode-alist))
+#+END_SRC
+
+* History
+:PROPERTIES:
+:ID:       e1e00346-355c-4d72-8bb3-68badbaf801b
+:END:
+#+BEGIN_SRC emacs-lisp
+  ;; Set directory to hold history
+  (setq savehist-file "~/.emacs.d/savehist")
+
+  ;; Start mode
+  (savehist-mode 1)
+
+  ;; FIXME
+  (setq history-length t)
+
+  ;; Delete duplicated history
+  (setq history-delete-duplicates t)
+
+  ;; Save minibuffer history
+  (setq savehist-save-minibuffer-history 1)
+
+  ;; Save hist for kill rings, search rings and regex search rings
+  (setq savehist-additional-variables
+        '(kill-ring
+          search-ring
+          regexp-search-ring))
+#+END_SRC
+
+* Server
+:PROPERTIES:
+:ID:       12212ff1-f928-4929-87cc-e6f487588a85
+:END:
+#+BEGIN_SRC emacs-lisp
+  (require 'server)
+  (unless (server-running-p)
+    (server-start))
+#+END_SRC
+
+* Dired
+:PROPERTIES:
+:ID:       75f45ca7-b183-4da3-a4f0-d32145b7a0be
+:END:
+#+BEGIN_SRC emacs-lisp
+  ;; -a : show all entries even those "hidden".
+  ;; -l : use a long listing format.
+  ;; -H : follow symbolic links.
+  ;; --group-directories-first : directory before files.
+  (setq dired-listing-switches "-alH --group-directories-first")
+
+  (defun xah-dired-mode-setup ()
+    "to be run as hook for `dired-mode'."
+    (dired-hide-details-mode 1))
+  (add-hook 'dired-mode-hook 'xah-dired-mode-setup)
+#+END_SRC
+

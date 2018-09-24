@@ -1,0 +1,325 @@
+#+TITLE:        Fun Packages Configurations
+#+AUTHOR:       Pedro Chinen
+#+DATE-CREATED: [2018-09-23 Sun]
+#+DATE-UPDATED: [2018-09-24 Mon]
+
+* CANCELED Load Package: Word of The Day
+CLOSED: [2018-09-23 Sun 23:52]
+:PROPERTIES:
+:ID:       858890f5-e5df-44a9-9f96-1e223267c540
+:END:
+- State "CANCELED"   from "DONE"       [2018-09-23 Sun 23:52]
+- State "DONE"       from "WORKING"    [2018-09-23 Sun 23:52]
+- State "WORKING"    from "TODO"       [2018-09-23 Sun 23:52]
+#+BEGIN_SRC emacs-lisp
+  ;; (use-package wotd
+  ;;   :ensure t)
+#+END_SRC
+
+* CANCELED Load Package: Typit
+:PROPERTIES:
+:ID:       4bdb9706-d0cd-470e-812f-64ead7775ee4
+:END:
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; (use-package typit
+  ;;   :ensure t)
+#+END_SRC
+
+* CANCELED Load Package: Focus
+:PROPERTIES:
+:ID:       d83bb25a-0dff-4490-9e6d-c63197fe8f1b
+:END:
+#+BEGIN_SRC emacs-lisp  :tangle no
+  ;; (use-package focus
+  ;;   :ensure t)
+#+END_SRC
+
+* CANCELED Load Package: Google Translate
+:PROPERTIES:
+:ID:       a59b4cdf-8a1f-4189-80f1-9cffaa1afbeb
+:END:
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; (use-package google-translate
+  ;;   :ensure t)
+#+END_SRC
+
+* CANCELED Load Package: Google This
+:PROPERTIES:
+:ID:       3cd39884-4471-4f4e-82fb-ceb18e47e5a8
+:END:
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; (use-package google-this
+  ;;   :ensure t)
+#+END_SRC
+
+* Load Package: Goto Addr
+:PROPERTIES:
+:ID:       35ad56f7-e2fe-4a5d-b94d-890d0a575671
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package goto-addr
+    ;; http://xenodium.com/#actionable-urls-in-emacs-buffers
+    :hook ((compilation-mode . goto-address-mode)
+           (prog-mode . goto-address-prog-mode)
+           (eshell-mode . goto-address-mode)
+           (shell-mode . goto-address-mode))
+    :bind (:map goto-address-highlight-keymap
+                ("<RET>" . goto-address-at-point)
+                ("M-<RET>" . newline))
+    :commands (goto-address-prog-mode
+               goto-address-mode))
+#+END_SRC
+
+* Load Package: Key Freq
+:PROPERTIES:
+:ID:       1b7e6097-710e-40dd-8b3f-ce3b07f2996f
+:END:
+#+BEGIN_SRC emacs-lisp
+(use-package keyfreq
+    :ensure t)
+#+END_SRC
+
+** Configure
+:PROPERTIES:
+:ID:       8b55a827-24bb-4d8d-9d6c-a8b1817e8300
+:END:
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'keyfreq)
+    ;; Commands that are not listed in (keyfreq-show)
+    (setq keyfreq-excluded-commands
+	  '(self-insert-command
+	    abort-recursive-edit
+	    backward-char
+	    backward-delete-char-untabify
+	    c-electric-backspace
+	    company-ignore
+	    delete-backward-char
+	    forward-char
+	    helm-next-line
+	    helm-previous-line
+	    left-char
+	    mouse-drag-region
+	    mouse-set-point
+	    mwheel-scroll
+	    next-line
+	    org-delete-backward-char
+	    org-self-insert-command
+	    previous-line
+	    right-char))
+
+    ;; Start keyfreq mode
+    (keyfreq-mode 1)
+
+    ;; Star key freq auto sabex
+    (keyfreq-autosave-mode 1))
+#+END_SRC
+
+* Load Package: Rainbow Delimiters
+:PROPERTIES:
+:ID:       a8dd458b-12a8-4843-812e-311b2ed3eb67
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package rainbow-delimiters
+    :ensure t)
+#+END_SRC
+
+** Configure
+:PROPERTIES:
+:ID:       3b991d9f-6d78-417c-9a2a-fdb2b91197a2
+:END:
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'rainbow-delimiters)
+    (require 'rainbow-delimiters)
+    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+#+END_SRC
+
+* Load Package: Define Word
+:PROPERTIES:
+:ID:       d48b2394-6dd7-4c5e-99f5-54d035a80b86
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package define-word
+    :ensure t)
+#+END_SRC
+
+* Load Package: String Inflection
+:PROPERTIES:
+:ID:       8cf58b18-54ac-477e-9093-4394c5f43d06
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package string-inflection
+    :ensure t)
+#+END_SRC
+
+* Load Package: Nov
+:PROPERTIES:
+:ID:       c521136e-55aa-499c-8919-b85c7e856663
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package nov
+    :ensure t)
+#+END_SRC
+
+** Configure
+:PROPERTIES:
+:ID:       4f2832ee-7b32-47e5-a7cd-9e6760791bcd
+:END:
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'nov)
+    (setq nov-text-width most-positive-fixnum)
+    (add-hook 'nov-mode-hook 'visual-line-mode)
+
+    (setq nov-text-width 80)
+
+    (defun my-nov-font-setup ()
+      (face-remap-add-relative
+       'variable-pitch
+       :family "Liberation Serif"
+       :height 1.0))
+
+    (add-hook 'nov-mode-hook 'my-nov-font-setup)
+
+    (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode)))
+#+END_SRC
+
+* Load Package: Try
+:PROPERTIES:
+:ID:       67022d68-7e5a-40e2-939d-3ba0232bfcb1
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package try
+    :ensure t)
+#+END_SRC
+
+* Load Package: Re-Builder
+:PROPERTIES:
+:ID:       4ea7abe5-0871-4571-ba5b-937843335afb
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package re-builder
+    :ensure t)
+#+END_SRC
+
+** TODO Configure
+:PROPERTIES:
+:ID:       e75904b3-6a0f-4407-a4eb-7b20966bdec6
+:END:
+#+BEGIN_SRC emacs-lisp
+
+#+END_SRC
+
+* Load Package: Multiple Cursors
+:PROPERTIES:
+:ID:       49809966-9769-4312-8310-49388e8475f1
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package multiple-cursors
+    :ensure t)
+#+END_SRC
+
+** Configure
+:PROPERTIES:
+:ID:       2f5cdafe-a68f-4cc6-b1d4-3f4da6549a69
+:END:
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'multiple-cursors)
+    (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+    (global-set-key (kbd "C-<") 'mc/mark-previous-like-this))
+#+END_SRC
+
+* Load Package: elmacro
+:PROPERTIES:
+:ID:       3c3b577a-7649-495d-b732-7625380727dc
+:END:
+#+BEGIN_SRC emacs-lisp
+    (use-package elmacro
+ 
+      :ensure t)
+#+END_SRC
+
+** Config
+:PROPERTIES:
+:ID:       0281baaf-3ae2-4698-b1f0-a13ab9f8f2c7
+:END:
+#+begin_src emacs-lisp
+  (when (featurep 'elmacro) 
+    (elmacro-mode))
+#+end_src
+
+* Load Package: Flycheck
+:PROPERTIES:
+:ID:       f17ac6e2-8b1e-47b9-914e-eb7c0a3f1a83
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck
+    :ensure t)
+#+END_SRC
+
+** Configure
+:PROPERTIES:
+:ID:       365b4c78-ee13-4203-8676-21797c7c8cd1
+:END:
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'flycheck)
+    ;; Flycheck gets to be a bit much when warning about checkdoc issues.
+    (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+
+    (add-hook 'prog-mode-hook 'flycheck-mode))
+#+END_SRC
+
+* Load Package: Expand Region
+:PROPERTIES:
+:ID:       b8bd9444-d023-4fe0-99e4-8b732e3b927a
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package expand-region
+    :ensure t)
+#+END_SRC
+
+** Configure
+:PROPERTIES:
+:ID:       b7b34fda-66a0-4f9a-bbb5-6042ab8a045d
+:END:
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'expand-region)
+    (global-set-key (kbd "C-=") 'er/expand-region))
+#+END_SRC
+
+* Load Package: Company
+:PROPERTIES:
+:ID:       3032bb89-0b5c-4ee1-b12c-1199eb2fa342
+:END:
+#+BEGIN_SRC emacs-lisp
+  (require-package 'company)
+#+END_SRC
+
+** Configure
+:PROPERTIES:
+:ID:       a572722d-0e69-449f-9571-b801880ecd7e
+:END:
+#+BEGIN_SRC emacs-lisp
+  ;; Set delay to start completition
+  (setq company-idle-delay 0.2)
+  (setq company-echo-delay 0)
+
+  ;; Keep the return of company as-is
+  (setq company-dabbrev-downcase nil)
+
+  ;; Minimimum size to start to search for match
+  (setq company-minimum-prefix-length 3)
+  (setq company-selection-wrap-around t)
+
+  ;; Sort matches by occurrence and backend importance
+  (setq company-transformers '(company-sort-by-occurrence
+                               company-sort-by-backend-importance))
+#+END_SRC
+
+** Hooks
+:PROPERTIES:
+:ID:       31d817f0-e087-4bf4-b94e-537070ceae87
+:END:
+#+BEGIN_SRC emacs-lisp
+  ;; Start mode globally
+  (add-hook 'after-init-hook 'global-company-mode)
+#+END_SRC
+

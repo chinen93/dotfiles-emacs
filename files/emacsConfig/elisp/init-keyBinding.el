@@ -1,23 +1,5 @@
 ;; Don't edit this file, edit ~/emacsConfig/init-keyBinding.org instead ...
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; Key Binding
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-  ;;;; Unset Key binding F(num)
-  (global-unset-key (kbd "<f2>"))
-  (global-unset-key (kbd "<f3>"))
-  (global-unset-key (kbd "<f4>"))
-  (global-unset-key (kbd "<f5>"))
-  (global-unset-key (kbd "<f6>"))
-  (global-unset-key (kbd "<f7>"))
-  (global-unset-key (kbd "<f8>"))
-  (global-unset-key (kbd "<f9>"))
-  (global-unset-key (kbd "<f10>"))
-  (global-unset-key (kbd "<f11>"))
-  (global-unset-key (kbd "<f12>"))
-
-  ;;;; Unset digit-arguments
   (global-unset-key (kbd "C-1"))
   (global-unset-key (kbd "C-2"))
   (global-unset-key (kbd "C-3"))
@@ -29,18 +11,6 @@
   (global-unset-key (kbd "C-9"))
   (global-unset-key (kbd "C-0"))
   (global-unset-key (kbd "C--"))
-  (global-unset-key (kbd "M-1"))
-  (global-unset-key (kbd "M-2"))
-  (global-unset-key (kbd "M-3"))
-  (global-unset-key (kbd "M-4"))
-  (global-unset-key (kbd "M-5"))
-  (global-unset-key (kbd "M-6"))
-  (global-unset-key (kbd "M-7"))
-  (global-unset-key (kbd "M-8"))
-  (global-unset-key (kbd "M-9"))
-  (global-unset-key (kbd "M-0"))
-  (global-unset-key (kbd "M--"))
-
   ;;;; Unset every single key chord: start with C-
   (global-unset-key (kbd "C-q"))
   (global-unset-key (kbd "C-w"))
@@ -68,7 +38,17 @@
   (global-unset-key (kbd "C-b"))
   (global-unset-key (kbd "C-n"))
   ;; (global-unset-key (kbd "C-m")) ;; in emacs C-m is the same as RET
-
+  (global-unset-key (kbd "M-1"))
+  (global-unset-key (kbd "M-2"))
+  (global-unset-key (kbd "M-3"))
+  (global-unset-key (kbd "M-4"))
+  (global-unset-key (kbd "M-5"))
+  (global-unset-key (kbd "M-6"))
+  (global-unset-key (kbd "M-7"))
+  (global-unset-key (kbd "M-8"))
+  (global-unset-key (kbd "M-9"))
+  (global-unset-key (kbd "M-0"))
+  (global-unset-key (kbd "M--"))
   ;;;; Unset every single key chord: start with M-
   (global-unset-key (kbd "M-q"))
   ;; (global-unset-key (kbd "M-w")) ;; kill-ring-save
@@ -97,7 +77,19 @@
   (global-unset-key (kbd "M-n"))
   (global-unset-key (kbd "M-m"))
 
-  ;;;; set Control/Meta plus number
+  (global-unset-key (kbd "<f2>"))
+  (global-unset-key (kbd "<f3>"))
+  (global-unset-key (kbd "<f4>"))
+  (global-unset-key (kbd "<f5>"))
+  (global-unset-key (kbd "<f6>"))
+  (global-unset-key (kbd "<f7>"))
+  (global-unset-key (kbd "<f8>"))
+  (global-unset-key (kbd "<f9>"))
+  (global-unset-key (kbd "<f10>"))
+  (global-unset-key (kbd "<f11>"))
+  (global-unset-key (kbd "<f12>"))
+  (global-unset-key (kbd "C-x DEL"))
+  (global-unset-key (kbd "C-x f"))
   ;; (global-set-key (kbd "C-1"))
   ;; (global-set-key (kbd "C-2"))
   ;; (global-set-key (kbd "C-3"))
@@ -109,35 +101,6 @@
   ;; (global-set-key (kbd "C-9"))
   ;; (global-set-key (kbd "C-0"))
   ;; (global-set-key (kbd "C--"))
-  (global-set-key (kbd "M-1") 'xah-cut-line-or-region)
-  ;; (global-set-key (kbd "M-2"))
-  (global-set-key (kbd "M-3") 'yank)
-  ;; (global-set-key (kbd "M-4"))
-  ;; (global-set-key (kbd "M-5"))
-  ;; (global-set-key (kbd "M-6"))
-  ;; (global-set-key (kbd "M-7"))
-  ;; (global-set-key (kbd "M-8"))
-  ;; (global-set-key (kbd "M-9"))
-  ;; (global-set-key (kbd "M-0"))
-  ;; (global-set-key (kbd "M--"))
-
-  ;;;; Unset key for frequent mistyped press
-  (global-unset-key (kbd "C-x DEL"))
-  (global-unset-key (kbd "C-x f"))
-
-  ;;;; Define new prefix command
-  (define-prefix-command 'my-prefix-command)
-  (global-set-key (kbd "C-v") 'my-prefix-command)
-  (global-set-key (kbd "M-v") 'my-prefix-command)
-
-  ;;;; Key binding using my prefix command
-  (global-set-key (kbd "M-v M-f") 'find-file)
-
-  ;;;; Key binding special keys
-  (global-set-key (kbd "<prior>") 'xah-backward-block)
-  (global-set-key (kbd "<next>") 'xah-forward-block)
-
-  ;;;; Set every single key chord: start with C-
   ;; (global-set-key (kbd "C-q"))
   ;; (global-set-key (kbd "C-w"))
   ;; (global-set-key (kbd "C-e"))
@@ -166,7 +129,17 @@
   ;; (global-set-key (kbd "C-m")) ;; in emacs C-m is the same as RET
   (global-set-key (kbd "<C-tab>") 'other-window)
 
-  ;;;; Set every single key chord: start with M-
+  (global-set-key (kbd "M-1") 'xah-cut-line-or-region)
+  ;; (global-set-key (kbd "M-2"))
+  (global-set-key (kbd "M-3") 'yank)
+  ;; (global-set-key (kbd "M-4"))
+  ;; (global-set-key (kbd "M-5"))
+  ;; (global-set-key (kbd "M-6"))
+  ;; (global-set-key (kbd "M-7"))
+  ;; (global-set-key (kbd "M-8"))
+  ;; (global-set-key (kbd "M-9"))
+  ;; (global-set-key (kbd "M-0"))
+  ;; (global-set-key (kbd "M--"))
   ;; (global-set-key (kbd "M-q"))
   ;; (global-set-key (kbd "M-w")) ;; kill-ring-save
   ;; (global-set-key (kbd "M-e"))
@@ -195,4 +168,10 @@
   ;; (global-set-key (kbd "M-m"))
   (global-set-key (kbd "M-0") 'undo)
 
-  (provide 'init-keyBinding)
+  ;;;; Define new prefix command
+  (define-prefix-command 'my-prefix-command)
+  (global-set-key (kbd "C-v") 'my-prefix-command)
+  (global-set-key (kbd "M-v") 'my-prefix-command)
+
+  ;;;; Key binding using my prefix command
+  (global-set-key (kbd "M-v M-f") 'find-file)

@@ -1,8 +1,5 @@
 ;; Don't edit this file, edit ~/emacsConfig/init-ivy.org instead ...
 
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; IVY configuration
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   (require-package 'ivy)
   (require-package 'counsel)
 
@@ -19,10 +16,7 @@
   (setq ivy-re-builders-alist
 	;; allow input not in order
 	'((t   . ivy--regex-ignore-order)))
-
   (global-set-key (kbd "C-s") 'swiper)
   (global-set-key (kbd "M-x") 'counsel-M-x)
 
   (global-set-key (kbd "M-v M-f") 'counsel-find-file)
-
-  (provide 'init-ivy)

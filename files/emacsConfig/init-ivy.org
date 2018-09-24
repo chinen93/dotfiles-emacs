@@ -1,11 +1,24 @@
+#+TITLE:        Ivy Configuration
+#+AUTHOR:       Pedro Chinen
+#+DATE-CREATED: [2018-09-22 Sat]
+#+DATE-UPDATED: [2018-09-22 Sat]
+
+* Load Package: Ivy
+:PROPERTIES:
+:ID:       c354f169-5dfa-439c-8fa9-b499d4d3183c
+:END:
 #+BEGIN_SRC emacs-lisp
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-  ;; IVY configuration
-  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   (require-package 'ivy)
   (require-package 'counsel)
 
   (ivy-mode 1)
+#+END_SRC
+
+* Configure
+:PROPERTIES:
+:ID:       efbd1606-eff7-43a5-a4e6-8c12b6d229ef
+:END:
+#+BEGIN_SRC emacs-lisp
   ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
   (setq ivy-use-virtual-buffers t)
   ;; number of result lines to display
@@ -18,11 +31,17 @@
   (setq ivy-re-builders-alist
 	;; allow input not in order
 	'((t   . ivy--regex-ignore-order)))
+#+END_SRC
 
+* Keybinding
+:PROPERTIES:
+:ID:       94134aee-9218-46ce-a96b-2e035b649bd2
+:END:
+#+BEGIN_SRC emacs-lisp
   (global-set-key (kbd "C-s") 'swiper)
   (global-set-key (kbd "M-x") 'counsel-M-x)
 
   (global-set-key (kbd "M-v M-f") 'counsel-find-file)
-
-  (provide 'init-ivy)
 #+END_SRC
+
+
