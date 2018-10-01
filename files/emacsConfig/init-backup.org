@@ -1,38 +1,71 @@
 #+TITLE:        Backup Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2018-09-22 Sat]
+#+DATE-UPDATED: [2018-09-26 Wed]
+
+Backup is a important part of editting text. Because most of the times
+I make some mistakes and having the possibility to revert to a cleaner
+state is gold.
 
 * Set Default Directory 
 :PROPERTIES:
 :ID:       a5f317bc-1b74-410b-89fb-07ebeb91b44f
 :END:
+
+The default directory to store backups is the file's directory that is
+being editted. However, for me, it makes the directory kind of
+messy. So to tidy it up a bit I put everything in ="~/.emacs.d/backups"=.
+
 #+BEGIN_SRC emacs-lisp
-  ;; Set directory to hold backup files
   (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+
 #+END_SRC
 
-* Where to Add Auto Saved Files
+* TODO How to name the auto-saved backup files
 :PROPERTIES:
 :ID:       b46630ef-a0a3-4ec3-8d47-104c057070cb
 :END:
+
+Set transform to apply to buffer file name before making auto-save file name.
 #+BEGIN_SRC emacs-lisp
-  ;; Set transform to apply to buffer file name before making auto-save
-  ;; file name.
   (setq auto-save-file-name-transforms
 	'((".*" "~/.emacs.d/auto-save-list/" t)))
+
 #+END_SRC
 
 * Configurations
 :PROPERTIES:
 :ID:       bb2f8725-32f0-44af-ac1c-ca45a9565b0b
 :END:
+
+Copy the file to the backup's folder.
 #+BEGIN_SRC emacs-lisp
-  ;; Backup by copying, delete old verions and backup version controlled
-  ;; files.
   (setq backup-by-copying t)
-  (setq delete-old-versions t)
-  (setq version-control t)
+
 #+END_SRC
 
 
+When making a backup create a name with a numeric suffix like:
+#+BEGIN_SRC text
+  Organizador.org.~1~
+  Organizador.org.~2~
+  Organizador.org.~4~
+#+END_SRC
+
+Create numeric suffix when backing up files. I make this way because I can see what was changed between edits. And It doens't take much space in disk.
+#+BEGIN_SRC emacs-lisp
+  (setq version-control t)
+
+#+END_SRC
+
+
+But don't keep too many versions. Just some.
+#+BEGIN_SRC emacs-lisp
+  ;; How many backups to keep
+  (setq kept-new-versions 2)
+  (setq kept-old-versions 2)
+
+  ;; Delete the others
+  (setq delete-old-versions t)
+
+#+END_SRC

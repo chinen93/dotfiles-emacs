@@ -1,64 +1,22 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2018-09-22 Sat]
+#+DATE-UPDATED: [2018-10-01 Mon]
 
+Emacs has a lot of keybindings, and I can't remember everyone of them. For example each key in the keyboard is related to a command, if you put it in combination with Ctrl or Meta or Crtl + Meta you can create others keybindins for functions. And the problem grows fast and wide. Each mode has a map describing some keybinding configurations that can overwrite others configurations. So I wan't always sure about the key chord I was pressing. 
+
+To solve this problem I found this package called: [[https://github.com/abo-abo/hydra][Hydra]]. 
+
+The site tells that:
+#+BEGIN_SRC text
+  This is a package for GNU Emacs that can be used to tie related commands into a family of short bindings with a common prefix - a Hydra.
+#+END_SRC
+
+In reality what it does is simple it creates a configuration that won't be overwritten by a mode key map. Because I can tell which commands are going to be on my hydra family and which key chords I want them to be.
+
+First things first we need to load the pacakge so that we can build some configurations on top of it.
 #+BEGIN_SRC emacs-lisp
   (require-package 'hydra)
-#+END_SRC
-
-* Zoom
-:PROPERTIES:
-:ID:       a612d1b6-c93f-4cb9-bf5b-2787225d62ef
-:END:
-#+BEGIN_SRC emacs-lisp
-  (defhydra hydra-zoom (:color pink)
-    "
-   ^Zoom^
-  -^----^-----------------------------------------------------
-  "
-    ("=" text-scale-increase nil)
-    ("+" text-scale-increase "in")
-    ("-" text-scale-decrease "out")
-    ("0" (text-scale-set 0) "remove")
-
-    ("q" nil "quit" :color blue)
-    ("l" hydra-launcher/body "return" :color blue))
-#+END_SRC
-
-* Help
-:PROPERTIES:
-:ID:       d9d72056-937d-4a64-9309-09e58a49570c
-:END:
-#+BEGIN_SRC emacs-lisp
-  (defhydra hydra-help (:color pink)
-    "
-   ^Help^
-  -^----^-----------------------------------------------------
-   _f_: function
-   _v_: variable
-   _m_: mode
-   _l_: view lossage
-   _M_: view Messages
-
-  "
-
-    ;;  Help
-    ;; ----------------------------------------------------------
-    ;;  f: function
-    ;;  v: variable
-    ;;  m: mode
-    ;;  l: view lossage
-    ;;  M: view Messages
-
-    ("M" view-echo-area-messages :color blue)
-    ("f" describe-function :color blue)
-    ("v" describe-variable :color blue)
-    ("m" describe-mode :color blue)
-    ("l" view-lossage :color blue)
-
-    ("q" nil "quit" :color blue)
-    ("l" hydra-launcher/body "return" :color blue))
 
 #+END_SRC
 
@@ -66,6 +24,9 @@
 :PROPERTIES:
 :ID:       2eeb3eeb-dd07-4cab-88f3-9ca9da35af21
 :END:
+
+
+
 #+BEGIN_SRC emacs-lisp
         ;;; Hydra launcher BEGIN
   (defhydra hydra-launcher (:color amaranth :hint nil)
@@ -125,6 +86,71 @@
 
     ("q" nil "cancel" :color blue))
   (global-set-key (kbd "M-q") 'hydra-launcher/body)
+#+END_SRC
+
+* Zoom
+:PROPERTIES:
+:ID:       a612d1b6-c93f-4cb9-bf5b-2787225d62ef
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (defhydra hydra-zoom (:color pink)
+    "
+   ^Zoom^
+  -^----^-----------------------------------------------------
+  "
+    ("=" text-scale-increase nil)
+    ("+" text-scale-increase "in")
+    ("-" text-scale-decrease "out")
+    ("0" (text-scale-set 0) "remove")
+
+    ("q" nil "quit" :color blue)
+    ("l" hydra-launcher/body "return" :color blue))
+
+#+END_SRC
+
+* Help
+:PROPERTIES:
+:ID:       d9d72056-937d-4a64-9309-09e58a49570c
+:END:
+
+When asking for help, normally it means that I need some description of a function, variable, mode or about what function I've just typed or what was written on the Message buffer.
+
+How it should be:
+#+BEGIN_SRC text
+   Help
+  ----------------------------------------------------------
+   f: function
+   v: variable
+   m: mode
+   l: view lossage
+   M: view Messages
+
+#+END_SRC
+
+How to create it:
+#+BEGIN_SRC emacs-lisp
+  (defhydra hydra-help (:color pink)
+    "
+   ^Help^
+  -^----^-----------------------------------------------------
+   _f_: function
+   _v_: variable
+   _m_: mode
+   _l_: view lossage
+   _M_: view Messages
+
+"
+
+    ("M" view-echo-area-messages :color blue)
+    ("f" describe-function :color blue)
+    ("v" describe-variable :color blue)
+    ("m" describe-mode :color blue)
+    ("l" view-lossage :color blue)
+
+    ("q" nil "quit" :color blue)
+    ("l" hydra-launcher/body "return" :color blue))
+
 #+END_SRC
 
 * Custom Functions

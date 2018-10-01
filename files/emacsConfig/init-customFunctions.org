@@ -1,7 +1,7 @@
 #+TITLE:        Custom Functions Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2018-09-22 Sat]
+#+DATE-UPDATED: [2018-09-26 Wed]
 
 * Functions from Internet
 :PROPERTIES:
@@ -249,7 +249,7 @@
 :PROPERTIES:
 :ID:       8f9c6ef4-7c8a-4b32-beb3-23ad6ceb5f4b
 :END:
-** Grep Notes 
+** Grep Notes
 :PROPERTIES:
 :ID:       03c0055b-4d9d-42fb-9397-413b5bba56b3
 :END:

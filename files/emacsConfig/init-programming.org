@@ -1,7 +1,7 @@
 #+TITLE:        Programming Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2018-09-23 Sun]
+#+DATE-UPDATED: [2018-09-26 Wed]
 
 * Function: Infer Identation Style
 :PROPERTIES:
@@ -48,6 +48,25 @@
     (add-to-list 'auto-mode-alist '("\\.json\\'" . js2-mode)))
 #+END_SRC
 
+** Load Package: rjsx Mode
+:PROPERTIES:
+:ID:       a504feb0-e2b4-48a0-978b-70b5e8b0e983
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package rjsx-mode
+    :ensure t)
+#+END_SRC
+
+*** Configure
+:PROPERTIES:
+:ID:       bf7f937b-33e9-47f6-b97d-4cf3768f4366
+:END:
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'rjsx-mode)
+    (add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode))
+    (add-to-list 'auto-mode-alist '("screens\\/.*\\.js\\'" . rjsx-mode)))
+#+END_SRC
+
 * Markdown
 :PROPERTIES:
 :ID:       c6a8a6e0-5624-42c1-82aa-780002ae8a9c
@@ -74,6 +93,16 @@
     ;;        ("\\.markdown\\'" . markdown-mode))
     ;; :init (setq markdown-command "multimarkdown"))
   )
+#+END_SRC
+
+* CSS
+:PROPERTIES:
+:ID:       df910dd7-81c1-4eb3-8ee6-aa0983687082
+:END:
+
+CSS 
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'auto-mode-alist '(".scss" . css-mode))
 #+END_SRC
 
 * GGTAGS

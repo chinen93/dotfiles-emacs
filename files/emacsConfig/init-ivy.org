@@ -1,7 +1,14 @@
 #+TITLE:        Ivy Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2018-09-22 Sat]
+#+DATE-UPDATED: [2018-10-01 Mon]
+
+Emacs is a text editor which don't want to bother the user. So normally it doesn't have an autocompletion function. However for editting text is important to have some sort of help. That one reason for using a completition package is essential to make it a better environment.
+
+One of those packages is the [[https://github.com/abo-abo/swiper][Ivy]] with its [[https://oremacs.com/swiper/][manual]]. I'll let it introduce itself:
+#+BEGIN_SRC text
+  Ivy is an interactive interface for completion in Emacs. Emacs uses completion mechanism in a variety of contexts: code, menus, commands, variables, functions, etc. Completion entails listing, sorting, filtering, previewing, and applying actions on selected items. When active, ivy-mode completes the selection process by narrowing available choices while previewing in the minibuffer. Selecting the final candidate is either through simple keyboard character inputs or through powerful regular expressions. 
+#+END_SRC
 
 * Load Package: Ivy
 :PROPERTIES:
@@ -12,6 +19,7 @@
   (require-package 'counsel)
 
   (ivy-mode 1)
+
 #+END_SRC
 
 * Configure
@@ -19,8 +27,6 @@
 :ID:       efbd1606-eff7-43a5-a4e6-8c12b6d229ef
 :END:
 #+BEGIN_SRC emacs-lisp
-  ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
-  (setq ivy-use-virtual-buffers t)
   ;; number of result lines to display
   (setq ivy-height 10)
   ;; does not count candidates
@@ -31,6 +37,7 @@
   (setq ivy-re-builders-alist
 	;; allow input not in order
 	'((t   . ivy--regex-ignore-order)))
+
 #+END_SRC
 
 * Keybinding
@@ -42,6 +49,7 @@
   (global-set-key (kbd "M-x") 'counsel-M-x)
 
   (global-set-key (kbd "M-v M-f") 'counsel-find-file)
+
 #+END_SRC
 
 

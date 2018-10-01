@@ -144,9 +144,20 @@ To transform those org files into acturla elisp files.")
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(org-capture-templates
+   (quote
+    (("c" "Contact" entry
+      (file "~/Dropbox/Contacts.org")
+      "* %(org-contacts-template-name)
+  :PROPERTIES:
+  :BIRTHDAY: %^{yyyy-mm-dd}
+  :EMAIL: %(org-contacts-template-email)
+  :NOTE: %^{NOTE}
+  :END:" :empty-lines 1))))
+ '(org-contacts-files (quote ("~/Dropbox/Contacts.org")))
  '(package-selected-packages
    (quote
-    (ggtags js2-mode magit zenburn-theme yasnippet use-package try string-inflection rainbow-delimiters org-plus-contrib nyan-mode nov multiple-cursors monokai-theme markdown-mode ledger-mode keyfreq hydra helm-swoop helm-descbinds flycheck expand-region exec-path-from-shell elmacro diminish define-word counsel company-jedi))))
+    (rjsx-mode ggtags js2-mode magit zenburn-theme yasnippet use-package try string-inflection rainbow-delimiters org-plus-contrib nyan-mode nov multiple-cursors monokai-theme markdown-mode ledger-mode keyfreq hydra helm-swoop helm-descbinds flycheck expand-region exec-path-from-shell elmacro diminish define-word counsel company-jedi))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

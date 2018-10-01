@@ -1,7 +1,14 @@
 #+TITLE:        Magit Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2018-09-23 Sun]
+#+DATE-UPDATED: [2018-10-01 Mon]
+
+Using [[https://git-scm.com/][Git]] can be sometimes tedious on the command terminal. And switching to it can have much impact on my focus because I have to change context.
+
+One way to help with it is using [[https://magit.vc/][Magit]]. As it describe itself:
+#+BEGIN_SRC text
+  Magit is an interface to the version control system Git, implemented as an Emacs package. Magit aspires to be a complete Git porcelain. While we cannot (yet) claim that Magit wraps and improves upon each and every Git command, it is complete enough to allow even experienced Git users to perform almost all of their daily version control tasks directly from within Emacs. While many fine Git clients exist, only Magit and Git itself deserve to be called porcelains.
+#+END_SRC
 
 * Load Package: Magit
 :PROPERTIES:
@@ -10,6 +17,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :ensure t)
+
 #+END_SRC
 
 * TODO Configuration

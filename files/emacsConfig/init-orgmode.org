@@ -1,15 +1,28 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2018-09-24 Mon]
+#+DATE-UPDATED: [2018-10-01 Mon]
+
+[[https://orgmode.org/][Org Mode]] 
+
+#+BEGIN_SRC text
+  Org is a mode for keeping notes, maintaining TODO lists, and project planning with a fast and effective plain-text system. It also is an authoring system with unique support for literate programming and reproducible research. 
+#+END_SRC
+
+* Load Package: Org Mode
+:PROPERTIES:
+:ID:       5ed0ba9d-5499-4dd2-9aa9-db12bb9d4684
+:END:
+#+BEGIN_SRC emacs-lisp
+  (require 'org)
+
+#+END_SRC
 
 * Default Files
 :PROPERTIES:
 :ID:       aa2a4b3e-8702-4bd2-9c4b-89bed3173229
 :END:
 #+BEGIN_SRC emacs-lisp
-  (require 'org)
-
   ;; Set org directory
   (setq org-directory "~/git/org")
 
@@ -19,6 +32,7 @@
   ;; Only set this org variable if there no other variable for the dropbox folder
   (unless (null my-dropbox-folder)
     (setq org-dropbox-folder my-dropbox-folder))
+
 #+END_SRC
 
 * Tags, Keywords, Headings, IDs
