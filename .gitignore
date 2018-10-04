@@ -6,3 +6,6 @@ dotfiles-emacs_old
 # elips compiled files
 *.elc
 
+# compiled configuration files
+files/emacsConfig/elisp
+
