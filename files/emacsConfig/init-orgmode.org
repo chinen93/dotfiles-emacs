@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2018-10-01 Mon]
+#+DATE-UPDATED: [2018-10-03 qua]
 
 [[https://orgmode.org/][Org Mode]] 
 
@@ -23,11 +23,8 @@
 :ID:       aa2a4b3e-8702-4bd2-9c4b-89bed3173229
 :END:
 #+BEGIN_SRC emacs-lisp
-  ;; Set org directory
-  (setq org-directory "~/git/org")
-
   ;; Set dropbox folder
-  (setq org-dropbox-folder "~/Dropbox")
+  (setq org-dropbox-folder "~/Dropbox/")
 
   ;; Only set this org variable if there no other variable for the dropbox folder
   (unless (null my-dropbox-folder)
@@ -51,7 +48,6 @@
   ;; Record a note when TODO item is DONE
   (setq org-log-done 'note)
   (setq org-log-repeat 'note)
-  (setq org-icalendar-timezone "America/New_York")
 
   (setq org-todo-keywords
         '((sequence "TODO(t)" "WORKING(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
@@ -83,68 +79,63 @@
 :PROPERTIES:
 :ID:       741ef6f4-614b-4b2e-b5cf-28a13f9ee9e6
 :END:
-#+BEGIN_SRC emacs-lisp
-  ;; Set org agenda files
-  (setq org-agenda-files 
-        (list (concat org-dropbox-folder "/Organizador.org")
-              (concat org-dropbox-folder "/Notes/Projetos.org")
-              (concat org-dropbox-folder "/Contacts.org")))
 
-  (setq org-agenda-include-all-todo nil)
+** Set Agenda Files
+:PROPERTIES:
+:ID:       d0b21712-a701-4681-80b7-d805941835e6
+:END:
+Set org agenda files
+#+BEGIN_SRC emacs-lisp
+  (setq org-agenda-files nil)
+
+  (add-to-list 'org-agenda-files 
+               (concat org-dropbox-folder "Organizador.org"))
+
+  (add-to-list 'org-agenda-files 
+               (concat org-dropbox-folder "Notes/Projetos.org"))
+
+  (add-to-list 'org-agenda-files 
+               (concat org-dropbox-folder "Contacts.org"))
+
+#+END_SRC
+
+** Configure some informations
+:PROPERTIES:
+:ID:       a75d5c64-9879-4700-b1ad-cd69d1983c7b
+:END:
+
+Skip tasks done in daily/weekly agenda
+#+BEGIN_SRC emacs-lisp
   (setq org-agenda-skip-scheduled-if-done t)
   (setq org-agenda-skip-deadline-if-done t)
-  (setq org-agenda-columns-add-appointments-to-effort-sum t)
-  (setq org-agenda-custom-commands nil)
+
+#+END_SRC
+
+
+Default duration for appointments that only have a starting time.
+#+BEGIN_SRC emacs-lisp
   (setq org-agenda-default-appointment-duration 60)
+
+#+END_SRC
+
+Follow link on agenda with mouse click
+#+BEGIN_SRC emacs-lisp
   (setq org-agenda-mouse-1-follows-link t)
+
+#+END_SRC
+
+Skip non-rechable files in `org-agenda-files`
+#+BEGIN_SRC emacs-lisp
   (setq org-agenda-skip-unavailable-files t)
-  (setq org-agenda-use-time-grid nil)
 
-  ;; Set new filter for agenda views
-  (setq org-agenda-custom-commands
-        '(
-          ;; Custom command to show done task from previous week
-          ("b" "DONE from this week"
-           ;; Use normal agenda
-           ((agenda ""
-                    ;; Put some configurations on this agenda
-                    ;; Show closed tasks and show 7 days starting today
-                    ((org-agenda-log-mode-items '(closed))
-                     (org-agenda-span 7)
-                     (org-agenda-start-day "-6d")
-                     (org-agenda-show-log t)
-                     (org-agenda-window-setup 'other-window))))
-           nil)
+#+END_SRC
 
-          ;; Custom agenda that show all the TODO tasks
-          ("n" "Agenda and all TODO's"
-           ((agenda ""
-                    ((org-agenda-span 16)
-                     (org-agenda-start-day "-2d")))
-            (alltodo "" nil))
-           nil)
+Agenda show next 7 days and previous 3 days
+#+BEGIN_SRC emacs-lisp
+  (setq org-agenda-span 10)
+  (setq org-agenda-start-on-weekday nil)
+  (setq org-agenda-start-day "-3d")
 
-          ;; Custom agenda to show working todo
-          ("w" "Working on tasks"
-           ((agenda ""
-                    ((org-agenda-span 4)
-                     (org-agenda-start-day "-1d")))
-            (todo "WORKING" nil))
-           nil nil)
-
-          ;; Custom agenda to show agenda and todo for every note
-          ("l" "Agenda and all TODO's"
-           ((agenda ""
-                    ((org-agenda-files '("~/Dropbox/Organizador.org" "~/Dropbox/Notes"))))
-            (alltodo ""
-                     ((org-agenda-files '("~/Dropbox/Organizador.org" "~/Dropbox/Notes")))))
-           nil)
-          ))
-
-  ;; Agenda show next 7 days and previous 3 days
-  (setq org-agenda-span 10
-        org-agenda-start-on-weekday nil
-        org-agenda-start-day "-3d")
 #+END_SRC
 
 ** Custom Commands
@@ -152,25 +143,91 @@
 :ID:       9f11523a-b7c1-432a-94b4-d406ca487263
 :END:
 #+BEGIN_SRC emacs-lisp
+  (setq org-agenda-custom-commands nil)
 
+  (add-to-list
+   'org-agenda-custom-commands
+
+   ;; Custom command to show done task from previous week
+   '("b" "DONE from this week"
+     ;; Use normal agenda
+     ((agenda ""
+              ;; Put some configurations on this agenda
+              ;; Show closed tasks and show 7 days starting today
+              ((org-agenda-log-mode-items '(closed))
+               (org-agenda-span 7)
+               (org-agenda-start-day "-6d")
+               (org-agenda-show-log t)
+               (org-agenda-window-setup 'other-window))))
+     nil))
+
+  (add-to-list
+   'org-agenda-custom-commands
+
+   ;; Custom agenda that show all the TODO tasks
+   '("n" "Agenda and all TODO's"
+     ((agenda ""
+              ((org-agenda-span 16)
+               (org-agenda-start-day "-2d")))
+      (alltodo "" nil))
+     nil))
+
+
+  (add-to-list
+   'org-agenda-custom-commands
+
+   ;; Custom agenda to show working todo
+   '("w" "Working on tasks"
+     ((agenda ""
+              ((org-agenda-span 4)
+               (org-agenda-start-day "-1d")))
+      (todo "WORKING" nil))
+     nil nil))
+
+  (add-to-list
+   'org-agenda-custom-commands
+
+   ;; Custom agenda to show agenda and todo for every note
+   '("l" "Agenda and all TODO's"
+     ((agenda ""
+              ((org-agenda-files '("~/Dropbox/Organizador.org"
+                                   "~/Dropbox/Notes"))))
+      (alltodo ""
+               ((org-agenda-files '("~/Dropbox/Organizador.org"
+                                    "~/Dropbox/Notes")))))
+     nil))
 #+END_SRC
 
 * Structure Templates
 :PROPERTIES:
 :ID:       abdb3d61-d414-492b-bf87-d670c5f52d82
 :END:
+
+Templates for source blocks
 #+BEGIN_SRC emacs-lisp
-  ;; Templates for source blocks
-  (setq org-structure-template-alist
-        '(("l"
-           "#+BEGIN_SRC emacs-lisp\n?\n#+END_SRC"
-           "<src lang=\"emacs-lisp\">             \n?\n</src>")
-          ("s"
-           "#+BEGIN_SRC sh\n?\n#+END_SRC"
-           "<src lang=\"shell\">             \n?\n</src>")
-          ("t"
-           "#+BEGIN_SRC text\n?\n#+END_SRC"
-           "<src lang=\"text\">\n?\n</src>")))
+  (setq org-structure-template-alist nil)
+
+  (add-to-list 
+   'org-structure-template-alist
+   `("l"
+     ,(concat "#+BEGIN_SRC emacs-lisp\n"
+              "?\n"
+              "#+END_SRC")))
+
+  (add-to-list 
+   'org-structure-template-alist
+   `("s"
+     ,(concat "#+BEGIN_SRC sh\n"
+              "?\n"
+              "#+END_SRC")))
+
+  (add-to-list 
+   'org-structure-template-alist
+    `("t"
+     ,(concat "#+BEGIN_SRC text\n"
+              "?\n"
+              "#+END_SRC")))
+
 #+END_SRC
 
 * Babel Load Languages
@@ -376,24 +433,31 @@
 :PROPERTIES:
 :ID:       d860bf58-caf5-4869-b56b-f74a9150a38a
 :END:
+
+Remove all capture templates.
 #+BEGIN_SRC emacs-lisp
-  (use-package org-capture
-    :ensure nil
-    :after org
-    :preface
-    (defvar my/org-contacts-template "* %(org-contacts-template-name)
+  (setq org-capture-templates nil) 
+
+#+END_SRC
+
+** Contact Template
+:PROPERTIES:
+:ID:       fb54fa73-e4c7-4653-acd4-8357b9adb7bd
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defvar my/org-contacts-template 
+  "* %(org-contacts-template-name)
   :PROPERTIES:
   :BIRTHDAY: %^{yyyy-mm-dd}
   :EMAIL: %(org-contacts-template-email)
   :NOTE: %^{NOTE}
-  :END:" "Template for org-contacts.")
-    :custom
-    (org-capture-templates
-     `(("c" "Contact" entry (file "~/Dropbox/Contacts.org")
-        ,my/org-contacts-template
-        :empty-lines 1)
+  :END:"
+  "Template for org-contacts.")
 
-       ;("p" "Project" entry (file "~/Dropbox/Notes/Projetos.org"))
-       )))
+  (add-to-list
+   'org-capture-templates
+   `(("c" "Contact" entry (file "~/Dropbox/Contacts.org")
+      ,my/org-contacts-template
+      :empty-lines 1)))
 #+END_SRC
 

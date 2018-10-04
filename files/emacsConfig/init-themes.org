@@ -1,7 +1,7 @@
 #+TITLE:        Themes Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2018-09-24 Mon]
+#+DATE-UPDATED: [2018-10-03 qua]
 
 * Load Package: Zenburn
 :PROPERTIES:
@@ -10,6 +10,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package zenburn-theme
     :ensure t)
+
 #+END_SRC
 
 * Load Package: Monokai
@@ -19,6 +20,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package monokai-theme
     :ensure t)
+
 #+END_SRC
 
 * Helper Functions
@@ -36,6 +38,7 @@
     (interactive "sWhat theme do you want to use? ")
     (when (display-graphic-p)
       (load-theme (intern themeName) t)))
+
 #+END_SRC
 
 ** Set Font
@@ -68,6 +71,7 @@
       (sakshamsharma-setFont myFont)))
 
   (sakshamsharma-frameActions)
+
 #+END_SRC
 
 

@@ -1,7 +1,10 @@
 #+TITLE:        Ledger Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2018-09-30 Sun]
+#+DATE-UPDATED: [2018-10-04 qui]
+
+Ledger is a command line accounting tool that provides double-entry
+accounting based on a text journal.
 
 * Load Package: Ledger
 :PROPERTIES:
@@ -17,20 +20,32 @@
 :PROPERTIES:
 :ID:       b64515fa-ef09-492e-aa0a-1badfdf3dc08
 :END:
+
+Create Variable to hold my ledger file
+#+BEGIN_SRC emacs-lisp
+  (defvar my-ledger-file "~/Dropbox/Ledger.ledger"
+    "Data file where ledger-cli search from.")
+#+END_SRC
+
+Set master file
 #+BEGIN_SRC emacs-lisp
   (when (featurep 'ledger-mode)
-    (defvar my-ledger-file "~/Dropbox/Ledger.ledger"
-      "Data file where ledger-cli search from.")
+    (setq-default ledger-master-file my-ledger-file))
 
-    ;; Set master file
-    (setq-default ledger-master-file my-ledger-file)
+#+END_SRC
 
-    ;; Clear whole transactions, not individual postings.
-    (setq ledger-clear-whole-transactions t)
-
+Create base command for all reports
+#+BEGIN_SRC emacs-lisp
     (defvar my-ledger-cmd 
       (format "ledger -f %s " my-ledger-file)
-      "Beginning of every command has to be this"))
+      "Beginning of every command has to be this")
+
+#+END_SRC
+
+Clear whole transactions, not individual postings.
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'ledger-mode)
+    (setq ledger-clear-whole-transactions t))
 
 #+END_SRC
 

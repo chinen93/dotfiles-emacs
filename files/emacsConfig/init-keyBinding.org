@@ -1,7 +1,7 @@
 #+TITLE:        Global KeyBinding Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2018-09-30 Sun]
+#+DATE-UPDATED: [2018-10-04 qui]
 
 * Unbind
 :PROPERTIES:
@@ -48,7 +48,7 @@
   (global-unset-key (kbd "C-o"))
   (global-unset-key (kbd "C-p"))
   (global-unset-key (kbd "C-a"))
-  ;; (global-unset-key (kbd "C-s")) ;; isearch-regexp
+  ;; (global-unset-key (kbd "C-s")) ;; isearch-forward-regexp
   (global-unset-key (kbd "C-d"))
   (global-unset-key (kbd "C-f"))
   ;; (global-unset-key (kbd "C-g")) ;; keyboard-quit

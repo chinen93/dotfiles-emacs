@@ -1,16 +1,23 @@
 #+TITLE:        Bookmark Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2018-09-26 Wed]
+#+DATE-UPDATED: [2018-10-04 qui]
 
-* Bookmark File 
+* Bookmark File
 :PROPERTIES:
 :ID:       d72c25e0-8b1c-474f-a228-89dfb8a5da4d
 :END:
 
 Set default file where bookmarks will be saved.
 #+BEGIN_SRC emacs-lisp
-  (setq bookmark-default-file  "~/emacsBookmark.el")
+  (let* ((filename "emacsBookmark.el")
+         (dropboxFilename (concat my-dropbox-folder filename))
+         (homeFilename (concat "~/" filename)))
+
+    (if (null 'my-dropbox-folder)
+        (setq bookmark-default-file homeFilename)
+      (setq bookmark-default-file dropboxFilename)))
+
 
 #+END_SRC
 
@@ -29,4 +36,3 @@ Bookmarks are displayed in LIFO order
 #+BEGIN_SRC emacs-lisp
   (setq bookmark-sort-flag nil)
 #+END_SRC
-

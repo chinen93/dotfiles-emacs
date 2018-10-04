@@ -1,7 +1,7 @@
 #+TITLE:        Programming Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2018-09-26 Wed]
+#+DATE-UPDATED: [2018-10-03 qua]
 
 * Function: Infer Identation Style
 :PROPERTIES:
@@ -17,6 +17,7 @@
       (if (> tab-count space-count) (setq indent-tabs-mode t))))
 
   (add-hook 'prog-mode-hook 'infer-indentation-style)
+
 #+END_SRC
 
 * Javascript
@@ -31,6 +32,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package js2-mode
     :ensure t)
+
 #+END_SRC
 
 *** Configure
@@ -46,6 +48,7 @@
     ;; load this mode when loading .js files
     (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
     (add-to-list 'auto-mode-alist '("\\.json\\'" . js2-mode)))
+
 #+END_SRC
 
 ** Load Package: rjsx Mode
@@ -55,6 +58,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package rjsx-mode
     :ensure t)
+
 #+END_SRC
 
 *** Configure
@@ -65,6 +69,7 @@
   (when (featurep 'rjsx-mode)
     (add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode))
     (add-to-list 'auto-mode-alist '("screens\\/.*\\.js\\'" . rjsx-mode)))
+
 #+END_SRC
 
 * Markdown
@@ -79,6 +84,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package markdown-mode
     :ensure t)
+
 #+END_SRC
 
 *** TODO Configure
@@ -93,6 +99,7 @@
     ;;        ("\\.markdown\\'" . markdown-mode))
     ;; :init (setq markdown-command "multimarkdown"))
   )
+
 #+END_SRC
 
 * CSS
@@ -103,6 +110,7 @@
 CSS 
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'auto-mode-alist '(".scss" . css-mode))
+
 #+END_SRC
 
 * GGTAGS
@@ -117,6 +125,7 @@ CSS
 #+BEGIN_SRC emacs-lisp
   (use-package ggtags
     :ensure t)
+
 #+END_SRC
 
 *** Configure
@@ -130,5 +139,6 @@ CSS
               (lambda ()
                 (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
                   (ggtags-mode 1)))))
+
 #+END_SRC
 

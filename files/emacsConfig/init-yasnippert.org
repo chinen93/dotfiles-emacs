@@ -1,7 +1,7 @@
 #+TITLE:        Yasnippet Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2018-09-24 Mon]
+#+DATE-UPDATED: [2018-10-03 qua]
 
 * Yasnippet
 :PROPERTIES:
@@ -25,5 +25,6 @@
 
   ;; Enable yasnippet mode globally
   (yas-global-mode)
+
 #+END_SRC
 

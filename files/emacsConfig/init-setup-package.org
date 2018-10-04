@@ -1,11 +1,12 @@
 #+TITLE:        Setup Package Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2018-09-24 Mon]
+#+DATE-UPDATED: [2018-10-03 qua]
 
 #+BEGIN_SRC emacs-lisp
   (require 'package)
   (package-initialize)
+
 #+END_SRC
 
 * Set Packages Archives
@@ -19,6 +20,7 @@
           ("org" . "http://orgmode.org/elpa/")
           ("gnu" . "http://elpa.gnu.org/packages/")
           ("marmalade" . "http://marmalade-repo.org/packages/")))
+
 #+END_SRC
 
 * Config Some Things
@@ -39,6 +41,7 @@
                (setq gc-cons-percentage 0.1)
                (garbage-collect))
             t)
+
 #+END_SRC
 
 * Purcell's Way to Install Packages
@@ -64,6 +67,7 @@
         (progn
           (package-refresh-contents)
           (require-package package min-version t)))))
+
 #+END_SRC
 
 * Load Package *use-package*
@@ -77,5 +81,6 @@
     (require-package 'use-package)
     (setq use-package-verbose t)
     (setq load-prefer-newer t))
+
 #+END_SRC
 

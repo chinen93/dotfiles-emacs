@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2018-09-26 Wed]
+#+DATE-UPDATED: [2018-10-04 qui]
 
 It doesn't need any external package. Just pure elisp.
 
@@ -75,12 +75,12 @@ Don't show start up message
 
 #+END_SRC
 
-** Show matching parenthesis 
+** Show matching parenthesis
 :PROPERTIES:
 :ID:       31f0d337-a006-4af2-ac06-26c49175e66a
 :END:
 
-  See the matching pair of parentheses and others characters. 
+  See the matching pair of parentheses and others characters.
 
   The Style should be: If the matching parenthesis is on the same page show it, otherwise highlight everything inside.
 #+BEGIN_SRC emacs-lisp
@@ -186,7 +186,7 @@ Don't follow symbolic link to the real file and warn user that this is versioned
 
 Create variable to hold common paths.
 #+BEGIN_SRC emacs-lisp
-  (defvar my-dropbox-folder "~/Dropbox" 
+  (defvar my-dropbox-folder "~/Dropbox/"
     "Path to Dropbox Folder")
 #+END_SRC
 
@@ -228,7 +228,7 @@ Start mode to save minibuffer history.
 
 #+END_SRC
 
-How many itens will be saved before deleting old ones. 
+How many itens will be saved before deleting old ones.
 #+BEGIN_SRC emacs-lisp
   (setq history-length 500)
 
@@ -288,4 +288,3 @@ Don't show every information about files. Just its name.
     (dired-hide-details-mode 1))
   (add-hook 'dired-mode-hook 'xah-dired-mode-setup)
 #+END_SRC
-
