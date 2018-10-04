@@ -7,5 +7,5 @@ dotfiles-emacs_old
 *.elc
 
 # compiled configuration files
-files/emacsConfig/elisp
+files/emacsConfig/elisp/*.el
 
