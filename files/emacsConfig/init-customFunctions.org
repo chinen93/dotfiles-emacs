@@ -1,7 +1,7 @@
 #+TITLE:        Custom Functions Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2018-10-02 ter]
+#+DATE-UPDATED: [2018-10-04 qui]
 
 * Functions from Internet
 :PROPERTIES:
@@ -189,7 +189,7 @@
 :ID:       bf95cbf3-c7da-4d1c-a9a7-6c08235855aa
 :END:
 #+BEGIN_SRC emacs-lisp
-  (defun user--clean-buffer () 
+  (defun user--clean-buffer ()
     "Cleans the buffer by re-indenting, changing tabs to spaces, and removing trailing whitespace."
     (interactive)
 
@@ -262,13 +262,30 @@
         (message "Too Short. Try Again!!")
       (progn
         (let* ((notes-dir "~/Dropbox/Notes/")
-               (regex-treated (replace-regexp-in-string " " ".*" regex))
-               (my-find-c (concat "find " notes-dir  " -type f -exec "))
-               (my-grep-c (concat "grep --color -nH -i -e '" regex-treated "' {} +"))
+               (regex-treated
+                (replace-regexp-in-string " " ".*" regex))
+               (my-find-c
+                (concat "find " notes-dir  " -type f -exec "))
+               (my-grep-c
+                (concat "grep --color -nH -i -e '" regex-treated "' {} +"))
                (command (concat my-find-c my-grep-c)))
 
           ;; find . -type f -exec grep --color -nH -e javascript {} +
           (grep-find command)
           (switch-to-buffer-other-frame "*grep*")))))
+
 #+END_SRC
 
+** Find Notes
+:PROPERTIES:
+:ID:       91bedb55-58dc-466d-8f79-96ac23ab8a4d
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defun my-find-notes ()
+    "Find file but initially in Notes Directory"
+    (interactive)
+
+    (when (functionp 'counsel-find-file)
+      (counsel-find-file "~/Dropbox/Notes")))
+
+#+END_SRC
