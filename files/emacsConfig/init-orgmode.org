@@ -1,13 +1,11 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2018-10-03 qua]
+#+DATE-UPDATED: [2018-10-04 qui]
 
 [[https://orgmode.org/][Org Mode]] 
 
-#+BEGIN_SRC text
-  Org is a mode for keeping notes, maintaining TODO lists, and project planning with a fast and effective plain-text system. It also is an authoring system with unique support for literate programming and reproducible research. 
-#+END_SRC
+Org is a mode for keeping notes, maintaining TODO lists, and project planning with a fast and effective plain-text system. It also is an authoring system with unique support for literate programming and reproducible research. 
 
 * Load Package: Org Mode
 :PROPERTIES:
@@ -429,7 +427,7 @@ Templates for source blocks
     :custom (org-contacts-files '("~/Dropbox/Contacts.org")))
 #+END_SRC
 
-* TODO Capture Templates
+* Capture Templates
 :PROPERTIES:
 :ID:       d860bf58-caf5-4869-b56b-f74a9150a38a
 :END:
@@ -440,24 +438,55 @@ Remove all capture templates.
 
 #+END_SRC
 
+** Template Structure
+:PROPERTIES:
+:ID:       a9e7947a-772f-476d-8365-8a7b50acde28
+:END:
+
+[[id:25a25f76-eb2c-4203-8a75-6a49751f0cc7][Capture Template Structures]]
+
 ** Contact Template
 :PROPERTIES:
 :ID:       fb54fa73-e4c7-4653-acd4-8357b9adb7bd
 :END:
 #+BEGIN_SRC emacs-lisp
   (defvar my/org-contacts-template 
-  "* %(org-contacts-template-name)
+    "* %(org-contacts-template-name)
   :PROPERTIES:
   :BIRTHDAY: %^{yyyy-mm-dd}
   :EMAIL: %(org-contacts-template-email)
   :NOTE: %^{NOTE}
   :END:"
-  "Template for org-contacts.")
+    "Template for org-contacts.")
 
   (add-to-list
    'org-capture-templates
-   `(("c" "Contact" entry (file "~/Dropbox/Contacts.org")
-      ,my/org-contacts-template
-      :empty-lines 1)))
+   `("c" "Contact" entry (file "~/Dropbox/Contacts.org")
+     ,my/org-contacts-template
+     :empty-lines 1
+     :kill-buffer
+     :unarrowed))
+
+#+END_SRC
+
+** Project Template
+:PROPERTIES:
+:ID:       47c0325c-9ce4-4c35-b376-6836fab45957
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (defvar my/org-project-template 
+    "* TODO %^{Project Idea}
+  %T
+  %f
+  %?"
+    "Template for new project")
+
+  (add-to-list
+   'org-capture-templates
+   `("p" "Project Idea" entry (file "~/Dropbox/Notes/Projetos.org")
+     ,my/org-project-template
+     :empty-lines 1))
+
 #+END_SRC
 
