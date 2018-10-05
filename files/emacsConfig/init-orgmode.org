@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2018-10-04 qui]
+#+DATE-UPDATED: [2018-10-05 sex]
 
 [[https://orgmode.org/][Org Mode]] 
 
@@ -478,7 +478,7 @@ Remove all capture templates.
   (defvar my/org-project-template 
     "* TODO %^{Project Idea}
   %T
-  %f
+  %a
   %?"
     "Template for new project")
 
