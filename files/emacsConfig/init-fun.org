@@ -1,20 +1,8 @@
 #+TITLE:        Fun Packages Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2018-09-24 Mon]
+#+DATE-UPDATED: [2018-10-05 sex]
 
-* CANCELED Load Package: Word of The Day
-CLOSED: [2018-09-23 Sun 23:52]
-:PROPERTIES:
-:ID:       858890f5-e5df-44a9-9f96-1e223267c540
-:END:
-- State "CANCELED"   from "DONE"       [2018-09-23 Sun 23:52]
-- State "DONE"       from "WORKING"    [2018-09-23 Sun 23:52]
-- State "WORKING"    from "TODO"       [2018-09-23 Sun 23:52]
-#+BEGIN_SRC emacs-lisp
-  ;; (use-package wotd
-  ;;   :ensure t)
-#+END_SRC
 
 * CANCELED Load Package: Typit
 :PROPERTIES:
@@ -34,15 +22,6 @@ CLOSED: [2018-09-23 Sun 23:52]
   ;;   :ensure t)
 #+END_SRC
 
-* CANCELED Load Package: Google Translate
-:PROPERTIES:
-:ID:       a59b4cdf-8a1f-4189-80f1-9cffaa1afbeb
-:END:
-#+BEGIN_SRC emacs-lisp :tangle no
-  ;; (use-package google-translate
-  ;;   :ensure t)
-#+END_SRC
-
 * CANCELED Load Package: Google This
 :PROPERTIES:
 :ID:       3cd39884-4471-4f4e-82fb-ceb18e47e5a8
@@ -50,24 +29,6 @@ CLOSED: [2018-09-23 Sun 23:52]
 #+BEGIN_SRC emacs-lisp :tangle no
   ;; (use-package google-this
   ;;   :ensure t)
-#+END_SRC
-
-* Load Package: Goto Addr
-:PROPERTIES:
-:ID:       35ad56f7-e2fe-4a5d-b94d-890d0a575671
-:END:
-#+BEGIN_SRC emacs-lisp
-  (use-package goto-addr
-    ;; http://xenodium.com/#actionable-urls-in-emacs-buffers
-    :hook ((compilation-mode . goto-address-mode)
-           (prog-mode . goto-address-prog-mode)
-           (eshell-mode . goto-address-mode)
-           (shell-mode . goto-address-mode))
-    :bind (:map goto-address-highlight-keymap
-                ("<RET>" . goto-address-at-point)
-                ("M-<RET>" . newline))
-    :commands (goto-address-prog-mode
-               goto-address-mode))
 #+END_SRC
 
 * Load Package: Key Freq
@@ -112,43 +73,6 @@ CLOSED: [2018-09-23 Sun 23:52]
 
     ;; Star key freq auto sabex
     (keyfreq-autosave-mode 1))
-#+END_SRC
-
-* Load Package: Rainbow Delimiters
-:PROPERTIES:
-:ID:       a8dd458b-12a8-4843-812e-311b2ed3eb67
-:END:
-#+BEGIN_SRC emacs-lisp
-  (use-package rainbow-delimiters
-    :ensure t)
-#+END_SRC
-
-** Configure
-:PROPERTIES:
-:ID:       3b991d9f-6d78-417c-9a2a-fdb2b91197a2
-:END:
-#+BEGIN_SRC emacs-lisp
-  (when (featurep 'rainbow-delimiters)
-    (require 'rainbow-delimiters)
-    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
-#+END_SRC
-
-* Load Package: Define Word
-:PROPERTIES:
-:ID:       d48b2394-6dd7-4c5e-99f5-54d035a80b86
-:END:
-#+BEGIN_SRC emacs-lisp
-  (use-package define-word
-    :ensure t)
-#+END_SRC
-
-* Load Package: String Inflection
-:PROPERTIES:
-:ID:       8cf58b18-54ac-477e-9093-4394c5f43d06
-:END:
-#+BEGIN_SRC emacs-lisp
-  (use-package string-inflection
-    :ensure t)
 #+END_SRC
 
 * Load Package: Nov

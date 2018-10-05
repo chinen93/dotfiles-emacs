@@ -1,7 +1,7 @@
 #+TITLE:        Themes Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2018-10-03 qua]
+#+DATE-UPDATED: [2018-10-05 sex]
 
 * Load Package: Zenburn
 :PROPERTIES:
@@ -74,4 +74,23 @@
 
 #+END_SRC
 
+
+* Load Package: Rainbow Delimiters
+:PROPERTIES:
+:ID:       a8dd458b-12a8-4843-812e-311b2ed3eb67
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package rainbow-delimiters
+    :ensure t)
+#+END_SRC
+
+** Configure
+:PROPERTIES:
+:ID:       3b991d9f-6d78-417c-9a2a-fdb2b91197a2
+:END:
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'rainbow-delimiters)
+    (require 'rainbow-delimiters)
+    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+#+END_SRC
 

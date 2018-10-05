@@ -1,7 +1,38 @@
 #+TITLE:        Programming Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2018-10-03 qua]
+#+DATE-UPDATED: [2018-10-05 sex]
+
+* Packages
+:PROPERTIES:
+:ID:       182bc287-76e2-48b5-882f-3d970cfd930a
+:END:
+** Load Package: Goto Addr
+:PROPERTIES:
+:ID:       35ad56f7-e2fe-4a5d-b94d-890d0a575671
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package goto-addr
+    ;; http://xenodium.com/#actionable-urls-in-emacs-buffers
+    :hook ((compilation-mode . goto-address-mode)
+           (prog-mode . goto-address-prog-mode)
+           (eshell-mode . goto-address-mode)
+           (shell-mode . goto-address-mode))
+    :bind (:map goto-address-highlight-keymap
+                ("<RET>" . goto-address-at-point)
+                ("M-<RET>" . newline))
+    :commands (goto-address-prog-mode
+               goto-address-mode))
+#+END_SRC
+
+** Load Package: String Inflection
+:PROPERTIES:
+:ID:       8cf58b18-54ac-477e-9093-4394c5f43d06
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package string-inflection
+    :ensure t)
+#+END_SRC
 
 * Function: Infer Identation Style
 :PROPERTIES:
