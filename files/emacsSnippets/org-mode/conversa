@@ -4,4 +4,12 @@
 # --
 * Conversa: `(format-time-string "%Y-%m-%d")`
 <`(format-time-string "%Y-%m-%d %a")`>
+
+Raiva    : XX/10
+Amor     : XX/10
+Medo     : XX/10
+Coragem  : XX/10
+Tristeza : XX/10
+Alegria  : XX/10
+
 $0
