@@ -250,25 +250,6 @@
 :ID:       8f9c6ef4-7c8a-4b32-beb3-23ad6ceb5f4b
 :END:
 
-** TODO Sort Org Headings
-:PROPERTIES:
-:ID:       879adb21-70ec-4a72-833b-262250a1bff3
-:END:
-#+BEGIN_SRC emacs-lisp
-  (defun my-sort-org-headings ()
-    "Sort subtree of an org file as Alfabetical and TODO keyword order"
-    (interactive)
-
-    (when (eq major-mode 'org-mode)
-      (save-excursion
-        (if (> (org-outline-level) 1)
-            (org-up-element)
-          (mark-whole-buffer))
-
-        (org-sort-entries nil ?a nil nil nil t)
-        (org-sort-entries nil ?o nil nil nil t))))
-#+END_SRC
-
 ** Find Notes
 :PROPERTIES:
 :ID:       91bedb55-58dc-466d-8f79-96ac23ab8a4d
@@ -308,5 +289,31 @@
           (grep-find command)
           (switch-to-buffer-other-frame "*grep*")))))
 
+#+END_SRC
+
+** Sort Org Headings
+:PROPERTIES:
+:ID:       879adb21-70ec-4a72-833b-262250a1bff3
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defun my-sort-org-headings ()
+    "Sort subtree of an org file as Alfabetical and TODO keyword order"
+    (interactive)
+
+    ;; Just do this if it is an orgmode
+    (when (eq major-mode 'org-mode)
+      (save-excursion
+
+        ;; If it is the first headline select the whole buffer
+        ;; else go to the parent of this headline
+        (if (> (org-outline-level) 1)
+            (org-up-element
+          (mark-whole-buffer))
+
+        ;; Sort entries by alphanumeric order
+        (org-sort-entries nil ?a nil nil nil t)
+
+        ;; Sort entries by todo keyword order
+        (org-sort-entries nil ?o nil nil nil t)))))
 #+END_SRC
 
