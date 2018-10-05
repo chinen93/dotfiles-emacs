@@ -1,18 +1,18 @@
 #+TITLE:        Ledger Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2018-10-04 qui]
+#+DATE-UPDATED: [2018-10-05 sex]
 
 [[https://www.ledger-cli.org/][Ledger cli]] is a command line accounting tool that provides double-entry
 accounting based on a text journal.
 
-Accounting is simply tracking your money. 
+Accounting is simply tracking your money.
 
 When you look at the balance totals for your ledger, you may be surprised to see that Expenses are a positive figure, and Income is a negative figure. It may take some getting used to, but to properly use a general ledger you must think in terms of how money moves.
 
 When you earn money, the money has to come from somewhere. Let’s call that somewhere “society”. In order for society to give you an income, you must take money away (withdraw) from society in order to put it into (make a payment to) your bank. When you then spend that money, it leaves your bank account (a withdrawal) and goes back to society (a payment). This is why Income will appear negative—it reflects the money you have drawn from society—and why Expenses will be positive—it is the amount you’ve given back.
 
-every negative figure means that that account or person or place has less money now than when you started your ledger; and every positive figure means that that account or person or place has more money now than when you started your ledger. 
+every negative figure means that that account or person or place has less money now than when you started your ledger; and every positive figure means that that account or person or place has more money now than when you started your ledger.
 
 [[https://www.ledger-cli.org/3.0/doc/ledger3.html][Ledger Web Manual]]
 
@@ -46,7 +46,7 @@ Set master file
 
 Create base command for all reports
 #+BEGIN_SRC emacs-lisp
-    (defvar my-ledger-cmd 
+    (defvar my-ledger-cmd
       (format "ledger -f %s " my-ledger-file)
       "Beginning of every command has to be this")
 
@@ -62,6 +62,11 @@ Clear whole transactions, not individual postings.
 * Helper Functions
 :PROPERTIES:
 :ID:       114d9d50-2ee3-4641-901f-7bd404efed8a
+:END:
+
+** Clear Ledger on Save
+:PROPERTIES:
+:ID:       8b589487-13a0-4e47-b3a9-c03c2f723582
 :END:
 #+BEGIN_SRC emacs-lisp
   (when (featurep 'ledger-mode)
@@ -79,6 +84,69 @@ Clear whole transactions, not individual postings.
 
 #+END_SRC
 
+** TODO See Expenses for all months
+:PROPERTIES:
+:ID:       51e6867e-18a9-4cfc-a29c-99968378facb
+:END:
+
+
+#+BEGIN_SRC emacs-lisp
+  (defun my-ledger-year-balance ()
+    "Create an annuary with the balance for each month"
+  
+    (interactive)
+
+    (let ((command (concat my-ledger-cmd "balance Expenses "))
+          (report-filename "*Monthy Ledger Report*")
+          (shell-buffer-name "*TESTE*")
+          (months '(("January   " . "jan")
+                    ("Febuary   " . "feb")
+                    ("March     " . "mar")
+                    ("April     " . "apr")
+                    ("May       " . "may")
+                    ("June      " . "jun")
+                    ("July      " . "jul")
+                    ("August    " . "aug")
+                    ("September " . "sep")
+                    ("October   " . "oct")
+                    ("November  " . "nov")
+                    ("December  " . "dec"))))
+
+      ;; Create report buffer
+      (get-buffer-create report-filename)
+
+      ;; For each month
+      (dolist (month months)
+
+        ;; Create an shell buffer
+        (get-buffer-create shell-buffer-name)
+
+        ;; Put a header for the month
+        (with-current-buffer report-filename
+          (insert (concat "============================= " 
+                          (cl-first month) 
+                          " \n")))
+
+        ;; Execute the ledger command and put its result in the report buffer
+        (with-current-buffer  shell-buffer-name
+          (shell-command (concat command 
+                                 "--period 'in " (cl-rest month)  " 2018'") 
+                         shell-buffer-name)
+          (append-to-buffer report-filename 
+                            (point-min) (point-max)))
+
+        ;; Kill the shell output buffer
+        (kill-buffer shell-buffer-name))
+
+
+      ;; Opens report buffer
+      (switch-to-buffer-other-window report-filename)))
+
+#+END_SRC
+
+#+RESULTS:
+: t
+
 * Set Reports
 :PROPERTIES:
 :ID:       3d4ec914-d5a2-41b2-86cb-ad3b6afe4c3d
@@ -89,15 +157,15 @@ Clear whole transactions, not individual postings.
     (setq ledger-reports nil)
 
     ;; Add more reports
-    (ledger-reports-add  
+    (ledger-reports-add
      "Balance Assets"
      (concat my-ledger-cmd "balance Assets:Bank"))
 
-    (ledger-reports-add 
+    (ledger-reports-add
      "Balance Expenses All"
      (concat my-ledger-cmd "balance Expenses"))
 
-    (ledger-reports-add 
+    (ledger-reports-add
      "Balance Expenses This Month"
      (concat my-ledger-cmd "balance --period 'this month' Expenses"))
 
@@ -109,7 +177,7 @@ Clear whole transactions, not individual postings.
      "Register This Month"
      (concat my-ledger-cmd "register --period 'this month'"))
 
-    (ledger-reports-add 
+    (ledger-reports-add
      "Register All"
      (concat my-ledger-cmd " " "register"))
 
@@ -126,4 +194,3 @@ Clear whole transactions, not individual postings.
     (eval-after-load 'ledger-mode
       (define-key ledger-mode-map (kbd "M-q") nil)))
 #+END_SRC
-
