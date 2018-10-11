@@ -1,0 +1,310 @@
+#+TITLE:        Global KeyBinding Configuration
+#+AUTHOR:       Pedro Chinen
+#+DATE-CREATED: [2018-09-22 Sat]
+#+DATE-UPDATED: [2018-10-04 qui]
+
+* Unbind
+:PROPERTIES:
+:ID:       0f4df504-894d-4dd4-9588-e3c3979ff45d
+:END:
+
+** Ctrl
+:PROPERTIES:
+:ID:       ceded4ce-6562-45c5-bc6d-ba34b169b495
+:END:
+
+*** Números
+:PROPERTIES:
+:ID:       c1022498-8e3a-40de-bafb-b4ed681ca57f
+:END:
+#+BEGIN_SRC emacs-lisp
+  (global-unset-key (kbd "C-1"))
+  (global-unset-key (kbd "C-2"))
+  (global-unset-key (kbd "C-3"))
+  (global-unset-key (kbd "C-4"))
+  (global-unset-key (kbd "C-5"))
+  (global-unset-key (kbd "C-6"))
+  (global-unset-key (kbd "C-7"))
+  (global-unset-key (kbd "C-8"))
+  (global-unset-key (kbd "C-9"))
+  (global-unset-key (kbd "C-0"))
+  (global-unset-key (kbd "C--"))
+
+#+END_SRC
+
+*** Letras
+:PROPERTIES:
+:ID:       2d81fb20-bcf3-47b7-a6ad-e728a96c3769
+:END:
+#+BEGIN_SRC emacs-lisp
+  ;;;; Unset every single key chord: start with C-
+  (global-unset-key (kbd "C-q"))
+  (global-unset-key (kbd "C-w"))
+  (global-unset-key (kbd "C-e"))
+  (global-unset-key (kbd "C-r"))
+  (global-unset-key (kbd "C-t"))
+  ;; (global-unset-key (kbd "C-u")) ;; digit-argument
+  ;; (global-unset-key (kbd "C-i")) ;; In emacs C-i is the same as TAB
+  (global-unset-key (kbd "C-o"))
+  (global-unset-key (kbd "C-p"))
+  (global-unset-key (kbd "C-a"))
+  ;; (global-unset-key (kbd "C-s")) ;; isearch-forward-regexp
+  (global-unset-key (kbd "C-d"))
+  (global-unset-key (kbd "C-f"))
+  ;; (global-unset-key (kbd "C-g")) ;; keyboard-quit
+  (global-unset-key (kbd "C-h"))
+  (global-unset-key (kbd "C-j"))
+  (global-unset-key (kbd "C-k"))
+  ;; (global-unset-key (kbd "C-l")) ;; recenter-top-botton
+  (global-unset-key (kbd "C-ç"))
+  (global-unset-key (kbd "C-z"))
+  ;; (global-unset-key (kbd "C-x")) ;; prefix-command
+  (global-unset-key (kbd "C-c"))
+  ;; (global-unset-key (kbd "C-v")) ;; prefix-command
+  (global-unset-key (kbd "C-b"))
+  (global-unset-key (kbd "C-n"))
+  ;; (global-unset-key (kbd "C-m")) ;; in emacs C-m is the same as RET
+
+#+END_SRC
+
+** Meta
+:PROPERTIES:
+:ID:       e8b8c1c1-fbcd-4bf2-abe4-1b9b5d37960b
+*** Números
+:PROPERTIES:
+:ID:       a06f2d27-2884-48f6-bd31-50d83b29a8ae
+:END:
+#+BEGIN_SRC emacs-lisp
+  (global-unset-key (kbd "M-1"))
+  (global-unset-key (kbd "M-2"))
+  (global-unset-key (kbd "M-3"))
+  (global-unset-key (kbd "M-4"))
+  (global-unset-key (kbd "M-5"))
+  (global-unset-key (kbd "M-6"))
+  (global-unset-key (kbd "M-7"))
+  (global-unset-key (kbd "M-8"))
+  (global-unset-key (kbd "M-9"))
+  (global-unset-key (kbd "M-0"))
+  (global-unset-key (kbd "M--"))
+
+#+END_SRC
+
+*** Letras
+:PROPERTIES:
+:ID:       c54e5102-4c8b-42ac-bebc-f333c3f5f70b
+:END:
+#+BEGIN_SRC emacs-lisp
+  ;;;; Unset every single key chord: start with M-
+  (global-unset-key (kbd "M-q"))
+  ;; (global-unset-key (kbd "M-w")) ;; kill-ring-save
+  (global-unset-key (kbd "M-e"))
+  (global-unset-key (kbd "M-r"))
+  (global-unset-key (kbd "M-t"))
+  (global-unset-key (kbd "M-y"))
+  (global-unset-key (kbd "M-u"))
+  (global-unset-key (kbd "M-i"))
+  (global-unset-key (kbd "M-o"))
+  (global-unset-key (kbd "M-p"))
+  (global-unset-key (kbd "M-a"))
+  (global-unset-key (kbd "M-s"))
+  (global-unset-key (kbd "M-d"))
+  (global-unset-key (kbd "M-f"))
+  (global-unset-key (kbd "M-g"))
+  (global-unset-key (kbd "M-h"))
+  (global-unset-key (kbd "M-j"))
+  (global-unset-key (kbd "M-k"))
+  (global-unset-key (kbd "M-l"))
+  (global-unset-key (kbd "M-z"))
+  ;; (global-unset-key (kbd "M-x")) ;; execute-extended-command
+  (global-unset-key (kbd "M-c"))
+  ;; (global-unset-key (kbd "M-v")) ;; prefix-command
+  (global-unset-key (kbd "M-b"))
+  (global-unset-key (kbd "M-n"))
+  (global-unset-key (kbd "M-m"))
+
+#+END_SRC
+
+** Function
+:PROPERTIES:
+:ID:       73b01cc9-e042-4017-af5b-e1f531d301df
+:END:
+#+BEGIN_SRC emacs-lisp
+  (global-unset-key (kbd "<f2>"))
+  (global-unset-key (kbd "<f3>"))
+  (global-unset-key (kbd "<f4>"))
+  (global-unset-key (kbd "<f5>"))
+  (global-unset-key (kbd "<f6>"))
+  (global-unset-key (kbd "<f7>"))
+  (global-unset-key (kbd "<f8>"))
+  (global-unset-key (kbd "<f9>"))
+  (global-unset-key (kbd "<f10>"))
+  (global-unset-key (kbd "<f11>"))
+  (global-unset-key (kbd "<f12>"))
+
+#+END_SRC
+
+** Frequent Mistyped Chords
+:PROPERTIES:
+:ID:       aeeb63ce-042c-4b48-bc35-65c0260460ad
+:END:
+#+BEGIN_SRC emacs-lisp
+  (global-unset-key (kbd "C-x DEL"))
+  (global-unset-key (kbd "C-x f"))
+
+#+END_SRC
+
+* Bind
+:PROPERTIES:
+:ID:       54bf97c8-4cae-420f-9486-f2c962af8abe
+:END:
+** Ctrl
+:PROPERTIES:
+:ID:       08804844-541d-4627-b1a2-0d758ea449e1
+:END:
+*** Números
+:PROPERTIES:
+:ID:       5e19c69e-b051-41f7-b1ce-a47bc0cd95e2
+:END:
+#+BEGIN_SRC emacs-lisp
+  ;; (global-set-key (kbd "C-1"))
+  ;; (global-set-key (kbd "C-2"))
+  ;; (global-set-key (kbd "C-3"))
+  ;; (global-set-key (kbd "C-4"))
+  ;; (global-set-key (kbd "C-5"))
+  ;; (global-set-key (kbd "C-6"))
+  ;; (global-set-key (kbd "C-7"))
+  ;; (global-set-key (kbd "C-8"))
+  ;; (global-set-key (kbd "C-9"))
+  ;; (global-set-key (kbd "C-0"))
+  ;; (global-set-key (kbd "C--"))
+
+#+END_SRC
+
+*** Letras
+:PROPERTIES:
+:ID:       f03f2ccf-86bb-4adf-8147-10fe7f29bdcc
+:END:
+#+BEGIN_SRC emacs-lisp
+  ;; (global-set-key (kbd "C-q"))
+  ;; (global-set-key (kbd "C-w"))
+  ;; (global-set-key (kbd "C-e"))
+  (global-set-key (kbd "C-r") 'isearch-backward-regexp)
+  ;; (global-set-key (kbd "C-t"))
+  ;; (global-set-key (kbd "C-u")) ;; digit-argument
+  ;; (global-set-key (kbd "C-i")) ;; In emacs C-i is the sama as TAB
+  ;; (global-set-key (kbd "C-o"))
+  ;; (global-set-key (kbd "C-p"))
+  ;; (global-set-key (kbd "C-a"))
+  (global-set-key (kbd "C-s") 'isearch-forward-regexp)
+  ;; (global-set-key (kbd "C-d"))
+  ;; (global-set-key (kbd "C-f"))
+  ;; (global-set-key (kbd "C-g")) ;; keyboard-quit
+  ;; (global-set-key (kbd "C-h"))
+  ;; (global-set-key (kbd "C-j"))
+  ;; (global-set-key (kbd "C-k"))
+  ;; (global-set-key (kbd "C-l")) ;; recenter-top-botton
+  ;; (global-set-key (kbd "C-ç"))
+  ;; (global-set-key (kbd "C-z"))
+  ;; (global-set-key (kbd "C-x")) ;; prefix-command
+  ;; (global-set-key (kbd "C-c"))
+  ;; (global-set-key (kbd "C-v")) ;; prefix-command
+  ;; (global-set-key (kbd "C-b"))
+  (global-set-key (kbd "C-n") 'xah-new-empty-buffer)
+  ;; (global-set-key (kbd "C-m")) ;; in emacs C-m is the same as RET
+  (global-set-key (kbd "<C-tab>") 'other-window)
+
+#+END_SRC
+
+** Meta
+:PROPERTIES:
+:ID:       94fdacfe-e884-47bb-8e26-ed6111c3cd20
+:END:
+*** Números
+:PROPERTIES:
+:ID:       d01d0a0e-5062-4547-9c3f-bc722ad70339
+:END:
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "M-1") 'xah-cut-line-or-region)
+  ;; (global-set-key (kbd "M-2"))
+  (global-set-key (kbd "M-3") 'yank)
+  ;; (global-set-key (kbd "M-4"))
+  ;; (global-set-key (kbd "M-5"))
+  ;; (global-set-key (kbd "M-6"))
+  ;; (global-set-key (kbd "M-7"))
+  ;; (global-set-key (kbd "M-8"))
+  ;; (global-set-key (kbd "M-9"))
+  ;; (global-set-key (kbd "M-0"))
+  ;; (global-set-key (kbd "M--"))
+
+#+END_SRC
+
+*** Letras
+:PROPERTIES:
+:ID:       7798c1fb-b9fb-43c4-ab87-344edc720b8e
+:END:
+#+BEGIN_SRC emacs-lisp
+  ;; (global-set-key (kbd "M-q"))
+  ;; (global-set-key (kbd "M-w")) ;; kill-ring-save
+  ;; (global-set-key (kbd "M-e"))
+  ;; (global-set-key (kbd "M-r"))
+  ;; (global-set-key (kbd "M-t"))
+  ;; (global-set-key (kbd "M-y"))
+  ;; (global-set-key (kbd "M-u"))
+  ;; (global-set-key (kbd "M-i"))
+  ;; (global-set-key (kbd "M-o"))
+  ;; (global-set-key (kbd "M-p"))
+  ;; (global-set-key (kbd "M-a"))
+  ;; (global-set-key (kbd "M-s"))
+  ;; (global-set-key (kbd "M-d"))
+  ;; (global-set-key (kbd "M-f"))
+  ;; (global-set-key (kbd "M-g"))
+  ;; (global-set-key (kbd "M-h"))
+  ;; (global-set-key (kbd "M-j"))
+  ;; (global-set-key (kbd "M-k"))
+  ;; (global-set-key (kbd "M-l"))
+  ;; (global-set-key (kbd "M-z"))
+  ;; (global-set-key (kbd "M-x")) ;; execute-extended-command
+  ;; (global-set-key (kbd "M-c"))
+  ;; (global-set-key (kbd "M-v")) ;; prefix-command
+  ;; (global-set-key (kbd "M-b"))
+  ;; (global-set-key (kbd "M-n"))
+  ;; (global-set-key (kbd "M-m"))
+  (global-set-key (kbd "M-0") 'undo)
+
+#+END_SRC
+
+** Function
+:PROPERTIES:
+:ID:       9c446ef2-247e-46df-8b96-9c8c95417ce4
+:END:
+#+BEGIN_SRC emacs-lisp
+    ;; (global-set-key (kbd "<f2>"))
+    ;; (global-set-key (kbd "<f3>"))
+    ;; (global-set-key (kbd "<f4>"))
+    ;; (global-set-key (kbd "<f5>"))
+    ;; (global-set-key (kbd "<f6>"))
+    ;; (global-set-key (kbd "<f7>"))
+    ;; (global-set-key (kbd "<f8>"))
+    ;; (global-set-key (kbd "<f9>"))
+    ;; (global-set-key (kbd "<f10>"))
+    ;; (global-set-key (kbd "<f11>"))
+    ;; (global-set-key (kbd "<f12>"))
+
+#+END_SRC
+
+* New Prefix Command: C-v M-v
+:PROPERTIES:
+:ID:       a1dfa7f8-27d3-4282-aab1-6ae0288e3188
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  ;;;; Define new prefix command
+  (define-prefix-command 'my-prefix-command)
+  (global-set-key (kbd "C-v") 'my-prefix-command)
+  (global-set-key (kbd "M-v") 'my-prefix-command)
+
+  ;;;; Key binding using my prefix command
+  (global-set-key (kbd "M-v M-f") 'find-file)
+
+#+END_SRC
+

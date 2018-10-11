@@ -1,0 +1,175 @@
+#+TITLE:        Programming Configuration
+#+AUTHOR:       Pedro Chinen
+#+DATE-CREATED: [2018-09-23 Sun]
+#+DATE-UPDATED: [2018-10-05 sex]
+
+* Packages
+:PROPERTIES:
+:ID:       182bc287-76e2-48b5-882f-3d970cfd930a
+:END:
+** Load Package: Goto Addr
+:PROPERTIES:
+:ID:       35ad56f7-e2fe-4a5d-b94d-890d0a575671
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package goto-addr
+    ;; http://xenodium.com/#actionable-urls-in-emacs-buffers
+    :hook ((compilation-mode . goto-address-mode)
+           (prog-mode . goto-address-prog-mode)
+           (eshell-mode . goto-address-mode)
+           (shell-mode . goto-address-mode))
+    :bind (:map goto-address-highlight-keymap
+                ("<RET>" . goto-address-at-point)
+                ("M-<RET>" . newline))
+    :commands (goto-address-prog-mode
+               goto-address-mode))
+#+END_SRC
+
+** Load Package: String Inflection
+:PROPERTIES:
+:ID:       8cf58b18-54ac-477e-9093-4394c5f43d06
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package string-inflection
+    :ensure t)
+#+END_SRC
+
+* Function: Infer Identation Style
+:PROPERTIES:
+:ID:       e9f3f607-3995-41a8-9410-f785a03bb36a
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defun infer-indentation-style ()
+    ;; if our source file uses tabs, we use tabs, if spaces spaces, and if
+    ;; neither, we use the current indent-tabs-mode
+    (let ((space-count (how-many "^  " (point-min) (point-max)))
+          (tab-count (how-many "^\t" (point-min) (point-max))))
+      (if (> space-count tab-count) (setq indent-tabs-mode nil))
+      (if (> tab-count space-count) (setq indent-tabs-mode t))))
+
+  (add-hook 'prog-mode-hook 'infer-indentation-style)
+
+#+END_SRC
+
+* Javascript
+:PROPERTIES:
+:ID:       bf0ca3c0-1538-4113-a93b-5ead7550a378
+:END:
+
+** Load Package: Js2 Mode
+:PROPERTIES:
+:ID:       63d830e2-ee6d-4d58-8d80-ddad8e8155cc
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package js2-mode
+    :ensure t)
+
+#+END_SRC
+
+*** Configure
+:PROPERTIES:
+:ID:       e1ab6fea-373d-488b-9ba0-eec18a7e4717
+:END:
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'js2-mode)
+    ;; number of spaces when identing
+    (setq indent-tabs-mode nil)
+    (setq js2-basic-offset 2)
+
+    ;; load this mode when loading .js files
+    (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+    (add-to-list 'auto-mode-alist '("\\.json\\'" . js2-mode)))
+
+#+END_SRC
+
+** Load Package: rjsx Mode
+:PROPERTIES:
+:ID:       a504feb0-e2b4-48a0-978b-70b5e8b0e983
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package rjsx-mode
+    :ensure t)
+
+#+END_SRC
+
+*** Configure
+:PROPERTIES:
+:ID:       bf7f937b-33e9-47f6-b97d-4cf3768f4366
+:END:
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'rjsx-mode)
+    (add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode))
+    (add-to-list 'auto-mode-alist '("screens\\/.*\\.js\\'" . rjsx-mode)))
+
+#+END_SRC
+
+* Markdown
+:PROPERTIES:
+:ID:       c6a8a6e0-5624-42c1-82aa-780002ae8a9c
+:END:
+
+** Load Package: Markdown Mode
+:PROPERTIES:
+:ID:       d1f1779a-d6a5-44a3-b63c-c27fb67d5a0a
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package markdown-mode
+    :ensure t)
+
+#+END_SRC
+
+*** TODO Configure
+:PROPERTIES:
+:ID:       4fc998d5-9dd2-4f8b-9199-ece6d217017d
+:END:
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'markdown-mode)
+    ;; :commands (markdown-mode gfm-mode)
+    ;; :mode (("README\\.md\\'" . gfm-mode)
+    ;;        ("\\.md\\'" . markdown-mode)
+    ;;        ("\\.markdown\\'" . markdown-mode))
+    ;; :init (setq markdown-command "multimarkdown"))
+  )
+
+#+END_SRC
+
+* CSS
+:PROPERTIES:
+:ID:       df910dd7-81c1-4eb3-8ee6-aa0983687082
+:END:
+
+CSS 
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'auto-mode-alist '(".scss" . css-mode))
+
+#+END_SRC
+
+* GGTAGS
+:PROPERTIES:
+:ID:       dba3b0bd-9583-4cfe-a7cd-d2e243add7c9
+:END:
+
+** Load Package: GGTAGS
+:PROPERTIES:
+:ID:       3a8940dd-66c1-4f76-9ee8-50c6ce5627c7
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package ggtags
+    :ensure t)
+
+#+END_SRC
+
+*** Configure
+:PROPERTIES:
+:ID:       3d1aca6d-caa2-4c4b-abcd-c89ecd055002
+:END:
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'ggtags)
+    (ggtags-mode 1)
+    (add-hook 'c-mode-common-hook
+              (lambda ()
+                (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
+                  (ggtags-mode 1)))))
+
+#+END_SRC
+

@@ -1,0 +1,30 @@
+#+TITLE:        Yasnippet Configurations
+#+AUTHOR:       Pedro Chinen
+#+DATE-CREATED: [2018-09-23 Sun]
+#+DATE-UPDATED: [2018-10-03 qua]
+
+* Yasnippet
+:PROPERTIES:
+:ID:       8c6fa2df-9edb-4752-a9fe-f16cb117cbe5
+:END:
+#+BEGIN_SRC emacs-lisp
+  (require-package 'yasnippet)
+
+  (message "Yasnippet - Loaded")
+
+  ;; Surppress yasnippet backquote changes
+  (setq warning-suppress-types '(yasnippet backquote-change))
+
+  ;; Controls indenting applied to snippets.
+  (setq yas-indent-line 'fixed)
+
+  ;; Change add Directories when looking for snippets
+  (setq yas-snippet-dirs
+        ;; Personal Collection
+        '("~/emacsSnippets"))
+
+  ;; Enable yasnippet mode globally
+  (yas-global-mode)
+
+#+END_SRC
+

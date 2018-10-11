@@ -1,0 +1,319 @@
+#+TITLE:        Custom Functions Configurations
+#+AUTHOR:       Pedro Chinen
+#+DATE-CREATED: [2018-09-22 Sat]
+#+DATE-UPDATED: [2018-10-05 sex]
+
+* Functions from Internet
+:PROPERTIES:
+:ID:       985d140b-eca1-4397-9e3c-71543075a4d4
+:END:
+** Clean Buffer
+:PROPERTIES:
+:ID:       bf95cbf3-c7da-4d1c-a9a7-6c08235855aa
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defun user--clean-buffer ()
+    "Cleans the buffer by re-indenting, changing tabs to spaces, and removing trailing whitespace."
+    (interactive)
+
+    ;; Remove whitespace from the ends of lines
+    (delete-trailing-whitespace)
+
+    ;; Replace more than 2 newlines with 2 newlines
+    (save-excursion
+      (replace-regexp "^\n\\{3,\\}" "\n\n" nil (point-min) (point-max)))
+
+    ;; Turn tabs into spaces
+    (untabify (point-min) (point-max)))
+#+END_SRC
+
+** Endless Fill or Unfill
+:PROPERTIES:
+:ID:       57cc1ea5-2d58-494d-bcd9-2485647ed20e
+:END:
+#+BEGIN_SRC emacs-lisp
+  ;; URL: http://endlessparentheses.com/fill-and-unfill-paragraphs-with-a-single-key.html?source=rss
+  (defun endless-fill-or-unfill ()
+    "Like `fill-paragraph', but unfill if used twice."
+    (interactive)
+    ;; Make fill-column as big as the buffer, so it will unfill or the normal size
+    (let ((fill-column
+           ;; Simple way to make an toggle function, check if the last command was
+           ;; this command
+           (if (eq last-command 'endless-fill-or-unfill)
+               ;; If true, make fill-column as big as it can be
+               ;; remove this command from the history
+               (progn (setq this-command nil)
+                      (point-max))
+             ;; If not, just set fill-column as default
+             fill-column)))
+      ;; Call fill-paragraph, because it uses fill-column
+      (call-interactively #'fill-paragraph)))
+#+END_SRC
+
+** Lunaryorn Rename File and Buffer
+:PROPERTIES:
+:ID:       0a16883e-caec-43c9-bd33-980062961c45
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defun lunaryorn-rename-file-and-buffer ()
+    "Rename the current file and buffer."
+    (interactive)
+    (let* ((filename (buffer-file-name))
+           (old-name (if filename
+                         (file-name-nondirectory filename)
+                       (buffer-name)))
+           (new-name (read-file-name "New name: " nil nil nil old-name)))
+      (cond
+       ((not (and filename (file-exists-p filename))) (rename-buffer new-name))
+       ((vc-backend filename) (vc-rename-file filename new-name))
+       (t
+        (rename-file filename new-name 'force-overwrite)
+        (set-visited-file-name new-name 'no-query 'along-with-file)))))
+#+END_SRC
+
+** Narrow or Widen dwin
+:PROPERTIES:
+:ID:       f00c2a20-0367-41d7-a2d9-db61185a39a9
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defun narrow-or-widen-dwim (p)
+    "If the buffer is narrowed, it widens. Otherwise, it narrows intelligently.
+   Intelligently means: region, subtree, or defun, whichever applies
+   first.
+   With prefix P, don't widen, just narrow even if buffer is already
+   narrowed."
+    (interactive "P")
+    (declare (interactive-only))
+    (cond ((and (buffer-narrowed-p) (not p)) (widen))
+          ((region-active-p)
+           (narrow-to-region (region-beginning) (region-end)))
+          ((derived-mode-p 'org-mode) (org-narrow-to-subtree))
+          (t (narrow-to-defun))))
+#+END_SRC
+
+** Xah Cut Line or Region
+:PROPERTIES:
+:ID:       01659420-a2e6-4dc3-a8f2-ab9b5a72313d
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defun xah-cut-line-or-region ()
+      "Cut current line, or text selection.
+       When `universal-argument' is called first,
+       cut whole buffer (respects `narrow-to-region').
+       URL `http://ergoemacs.org/emacs/emacs_copy_cut_current_line.html'
+       Version 2015-06-10"
+
+      (interactive)
+
+      ;; check if exist a prefix argument for this command
+      (if current-prefix-arg
+
+          ;; exist a prefix argument: kill whole buffer
+          (progn
+
+            ;; this will be the latest kill in the kill ring
+            (kill-new
+             x
+
+             ;; selected whole buffer
+             (buffer-string))
+
+            ;; delete region between:
+            (delete-region
+
+             ;; begnning of buffer
+             (point-min)
+
+             ;; end of buffer
+             (point-max)))
+
+        ;; do not exist a prefix argument: kill some region
+        (progn
+
+          ;; check if a region is selected
+          (if (use-region-p)
+
+              ;; region selected: kill region between:
+              (kill-region
+
+               ;; beginning of the region selected
+               (region-beginning)
+
+               ;; end of the region selected
+               (region-end)
+
+               ;; kill the region
+               t)
+
+            ;; region is not selected: kill region between:
+            (kill-region
+
+             ;; beginning of line
+             (line-beginning-position)
+
+             ;; end of line
+             (line-end-position))))))
+#+END_SRC
+
+** Xah New Empty Buffer
+:PROPERTIES:
+:ID:       5ca2b3f0-bcc7-4d59-b644-224ca8be878a
+:END:
+#+BEGIN_SRC emacs-lisp
+  ;; URL: http://ergoemacs.org/emacs/emacs_new_empty_buffer.html
+  (defun xah-new-empty-buffer ()
+    "Open a new empty buffer."
+    (interactive)
+
+    ;; (1) bind variables and (2) eval some commands
+    (let
+
+        ;; (1) bind variables
+        (
+
+         ;; create variable 'my-new-buffer'
+         (my-new-buffer
+
+          ;; set variable with the new buffer untitled
+          (generate-new-buffer "untitled")))
+
+      ;; (2) eval some commands
+      ;; switch to new buffer
+      (switch-to-buffer my-new-buffer)
+
+      ;; switch mode of untitle buffer
+      (funcall (text-mode))
+
+      ;; set variable buffer-other-save 't'
+      (setq buffer-other-save t)))
+#+END_SRC
+
+** Xah Open in External App
+:PROPERTIES:
+:ID:       209c7f8f-c3d5-4deb-bcbc-caa347eec7df
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defun xah-open-in-external-app ()
+    "Open the current file or dired marked files in external app.
+   The app is chosen from your OS's preference.
+   URL `http://ergoemacs.org/emacs/emacs_dired_open_file_in_ext_apps.html'
+   Version 2016-10-15"
+    (interactive)
+    (let* (($file-list
+            (if (string-equal major-mode "dired-mode")
+                (dired-get-marked-files)
+              (list (buffer-file-name))))
+           ($do-it-p (if (<= (length $file-list) 5)
+                         t
+                       (y-or-n-p "Open more than 5 files? "))))
+      (when $do-it-p
+        (cond
+         ((string-equal system-type "windows-nt")
+          (mapc
+           (lambda ($fpath)
+             (w32-shell-execute "open" (replace-regexp-in-string "/" "\\" $fpath t t))) $file-list))
+         ((string-equal system-type "darwin")
+          (mapc
+           (lambda ($fpath)
+             (shell-command
+              (concat "open " (shell-quote-argument $fpath))))  $file-list))
+         ((string-equal system-type "gnu/linux")
+          (mapc
+           (lambda ($fpath) (let ((process-connection-type nil))
+                              (start-process "" nil "xdg-open" $fpath))) $file-list))))))
+#+END_SRC
+
+** Xah Open in Terminal
+:PROPERTIES:
+:ID:       510abf7f-6066-4b0b-a586-822fa5f60475
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defun xah-open-in-terminal ()
+    "Open the current dir in a new terminal window.
+   URL `http://ergoemacs.org/emacs/emacs_dired_open_file_in_ext_apps.html'
+   Version 2015-12-10"
+    (interactive)
+    (cond
+     ((string-equal system-type "windows-nt")
+      (message "Microsoft Windows not supported. File a bug report or pull request."))
+     ((string-equal system-type "darwin")
+      (message "Mac not supported. File a bug report or pull request."))
+     ((string-equal system-type "gnu/linux")
+      (let ((process-connection-type nil))
+        (start-process "" nil "x-terminal-emulator"
+                       (concat "--working-directory=" default-directory) )))))
+#+END_SRC
+
+* My Functions
+:PROPERTIES:
+:ID:       8f9c6ef4-7c8a-4b32-beb3-23ad6ceb5f4b
+:END:
+
+** Find Notes
+:PROPERTIES:
+:ID:       91bedb55-58dc-466d-8f79-96ac23ab8a4d
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defun my-find-notes ()
+    "Find file but initially in Notes Directory"
+    (interactive)
+
+    (when (functionp 'counsel-find-file)
+      (counsel-find-file "~/Dropbox/Notes")))
+
+#+END_SRC
+
+** Grep Notes
+:PROPERTIES:
+:ID:       03c0055b-4d9d-42fb-9397-413b5bba56b3
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defun my-grep-notes (regex)
+    "Use FIND-GREP in my notes directory."
+
+    (interactive "sWhat to SEARCH for? ")
+    (if (< (length regex) 3)
+        (message "Too Short. Try Again!!")
+      (progn
+        (let* ((notes-dir "~/Dropbox/Notes/")
+               (regex-treated
+                (replace-regexp-in-string " " ".*" regex))
+               (my-find-c
+                (concat "find " notes-dir  " -type f -exec "))
+               (my-grep-c
+                (concat "grep --color -nH -i -e '" regex-treated "' {} +"))
+               (command (concat my-find-c my-grep-c)))
+
+          ;; find . -type f -exec grep --color -nH -e javascript {} +
+          (grep-find command)
+          (switch-to-buffer-other-frame "*grep*")))))
+
+#+END_SRC
+
+** Sort Org Headings
+:PROPERTIES:
+:ID:       879adb21-70ec-4a72-833b-262250a1bff3
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defun my-sort-org-headings ()
+    "Sort subtree of an org file as Alfabetical and TODO keyword order"
+    (interactive)
+
+    ;; Just do this if it is an orgmode
+    (when (eq major-mode 'org-mode)
+      (save-excursion
+
+        ;; If it is the first headline select the whole buffer
+        ;; else go to the parent of this headline
+        (if (> (org-outline-level) 1)
+            (org-up-element
+          (mark-whole-buffer))
+
+        ;; Sort entries by alphanumeric order
+        (org-sort-entries nil ?a nil nil nil t)
+
+        ;; Sort entries by todo keyword order
+        (org-sort-entries nil ?o nil nil nil t)))))
+#+END_SRC
+

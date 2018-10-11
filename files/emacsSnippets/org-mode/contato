@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: contato
+# key: contato
+# --
+:EMAIL: ${1:email@not_work.com}
+:EMAIL_WORK: ${2:email@work.com}
+:NICKNAME: ${3:Nick}
+:BIRTHDAY: ${4:1950-05-29}
+:WHERE: ${5:Somehere}

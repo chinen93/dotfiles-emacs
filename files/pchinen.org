@@ -1,5 +1,0 @@
-#+TITLE:  Pchinen emacs Org
-#+AUTHOR: Pedro Chinen
-#+EMAIL:  ph.u.chinen@gmail.com
-#+DATE_CREATE: 2016-04-03
-#+DATE_UPDATE: 2016-06-29

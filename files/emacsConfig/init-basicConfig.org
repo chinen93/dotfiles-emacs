@@ -1,0 +1,290 @@
+#+TITLE:        Basic Configuration
+#+AUTHOR:       Pedro Chinen
+#+DATE-CREATED: [2018-09-21 Fri]
+#+DATE-UPDATED: [2018-10-04 qui]
+
+It doesn't need any external package. Just pure elisp.
+
+* Scratch Buffer
+:PROPERTIES:
+:ID:       d4c6c814-f72e-41a1-9930-007d52730ae3
+:END:
+
+What to say on the *scratch* buffer.
+#+BEGIN_SRC emacs-lisp
+  (setq initial-scratch-message "
+  ;; ***************************************************************
+  ;; *************************** SCRATCH ***************************
+  ;; ***************************************************************
+
+  ;; | Copy & Paste                                                |
+  ;; |-------------------------------------------------------------|
+  ;; | M-1 : cut line                     | M-3 : paste clipboard  |
+
+  ;; | New command prefix (C-v) and (M-v)                          |
+  ;; |-------------------------------------------------------------|
+  ;; | M-v M-f : find-file                                         |
+
+  ;; | Useful keybindings                                          |
+  ;; |------------------------------------+------------------------|
+  ;; | C-r : backward regex               | C-s   : forward regex  |
+  ;; | C-n : new buffer                   | C-TAB : other-window   |
+  ;; | C-0 : undo                         | M-q   : Hydra Launcher |
+
+  ;; | Open Hydra Launcher - More commands inside !!               |
+  ;; |------------------------------------+------------------------|
+  ;; | M-q   : Hydra Launcher                                      |
+
+  ")
+
+#+END_SRC
+
+* Encoding Charset
+:PROPERTIES:
+:ID:       f59e7297-4e09-498d-8c47-703673a6f5da
+:END:
+
+[[https://en.wikipedia.org/wiki/UTF-8][UTF-8]] is a variable width character encoding capable of encoding all 1,112,064 valid code points in Unicode using one to four 8-bit bytes. The encoding is defined by the Unicode standard, and was originally designed by Ken Thompson and Rob Pike. The name is derived from Unicode (or Universal Coded Character Set) Transformation Format – 8-bit.
+
+Set the default enconding to be UTF-8 on everything possible
+#+BEGIN_SRC emacs-lisp
+  (set-language-environment 'utf-8)
+  (set-selection-coding-system 'utf-8)
+  (setq locale-coding-system 'utf-8)
+  (set-default-coding-systems 'utf-8)
+  (set-terminal-coding-system 'utf-8)
+  (prefer-coding-system 'utf-8)
+
+#+END_SRC
+
+* Better Visual
+:PROPERTIES:
+:ID:       40501f1f-b111-4789-992f-c658bd924d15
+:END:
+
+Remove tool bar at top and scroll bar at right
+#+BEGIN_SRC emacs-lisp
+  (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+  (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+
+#+END_SRC
+
+Don't show start up message
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-startup-message t)
+
+#+END_SRC
+
+** Show matching parenthesis
+:PROPERTIES:
+:ID:       31f0d337-a006-4af2-ac06-26c49175e66a
+:END:
+
+  See the matching pair of parentheses and others characters.
+
+  The Style should be: If the matching parenthesis is on the same page show it, otherwise highlight everything inside.
+#+BEGIN_SRC emacs-lisp
+  (show-paren-mode t)
+  (setq show-paren-style 'mixed)
+
+#+END_SRC
+
+** Alarm Bell
+:PROPERTIES:
+:ID:       cd778e6d-2bbc-4e08-8b4f-6cd46d965a93
+:END:
+https://www.emacswiki.org/emacs/AlarmBell
+
+When an error occur, change the color of the modeline for a moment. Just to show that something went wrong.
+#+BEGIN_SRC emacs-lisp
+  (setq ring-bell-function
+        (lambda ()
+          (let ((orig-fg (face-foreground 'mode-line)))
+            (set-face-foreground 'mode-line "#F2804F")
+            (run-with-idle-timer 0.1 nil
+                                 (lambda (fg) (set-face-foreground 'mode-line fg))
+                                 orig-fg))))
+
+#+END_SRC
+
+** Prompt yes-no
+:PROPERTIES:
+:ID:       e61fdcf3-d5ef-437f-b13a-efdeab15013e
+:END:
+
+Change (yes/no) to (y/n)
+#+BEGIN_SRC emacs-lisp
+  (fset 'yes-or-no-p 'y-or-n-p)
+
+#+END_SRC
+
+** Ask before leaving Emacs
+:PROPERTIES:
+:ID:       61a27609-0794-4195-aca4-b39c0a633541
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (setq confirm-kill-emacs 'yes-or-no-p)
+
+#+END_SRC
+
+* Global Identation
+:PROPERTIES:
+:ID:       bb472086-0d4c-4779-9b79-4a4929de4a6e
+:END:
+
+Don't indent automatically. Go to the beginning of the newline instead.
+#+BEGIN_SRC emacs-lisp
+  (electric-indent-mode -1)
+
+#+END_SRC
+
+* Mouse
+:PROPERTIES:
+:ID:       bacabf25-5984-4e0d-8f5d-042ec3f02da1
+:END:
+
+When yanking with mouse, don't move the point. Just yank it.
+#+BEGIN_SRC emacs-lisp
+  (setq mouse-yank-at-point t)
+#+END_SRC
+
+To yank with the mouse press <mouse-2>, which is the middle button.
+
+* Delete Things
+:PROPERTIES:
+:ID:       78566d3b-c8ae-4ca1-b106-73ad2c7cf238
+:END:
+
+Delete selected text when something is inserted and a mark is active.
+#+BEGIN_SRC emacs-lisp
+  (delete-selection-mode 1)
+
+#+END_SRC
+
+Don't delete file, but move to trash instead.
+#+BEGIN_SRC emacs-lisp
+  (setq delete-by-moving-to-trash t)
+
+#+END_SRC
+
+* Syslinks
+:PROPERTIES:
+:ID:       eabe8ead-fcc1-412d-9cdc-da74407d1758
+:END:
+
+Don't follow symbolic link to the real file and warn user that this is versioned file.
+#+BEGIN_SRC emacs-lisp
+  (setq vc-follow-symlinks nil)
+
+#+END_SRC
+
+* TODO Global Variables
+:PROPERTIES:
+:ID:       d53815ee-b64e-40f0-9b3a-8be0d6db288e
+:END:
+
+Create variable to hold common paths.
+#+BEGIN_SRC emacs-lisp
+  (defvar my-dropbox-folder "~/Dropbox/"
+    "Path to Dropbox Folder")
+#+END_SRC
+
+* TODO Files Modes
+:PROPERTIES:
+:ID:       31c397d5-4b33-49c1-b850-6892b872c131
+:END:
+
+let dotfiles be loaded with shell-script-mode.
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'auto-mode-alist '(".bashrc" . shell-script-mode))
+  (add-to-list 'auto-mode-alist '(".bash_profile" . shell-script-mode))
+  (add-to-list 'auto-mode-alist '(".bash_aliases" . shell-script-mode))
+  (add-to-list 'auto-mode-alist '(".screenrc" . shell-script-mode))
+  (add-to-list 'auto-mode-alist '(".ledgerrc" . shell-script-mode))
+
+#+END_SRC
+
+Files that doesn't have any extension should be loaded as fundamental-mode.
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'auto-mode-alist '("/[^\\./]*\\'" . fundamental-mode))
+
+#+END_SRC
+
+* History
+:PROPERTIES:
+:ID:       e1e00346-355c-4d72-8bb3-68badbaf801b
+:END:
+
+Set directory to hold history.
+#+BEGIN_SRC emacs-lisp
+  (setq savehist-file "~/.emacs.d/savehist")
+
+#+END_SRC
+
+Start mode to save minibuffer history.
+#+BEGIN_SRC emacs-lisp
+  (savehist-mode 1)
+
+#+END_SRC
+
+How many itens will be saved before deleting old ones.
+#+BEGIN_SRC emacs-lisp
+  (setq history-length 500)
+
+#+END_SRC
+
+Delete duplicated history.
+#+BEGIN_SRC emacs-lisp
+  (setq history-delete-duplicates t)
+
+#+END_SRC
+
+What things to save in the *savehist-file*. The minibuffer is inserted by default.
+#+BEGIN_SRC emacs-lisp
+  (setq savehist-save-minibuffer-history t)
+
+  (setq savehist-additional-variables
+        '(kill-ring
+          search-ring
+          regexp-search-ring))
+
+#+END_SRC
+
+* Server
+:PROPERTIES:
+:ID:       12212ff1-f928-4929-87cc-e6f487588a85
+:END:
+
+Start server on startup.
+#+BEGIN_SRC emacs-lisp
+  (require 'server)
+  (unless (server-running-p)
+    (server-start))
+
+#+END_SRC
+
+* Dired
+:PROPERTIES:
+:ID:       75f45ca7-b183-4da3-a4f0-d32145b7a0be
+:END:
+
+Dired uses the program *ls* to show all files from a directory, so we can pass its parameters to make it behave like we want.
+
+The ones that I like are:
+-a : show all entries even those "hidden".
+-l : use a long listing format.
+-H : follow symbolic links.
+--group-directories-first : directory before files.
+#+BEGIN_SRC emacs-lisp
+  (setq dired-listing-switches "-alH --group-directories-first")
+
+#+END_SRC
+
+Don't show every information about files. Just its name.
+#+BEGIN_SRC emacs-lisp
+  (defun xah-dired-mode-setup ()
+    "to be run as hook for `dired-mode'."
+    (dired-hide-details-mode 1))
+  (add-hook 'dired-mode-hook 'xah-dired-mode-setup)
+#+END_SRC

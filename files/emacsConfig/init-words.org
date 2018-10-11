@@ -1,0 +1,36 @@
+#+TITLE:        Words Packages Configurations
+#+AUTHOR:       Pedro Chinen
+#+DATE-CREATED: [2018-10-05 sex]
+#+DATE-UPDATED: [2018-10-05 sex]
+
+* Load Package: Define Word
+:PROPERTIES:
+:ID:       d48b2394-6dd7-4c5e-99f5-54d035a80b86
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package define-word
+    :ensure t)
+#+END_SRC
+
+* CANCELED Load Package: Google Translate
+:PROPERTIES:
+:ID:       a59b4cdf-8a1f-4189-80f1-9cffaa1afbeb
+:END:
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; (use-package google-translate
+  ;;   :ensure t)
+#+END_SRC
+
+* CANCELED Load Package: Word of The Day
+CLOSED: [2018-09-23 Sun 23:52]
+:PROPERTIES:
+:ID:       858890f5-e5df-44a9-9f96-1e223267c540
+:END:
+- State "CANCELED"   from "DONE"       [2018-09-23 Sun 23:52]
+- State "DONE"       from "WORKING"    [2018-09-23 Sun 23:52]
+- State "WORKING"    from "TODO"       [2018-09-23 Sun 23:52]
+#+BEGIN_SRC emacs-lisp
+  ;; (use-package wotd
+  ;;   :ensure t)
+#+END_SRC
+

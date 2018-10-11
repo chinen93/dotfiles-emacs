@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: check major mode
+# key: check
+# --
+(when (eq major-mode 'major-mode)
+  'body)
