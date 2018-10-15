@@ -1,7 +1,7 @@
 #+TITLE:        Custom Functions Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2018-10-05 sex]
+#+DATE-UPDATED: [2018-10-15 seg]
 
 * Functions from Internet
 :PROPERTIES:
@@ -241,7 +241,7 @@
       (message "Mac not supported. File a bug report or pull request."))
      ((string-equal system-type "gnu/linux")
       (let ((process-connection-type nil))
-        (start-process "" nil "x-terminal-emulator"
+        (start-process "" nil "gnome-terminal"
                        (concat "--working-directory=" default-directory) )))))
 #+END_SRC
 
