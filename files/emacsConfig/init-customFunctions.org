@@ -239,10 +239,12 @@
       (message "Microsoft Windows not supported. File a bug report or pull request."))
      ((string-equal system-type "darwin")
       (message "Mac not supported. File a bug report or pull request."))
+
      ((string-equal system-type "gnu/linux")
       (let ((process-connection-type nil))
         (start-process "" nil "gnome-terminal"
-                       (concat "--working-directory=" default-directory) )))))
+                       (concat "--working-directory=" 
+                               (expand-file-name default-directory)) )))))
 #+END_SRC
 
 * My Functions
