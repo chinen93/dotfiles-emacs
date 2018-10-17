@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2018-10-05 sex]
+#+DATE-UPDATED: [2018-10-17 qua]
 
 [[https://orgmode.org/][Org Mode]] 
 
@@ -209,6 +209,13 @@ Templates for source blocks
    'org-structure-template-alist
    `("l"
      ,(concat "#+BEGIN_SRC emacs-lisp\n"
+              "?\n"
+              "#+END_SRC")))
+
+  (add-to-list 
+   'org-structure-template-alist
+   `("ln"
+     ,(concat "#+BEGIN_SRC emacs-lisp :tangle no\n"
               "?\n"
               "#+END_SRC")))
 
