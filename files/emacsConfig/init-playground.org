@@ -1,0 +1,30 @@
+#+TITLE:        Playground for new Configurations
+#+AUTHOR:       Pedro Chinen
+#+EMAIL:        ph.u.chinen@gmail.com
+#+DATE-CREATED: [2018-10-17 qua]
+#+DATE-UPDATED: [2018-10-17 qua]
+
+* Playground
+:PROPERTIES:
+:ID:       eabe7319-8572-481a-852d-1783fdc300f6
+:END:
+
+** CANCELED Ample-regexp
+:PROPERTIES:
+:ID:       ba1309ce-3cd8-4df9-a4be-c68c80f79756
+:END:
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  (use-package ample-regexps
+    :ensure t)
+
+  (when (featurep 'ample-regexps)
+    (define-arx alnum-rx
+    '((alpha_ (regexp "[[:alpha:]_]"))
+      (alnum_ (regexp "[[:alnum:]_]")))) ;; -> alnum-rx
+
+    (alnum-rx (+ alpha_) (* alnum_)) ;; -> "[[:alpha:]_]+[[:alnum:]_]*"
+    )
+#+END_SRC
+
+
