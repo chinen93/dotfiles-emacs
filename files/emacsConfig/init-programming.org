@@ -1,7 +1,7 @@
 #+TITLE:        Programming Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2018-10-05 sex]
+#+DATE-UPDATED: [2018-10-17 qua]
 
 * Packages
 :PROPERTIES:
@@ -173,3 +173,13 @@ CSS
 
 #+END_SRC
 
+* TODO GREP MODE
+:PROPERTIES:
+:ID:       5aa7c769-b0aa-45a5-88fb-39331630a85c
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'grep-mode-hook 
+            (lambda ()
+              ))
+#+END_SRC
