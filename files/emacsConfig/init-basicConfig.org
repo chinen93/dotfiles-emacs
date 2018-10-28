@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2018-10-17 qua]
+#+DATE-UPDATED: [2018-10-28 dom]
 
 It doesn't need any external package. Just pure elisp.
 
@@ -158,7 +158,7 @@ To yank with the mouse press <mouse-2>, which is the middle button.
 
 Scroll pleasantly with the mouse wheel. A slow turn moves the buffer up and down one line at a time.
 #+BEGIN_SRC emacs-lisp
-  (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+  (setq mouse-wheel-scroll-amount '(1 ((shift) . 5)))
   (setq mouse-wheel-progressive-speed nil)
 #+END_SRC
 
@@ -189,9 +189,9 @@ Don't delete file, but move to trash instead.
 :ID:       eabe8ead-fcc1-412d-9cdc-da74407d1758
 :END:
 
-Don't follow symbolic link to the real file and warn user that this is versioned file.
+Follow sysliks
 #+BEGIN_SRC emacs-lisp
-  (setq vc-follow-symlinks nil)
+  (setq vc-follow-symlinks t)
 
 #+END_SRC
 
