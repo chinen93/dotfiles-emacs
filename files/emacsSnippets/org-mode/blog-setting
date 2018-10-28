@@ -7,4 +7,9 @@
 #+AUTHOR:       ${2:Pedro Chinen}
 #+DATE-CREATED: [`(format-time-string "%Y-%m-%d %a")`]
 #+DATE-UPDATED: [`(format-time-string "%Y-%m-%d %a")`]
+
+* Problem
 $0
+
+* Action Plan
+
