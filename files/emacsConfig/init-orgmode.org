@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2018-10-05 sex]
+#+DATE-UPDATED: [2018-10-28 dom]
 
 [[https://orgmode.org/][Org Mode]] 
 
@@ -22,11 +22,12 @@ Org is a mode for keeping notes, maintaining TODO lists, and project planning wi
 :END:
 #+BEGIN_SRC emacs-lisp
   ;; Set dropbox folder
-  (setq org-dropbox-folder "~/Dropbox/")
+  (defvar my/org-dropbox-folder "~/Dropbox/" 
+    "Dropbox directory")
 
   ;; Only set this org variable if there no other variable for the dropbox folder
-  (unless (null my-dropbox-folder)
-    (setq org-dropbox-folder my-dropbox-folder))
+  (unless (null my/dropbox-folder)
+    (setq my/org-dropbox-folder my/dropbox-folder))
 
 #+END_SRC
 
@@ -87,13 +88,13 @@ Set org agenda files
   (setq org-agenda-files nil)
 
   (add-to-list 'org-agenda-files 
-               (concat org-dropbox-folder "Organizador.org"))
+               (concat my/org-dropbox-folder "Organizador.org"))
 
   (add-to-list 'org-agenda-files 
-               (concat org-dropbox-folder "Notes/Projetos.org"))
+               (concat my/org-dropbox-folder "Notes/Projetos.org"))
 
   (add-to-list 'org-agenda-files 
-               (concat org-dropbox-folder "Contacts.org"))
+               (concat my/org-dropbox-folder "Contacts.org"))
 
 #+END_SRC
 
@@ -209,6 +210,13 @@ Templates for source blocks
    'org-structure-template-alist
    `("l"
      ,(concat "#+BEGIN_SRC emacs-lisp\n"
+              "?\n"
+              "#+END_SRC")))
+
+  (add-to-list 
+   'org-structure-template-alist
+   `("ln"
+     ,(concat "#+BEGIN_SRC emacs-lisp :tangle no\n"
               "?\n"
               "#+END_SRC")))
 
@@ -392,6 +400,112 @@ Templates for source blocks
         (org-id-update-id-locations nil 'silent))))
 #+END_SRC
 
+** Style Current Text
+:PROPERTIES:
+:ID:       c2de9ca1-9ca8-4e99-a408-37d581a6c720
+:END:
+
+*** Function to Get Begin and End Points
+:PROPERTIES:
+:ID:       4d9b080c-039b-4685-a03b-86cdfe2bb575
+:END:
+
+
+#+BEGIN_SRC emacs-lisp
+  (defun my-begin-word-or-region ()
+    "Get begin of WORD or REGION"
+
+    (save-excursion
+      ;; Get begin point of word
+      (let ((point-begin
+             (progn
+               (forward-whitespace -1)
+               (forward-char)
+               (point))))
+
+        ;; If region is active. Get its begin point
+        (when (region-active-p)
+          (setq point-begin (region-beginning)))
+
+        ;; Return point
+        point-begin)))
+
+  (defun my-end-word-or-region ()
+    "Get end of WORD or REGION"
+
+    (save-excursion
+      ;; Get end point of word
+      (let ((point-end
+             (progn
+               (forward-whitespace 1)
+               (backward-char)
+               (point))))
+
+        ;; If region is active. Get its end point
+        (when (region-active-p)
+          (setq point-end (region-end)))
+
+        ;; Return point
+        point-end)))
+#+END_SRC
+
+*** Function to Insert Char into Begin and End Point
+:PROPERTIES:
+:ID:       aed3fcdf-a49f-4d0e-b727-555fac20e6ba
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defun my-insert-string (begin end string)
+    "Insert STRING in BEGIN and END point"
+
+    ;; Put in the STRING in END position first so BEGIN position
+    ;; won't be changed when adding STRING
+    (goto-char end)
+    (insert string)
+
+    (goto-char begin)
+    (insert string))
+#+END_SRC
+
+*** Italic
+:PROPERTIES:
+:ID:       438050d9-4708-4e5a-9d0b-2a1aaa3dcbdb
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (defun my-org-italic-current-text ()
+    "Make current WORD or REGION italic"
+    (interactive)
+
+    ;; Don't change the actual point
+    (save-excursion
+
+      ;; Set region of current word
+      (let ((point-begin (my-begin-word-or-region))
+            (point-end (my-end-word-or-region)))
+
+        (my-insert-string point-begin point-end "/"))))
+#+END_SRC
+
+*** Bold
+:PROPERTIES:
+:ID:       713b4d63-ff3a-479e-b884-70585d4e66f4
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (defun my-org-bold-current-text ()
+    "Make current WORD or REGION bold"
+    (interactive)
+
+    ;; Don't change the actual point
+    (save-excursion
+
+      ;; Set region of current word
+      (let ((point-begin (my-begin-word-or-region))
+            (point-end (my-end-word-or-region)))
+
+        (my-insert-string point-begin point-end "*"))))
+#+END_SRC
+
 * Hooks
 :PROPERTIES:
 :ID:       97b4a8b1-8d0b-4f54-9c25-44439c58c3f9
@@ -476,11 +590,12 @@ Remove all capture templates.
 
 #+BEGIN_SRC emacs-lisp
   (defvar my/org-project-template 
-    "* TODO %^{Project Idea}
-  %T
-  %a
-  %?"
-    "Template for new project")
+    (concat
+     "* TODO %^{Project Idea}\n"
+     "%T\n"
+     "%a\n"
+     "%?\n")
+     "Template for new project")
 
   (add-to-list
    'org-capture-templates
@@ -488,5 +603,25 @@ Remove all capture templates.
      ,my/org-project-template
      :empty-lines 1))
 
+#+END_SRC
+
+** Ledger Template
+:PROPERTIES:
+:ID:       67197e33-4b61-4639-94ef-d0b4df9c6fd3
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (defvar my/ledger-transaction-template
+    (concat 
+     "%^{YYYY}/%^{MM}/%^{DD} Dinheiro
+      Expenses:Dinheiro                      R$ %^{50.00}
+      Assets:Bank:Caixa")
+    "Template for generic transaction")
+
+  (add-to-list
+   'org-capture-templates
+   `("D" "Ledger Dinheiro" entry (file "~/Dropbox/Ledger.ledger")
+     ,my/ledger-transaction-template
+     :empty-lines 1))
 #+END_SRC
 

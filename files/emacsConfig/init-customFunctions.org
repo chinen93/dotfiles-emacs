@@ -1,7 +1,7 @@
 #+TITLE:        Custom Functions Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2018-10-05 sex]
+#+DATE-UPDATED: [2018-10-27 sáb]
 
 * Functions from Internet
 :PROPERTIES:
@@ -49,6 +49,20 @@
              fill-column)))
       ;; Call fill-paragraph, because it uses fill-column
       (call-interactively #'fill-paragraph)))
+#+END_SRC
+
+** Help Measure Time of Execution of Body
+:PROPERTIES:
+:ID:       75b07b42-571a-4c13-bbfa-ae5facb130ff
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defmacro help/measure-time (&rest body)
+    "Measure the time it takes to evaluate BODY.
+
+  Attribution Nikolaj Schumacher: URL `https://lists.gnu.org/archive/html/help-gnu-emacs/2008-06/msg00087.html'"
+    `(let ((time (current-time)))
+       ,@body
+       (message "%.06f" (float-time (time-since time)))))
 #+END_SRC
 
 ** Lunaryorn Rename File and Buffer
@@ -239,10 +253,12 @@
       (message "Microsoft Windows not supported. File a bug report or pull request."))
      ((string-equal system-type "darwin")
       (message "Mac not supported. File a bug report or pull request."))
+
      ((string-equal system-type "gnu/linux")
       (let ((process-connection-type nil))
-        (start-process "" nil "x-terminal-emulator"
-                       (concat "--working-directory=" default-directory) )))))
+        (start-process "" nil "gnome-terminal"
+                       (concat "--working-directory=" 
+                               (expand-file-name default-directory)) )))))
 #+END_SRC
 
 * My Functions
@@ -250,45 +266,87 @@
 :ID:       8f9c6ef4-7c8a-4b32-beb3-23ad6ceb5f4b
 :END:
 
+** Find Grep Directory
+:PROPERTIES:
+:ID:       a26183aa-5d9e-43e9-9f07-6508571a0419
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defun my-find-grep (directory regexp)
+    "Use FIND-GREP in DIRECTORY searching for REGEXP"
+
+    (let* ((notes-dir directory)
+           (regex-treated
+            (replace-regexp-in-string " " ".*" regexp))
+           (my-find-c
+            (concat "find " notes-dir  " -type f -exec "))
+           (my-grep-c
+            (concat "grep --color -nH -i -e '" regex-treated "' {} +"))
+           (command (concat my-find-c my-grep-c)))
+
+      ;; find . -type f -exec grep --color -nH -e javascript {} +
+      (grep-find command)
+      (switch-to-buffer-other-frame "*grep*")))
+#+END_SRC
+
+*** Grep Notes
+:PROPERTIES:
+:ID:       03c0055b-4d9d-42fb-9397-413b5bba56b3
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defun my-grep-notes (regexp)
+    "Use FIND-GREP in my notes directory."
+
+    (interactive "sWhat to SEARCH for? ")
+    (if (< (length regexp) 3)
+        (message "Too Short. Try Again!!")
+      (my-find-grep "~/Dropbox/Notes" regexp)))
+
+#+END_SRC
+
+*** Grep Current Directory
+:PROPERTIES:
+:ID:       d4d782ee-45ca-4be8-b08f-f64d10598a3f
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defun my-grep-directory (regexp)
+    "Use FIND-GREP in current Directory"
+  
+    (interactive "sWhat to SEARCH for? ")
+    (if (< (length regexp) 3)
+        (message "Too Short. Try Again!!")
+      (my-find-grep default-directory regexp)))
+#+END_SRC
+
 ** Find Notes
 :PROPERTIES:
 :ID:       91bedb55-58dc-466d-8f79-96ac23ab8a4d
 :END:
 #+BEGIN_SRC emacs-lisp
+  (defvar my/notes-directory 
+    (concat my/dropbox-folder "Notes/")
+    "Notes base directory")
+
   (defun my-find-notes ()
     "Find file but initially in Notes Directory"
     (interactive)
 
     (when (functionp 'counsel-find-file)
-      (counsel-find-file "~/Dropbox/Notes")))
+      (counsel-find-file my/notes-directory)))
 
 #+END_SRC
 
-** Grep Notes
+** Open File Explorer
 :PROPERTIES:
-:ID:       03c0055b-4d9d-42fb-9397-413b5bba56b3
+:ID:       a3f9001c-330c-4347-83cc-97110a8f4413
 :END:
 #+BEGIN_SRC emacs-lisp
-  (defun my-grep-notes (regex)
-    "Use FIND-GREP in my notes directory."
+  (defun my-open-file-explorer ()
+    "Open current directory in the file explorer"
+    (interactive)
 
-    (interactive "sWhat to SEARCH for? ")
-    (if (< (length regex) 3)
-        (message "Too Short. Try Again!!")
-      (progn
-        (let* ((notes-dir "~/Dropbox/Notes/")
-               (regex-treated
-                (replace-regexp-in-string " " ".*" regex))
-               (my-find-c
-                (concat "find " notes-dir  " -type f -exec "))
-               (my-grep-c
-                (concat "grep --color -nH -i -e '" regex-treated "' {} +"))
-               (command (concat my-find-c my-grep-c)))
-
-          ;; find . -type f -exec grep --color -nH -e javascript {} +
-          (grep-find command)
-          (switch-to-buffer-other-frame "*grep*")))))
-
+    (let ((process-connection-type nil))
+        (start-process "" nil "nautilus" 
+                       (expand-file-name default-directory))))
 #+END_SRC
 
 ** Sort Org Headings
@@ -307,13 +365,43 @@
         ;; If it is the first headline select the whole buffer
         ;; else go to the parent of this headline
         (if (> (org-outline-level) 1)
-            (org-up-element
+            (org-up-element)
           (mark-whole-buffer))
 
         ;; Sort entries by alphanumeric order
         (org-sort-entries nil ?a nil nil nil t)
 
         ;; Sort entries by todo keyword order
-        (org-sort-entries nil ?o nil nil nil t)))))
+        (org-sort-entries nil ?o nil nil nil t))))
 #+END_SRC
+
+** Update Org Ids
+:PROPERTIES:
+:ID:       d93abbf3-83c3-401f-ae88-d53b699a4460
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (defvar my/org-directories 
+    `(,my/emacs-config-dir ,my/notes-directory ,my/dropbox-folder)
+    "Directories where exist important Org Modes files that need to
+  have its IDs known")
+
+
+  (defun my-update-org-ids ()
+    "Execute `org-id-update-id-locations' in every Org Mode file of"
+
+    (interactive)
+
+    (let ((org-files '()))
+
+      ;; Put all Org Mode files into a list
+      (dolist (directory my/org-directories)
+        (dolist (file (regexp-filter "\.org$" (directory-files directory)))
+          (add-to-list 'org-files file t)))
+
+      ;; Consume the list updating every ID
+      (org-id-update-id-locations org-files)))
+#+END_SRC
+
+
 

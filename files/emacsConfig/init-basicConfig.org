@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2018-10-04 qui]
+#+DATE-UPDATED: [2018-10-28 dom]
 
 It doesn't need any external package. Just pure elisp.
 
@@ -151,6 +151,22 @@ When yanking with mouse, don't move the point. Just yank it.
 
 To yank with the mouse press <mouse-2>, which is the middle button.
 
+** Wheel
+:PROPERTIES:
+:ID:       0164fe5d-d0b8-4197-997a-4e887c1de983
+:END:
+
+Scroll pleasantly with the mouse wheel. A slow turn moves the buffer up and down one line at a time.
+#+BEGIN_SRC emacs-lisp
+  (setq mouse-wheel-scroll-amount '(1 ((shift) . 5)))
+  (setq mouse-wheel-progressive-speed nil)
+#+END_SRC
+
+Wheel will follow mouse, So the frame where the mouse is will scroll
+#+BEGIN_SRC emacs-lisp
+  (setq mouse-wheel-follow-mouse t)
+#+END_SRC
+
 * Delete Things
 :PROPERTIES:
 :ID:       78566d3b-c8ae-4ca1-b106-73ad2c7cf238
@@ -173,9 +189,9 @@ Don't delete file, but move to trash instead.
 :ID:       eabe8ead-fcc1-412d-9cdc-da74407d1758
 :END:
 
-Don't follow symbolic link to the real file and warn user that this is versioned file.
+Follow sysliks
 #+BEGIN_SRC emacs-lisp
-  (setq vc-follow-symlinks nil)
+  (setq vc-follow-symlinks t)
 
 #+END_SRC
 
@@ -186,7 +202,7 @@ Don't follow symbolic link to the real file and warn user that this is versioned
 
 Create variable to hold common paths.
 #+BEGIN_SRC emacs-lisp
-  (defvar my-dropbox-folder "~/Dropbox/"
+  (defvar my/dropbox-folder "~/Dropbox/"
     "Path to Dropbox Folder")
 #+END_SRC
 
@@ -288,3 +304,4 @@ Don't show every information about files. Just its name.
     (dired-hide-details-mode 1))
   (add-hook 'dired-mode-hook 'xah-dired-mode-setup)
 #+END_SRC
+

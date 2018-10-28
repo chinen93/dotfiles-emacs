@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: code
+# key: code
+# --
+\begin{Verbatim}[frame=single, numbers=left]
+\end{Verbatim}

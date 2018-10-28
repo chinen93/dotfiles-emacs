@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2018-10-01 Mon]
+#+DATE-UPDATED: [2018-10-26 sex]
 
 Emacs has a lot of keybindings, and I can't remember everyone of them. For example each key in the keyboard is related to a command, if you put it in combination with Ctrl or Meta or Crtl + Meta you can create others keybindins for functions. And the problem grows fast and wide. Each mode has a map describing some keybinding configurations that can overwrite others configurations. So I wan't always sure about the key chord I was pressing. 
 
@@ -9,7 +9,10 @@ To solve this problem I found this package called: [[https://github.com/abo-abo/
 
 The site tells that:
 #+BEGIN_SRC text
-  This is a package for GNU Emacs that can be used to tie related commands into a family of short bindings with a common prefix - a Hydra.
+  This is a package for GNU Emacs that can be used to tie related
+  commands into a family of short bindings with a common prefix 
+
+  - a Hydra.
 #+END_SRC
 
 In reality what it does is simple it creates a configuration that won't be overwritten by a mode key map. Because I can tell which commands are going to be on my hydra family and which key chords I want them to be.
@@ -25,8 +28,6 @@ First things first we need to load the pacakge so that we can build some configu
 :ID:       2eeb3eeb-dd07-4cab-88f3-9ca9da35af21
 :END:
 
-
-
 #+BEGIN_SRC emacs-lisp
         ;;; Hydra launcher BEGIN
   (defhydra hydra-launcher (:color amaranth :hint nil)
@@ -39,7 +40,7 @@ First things first we need to load the pacakge so that we can build some configu
      ^ ^                 _3_: divide vertc    _l_: ledger      _f_: functions
      _c_: Capture        _4_: other window    _m_: Agenda      _(_: macro
      _n_: Narrow Widen   ^ ^                  ^ ^              _r_: rectangle
-     _e_: Hydra Context
+     _e_: Hydra Context  ^ ^                  ^ ^              ^ ^
 
     "
 
@@ -157,6 +158,11 @@ How to create it:
 :PROPERTIES:
 :ID:       038b598e-f4c9-434b-9d34-53596ba4e801
 :END:
+
+** Internet and Others Functions
+:PROPERTIES:
+:ID:       3cae0483-c78e-4dc0-b757-a8292d9788b2
+:END:
 #+BEGIN_SRC emacs-lisp
   (defhydra hydra-functions (:color amaranth :hint nil)
     "
@@ -170,7 +176,11 @@ How to create it:
     _l_: Open Terminal          ^ ^                   _d_: Define Word
     _r_: Query Replace Regexp
 
+    _m_: My Hydra Functions
+
     "
+
+    ("m" hydra-my-functions/body :color blue)
 
     ("p" (user--clean-buffer))
 
@@ -199,6 +209,26 @@ How to create it:
 
     ("q" nil "cancel" :color blue))
 
+#+END_SRC
+
+** My Functions
+:PROPERTIES:
+:ID:       040d5f42-c6dd-46d5-9944-4bc8722a2e7d
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (defhydra hydra-my-functions (:color amaranth :hint nil)
+    "
+    My Functions
+    -----------------------------------------------------
+  "
+
+    ("n" my-find-notes "Find Notes" :color blue)
+    ("G" my-grep-notes "Grep Notes" :color blue)
+    ("g" my-grep-directory "Grep Current Directory" :color blue)
+    ("s" my-sort-org-headings "Sort Org Headings" :color blue)
+    ("o" my-open-file-explorer "Open File Explorer" :color blue)
+    ("q" nil "quit" :color blue))
 #+END_SRC
 
 * Yasnippet
