@@ -202,7 +202,7 @@ Don't follow symbolic link to the real file and warn user that this is versioned
 
 Create variable to hold common paths.
 #+BEGIN_SRC emacs-lisp
-  (defvar my-dropbox-folder "~/Dropbox/"
+  (defvar my/dropbox-folder "~/Dropbox/"
     "Path to Dropbox Folder")
 #+END_SRC
 

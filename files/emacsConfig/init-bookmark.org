@@ -1,7 +1,7 @@
 #+TITLE:        Bookmark Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2018-10-15 seg]
+#+DATE-UPDATED: [2018-10-27 sáb]
 
 * Bookmark File
 :PROPERTIES:
@@ -11,10 +11,10 @@
 Set default file where bookmarks will be saved.
 #+BEGIN_SRC emacs-lisp
   (let* ((filename "emacsBookmark.el")
-         (dropboxFilename (concat my-dropbox-folder filename))
+         (dropboxFilename (concat my/dropbox-folder filename))
          (homeFilename (concat "~/" filename)))
 
-    (if (file-directory-p my-dropbox-folder)
+    (if (file-directory-p my/dropbox-folder)
         (setq bookmark-default-file dropboxFilename)
       (setq bookmark-default-file homeFilename)))
 

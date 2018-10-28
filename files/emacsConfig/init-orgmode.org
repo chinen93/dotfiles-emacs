@@ -22,11 +22,12 @@ Org is a mode for keeping notes, maintaining TODO lists, and project planning wi
 :END:
 #+BEGIN_SRC emacs-lisp
   ;; Set dropbox folder
-  (setq org-dropbox-folder "~/Dropbox/")
+  (defvar my/org-dropbox-folder "~/Dropbox/" 
+    "Dropbox directory")
 
   ;; Only set this org variable if there no other variable for the dropbox folder
-  (unless (null my-dropbox-folder)
-    (setq org-dropbox-folder my-dropbox-folder))
+  (unless (null my/dropbox-folder)
+    (setq my/org-dropbox-folder my/dropbox-folder))
 
 #+END_SRC
 
@@ -87,13 +88,13 @@ Set org agenda files
   (setq org-agenda-files nil)
 
   (add-to-list 'org-agenda-files 
-               (concat org-dropbox-folder "Organizador.org"))
+               (concat my/org-dropbox-folder "Organizador.org"))
 
   (add-to-list 'org-agenda-files 
-               (concat org-dropbox-folder "Notes/Projetos.org"))
+               (concat my/org-dropbox-folder "Notes/Projetos.org"))
 
   (add-to-list 'org-agenda-files 
-               (concat org-dropbox-folder "Contacts.org"))
+               (concat my/org-dropbox-folder "Contacts.org"))
 
 #+END_SRC
 
