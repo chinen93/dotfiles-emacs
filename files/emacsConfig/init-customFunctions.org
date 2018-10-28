@@ -1,7 +1,7 @@
 #+TITLE:        Custom Functions Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2018-10-17 qua]
+#+DATE-UPDATED: [2018-10-27 sáb]
 
 * Functions from Internet
 :PROPERTIES:
@@ -49,6 +49,20 @@
              fill-column)))
       ;; Call fill-paragraph, because it uses fill-column
       (call-interactively #'fill-paragraph)))
+#+END_SRC
+
+** Help Measure Time of Execution of Body
+:PROPERTIES:
+:ID:       75b07b42-571a-4c13-bbfa-ae5facb130ff
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defmacro help/measure-time (&rest body)
+    "Measure the time it takes to evaluate BODY.
+
+  Attribution Nikolaj Schumacher: URL `https://lists.gnu.org/archive/html/help-gnu-emacs/2008-06/msg00087.html'"
+    `(let ((time (current-time)))
+       ,@body
+       (message "%.06f" (float-time (time-since time)))))
 #+END_SRC
 
 ** Lunaryorn Rename File and Buffer
@@ -247,58 +261,10 @@
                                (expand-file-name default-directory)) )))))
 #+END_SRC
 
-** Help Measure Time of Execution of Body
-:PROPERTIES:
-:ID:       75b07b42-571a-4c13-bbfa-ae5facb130ff
-:END:
-#+BEGIN_SRC emacs-lisp
-  (defmacro help/measure-time (&rest body)
-    "Measure the time it takes to evaluate BODY.
-
-  Attribution Nikolaj Schumacher: URL `https://lists.gnu.org/archive/html/help-gnu-emacs/2008-06/msg00087.html'"
-    `(let ((time (current-time)))
-       ,@body
-       (message "%.06f" (float-time (time-since time)))))
-#+END_SRC
-
-** Emacs Redux Indent Region or Buffer
-:PROPERTIES:
-:ID:       b4bc7641-000c-4b26-b606-a0a4a8e4a2a0
-:END:
-#+BEGIN_SRC emacs-lisp
-  (defun emacsredux/indent-region-or-buffer ()
-    "Indent a region if selected, otherwise the whole buffer.
-
-  URL: `http://emacsredux.com/blog/2013/03/27/indent-region-or-buffer/'"
-    (interactive)
-    (save-excursion
-      (if (region-active-p)
-          (progn
-            (indent-region (region-beginning) (region-end))
-            (message "Indented selected region."))
-        (progn
-          (indent-region (point-min) (point-max))
-          (message "Indented buffer.")))))
-#+END_SRC
-
 * My Functions
 :PROPERTIES:
 :ID:       8f9c6ef4-7c8a-4b32-beb3-23ad6ceb5f4b
 :END:
-
-** Find Notes
-:PROPERTIES:
-:ID:       91bedb55-58dc-466d-8f79-96ac23ab8a4d
-:END:
-#+BEGIN_SRC emacs-lisp
-  (defun my-find-notes ()
-    "Find file but initially in Notes Directory"
-    (interactive)
-
-    (when (functionp 'counsel-find-file)
-      (counsel-find-file "~/Dropbox/Notes")))
-
-#+END_SRC
 
 ** Find Grep Directory
 :PROPERTIES:
@@ -350,6 +316,39 @@
         (message "Too Short. Try Again!!")
       (my-find-grep default-directory regexp)))
 #+END_SRC
+
+** Find Notes
+:PROPERTIES:
+:ID:       91bedb55-58dc-466d-8f79-96ac23ab8a4d
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defvar my/notes-directory 
+    (concat my/dropbox-folder "Notes/")
+    "Notes base directory")
+
+  (defun my-find-notes ()
+    "Find file but initially in Notes Directory"
+    (interactive)
+
+    (when (functionp 'counsel-find-file)
+      (counsel-find-file my/notes-directory)))
+
+#+END_SRC
+
+** Open File Explorer
+:PROPERTIES:
+:ID:       a3f9001c-330c-4347-83cc-97110a8f4413
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defun my-open-file-explorer ()
+    "Open current directory in the file explorer"
+    (interactive)
+
+    (let ((process-connection-type nil))
+        (start-process "" nil "nautilus" 
+                       (expand-file-name default-directory))))
+#+END_SRC
+
 ** Sort Org Headings
 :PROPERTIES:
 :ID:       879adb21-70ec-4a72-833b-262250a1bff3
@@ -366,27 +365,43 @@
         ;; If it is the first headline select the whole buffer
         ;; else go to the parent of this headline
         (if (> (org-outline-level) 1)
-            (org-up-element
+            (org-up-element)
           (mark-whole-buffer))
 
         ;; Sort entries by alphanumeric order
         (org-sort-entries nil ?a nil nil nil t)
 
         ;; Sort entries by todo keyword order
-        (org-sort-entries nil ?o nil nil nil t)))))
+        (org-sort-entries nil ?o nil nil nil t))))
 #+END_SRC
 
-** Open File Explorer
+** Update Org Ids
 :PROPERTIES:
-:ID:       a3f9001c-330c-4347-83cc-97110a8f4413
+:ID:       d93abbf3-83c3-401f-ae88-d53b699a4460
 :END:
+
 #+BEGIN_SRC emacs-lisp
-  (defun my-open-file-explorer ()
-    "Open current directory in the file explorer"
+  (defvar my/org-directories 
+    `(,my/emacs-config-dir ,my/notes-directory ,my/dropbox-folder)
+    "Directories where exist important Org Modes files that need to
+  have its IDs known")
+
+
+  (defun my-update-org-ids ()
+    "Execute `org-id-update-id-locations' in every Org Mode file of"
+
     (interactive)
 
-    (let ((process-connection-type nil))
-        (start-process "" nil "nautilus" 
-                       (expand-file-name default-directory))))
+    (let ((org-files '()))
+
+      ;; Put all Org Mode files into a list
+      (dolist (directory my/org-directories)
+        (dolist (file (regexp-filter "\.org$" (directory-files directory)))
+          (add-to-list 'org-files file t)))
+
+      ;; Consume the list updating every ID
+      (org-id-update-id-locations org-files)))
 #+END_SRC
+
+
 
