@@ -1,11 +1,11 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2018-10-28 dom]
+#+DATE-UPDATED: [2018-10-29 seg]
 
-[[https://orgmode.org/][Org Mode]] 
+[[https://orgmode.org/][Org Mode]]
 
-Org is a mode for keeping notes, maintaining TODO lists, and project planning with a fast and effective plain-text system. It also is an authoring system with unique support for literate programming and reproducible research. 
+Org is a mode for keeping notes, maintaining TODO lists, and project planning with a fast and effective plain-text system. It also is an authoring system with unique support for literate programming and reproducible research.
 
 * Load Package: Org Mode
 :PROPERTIES:
@@ -22,7 +22,7 @@ Org is a mode for keeping notes, maintaining TODO lists, and project planning wi
 :END:
 #+BEGIN_SRC emacs-lisp
   ;; Set dropbox folder
-  (defvar my/org-dropbox-folder "~/Dropbox/" 
+  (defvar my/org-dropbox-folder "~/Dropbox/"
     "Dropbox directory")
 
   ;; Only set this org variable if there no other variable for the dropbox folder
@@ -40,6 +40,10 @@ Org is a mode for keeping notes, maintaining TODO lists, and project planning wi
 
   ;; If `org-store-link` is called directly don't create IDs if it already exist
   (setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
+
+  ;; Change File which holds all IDs
+  (setq org-id-locations-file
+        (concat my/dropbox-folder ".org-id-location"))
 
   ;; Place tags directly after headline text, with only one space in between
   (setq org-tags-column 0)
@@ -87,13 +91,13 @@ Set org agenda files
 #+BEGIN_SRC emacs-lisp
   (setq org-agenda-files nil)
 
-  (add-to-list 'org-agenda-files 
+  (add-to-list 'org-agenda-files
                (concat my/org-dropbox-folder "Organizador.org"))
 
-  (add-to-list 'org-agenda-files 
+  (add-to-list 'org-agenda-files
                (concat my/org-dropbox-folder "Notes/Projetos.org"))
 
-  (add-to-list 'org-agenda-files 
+  (add-to-list 'org-agenda-files
                (concat my/org-dropbox-folder "Contacts.org"))
 
 #+END_SRC
@@ -206,28 +210,28 @@ Templates for source blocks
 #+BEGIN_SRC emacs-lisp
   (setq org-structure-template-alist nil)
 
-  (add-to-list 
+  (add-to-list
    'org-structure-template-alist
    `("l"
      ,(concat "#+BEGIN_SRC emacs-lisp\n"
               "?\n"
               "#+END_SRC")))
 
-  (add-to-list 
+  (add-to-list
    'org-structure-template-alist
    `("ln"
      ,(concat "#+BEGIN_SRC emacs-lisp :tangle no\n"
               "?\n"
               "#+END_SRC")))
 
-  (add-to-list 
+  (add-to-list
    'org-structure-template-alist
    `("s"
      ,(concat "#+BEGIN_SRC sh\n"
               "?\n"
               "#+END_SRC")))
 
-  (add-to-list 
+  (add-to-list
    'org-structure-template-alist
     `("t"
      ,(concat "#+BEGIN_SRC text\n"
@@ -240,14 +244,79 @@ Templates for source blocks
 :PROPERTIES:
 :ID:       3187a406-3e9b-4ddb-839b-4385deca07f1
 :END:
+
+Create Variable to hold all languages that I want to be enabled
+#+BEGIN_SRC emacs-lisp
+  (defvar my/org-languages nil
+    "List of languages enabled in Org Mode Blocks")
+
+#+END_SRC
+
+** Add support for Emacs Lisp
+:PROPERTIES:
+:ID:       e3868b22-706d-48c2-8545-5f79a16dfe30
+:END:
+#+BEGIN_SRC emacs-lisp
+  (add-to-list
+   'my/org-languages
+   '(emacs-lisp . t))
+
+#+END_SRC
+
+** Add support for Shell
+:PROPERTIES:
+:ID:       81fa4906-c501-4377-aa4c-70e5fee03387
+:END:
+Shell has changed somehow and depending of your
+current `org-version' or `emacs-version' it needs to load '(shell . t)
+or '(sh . t)
+https://emacs.stackexchange.com/questions/21366/should-i-have-removed-shell-t-to-clear-an-ob-shell-initialization-error/21368
+#+BEGIN_SRC emacs-lisp
+  (let ((shell-list '(shell . t))
+        (sh-list '(sh . t))
+        (elem nil))
+
+    (if (version< org-version "9")
+        (setq elem sh-list)
+      (setq elem shell-list))
+
+    (add-to-list
+     'my/org-languages
+     elem))
+
+#+END_SRC
+
+** Add support for Python
+:PROPERTIES:
+:ID:       933d309e-8a98-498c-a57f-a1fcc28b41f7
+:END:
+#+BEGIN_SRC emacs-lisp
+  (add-to-list
+   'my/org-languages
+   '(python . t))
+
+#+END_SRC
+
+** Add support for Latex
+:PROPERTIES:
+:ID:       b8b399fd-dcac-4b0b-9d85-9b35e2a29f5c
+:END:
+#+BEGIN_SRC emacs-lisp
+  (add-to-list
+   'my/org-languages
+   '(latex . t))
+
+#+END_SRC
+
+** Effectively loads languages
+:PROPERTIES:
+:ID:       f8a20334-6856-448b-976e-dcd7a9f5ea5c
+:END:
 #+BEGIN_SRC emacs-lisp
   ;; Support to languages in #-begin_src #end_src code
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((emacs-lisp . t)
-     (shell . t)
-     (python . t)
-     (latex . t)))
+   my/org-languages)
 #+END_SRC
 
 * Functions
@@ -548,7 +617,7 @@ Templates for source blocks
 
 Remove all capture templates.
 #+BEGIN_SRC emacs-lisp
-  (setq org-capture-templates nil) 
+  (setq org-capture-templates nil)
 
 #+END_SRC
 
@@ -564,7 +633,7 @@ Remove all capture templates.
 :ID:       fb54fa73-e4c7-4653-acd4-8357b9adb7bd
 :END:
 #+BEGIN_SRC emacs-lisp
-  (defvar my/org-contacts-template 
+  (defvar my/org-contacts-template
     "* %(org-contacts-template-name)
   :PROPERTIES:
   :BIRTHDAY: %^{yyyy-mm-dd}
@@ -589,7 +658,7 @@ Remove all capture templates.
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (defvar my/org-project-template 
+  (defvar my/org-project-template
     (concat
      "* TODO %^{Project Idea}\n"
      "%T\n"
@@ -612,7 +681,7 @@ Remove all capture templates.
 
 #+BEGIN_SRC emacs-lisp
   (defvar my/ledger-transaction-template
-    (concat 
+    (concat
      "%^{YYYY}/%^{MM}/%^{DD} Dinheiro
       Expenses:Dinheiro                      R$ %^{50.00}
       Assets:Bank:Caixa")
@@ -624,4 +693,3 @@ Remove all capture templates.
      ,my/ledger-transaction-template
      :empty-lines 1))
 #+END_SRC
-

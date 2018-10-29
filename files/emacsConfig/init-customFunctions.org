@@ -1,7 +1,7 @@
 #+TITLE:        Custom Functions Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2018-10-27 sáb]
+#+DATE-UPDATED: [2018-10-28 dom]
 
 * Functions from Internet
 :PROPERTIES:
