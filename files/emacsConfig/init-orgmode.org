@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2018-10-29 seg]
+#+DATE-UPDATED: [2018-10-30 ter]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -99,6 +99,9 @@ Set org agenda files
 
   (add-to-list 'org-agenda-files
                (concat my/org-dropbox-folder "Contacts.org"))
+
+  (add-to-list 'org-agenda-files
+               (concat my/org-dropbox-folder "Notes/Pedro.org"))
 
 #+END_SRC
 
@@ -693,3 +696,4 @@ Remove all capture templates.
      ,my/ledger-transaction-template
      :empty-lines 1))
 #+END_SRC
+
