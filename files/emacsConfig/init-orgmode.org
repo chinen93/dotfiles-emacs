@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2018-10-30 ter]
+#+DATE-UPDATED: [2018-11-08 Thu]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -21,19 +21,19 @@ Org is a mode for keeping notes, maintaining TODO lists, and project planning wi
 :ID:       aa2a4b3e-8702-4bd2-9c4b-89bed3173229
 :END:
 #+BEGIN_SRC emacs-lisp
-  ;; Set dropbox folder
-  (defvar my/org-dropbox-folder "~/Dropbox/"
-    "Dropbox directory")
+  ;; Set Org folder
+  (defvar my/org-folder "~/org/"
+    "Org directory")
 
   ;; Only set this org variable if there no other variable for the dropbox folder
-  (unless (null my/dropbox-folder)
-    (setq my/org-dropbox-folder my/dropbox-folder))
+  (when (file-directory-p my/dropbox-folder)
+    (setq my/org-folder my/dropbox-folder))
 
 #+END_SRC
 
-* Tags, Keywords, Headings, IDs
+* IDs
 :PROPERTIES:
-:ID:       d1668e0a-a17a-4fc0-8c60-342b5f5c7891
+:ID:       bf94cf7d-f656-48ad-b7fe-c6ef9310e1ec
 :END:
 #+BEGIN_SRC emacs-lisp
   (require 'org-id)
@@ -42,9 +42,16 @@ Org is a mode for keeping notes, maintaining TODO lists, and project planning wi
   (setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
 
   ;; Change File which holds all IDs
-  (setq org-id-locations-file
-        (concat my/dropbox-folder ".org-id-location"))
+  ;; (setq org-id-locations-file
+  ;;       (concat my/dropbox-folder ".org-id-location"))
 
+#+END_SRC
+
+* Tags, Keywords, Headings
+:PROPERTIES:
+:ID:       d1668e0a-a17a-4fc0-8c60-342b5f5c7891
+:END:
+#+BEGIN_SRC emacs-lisp
   ;; Place tags directly after headline text, with only one space in between
   (setq org-tags-column 0)
 
@@ -61,6 +68,7 @@ Org is a mode for keeping notes, maintaining TODO lists, and project planning wi
   ;; Hide the leading "*" from the headline
   (setq org-startup-indented t
         org-hide-leading-stars t)
+
 #+END_SRC
 
 * Refile
@@ -92,16 +100,16 @@ Set org agenda files
   (setq org-agenda-files nil)
 
   (add-to-list 'org-agenda-files
-               (concat my/org-dropbox-folder "Organizador.org"))
+               (concat my/org-folder "Organizador.org"))
 
   (add-to-list 'org-agenda-files
-               (concat my/org-dropbox-folder "Notes/Projetos.org"))
+               (concat my/org-folder "Notes/Projetos.org"))
 
   (add-to-list 'org-agenda-files
-               (concat my/org-dropbox-folder "Contacts.org"))
+               (concat my/org-folder "Contacts.org"))
 
   (add-to-list 'org-agenda-files
-               (concat my/org-dropbox-folder "Notes/Pedro.org"))
+               (concat my/org-folder "Notes/Pedro.org"))
 
 #+END_SRC
 
