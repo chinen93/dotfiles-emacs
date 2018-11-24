@@ -1,7 +1,7 @@
 #+TITLE:        Ledger Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2018-10-27 sáb]
+#+DATE-UPDATED: [2018-11-24 sáb]
 
 [[https://www.ledger-cli.org/][Ledger cli]] is a command line accounting tool that provides double-entry
 accounting based on a text journal.
@@ -33,8 +33,18 @@ every negative figure means that that account or person or place has less money 
 
 Create Variable to hold my ledger file
 #+BEGIN_SRC emacs-lisp
-  (defvar my/ledger-file "~/Dropbox/Ledger.ledger"
-    "Data file where ledger-cli search from.")
+  (let* ((folder "Ledger.ledger")
+         (default (concat "~/Dropbox/" folder)))
+
+    ;; Create variable in a default location
+    (defvar my/ledger-file default
+      "Data file where ledger-cli search from.")
+
+    ;; If directory isn't in the same place
+    (when (and (boundp 'my/dropbox-folder)
+               (file-directory-p my/dropbox-folder))
+      (setq my/ledger-file (concat my/dropbox-folder folder))))
+
 #+END_SRC
 
 Set master file
@@ -93,7 +103,7 @@ Clear whole transactions, not individual postings.
 #+BEGIN_SRC emacs-lisp
   (defun my-ledger-year-balance ()
     "Create an annuary with the balance for each month"
-  
+
     (interactive)
 
     (let ((command (concat my/ledger-cmd "balance Expenses "))
@@ -123,16 +133,16 @@ Clear whole transactions, not individual postings.
 
         ;; Put a header for the month
         (with-current-buffer report-filename
-          (insert (concat "============================= " 
-                          (cl-first month) 
+          (insert (concat "============================= "
+                          (cl-first month)
                           " \n")))
 
         ;; Execute the ledger command and put its result in the report buffer
         (with-current-buffer  shell-buffer-name
-          (shell-command (concat command 
-                                 "--period 'in " (cl-rest month)  " 2018'") 
+          (shell-command (concat command
+                                 "--period 'in " (cl-rest month)  " 2018'")
                          shell-buffer-name)
-          (append-to-buffer report-filename 
+          (append-to-buffer report-filename
                             (point-min) (point-max)))
 
         ;; Kill the shell output buffer

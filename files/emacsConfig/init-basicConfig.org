@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2018-10-28 dom]
+#+DATE-UPDATED: [2018-11-24 sáb]
 
 It doesn't need any external package. Just pure elisp.
 
@@ -204,6 +204,9 @@ Create variable to hold common paths.
 #+BEGIN_SRC emacs-lisp
   (defvar my/dropbox-folder "~/Dropbox/"
     "Path to Dropbox Folder")
+
+  (defvar my/home-folder "~/"
+    "Path to Home Folder")
 #+END_SRC
 
 * TODO Files Modes
@@ -234,7 +237,7 @@ Files that doesn't have any extension should be loaded as fundamental-mode.
 
 Set directory to hold history.
 #+BEGIN_SRC emacs-lisp
-  (setq savehist-file "~/.emacs.d/savehist")
+  (setq savehist-file (concat my/home-folder ".emacs.d/savehist"))
 
 #+END_SRC
 
@@ -304,4 +307,3 @@ Don't show every information about files. Just its name.
     (dired-hide-details-mode 1))
   (add-hook 'dired-mode-hook 'xah-dired-mode-setup)
 #+END_SRC
-

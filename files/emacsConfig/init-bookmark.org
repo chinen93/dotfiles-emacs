@@ -1,7 +1,7 @@
 #+TITLE:        Bookmark Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2018-10-27 sáb]
+#+DATE-UPDATED: [2018-11-24 sáb]
 
 * Bookmark File
 :PROPERTIES:
@@ -14,7 +14,8 @@ Set default file where bookmarks will be saved.
          (dropboxFilename (concat my/dropbox-folder filename))
          (homeFilename (concat "~/" filename)))
 
-    (if (file-directory-p my/dropbox-folder)
+    (if (and (boundp 'my/dropbox-folder)
+             (file-directory-p my/dropbox-folder))
         (setq bookmark-default-file dropboxFilename)
       (setq bookmark-default-file homeFilename)))
 
@@ -35,4 +36,3 @@ Bookmarks are displayed in LIFO order
 #+BEGIN_SRC emacs-lisp
   (setq bookmark-sort-flag nil)
 #+END_SRC
-

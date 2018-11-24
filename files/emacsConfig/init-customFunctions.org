@@ -1,7 +1,7 @@
 #+TITLE:        Custom Functions Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2018-10-27 sáb]
+#+DATE-UPDATED: [2018-11-24 sáb]
 
 * Functions from Internet
 :PROPERTIES:
@@ -257,7 +257,7 @@
      ((string-equal system-type "gnu/linux")
       (let ((process-connection-type nil))
         (start-process "" nil "gnome-terminal"
-                       (concat "--working-directory=" 
+                       (concat "--working-directory="
                                (expand-file-name default-directory)) )))))
 #+END_SRC
 
@@ -299,7 +299,9 @@
     (interactive "sWhat to SEARCH for? ")
     (if (< (length regexp) 3)
         (message "Too Short. Try Again!!")
-      (my-find-grep "~/Dropbox/Notes" regexp)))
+
+      (let ((folder (concat my/dropbox-folder "Notes/")))
+        (my-find-grep folder regexp))))
 
 #+END_SRC
 
@@ -310,7 +312,7 @@
 #+BEGIN_SRC emacs-lisp
   (defun my-grep-directory (regexp)
     "Use FIND-GREP in current Directory"
-  
+
     (interactive "sWhat to SEARCH for? ")
     (if (< (length regexp) 3)
         (message "Too Short. Try Again!!")
@@ -322,7 +324,7 @@
 :ID:       91bedb55-58dc-466d-8f79-96ac23ab8a4d
 :END:
 #+BEGIN_SRC emacs-lisp
-  (defvar my/notes-directory 
+  (defvar my/notes-directory
     (concat my/dropbox-folder "Notes/")
     "Notes base directory")
 
@@ -345,7 +347,7 @@
     (interactive)
 
     (let ((process-connection-type nil))
-        (start-process "" nil "nautilus" 
+        (start-process "" nil "nautilus"
                        (expand-file-name default-directory))))
 #+END_SRC
 
@@ -381,7 +383,7 @@
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (defvar my/org-directories 
+  (defvar my/org-directories
     `(,my/emacs-config-dir ,my/notes-directory ,my/dropbox-folder)
     "Directories where exist important Org Modes files that need to
   have its IDs known")
@@ -403,5 +405,17 @@
       (org-id-update-id-locations org-files)))
 #+END_SRC
 
+** Pick date with Org
+:PROPERTIES:
+:ID:       2ab262c3-eaa3-4ff0-88e5-1a01c1bdb26f
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defun my-org-pick-date (&optional separator)
+    "Pick a date with org function and them put the SEPARATOR."
 
+    (let ((date (org-read-date))
+          (separator (or separator
+                         "/")))
+      (s-replace "-" separator date)))
 
+#+END_SRC
