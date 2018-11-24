@@ -1,7 +1,7 @@
 #+TITLE:        Fun Packages Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2018-10-05 sex]
+#+DATE-UPDATED: [2018-11-08 Thu]
 
 
 * CANCELED Load Package: Typit
@@ -141,16 +141,6 @@
     :ensure t)
 #+END_SRC
 
-** Configure
-:PROPERTIES:
-:ID:       2f5cdafe-a68f-4cc6-b1d4-3f4da6549a69
-:END:
-#+BEGIN_SRC emacs-lisp
-  (when (featurep 'multiple-cursors)
-    (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-    (global-set-key (kbd "C-<") 'mc/mark-previous-like-this))
-#+END_SRC
-
 * Load Package: elmacro
 :PROPERTIES:
 :ID:       3c3b577a-7649-495d-b732-7625380727dc
@@ -198,15 +188,6 @@
 #+BEGIN_SRC emacs-lisp
   (use-package expand-region
     :ensure t)
-#+END_SRC
-
-** Configure
-:PROPERTIES:
-:ID:       b7b34fda-66a0-4f9a-bbb5-6042ab8a045d
-:END:
-#+BEGIN_SRC emacs-lisp
-  (when (featurep 'expand-region)
-    (global-set-key (kbd "C-=") 'er/expand-region))
 #+END_SRC
 
 * Load Package: Company

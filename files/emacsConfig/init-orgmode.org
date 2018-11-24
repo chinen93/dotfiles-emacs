@@ -33,9 +33,9 @@ Org is a mode for keeping notes, maintaining TODO lists, and project planning wi
 
 #+END_SRC
 
-* Tags, Keywords, Headings, IDs
+* IDs
 :PROPERTIES:
-:ID:       d1668e0a-a17a-4fc0-8c60-342b5f5c7891
+:ID:       bf94cf7d-f656-48ad-b7fe-c6ef9310e1ec
 :END:
 #+BEGIN_SRC emacs-lisp
   (require 'org-id)
@@ -43,6 +43,17 @@ Org is a mode for keeping notes, maintaining TODO lists, and project planning wi
   ;; If `org-store-link` is called directly don't create IDs if it already exist
   (setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
 
+  ;; Change File which holds all IDs
+  ;; (setq org-id-locations-file
+  ;;       (concat my/dropbox-folder ".org-id-location"))
+
+#+END_SRC
+
+* Tags, Keywords, Headings
+:PROPERTIES:
+:ID:       d1668e0a-a17a-4fc0-8c60-342b5f5c7891
+:END:
+#+BEGIN_SRC emacs-lisp
   ;; Place tags directly after headline text, with only one space in between
   (setq org-tags-column 0)
 
@@ -59,6 +70,7 @@ Org is a mode for keeping notes, maintaining TODO lists, and project planning wi
   ;; Hide the leading "*" from the headline
   (setq org-startup-indented t
         org-hide-leading-stars t)
+
 #+END_SRC
 
 * Refile
@@ -244,14 +256,79 @@ Templates for source blocks
 :PROPERTIES:
 :ID:       3187a406-3e9b-4ddb-839b-4385deca07f1
 :END:
+
+Create Variable to hold all languages that I want to be enabled
+#+BEGIN_SRC emacs-lisp
+  (defvar my/org-languages nil
+    "List of languages enabled in Org Mode Blocks")
+
+#+END_SRC
+
+** Add support for Emacs Lisp
+:PROPERTIES:
+:ID:       e3868b22-706d-48c2-8545-5f79a16dfe30
+:END:
+#+BEGIN_SRC emacs-lisp
+  (add-to-list
+   'my/org-languages
+   '(emacs-lisp . t))
+
+#+END_SRC
+
+** Add support for Shell
+:PROPERTIES:
+:ID:       81fa4906-c501-4377-aa4c-70e5fee03387
+:END:
+Shell has changed somehow and depending of your
+current `org-version' or `emacs-version' it needs to load '(shell . t)
+or '(sh . t)
+https://emacs.stackexchange.com/questions/21366/should-i-have-removed-shell-t-to-clear-an-ob-shell-initialization-error/21368
+#+BEGIN_SRC emacs-lisp
+  (let ((shell-list '(shell . t))
+        (sh-list '(sh . t))
+        (elem nil))
+
+    (if (version< org-version "9")
+        (setq elem sh-list)
+      (setq elem shell-list))
+
+    (add-to-list
+     'my/org-languages
+     elem))
+
+#+END_SRC
+
+** Add support for Python
+:PROPERTIES:
+:ID:       933d309e-8a98-498c-a57f-a1fcc28b41f7
+:END:
+#+BEGIN_SRC emacs-lisp
+  (add-to-list
+   'my/org-languages
+   '(python . t))
+
+#+END_SRC
+
+** Add support for Latex
+:PROPERTIES:
+:ID:       b8b399fd-dcac-4b0b-9d85-9b35e2a29f5c
+:END:
+#+BEGIN_SRC emacs-lisp
+  (add-to-list
+   'my/org-languages
+   '(latex . t))
+
+#+END_SRC
+
+** Effectively loads languages
+:PROPERTIES:
+:ID:       f8a20334-6856-448b-976e-dcd7a9f5ea5c
+:END:
 #+BEGIN_SRC emacs-lisp
   ;; Support to languages in #-begin_src #end_src code
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((emacs-lisp . t)
-     (shell . t)
-     (python . t)
-     (latex . t)))
+   my/org-languages)
 #+END_SRC
 
 * Functions

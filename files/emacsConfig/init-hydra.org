@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2018-10-26 sex]
+#+DATE-UPDATED: [2018-11-08 Thu]
 
 Emacs has a lot of keybindings, and I can't remember everyone of them. For example each key in the keyboard is related to a command, if you put it in combination with Ctrl or Meta or Crtl + Meta you can create others keybindins for functions. And the problem grows fast and wide. Each mode has a map describing some keybinding configurations that can overwrite others configurations. So I wan't always sure about the key chord I was pressing. 
 
@@ -86,7 +86,6 @@ First things first we need to load the pacakge so that we can build some configu
     ("<ESC>" nil :color blue)
 
     ("q" nil "cancel" :color blue))
-  (global-set-key (kbd "M-q") 'hydra-launcher/body)
 #+END_SRC
 
 * Zoom
