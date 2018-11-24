@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2018-11-08 Thu]
+#+DATE-UPDATED: [2018-11-24 sáb]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -21,13 +21,15 @@ Org is a mode for keeping notes, maintaining TODO lists, and project planning wi
 :ID:       aa2a4b3e-8702-4bd2-9c4b-89bed3173229
 :END:
 #+BEGIN_SRC emacs-lisp
-  ;; Set Org folder
-  (defvar my/org-folder "~/org/"
-    "Org directory")
+  ;; Set dropbox folder
+  (defvar my/org-dropbox-folder "~/Dropbox/"
+    "Dropbox directory")
 
   ;; Only set this org variable if there no other variable for the dropbox folder
-  (when (file-directory-p my/dropbox-folder)
-    (setq my/org-folder my/dropbox-folder))
+  (let ((file my/dropbox-folder))
+    (when (and (boundp 'file)
+               (file-directory-p file))
+      (setq my/org-dropbox-folder my/dropbox-folder)))
 
 #+END_SRC
 
@@ -100,16 +102,13 @@ Set org agenda files
   (setq org-agenda-files nil)
 
   (add-to-list 'org-agenda-files
-               (concat my/org-folder "Organizador.org"))
+               (concat my/org-dropbox-folder "Organizador.org"))
 
   (add-to-list 'org-agenda-files
-               (concat my/org-folder "Notes/Projetos.org"))
+               (concat my/org-dropbox-folder "Notes/Projetos.org"))
 
   (add-to-list 'org-agenda-files
-               (concat my/org-folder "Contacts.org"))
-
-  (add-to-list 'org-agenda-files
-               (concat my/org-folder "Notes/Pedro.org"))
+               (concat my/org-dropbox-folder "Contacts.org"))
 
 #+END_SRC
 
@@ -202,13 +201,15 @@ Agenda show next 7 days and previous 3 days
    'org-agenda-custom-commands
 
    ;; Custom agenda to show agenda and todo for every note
-   '("l" "Agenda and all TODO's"
+   `("l" "Agenda and all TODO's"
      ((agenda ""
-              ((org-agenda-files '("~/Dropbox/Organizador.org"
-                                   "~/Dropbox/Notes"))))
+              ((org-agenda-files
+                `(,(concat my/org-dropbox-folder "Organizador.org")
+                  ,(concat my/org-dropbox-folder "Notes.org")))))
       (alltodo ""
-               ((org-agenda-files '("~/Dropbox/Organizador.org"
-                                    "~/Dropbox/Notes")))))
+               ((org-agenda-files
+                `(,(concat my/org-dropbox-folder "Organizador.org")
+                  ,(concat my/org-dropbox-folder "Notes.org"))))))
      nil))
 #+END_SRC
 
@@ -610,13 +611,15 @@ https://emacs.stackexchange.com/questions/21366/should-i-have-removed-shell-t-to
 
 #+END_SRC
 
-* Load Package: Org Contacts
+* CANCELED Load Package: Org Contacts
+CLOSED: [2018-11-23 sex 21:51]
 :PROPERTIES:
 :ID:       89910a66-0e0b-4e9d-a4da-61386dd74c51
 :END:
+- State "DONE"       from "WORKING"    [2018-11-23 sex 21:51]
 #+BEGIN_SRC emacs-lisp
-  (use-package org-contacts
-    :ensure nil
+  (use-package org
+    :ensure org-contacts
     :after org
     :custom (org-contacts-files '("~/Dropbox/Contacts.org")))
 #+END_SRC
@@ -644,44 +647,43 @@ Remove all capture templates.
 :ID:       fb54fa73-e4c7-4653-acd4-8357b9adb7bd
 :END:
 #+BEGIN_SRC emacs-lisp
-  (defvar my/org-contacts-template
-    "* %(org-contacts-template-name)
+  (let ((filename (concat my/org-dropbox-folder "Contacts.org"))
+        (template "* %^{Nome}
   :PROPERTIES:
-  :BIRTHDAY: %^{yyyy-mm-dd}
-  :EMAIL: %(org-contacts-template-email)
+  :EMAIL: %^{Email}
   :NOTE: %^{NOTE}
-  :END:"
-    "Template for org-contacts.")
+  :END:
+  <%^{yyyy-mm-dd} +1y>"))
 
-  (add-to-list
-   'org-capture-templates
-   `("c" "Contact" entry (file "~/Dropbox/Contacts.org")
-     ,my/org-contacts-template
-     :empty-lines 1
-     :kill-buffer
-     :unarrowed))
+    (add-to-list
+     'org-capture-templates
+     `("c" "Contact" entry
+       (file ,filename)
+       ,template
+       :empty-lines 1
+       :kill-buffer
+       :unarrowed)))
 
 #+END_SRC
-
 ** Project Template
 :PROPERTIES:
 :ID:       47c0325c-9ce4-4c35-b376-6836fab45957
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (defvar my/org-project-template
-    (concat
-     "* TODO %^{Project Idea}\n"
-     "%T\n"
-     "%a\n"
-     "%?\n")
-     "Template for new project")
+  (let ((filename (concat my/org-dropbox-folder "Projetos.org"))
+        (template "* TODO %^{Project Idea}
+  %T
+  %a
+  %?
+  "))
 
-  (add-to-list
-   'org-capture-templates
-   `("p" "Project Idea" entry (file "~/Dropbox/Notes/Projetos.org")
-     ,my/org-project-template
-     :empty-lines 1))
+      (add-to-list
+       'org-capture-templates
+       `("p" "Project Idea" entry
+         (file ,filename)
+         ,template
+         :empty-lines 1)))
 
 #+END_SRC
 
@@ -691,17 +693,31 @@ Remove all capture templates.
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (defvar my/ledger-transaction-template
-    (concat
-     "%^{YYYY}/%^{MM}/%^{DD} Dinheiro
-      Expenses:Dinheiro                      R$ %^{50.00}
-      Assets:Bank:Caixa")
-    "Template for generic transaction")
+  (let ((filename (concat my/org-dropbox-folder "Ledger.ledger"))
+        (template "%(my-org-pick-date) Dinheiro
+  Expenses:Dinheiro                      R$ %^{50.00}
+  Assets:Bank:Caixa"))
 
-  (add-to-list
-   'org-capture-templates
-   `("D" "Ledger Dinheiro" entry (file "~/Dropbox/Ledger.ledger")
-     ,my/ledger-transaction-template
-     :empty-lines 1))
+    (add-to-list
+     'org-capture-templates
+     `("D" "Ledger Dinheiro" plain
+       (file ,filename)
+       ,template
+       :empty-lines 1)))
+
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+  (let ((filename (concat my/org-dropbox-folder "Ledger.ledger"))
+        (template "%(my-org-pick-date) %^{Empresa}
+  Expenses:                      R$ %^{50.00}
+  Assets:Bank:Bradesco"))
+
+    (add-to-list
+     'org-capture-templates
+     `("T" "Ledger Transação" plain
+       (file ,filename)
+       ,template
+       :empty-lines 1)))
+
+#+END_SRC

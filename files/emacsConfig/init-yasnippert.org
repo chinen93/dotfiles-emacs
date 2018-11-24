@@ -1,7 +1,7 @@
 #+TITLE:        Yasnippet Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2018-10-03 qua]
+#+DATE-UPDATED: [2018-11-24 sáb]
 
 * Yasnippet
 :PROPERTIES:
@@ -18,13 +18,21 @@
   ;; Controls indenting applied to snippets.
   (setq yas-indent-line 'fixed)
 
-  ;; Change add Directories when looking for snippets
-  (setq yas-snippet-dirs
-        ;; Personal Collection
-        '("~/emacsSnippets"))
+  (let* ((folder "emacsSnippets/")
+         (default (concat "~/" folder)))
+
+    ;; Default directories to seek for snippets
+    (setq yas-snippet-dirs
+          ;; Personal Collection
+          `(,default))
+
+    ;; If the home folder is in another place
+    (when (and (boundp 'my/home-folder)
+               (file-directory-p my/home-folder))
+      (setq yas-snippet-dirs
+            `(,(concat my/home-folder folder)))))
 
   ;; Enable yasnippet mode globally
   (yas-global-mode)
 
 #+END_SRC
-

@@ -1,13 +1,13 @@
 #+TITLE:        Backup Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2018-09-26 Wed]
+#+DATE-UPDATED: [2018-11-24 sáb]
 
 Backup is a important part of editting text. Because most of the times
 I make some mistakes and having the possibility to revert to a cleaner
 state is gold.
 
-* Set Default Directory 
+* Set Default Directory
 :PROPERTIES:
 :ID:       a5f317bc-1b74-410b-89fb-07ebeb91b44f
 :END:
@@ -17,7 +17,15 @@ being editted. However, for me, it makes the directory kind of
 messy. So to tidy it up a bit I put everything in ="~/.emacs.d/backups"=.
 
 #+BEGIN_SRC emacs-lisp
-  (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+  (let* ((filename ".emacs.d/backups")
+         (homeFilename (concat "~/" filename)))
+
+    (setq backup-directory-alist `(("." . ,homeFilename)))
+
+    (when (and (boundp 'my/home-folder)
+               (file-directory-p my/home-folder))
+      (setq backup-directory-alist
+            `(("." . ,(concat my/home-folder filename))))))
 
 #+END_SRC
 
@@ -28,8 +36,15 @@ messy. So to tidy it up a bit I put everything in ="~/.emacs.d/backups"=.
 
 Set transform to apply to buffer file name before making auto-save file name.
 #+BEGIN_SRC emacs-lisp
-  (setq auto-save-file-name-transforms
-	'((".*" "~/.emacs.d/auto-save-list/" t)))
+  (let* ((filename ".emacs.d/auto-save-list/")
+         (homeFilename (concat "~/" filename)))
+
+    (setq auto-save-file-name-transforms `((".*" ,homeFilename t)))
+
+    (when (and (boundp 'my/home-folder)
+               (file-directory-p my/home-folder))
+      (setq auto-save-file-name-transforms
+            `((".*" ,(concat my/home-folder filename) t)))))
 
 #+END_SRC
 
