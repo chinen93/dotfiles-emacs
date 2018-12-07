@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2018-11-24 sáb]
+#+DATE-UPDATED: [2018-12-06 qui]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -155,14 +155,23 @@ Agenda show next 7 days and previous 3 days
 :PROPERTIES:
 :ID:       9f11523a-b7c1-432a-94b4-d406ca487263
 :END:
+
+Remove all Org Mode agenda commands. To only show my custom commands.
 #+BEGIN_SRC emacs-lisp
   (setq org-agenda-custom-commands nil)
 
+#+END_SRC
+
+*** All DONE Itens from This Week
+:PROPERTIES:
+:ID:       2970d122-05c8-47bf-8f60-0ac4e25bcf04
+:END:
+#+BEGIN_SRC emacs-lisp
   (add-to-list
    'org-agenda-custom-commands
 
    ;; Custom command to show done task from previous week
-   '("b" "DONE from this week"
+   '("d" "DONE from this week"
      ;; Use normal agenda
      ((agenda ""
               ;; Put some configurations on this agenda
@@ -174,18 +183,32 @@ Agenda show next 7 days and previous 3 days
                (org-agenda-window-setup 'other-window))))
      nil))
 
+#+END_SRC
+
+*** Two Weeks in Advance and All TODO Itens
+:PROPERTIES:
+:ID:       6aa45574-713d-47b0-8756-bd352b8f2e00
+:END:
+#+BEGIN_SRC emacs-lisp
   (add-to-list
    'org-agenda-custom-commands
 
    ;; Custom agenda that show all the TODO tasks
-   '("n" "Agenda and all TODO's"
+   '("m" "Agenda and all TODO's"
      ((agenda ""
               ((org-agenda-span 16)
                (org-agenda-start-day "-2d")))
       (alltodo "" nil))
      nil))
 
+#+END_SRC
 
+*** Current Working Tasks and Immediate Calendar
+:PROPERTIES:
+:ID:       d0be7bcc-8135-4264-91b2-8f16ac337bb2
+:END:
+
+#+BEGIN_SRC emacs-lisp
   (add-to-list
    'org-agenda-custom-commands
 
@@ -197,21 +220,29 @@ Agenda show next 7 days and previous 3 days
       (todo "WORKING" nil))
      nil nil))
 
+#+END_SRC
+
+*** All Task in Notes Directory
+:PROPERTIES:
+:ID:       0acfba9f-08a3-4e8b-b625-2547e4837630
+:END:
+#+BEGIN_SRC emacs-lisp
   (add-to-list
    'org-agenda-custom-commands
 
    ;; Custom agenda to show agenda and todo for every note
-   `("l" "Agenda and all TODO's"
-     ((agenda ""
-              ((org-agenda-files
-                `(,(concat my/org-dropbox-folder "Organizador.org")
-                  ,(concat my/org-dropbox-folder "Notes.org")))))
-      (alltodo ""
+   `("n" "All TODO's in Notes"
+     ((alltodo ""
                ((org-agenda-files
-                `(,(concat my/org-dropbox-folder "Organizador.org")
-                  ,(concat my/org-dropbox-folder "Notes.org"))))))
+                `(,(concat my/org-dropbox-folder "Notes/"))))))
      nil))
+
 #+END_SRC
+
+*** TODO All Year 
+:PROPERTIES:
+:ID:       dfe5baf8-f51e-43ef-b7f9-9fc5fb54ce89
+:END:
 
 * Structure Templates
 :PROPERTIES:
