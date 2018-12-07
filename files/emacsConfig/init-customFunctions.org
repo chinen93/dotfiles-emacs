@@ -1,7 +1,7 @@
 #+TITLE:        Custom Functions Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2018-11-24 sáb]
+#+DATE-UPDATED: [2018-12-07 sex]
 
 * Functions from Internet
 :PROPERTIES:
@@ -104,6 +104,48 @@
            (narrow-to-region (region-beginning) (region-end)))
           ((derived-mode-p 'org-mode) (org-narrow-to-subtree))
           (t (narrow-to-defun))))
+
+  (defvar my-indirect-buffer-prefix-name
+    "IndBuf" "Prefix of my indirect buffers")
+
+  (defun my-indirect-buffer-get-name (name)
+    "Return the name of the indirect buffer."
+    (concat "*" my-indirect-buffer-prefix-name "[" name "]*"))
+
+  (defun my-indirect-buffer-p ()
+    "A buffer is verified as an indirect buffer if its name is like:
+   ,*IndirectBuffer `buffer-name`*"
+
+    (string-match-p my-indirect-buffer-prefix-name (buffer-name)))
+
+  (defun my-indirect-buffer ()
+    "Creates an indirect buffer for the current buffer"
+    (clone-indirect-buffer-other-window
+     (my-indirect-buffer-get-name (buffer-name)) t))
+
+  (defun my-indirect-buffer-kill ()
+    "If the buffer is an indirect buffer, kill it."
+    (interactive)
+    (if (my-indirect-buffer-p)
+        (kill-buffer (buffer-name))
+      (message (concat (buffer-name) " isn't an Indirect Buffer"))))
+
+  (defun my-indirect-buffer-rename ()
+    "Rename current buffer if it is an indirect buffer"
+    (interactive)
+    (if (not (my-indirect-buffer-p))
+        (message (concat (buffer-name) " isn't an Indirect Buffer"))
+      (let* ((name (read-string "New Name: " nil nil (buffer-name)))
+             (new-name (my-indirect-buffer-get-name name)))
+        (rename-buffer new-name t))))
+
+  (defun my-indirect-buffer-narrow-or-widen-dwim (p)
+    "Just narrow or widen if its happening in the original buffer"
+    (interactive "P")
+    (if (my-indirect-buffer-p)
+        (message "This is already an Indirect Buffer!")
+      (my-indirect-buffer)
+      (call-interactively #'narrow-or-widen-dwim)))
 #+END_SRC
 
 ** Xah Cut Line or Region
@@ -419,3 +461,4 @@
       (s-replace "-" separator date)))
 
 #+END_SRC
+

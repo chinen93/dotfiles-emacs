@@ -2,7 +2,7 @@
 #+AUTHOR:       Pedro Chinen
 #+EMAIL:        ph.u.chinen@gmail.com
 #+DATE-CREATED: [2018-10-17 qua]
-#+DATE-UPDATED: [2018-11-12 Mon]
+#+DATE-UPDATED: [2018-11-24 sáb]
 
 * Playground
 :PROPERTIES:
