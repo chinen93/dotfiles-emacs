@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2018-12-06 qui]
+#+DATE-UPDATED: [2018-12-26 qua]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -237,6 +237,25 @@ Remove all Org Mode agenda commands. To only show my custom commands.
                 `(,(concat my/org-dropbox-folder "Notes/"))))))
      nil))
 
+#+END_SRC
+
+*** Notes "Viagens" Agenda
+:PROPERTIES:
+:ID:       a7b76845-2081-4783-abea-1c507242f4f4
+:END:
+#+BEGIN_SRC emacs-lisp
+  (add-to-list
+   'org-agenda-custom-commands
+
+   ;; Custom agenda to show agenda and todo for every note
+   `("v" "'Viagens' Notes"
+     ((agenda ""
+              ((org-agenda-files
+                `(,(concat my/org-dropbox-folder "Notes/viagens.org")))))
+      (alltodo ""
+               ((org-agenda-files
+                 `(,(concat my/org-dropbox-folder "Notes/viagens.org"))))))
+     nil))
 #+END_SRC
 
 *** TODO All Year 
