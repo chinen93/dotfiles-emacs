@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2018-12-26 qua]
+#+DATE-UPDATED: [2019-03-14 qui]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -235,6 +235,23 @@ Remove all Org Mode agenda commands. To only show my custom commands.
      ((alltodo ""
                ((org-agenda-files
                 `(,(concat my/org-dropbox-folder "Notes/"))))))
+     nil))
+
+#+END_SRC
+
+*** All Task in Emacs Config Directory
+:PROPERTIES:
+:ID:       0acfba9f-08a3-4e8b-b625-2547e4837630
+:END:
+#+BEGIN_SRC emacs-lisp
+  (add-to-list
+   'org-agenda-custom-commands
+
+   ;; Custom agenda to show agenda and todo for every note
+   `("e" "All TODO's in Emacs Config Directory"
+     ((alltodo ""
+               ((org-agenda-files
+                `(,my/emacs-config-dir)))))
      nil))
 
 #+END_SRC
