@@ -1,7 +1,7 @@
 #+TITLE:        Ledger Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2018-11-24 sáb]
+#+DATE-UPDATED: [2019-03-14 qui]
 
 [[https://www.ledger-cli.org/][Ledger cli]] is a command line accounting tool that provides double-entry
 accounting based on a text journal.
@@ -33,8 +33,9 @@ every negative figure means that that account or person or place has less money 
 
 Create Variable to hold my ledger file
 #+BEGIN_SRC emacs-lisp
-  (let* ((folder "Ledger.ledger")
-         (default (concat "~/Dropbox/" folder)))
+  (let* ((year (format-time-string "%Y"))
+         (file (concat "Ledger" year ".ledger"))
+         (default (concat "~/Dropbox/" file)))
 
     ;; Create variable in a default location
     (defvar my/ledger-file default
@@ -43,7 +44,7 @@ Create Variable to hold my ledger file
     ;; If directory isn't in the same place
     (when (and (boundp 'my/dropbox-folder)
                (file-directory-p my/dropbox-folder))
-      (setq my/ledger-file (concat my/dropbox-folder folder))))
+      (setq my/ledger-file (concat my/dropbox-folder file))))
 
 #+END_SRC
 
@@ -56,8 +57,7 @@ Set master file
 
 Create base command for all reports
 #+BEGIN_SRC emacs-lisp
-    (defvar my/ledger-cmd
-      (format "ledger -f %s " my/ledger-file)
+    (defvar my/ledger-cmd "ledger -f "
       "Beginning of every command has to be this")
 
 #+END_SRC
@@ -94,19 +94,23 @@ Clear whole transactions, not individual postings.
 
 #+END_SRC
 
-** TODO See Expenses for all months
+** DONE See Expenses for all months
+CLOSED: [2019-03-14 qui 08:34]
 :PROPERTIES:
 :ID:       51e6867e-18a9-4cfc-a29c-99968378facb
 :END:
-
+- State "DONE"       from "WORKING"    [2019-03-14 qui 08:34]
+- State "WORKING"    from "TODO"       [2019-03-14 qui 08:34]
 
 #+BEGIN_SRC emacs-lisp
-  (defun my-ledger-year-balance ()
+  (defun my-ledger-monthly-balance ()
     "Create an annuary with the balance for each month"
 
     (interactive)
 
-    (let ((command (concat my/ledger-cmd "balance Expenses "))
+    (let ((command (concat my/ledger-cmd
+                           my/ledger-file
+                           " balance Expenses "))
           (report-filename "*Monthy Ledger Report*")
           (shell-buffer-name "*TESTE*")
           (months '(("January   " . "jan")
@@ -140,7 +144,11 @@ Clear whole transactions, not individual postings.
         ;; Execute the ledger command and put its result in the report buffer
         (with-current-buffer  shell-buffer-name
           (shell-command (concat command
-                                 "--period 'in " (cl-rest month)  " 2018'")
+                                 "--period 'in "
+                                 (cl-rest month)
+                                 " "
+                                 (format-time-string "%Y")
+                                 "'")
                          shell-buffer-name)
           (append-to-buffer report-filename
                             (point-min) (point-max)))
@@ -151,11 +159,7 @@ Clear whole transactions, not individual postings.
 
       ;; Opens report buffer
       (switch-to-buffer-other-window report-filename)))
-
 #+END_SRC
-
-#+RESULTS:
-: t
 
 * Set Reports
 :PROPERTIES:
@@ -169,30 +173,30 @@ Clear whole transactions, not individual postings.
     ;; Add more reports
     (ledger-reports-add
      "Balance Assets"
-     (concat my/ledger-cmd "balance Assets:Bank"))
+     (concat my/ledger-cmd my/ledger-file " balance Assets:Bank"))
 
     (ledger-reports-add
      "Balance Expenses All"
-     (concat my/ledger-cmd "balance Expenses"))
+     (concat my/ledger-cmd my/ledger-file " balance Expenses"))
 
     (ledger-reports-add
      "Balance Expenses This Month"
-     (concat my/ledger-cmd "balance --period 'this month' Expenses"))
+     (concat my/ledger-cmd my/ledger-file " balance --period 'this month' Expenses"))
 
     (ledger-reports-add
      "Balance Expenses Last Month"
-     (concat my/ledger-cmd "balance --period 'last month' Expenses"))
+     (concat my/ledger-cmd my/ledger-file " balance --period 'last month' Expenses"))
 
     (ledger-reports-add
      "Register This Month"
-     (concat my/ledger-cmd "register --period 'this month'"))
+     (concat my/ledger-cmd my/ledger-file " register --period 'this month'"))
 
     (ledger-reports-add
      "Register All"
-     (concat my/ledger-cmd " " "register"))
+     (concat my/ledger-cmd my/ledger-file " register"))
 
     (ledger-reports-add
-     "Balance All" (concat my/ledger-cmd "balance")))
+     "Balance All" (concat my/ledger-cmd my/ledger-file " balance")))
 #+END_SRC
 
 * Keybinding
@@ -204,3 +208,4 @@ Clear whole transactions, not individual postings.
     (eval-after-load 'ledger-mode
       (define-key ledger-mode-map (kbd "M-q") nil)))
 #+END_SRC
+
