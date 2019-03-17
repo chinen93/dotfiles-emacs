@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2018-11-24 sáb]
+#+DATE-UPDATED: [2019-03-17 dom]
 
 It doesn't need any external package. Just pure elisp.
 
@@ -156,9 +156,9 @@ To yank with the mouse press <mouse-2>, which is the middle button.
 :ID:       0164fe5d-d0b8-4197-997a-4e887c1de983
 :END:
 
-Scroll pleasantly with the mouse wheel. A slow turn moves the buffer up and down one line at a time.
+Scroll pleasantly with the mouse wheel. A slow turn moves the buffer up and down few lines at a time.
 #+BEGIN_SRC emacs-lisp
-  (setq mouse-wheel-scroll-amount '(1 ((shift) . 5)))
+  (setq mouse-wheel-scroll-amount '(2 ((shift) . 5)))
   (setq mouse-wheel-progressive-speed nil)
 #+END_SRC
 
@@ -172,7 +172,22 @@ Wheel will follow mouse, So the frame where the mouse is will scroll
 :ID:       78566d3b-c8ae-4ca1-b106-73ad2c7cf238
 :END:
 
-Delete selected text when something is inserted and a mark is active.
+Delete selected text when something is inserted and a mark is active. Without it the new text would remove the mark and just insert the text in the buffer.
+
+Example of `delete-selection-mode` inactive. [] is the marked region and () is the current point:
+#+BEGIN_SRC text
+  Lorem ipsum dolor sit amet, [consectetur adipiscing elit()], sed do eiusmod tempor.
+
+  Lorem ipsum dolor sit amet, consectetur adipiscing elitNEW TEXT, sed do eiusmod tempor.
+#+END_SRC
+
+Example of `delete-selection-mode` active. [] is the marked region and () is the current point:
+#+BEGIN_SRC text
+  Lorem ipsum dolor sit amet, [consectetur adipiscing elit()], sed do eiusmod tempor.
+
+  Lorem ipsum dolor sit amet, NEW TEXT, sed do eiusmod tempo.
+#+END_SRC
+
 #+BEGIN_SRC emacs-lisp
   (delete-selection-mode 1)
 
@@ -189,7 +204,9 @@ Don't delete file, but move to trash instead.
 :ID:       eabe8ead-fcc1-412d-9cdc-da74407d1758
 :END:
 
-Follow sysliks
+A symbolic link is a reference to another file or directory. It can be an absolute or relative path. In emacs, when visiting a symbolic link to a file under version control the default behavior is to ask what to do.
+
+Instead just follow the syslink and edit the real file.
 #+BEGIN_SRC emacs-lisp
   (setq vc-follow-symlinks t)
 
@@ -200,7 +217,7 @@ Follow sysliks
 :ID:       d53815ee-b64e-40f0-9b3a-8be0d6db288e
 :END:
 
-Create variable to hold common paths.
+Create variable to hold common directory paths.
 #+BEGIN_SRC emacs-lisp
   (defvar my/dropbox-folder "~/Dropbox/"
     "Path to Dropbox Folder")
@@ -209,12 +226,12 @@ Create variable to hold common paths.
     "Path to Home Folder")
 #+END_SRC
 
-* TODO Files Modes
+* Files Modes
 :PROPERTIES:
 :ID:       31c397d5-4b33-49c1-b850-6892b872c131
 :END:
 
-let dotfiles be loaded with shell-script-mode.
+Dotfiles should be loaded with shell-script-mode.
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'auto-mode-alist '(".bashrc" . shell-script-mode))
   (add-to-list 'auto-mode-alist '(".bash_profile" . shell-script-mode))
@@ -222,6 +239,11 @@ let dotfiles be loaded with shell-script-mode.
   (add-to-list 'auto-mode-alist '(".screenrc" . shell-script-mode))
   (add-to-list 'auto-mode-alist '(".ledgerrc" . shell-script-mode))
 
+#+END_SRC
+
+Make some files open in emacs-lisp-mode.
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'auto-mode-alist '("emacs$" . emacs-lisp-mode))
 #+END_SRC
 
 Files that doesn't have any extension should be loaded as fundamental-mode.
