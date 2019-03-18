@@ -1,7 +1,7 @@
 #+TITLE:        Global KeyBinding Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2018-11-08 Thu]
+#+DATE-UPDATED: [2019-03-17 dom]
 
 * My keymap
 :PROPERTIES:
@@ -382,10 +382,14 @@
 
 #+END_SRC
 
-* TODO Minor Mode
+* Minor Mode
 :PROPERTIES:
 :ID:       5fa9e8f6-3460-4a22-a980-15124a79e260
 :END:
+
+A minor mode is a set of predefined configurations that change the behavior of Emacs. Many minor modes can exist in the same buffer, in this way, the global keybindings can be in effect without being overwritten.
+
+First of all, the minor mode is created using the keybindings keymap as the base.
 #+BEGIN_SRC emacs-lisp
   (define-minor-mode my-keys-minor-mode
     "A minor mode so that my key settings override annoying major modes."
@@ -395,13 +399,20 @@
 
   (my-keys-minor-mode 1)
 
+#+END_SRC
+
+
+The minibuffer should behave normally without specific keybindings, so disable it to use the minibuffer.
+#+BEGIN_SRC emacs-lisp
   (defun my-minibuffer-setup-hook ()
     (my-keys-minor-mode 0))
 
   (add-hook 'minibuffer-setup-hook 'my-minibuffer-setup-hook)
 
-  (add-hook 'after-load-functions 'my-keys-have-priority)
+#+END_SRC
 
+The last minor mode loaded has configuration's preference over the others. Load this minor mode as the last thing, so that the keybindings is consistent throughout Emacs.
+#+BEGIN_SRC emacs-lisp
   (defun my-keys-have-priority (_file)
     "Try to ensure that my keybindings retain priority over other minor modes.
 
@@ -411,4 +422,8 @@
         (assq-delete-all 'my-keys-minor-mode minor-mode-map-alist)
         (add-to-list 'minor-mode-map-alist mykeys))))
 
+  (add-hook 'after-load-functions 'my-keys-have-priority)
+
 #+END_SRC
+
+
