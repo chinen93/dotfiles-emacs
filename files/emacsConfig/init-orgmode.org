@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2019-03-14 qui]
+#+DATE-UPDATED: [2019-04-06 sáb]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -256,11 +256,12 @@ Remove all Org Mode agenda commands. To only show my custom commands.
 
 #+END_SRC
 
-*** Notes "Viagens" Agenda
+*** CANCELED Notes "Viagens" Agenda
 :PROPERTIES:
 :ID:       a7b76845-2081-4783-abea-1c507242f4f4
 :END:
-#+BEGIN_SRC emacs-lisp
+
+#+BEGIN_SRC emacs-lisp :tangle no
   (add-to-list
    'org-agenda-custom-commands
 
