@@ -732,13 +732,14 @@ Remove all capture templates.
        :unarrowed)))
 
 #+END_SRC
+
 ** Project Template
 :PROPERTIES:
 :ID:       47c0325c-9ce4-4c35-b376-6836fab45957
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (let ((filename (concat my/org-dropbox-folder "Projetos.org"))
+  (let ((filename (concat my/org-dropbox-folder "Notes/Projetos.org"))
         (template "* TODO %^{Project Idea}
   %T
   %a
