@@ -206,12 +206,12 @@ Remove all Org Mode agenda commands. To only show my custom commands.
 
 #+END_SRC
 
-*** Current Working Tasks and Immediate Calendar
+*** CANCELED Current Working Tasks and Immediate Calendar
 :PROPERTIES:
 :ID:       d0be7bcc-8135-4264-91b2-8f16ac337bb2
 :END:
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
   (add-to-list
    'org-agenda-custom-commands
 
@@ -242,11 +242,11 @@ Remove all Org Mode agenda commands. To only show my custom commands.
 
 #+END_SRC
 
-*** All Task in Emacs Config Directory
+*** CANCELED All Task in Emacs Config Directory
 :PROPERTIES:
 :ID:       0acfba9f-08a3-4e8b-b625-2547e4837630
 :END:
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
   (add-to-list
    'org-agenda-custom-commands
 
