@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2019-04-06 sáb]
+#+DATE-UPDATED: [2019-04-07 dom]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -166,12 +166,15 @@ Remove all Org Mode agenda commands. To only show my custom commands.
 :PROPERTIES:
 :ID:       6aa45574-713d-47b0-8756-bd352b8f2e00
 :END:
+
+Main agenda with the most important information to show how the week will be and current working projects.
+
 #+BEGIN_SRC emacs-lisp
   (add-to-list
    'org-agenda-custom-commands
 
    ;; Custom agenda that show all the TODO tasks
-   '("m" "Agenda and all TODO's"
+   '("m" "Main Agenda"
      ((agenda ""
               ((org-agenda-span 10)
                (org-agenda-start-day "-1d")))
