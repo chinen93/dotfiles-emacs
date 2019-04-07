@@ -279,11 +279,6 @@ Remove all Org Mode agenda commands. To only show my custom commands.
      nil))
 #+END_SRC
 
-*** TODO All Year 
-:PROPERTIES:
-:ID:       dfe5baf8-f51e-43ef-b7f9-9fc5fb54ce89
-:END:
-
 * Structure Templates
 :PROPERTIES:
 :ID:       abdb3d61-d414-492b-bf87-d670c5f52d82
