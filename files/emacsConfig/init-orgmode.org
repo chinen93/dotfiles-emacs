@@ -181,7 +181,10 @@ Main agenda with the most important information to show how the week will be and
       (alltodo ""
                ((org-agenda-files
                  `(,my/emacs-config-dir))))
-      (todo "WORKING" nil))
+      (todo "WORKING" nil)
+      (alltodo ""
+               ((org-agenda-files
+                 `(,(concat my/org-dropbox-folder "Contacts.org"))))))
      nil))
 
 #+END_SRC
