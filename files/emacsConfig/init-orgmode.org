@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2019-04-12 sex]
+#+DATE-UPDATED: [2019-04-19 sex]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -321,6 +321,13 @@ Templates for source blocks
    'org-structure-template-alist
     `("t"
      ,(concat "#+BEGIN_SRC text\n"
+              "?\n"
+              "#+END_SRC")))
+
+  (add-to-list
+   'org-structure-template-alist
+    `("latex"
+     ,(concat "#+BEGIN_SRC latex\n"
               "?\n"
               "#+END_SRC")))
 
@@ -807,25 +814,42 @@ Remove all capture templates.
 :ID:       2281cf9c-e7b7-4201-83ef-9074a129825e
 :END:
 
+LaTeX (/ˈlɑːtɛx/ LAH-tekh or /ˈleɪtɛx/ LAY-tekh; a shortening of Lamport TeX) is a document preparation system. The writer uses markup tagging conventions to define the general structure of a document (such as article, book, and letter), to stylise text throughout a document (such as bold and italics), and to add citations and cross-references. A TeX distribution such as TeX Live or MikTeX is used to produce an output file (such as PDF or DVI) suitable for printing or digital distribution. Within the typesetting system, its name is stylised as LaTeX.
+
 *** LaTeX Classes
 :PROPERTIES:
 :ID:       4a8759d5-6bc6-4ff3-bc80-0df0a84b72da
 :END:
 
-**** IEEE
+Alist of LaTeX classes and associated header and structure. If #+LATEX_CLASS is set in the buffer, use its value and the associated information.
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  (class-name
+   header-string
+   (numbered-section . unnumbered-section)
+   ...)
+#+END_SRC
+
+**** IEEE - Institute of Electrical and Electronics Engineers
 :PROPERTIES:
 :ID:       b67e1475-095d-4176-9a9e-d19d918f00be
 :END:
+
+https://journals.ieeeauthorcenter.ieee.org/create-your-ieee-article/authoring-tools-and-templates/ieee-article-templates/
+
 #+BEGIN_SRC emacs-lisp
-  (add-to-list 'org-latex-classes
-               '("IEEEtran"
-                 "\\documentclass{IEEEtran}
+  (require 'ox-latex)
+  (with-eval-after-load 'ox-latex
+    (add-to-list 'org-latex-classes
+                 '("IEEEtran"
+                   "\\documentclass{IEEEtran}
   [NO-DEFAULT-PACKAGES]
   [PACKAGES]
   [EXTRA]"
-                 ("\\section{%s}" . "\\section*{%s}")
-                 ("\\subsection{%s}" . "\\subsection*{%s}")
-                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+                   ("\\section{%s}" . "\\section*{%s}")
+                   ("\\subsection{%s}" . "\\subsection*{%s}")
+                   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 #+END_SRC
+
