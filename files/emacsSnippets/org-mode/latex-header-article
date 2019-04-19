@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: latex-header-article
+# key:
+# --
+#+TITLE: ${1:ARTICLE TITLE}
+#+LATEX_CLASS: article
+#+LATEX_CLASS_OPTIONS: [a4paper, twoside, twocolumn]
+#+OPTIONS: toc:nil ^:nil
+
+*ABSTRACT: ${2:abstract introduction.}*
+
+#+TOC: headlines 2
+
+$0
