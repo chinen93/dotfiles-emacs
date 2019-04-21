@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: latex-header-article
-# key:
+# key: latex-header-article
 # --
 #+TITLE: ${1:ARTICLE TITLE}
 #+LATEX_CLASS: article

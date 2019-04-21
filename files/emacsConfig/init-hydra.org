@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2018-12-07 sex]
+#+DATE-UPDATED: [2019-04-20 sáb]
 
 Emacs has a lot of keybindings, and I can't remember everyone of them. For example each key in the keyboard is related to a command, if you put it in combination with Ctrl or Meta or Crtl + Meta you can create others keybindins for functions. And the problem grows fast and wide. Each mode has a map describing some keybinding configurations that can overwrite others configurations. So I wan't always sure about the key chord I was pressing. 
 
@@ -40,7 +40,7 @@ First things first we need to load the pacakge so that we can build some configu
      ^ ^                 _3_: divide vertc    _l_: ledger        _f_: functions
      _c_: Capture        _4_: other window    _m_: Agenda        _(_: macro
      ^ ^                 ^ ^                  _n_: Narrow Widen  _r_: rectangle
-     _e_: Hydra Context  ^ ^                  ^ ^                ^ ^
+     _e_: Hydra Context  ^ ^                  _F_: Flycheck      ^ ^
 
     "
 
@@ -73,6 +73,7 @@ First things first we need to load the pacakge so that we can build some configu
     ("h" hydra-help/body :color blue)
     ("r" hydra-rectangle/body :color blue)
     ("n" hydra-narrow-widen/body :color blue)
+    ("F" hydra-flycheck/body :color blue)
 
     ;; move around text
     ("<right>" forward-char)
@@ -126,6 +127,35 @@ First things first we need to load the pacakge so that we can build some configu
     ("q" nil "quit" :color blue)
     ("l" hydra-launcher/body "return" :color blue))
 
+#+END_SRC
+
+* Flycheck
+:PROPERTIES:
+:ID:       d9197a4c-76fe-4877-b2a0-74c95efbcde1
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defhydra hydra-flycheck (:color blue)
+    "
+    ^
+    ^Flycheck^          ^Errors^            ^Checker^
+    ^────────^──────────^──────^────────────^───────^─────
+    _q_ quit            _<_ previous        _?_ describe
+    _M_ manual          _>_ next            _d_ disable
+    _v_ verify setup    _f_ check           _m_ mode
+    ^^                  _l_ list            _s_ select
+    ^^                  ^^                  ^^
+    "
+    ("q" nil)
+    ("<" flycheck-previous-error :color pink)
+    (">" flycheck-next-error :color pink)
+    ("?" flycheck-describe-checker)
+    ("M" flycheck-manual)
+    ("d" flycheck-disable-checker)
+    ("f" flycheck-buffer)
+    ("l" flycheck-list-errors)
+    ("m" flycheck-mode)
+    ("s" flycheck-select-checker)
+    ("v" flycheck-verify-setup))
 #+END_SRC
 
 * Help
@@ -248,7 +278,6 @@ How to create it:
     ("o" my-open-file-explorer "Open File Explorer" :color blue)
     ("q" nil "quit" :color blue))
 #+END_SRC
-
 * Yasnippet
 :PROPERTIES:
 :ID:       b7bb22b6-00f5-4e7e-8c14-a1113f3e6358
