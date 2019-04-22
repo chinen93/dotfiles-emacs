@@ -1,19 +1,14 @@
 #+TITLE:        Ivy Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2018-11-08 Thu]
+#+DATE-UPDATED: [2019-04-21 dom]
 
 Emacs is a text editor which don't want to bother the user. So normally it doesn't have an autocompletion function. However for editting text is important to have some sort of help. That one reason for using a completition package is essential to make it a better environment.
 
 One of those packages is the [[https://github.com/abo-abo/swiper][Ivy]] with its [[https://oremacs.com/swiper/][manual]]. I'll let it introduce itself:
-#+BEGIN_SRC text
-  Ivy is an interactive interface for completion in Emacs. Emacs uses completion mechanism in a variety of contexts: code, menus, commands, variables, functions, etc. Completion entails listing, sorting, filtering, previewing, and applying actions on selected items. When active, ivy-mode completes the selection process by narrowing available choices while previewing in the minibuffer. Selecting the final candidate is either through simple keyboard character inputs or through powerful regular expressions. 
-#+END_SRC
 
-* Load Package: Ivy
-:PROPERTIES:
-:ID:       c354f169-5dfa-439c-8fa9-b499d4d3183c
-:END:
+Ivy is an interactive interface for completion in Emacs. Emacs uses completion mechanism in a variety of contexts: code, menus, commands, variables, functions, etc. Completion entails listing, sorting, filtering, previewing, and applying actions on selected items. When active, ivy-mode completes the selection process by narrowing available choices while previewing in the minibuffer. Selecting the final candidate is either through simple keyboard character inputs or through powerful regular expressions. 
+
 #+BEGIN_SRC emacs-lisp
   (require-package 'ivy)
   (require-package 'counsel)
