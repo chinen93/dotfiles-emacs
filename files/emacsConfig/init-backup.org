@@ -1,20 +1,16 @@
 #+TITLE:        Backup Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2019-03-15 sex]
+#+DATE-UPDATED: [2019-04-21 dom]
 
-Backup is a important part of editting text. Because most of the times
-I make some mistakes and having the possibility to revert to a cleaner
-state is gold.
+Backup is a important part of editting text. Because most of the times I make some mistakes and having the possibility to revert to a cleaner state is gold.
 
 * Set Default Directory
 :PROPERTIES:
 :ID:       a5f317bc-1b74-410b-89fb-07ebeb91b44f
 :END:
 
-The default directory to store backups is the file's directory that is
-being editted. However, for me, it makes the directory kind of
-messy. So to tidy it up a bit I put everything in ="~/.emacs.d/backups"=.
+The default directory to store backups is the file's directory that is being editted. However, for me, it makes the directory kind of messy. So to tidy it up a bit I put everything in `"~/.emacs.d/backups"`.
 
 #+BEGIN_SRC emacs-lisp
   (let* ((filename ".emacs.d/backups")
@@ -75,7 +71,6 @@ Create numeric suffix when backing up files. I make this way because I can see w
   (setq version-control t)
 
 #+END_SRC
-
 
 But don't keep too many versions. Just some.
 #+BEGIN_SRC emacs-lisp
