@@ -769,41 +769,6 @@ Remove all capture templates.
 
 #+END_SRC
 
-** Ledger Template
-:PROPERTIES:
-:ID:       67197e33-4b61-4639-94ef-d0b4df9c6fd3
-:END:
-
-#+BEGIN_SRC emacs-lisp
-  (let ((filename (concat my/org-dropbox-folder "Ledger.ledger"))
-        (template "%(my-org-pick-date) Dinheiro
-  Expenses:Dinheiro                      R$ %^{50.00}
-  Assets:Bank:Caixa"))
-
-    (add-to-list
-     'org-capture-templates
-     `("D" "Ledger Dinheiro" plain
-       (file ,filename)
-       ,template
-       :empty-lines 1)))
-
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-  (let ((filename (concat my/org-dropbox-folder "Ledger.ledger"))
-        (template "%(my-org-pick-date) %^{Empresa}
-  Expenses:                      R$ %^{50.00}
-  Assets:Bank:Bradesco"))
-
-    (add-to-list
-     'org-capture-templates
-     `("T" "Ledger Transação" plain
-       (file ,filename)
-       ,template
-       :empty-lines 1)))
-
-#+END_SRC
-
 ** Conversa Template
 :PROPERTIES:
 :ID:       7fb6d611-0a97-44d4-9d68-a0b5e80b59c9
