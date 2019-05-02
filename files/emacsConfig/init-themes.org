@@ -1,7 +1,7 @@
 #+TITLE:        Themes Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2019-03-14 qui]
+#+DATE-UPDATED: [2019-05-02 qui]
 
 A *Theme* is a collection of graphical appearance details in order to change the look and feel of a Graphical User Interface (GUI). Usually comprises a set of shapes and colors.
 
@@ -18,16 +18,35 @@ Particulary, in Emacs' case, the different possibilities of themes are limited, 
 :END:
 #+BEGIN_SRC emacs-lisp
   (use-package zenburn-theme
+    :ensure t
+    :config
+    ;; use variable-pitch fonts for some headings and titles
+    (setq zenburn-use-variable-pitch t)
+
+    ;; scale headings in org-mode
+    (setq zenburn-scale-org-headlines t)
+
+    ;; scale headings in outline-mode
+    (setq zenburn-scale-outline-headlines t))
+
+#+END_SRC
+
+* CANCELED Load Package: Monokai
+:PROPERTIES:
+:ID:       6742532e-84c8-4fba-8b58-094002df97de
+:END:
+#+BEGIN_SRC emacs-lisp :tangle no
+  (use-package monokai-theme
     :ensure t)
 
 #+END_SRC
 
-* Load Package: Monokai
+* CANCELED Load Package: color-theme-sanityinc-tomorrow
 :PROPERTIES:
-:ID:       6742532e-84c8-4fba-8b58-094002df97de
+:ID:       f797f089-ce9f-4629-bc8f-cca1eb693df1
 :END:
 #+BEGIN_SRC emacs-lisp
-  (use-package monokai-theme
+  (use-package color-theme-sanityinc-tomorrow
     :ensure t)
 
 #+END_SRC
@@ -74,7 +93,7 @@ Particulary, in Emacs' case, the different possibilities of themes are limited, 
   (defun sakshamsharma-frameActions ()
     "Do actions to set up appearance of frame."
     (interactive)
-    (let ((myTheme "monokai") (myFont "DejaVu Sans Mono"))
+    (let ((myTheme "zenburn") (myFont "DejaVu Sans Mono"))
       ;; (disableBells)
       (sakshamsharma-setTheme myTheme)
       (sakshamsharma-setFont myFont)))
@@ -114,13 +133,13 @@ Show number of line and column
 
 #+end_src
 
-* Load Package: Diminish
+* CANCELED Load Package: Diminish
 :PROPERTIES:
 :ID:       138ac899-9c43-4ff8-954d-2e40b27a09e7
 :END:
 
 Don't show every major and minor mode that is active in the moment. Just those that are really important.
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
   (use-package diminish
     :ensure t)
 
@@ -172,3 +191,27 @@ Package to replace the need for the scroll bar on the sides of the frame. It is 
 
 #+END_SRC
 
+* Load Package: Moody
+:PROPERTIES:
+:ID:       6e3f681f-a8dd-4686-9307-94a7f2ac5b2b
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package moody
+    :ensure t
+    :config
+    (setq x-underline-at-descent-line 5)
+    (moody-replace-mode-line-buffer-identification)
+    (moody-replace-vc-mode))
+
+#+END_SRC
+* Load Pacakge: Minions
+:PROPERTIES:
+:ID:       45d6a6c3-0d9c-4fa6-b52c-361b3bb0457a
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package minions
+    :ensure t
+    :init (minions-mode))
+
+#+END_SRC
