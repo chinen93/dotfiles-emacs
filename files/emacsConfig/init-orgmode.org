@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2019-04-19 sex]
+#+DATE-UPDATED: [2019-05-02 qui]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -769,41 +769,33 @@ Remove all capture templates.
 
 #+END_SRC
 
-** Ledger Template
+** Conversa Template
 :PROPERTIES:
-:ID:       67197e33-4b61-4639-94ef-d0b4df9c6fd3
+:ID:       7fb6d611-0a97-44d4-9d68-a0b5e80b59c9
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (let ((filename (concat my/org-dropbox-folder "Ledger.ledger"))
-        (template "%(my-org-pick-date) Dinheiro
-  Expenses:Dinheiro                      R$ %^{50.00}
-  Assets:Bank:Caixa"))
+  (let ((filename (concat my/org-dropbox-folder "Notes/Conversas.org"))
+        (template "* Conversa: %<%Y-%m-%d>
+  <%<%Y-%m-%d>>
+
+  Raiva    : XX/10
+  Amor     : XX/10
+  Medo     : XX/10
+  Coragem  : XX/10
+  Tristeza : XX/10
+  Alegria  : XX/10
+
+  %?
+  "))
 
     (add-to-list
      'org-capture-templates
-     `("D" "Ledger Dinheiro" plain
+     `("C" "Conversas" plain
        (file ,filename)
        ,template
        :empty-lines 1)))
-
 #+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-  (let ((filename (concat my/org-dropbox-folder "Ledger.ledger"))
-        (template "%(my-org-pick-date) %^{Empresa}
-  Expenses:                      R$ %^{50.00}
-  Assets:Bank:Bradesco"))
-
-    (add-to-list
-     'org-capture-templates
-     `("T" "Ledger Transação" plain
-       (file ,filename)
-       ,template
-       :empty-lines 1)))
-
-#+END_SRC
-
 * Export
 :PROPERTIES:
 :ID:       a4a8d233-afea-4f30-98f2-0f5a18fde599
