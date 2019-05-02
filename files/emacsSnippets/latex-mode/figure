@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: figure 
+# key: figure
+# --
+\begin{figure}[ht]
+  \centering
+  \includegraphics[scale=1]{${1:ARQUIVO}}
+  \caption{${2:TITULO}}
+  \label{${3:LABEL}}
+\end{figure}
+$0
