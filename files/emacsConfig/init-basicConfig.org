@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2019-03-17 dom]
+#+DATE-UPDATED: [2019-04-21 dom]
 
 It doesn't need any external package. Just pure elisp.
 
@@ -123,6 +123,7 @@ Change (yes/no) to (y/n)
 :ID:       61a27609-0794-4195-aca4-b39c0a633541
 :END:
 
+Don't just exit emacs without asking. I don't want to lose changes that I made by hitting *C-x C-x* by accident.
 #+BEGIN_SRC emacs-lisp
   (setq confirm-kill-emacs 'yes-or-no-p)
 
@@ -149,7 +150,7 @@ When yanking with mouse, don't move the point. Just yank it.
   (setq mouse-yank-at-point t)
 #+END_SRC
 
-To yank with the mouse press <mouse-2>, which is the middle button.
+To yank with the mouse press *<mouse-2>*, which is the middle button.
 
 ** Wheel
 :PROPERTIES:
@@ -167,33 +168,36 @@ Wheel will follow mouse, So the frame where the mouse is will scroll
   (setq mouse-wheel-follow-mouse t)
 #+END_SRC
 
-* Delete Things
+* Delete Marked Text When Inserting New Text
 :PROPERTIES:
 :ID:       78566d3b-c8ae-4ca1-b106-73ad2c7cf238
 :END:
 
 Delete selected text when something is inserted and a mark is active. Without it the new text would remove the mark and just insert the text in the buffer.
+#+BEGIN_SRC emacs-lisp
+  (delete-selection-mode 1)
 
-Example of `delete-selection-mode` inactive. [] is the marked region and () is the current point:
+#+END_SRC
+
+For example if *delete-selection-mode* is inactive. [] is the marked region and () is the current point:
 #+BEGIN_SRC text
   Lorem ipsum dolor sit amet, [consectetur adipiscing elit()], sed do eiusmod tempor.
 
   Lorem ipsum dolor sit amet, consectetur adipiscing elitNEW TEXT, sed do eiusmod tempor.
 #+END_SRC
 
-Example of `delete-selection-mode` active. [] is the marked region and () is the current point:
+Example if *delete-selection-mode* is active. [] is the marked region and () is the current point:
 #+BEGIN_SRC text
   Lorem ipsum dolor sit amet, [consectetur adipiscing elit()], sed do eiusmod tempor.
 
   Lorem ipsum dolor sit amet, NEW TEXT, sed do eiusmod tempo.
 #+END_SRC
 
-#+BEGIN_SRC emacs-lisp
-  (delete-selection-mode 1)
-
-#+END_SRC
-
-Don't delete file, but move to trash instead.
+* Move to Trash Instead of Deleting file
+:PROPERTIES:
+:ID:       bef8aaab-999e-4e5b-bece-a3115be808cf
+:END:
+Don't delete file, but move to trash instead. Sometimes I messed up and delete things by miskate. I just want them to be thrown to trash so I can retrieve them later, if needed.
 #+BEGIN_SRC emacs-lisp
   (setq delete-by-moving-to-trash t)
 
