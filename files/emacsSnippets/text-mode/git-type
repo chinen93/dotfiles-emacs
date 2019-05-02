@@ -1,5 +1,11 @@
 # -*- mode: snippet -*-
-# name: type
-# key: type
+# name: git-type
+# key: git-type
 # --
-${1:$$(yas-choose-value '("fix" "hotfix" "add" "update" "change" "clean" "disable" "remove" "upgrade" "revert"))} $0
+${1:$$(yas-choose-value	'(
+			"Fix"
+			"Add"
+			"Update"
+			"Change"
+			"Clean"
+			"Remove"))} $0
