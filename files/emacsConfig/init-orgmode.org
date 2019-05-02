@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2019-04-19 sex]
+#+DATE-UPDATED: [2019-05-02 qui]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -804,6 +804,33 @@ Remove all capture templates.
 
 #+END_SRC
 
+** Conversa Template
+:PROPERTIES:
+:ID:       7fb6d611-0a97-44d4-9d68-a0b5e80b59c9
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (let ((filename (concat my/org-dropbox-folder "Notes/Conversas.org"))
+        (template "* Conversa: %<%Y-%m-%d>
+  <%<%Y-%m-%d>>
+
+  Raiva    : XX/10
+  Amor     : XX/10
+  Medo     : XX/10
+  Coragem  : XX/10
+  Tristeza : XX/10
+  Alegria  : XX/10
+
+  %?
+  "))
+
+    (add-to-list
+     'org-capture-templates
+     `("C" "Conversas" plain
+       (file ,filename)
+       ,template
+       :empty-lines 1)))
+#+END_SRC
 * Export
 :PROPERTIES:
 :ID:       a4a8d233-afea-4f30-98f2-0f5a18fde599
