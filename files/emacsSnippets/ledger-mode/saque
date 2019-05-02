@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: saque
+# key: saque
+# --
+`(format-time-string "%Y/%m/%d")` Saque
+    Expenses:Dinheiro                       R$ 00.00
+    Assets:
