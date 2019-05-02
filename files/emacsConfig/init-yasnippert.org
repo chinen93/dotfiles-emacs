@@ -1,7 +1,7 @@
 #+TITLE:        Yasnippet Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2019-04-25 qui]
+#+DATE-UPDATED: [2019-05-02 qui]
 
 YASnippet is a template system for Emacs. It allows you to type an abbreviation and automatically expand it into function templates. Bundled language templates include: C, C++, C#, Perl, Python, Ruby, SQL, LaTeX, HTML, CSS and more.
 
@@ -15,7 +15,7 @@ Load package to be used in this condfiguration.
 
 #+END_SRC
 
-*  Snippets Location
+* Snippets Location
 :PROPERTIES:
 :ID:       bb384859-63d5-4e82-a43d-ff9e341de4f0
 :END:
@@ -84,3 +84,27 @@ Controls indenting applied to snippets. Indent the snippet to the current column
 
 #+END_SRC
 
+* Auto Insert
+:PROPERTIES:
+:ID:       c60dc91c-d3e9-4d09-93fc-6b6fb64db81b
+:END:
+http://www.howardism.org/Technical/Emacs/templates-tutorial.html
+
+#+BEGIN_SRC emacs-lisp
+  (defun autoinsert-yas-expand()
+    "Replace text in yasnippet template."
+    (yas-expand-snippet (buffer-string) (point-min) (point-max)))
+
+  (use-package autoinsert
+    :init
+    ;; Don't want to be prompted before insertion:
+    (setq auto-insert-query nil)
+
+    (setq auto-insert-directory (concat "~/emacsSnippets/"))
+    (add-hook 'find-file-hook 'auto-insert)
+    (auto-insert-mode 1)
+    :config
+    (setq define-auto-insert nil)
+    (define-auto-insert "\\.py$" ["template/base-python" autoinsert-yas-expand])
+  )
+#+END_SRC
