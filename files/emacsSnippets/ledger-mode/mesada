@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: mesada
+# key: mesada
+# --
+`(format-time-string "%Y/%m/%d")` Mesada
+    Assets:Bank:Caixa                      R$ 00.00
+    Liability:Claudio

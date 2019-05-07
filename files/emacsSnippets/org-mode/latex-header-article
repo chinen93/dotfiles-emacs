@@ -2,6 +2,7 @@
 # name: latex-header-article
 # key: latex-header-article
 # --
+# -*- org-confirm-babel-evaluate: nil -*-
 #+TITLE: ${1:ARTICLE TITLE}
 #+LATEX_CLASS: article
 #+LATEX_CLASS_OPTIONS: [a4paper, twoside, twocolumn]
