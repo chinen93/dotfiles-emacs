@@ -1,7 +1,7 @@
 #+TITLE:        Yasnippet Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2019-05-02 qui]
+#+DATE-UPDATED: [2019-05-07 ter]
 
 YASnippet is a template system for Emacs. It allows you to type an abbreviation and automatically expand it into function templates. Bundled language templates include: C, C++, C#, Perl, Python, Ruby, SQL, LaTeX, HTML, CSS and more.
 
@@ -90,21 +90,59 @@ Controls indenting applied to snippets. Indent the snippet to the current column
 :END:
 http://www.howardism.org/Technical/Emacs/templates-tutorial.html
 
+A mode that comes with Emacs that automagically inserts text into new buffers based on file extension or the major mode.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package autoinsert
+    :init
+    (add-hook 'find-file-hook 'auto-insert)
+    (auto-insert-mode 1))
+#+END_SRC
+
+** Set Templates Directory
+:PROPERTIES:
+:ID:       5a6610c1-650f-4451-b8e1-fbc97ade5f2d
+:END:
+
+Place where to search for templates
+
+#+BEGIN_SRC emacs-lisp
+    (setq auto-insert-directory (concat "~/emacsSnippets/"))
+#+END_SRC
+
+** Don't ask before insertion
+:PROPERTIES:
+:ID:       15f88107-1564-46ff-a78d-9ff3aff313e2
+:END:
+
+Don't want to be prompted before insertion. I want this process to be less painful as possible.
+#+BEGIN_SRC emacs-lisp
+    (setq auto-insert-query nil)
+#+END_SRC
+
+** How to expand: YASNIPPET
+:PROPERTIES:
+:ID:       a5ef9ed7-8e18-45e5-816e-147bbffafbd2
+:END:
+
+Use the yasnippet project to expand templates. This allows the usage of yasnippet syntax. Which makes everything consistent.
 #+BEGIN_SRC emacs-lisp
   (defun autoinsert-yas-expand()
     "Replace text in yasnippet template."
     (yas-expand-snippet (buffer-string) (point-min) (point-max)))
+#+END_SRC
 
-  (use-package autoinsert
-    :init
-    ;; Don't want to be prompted before insertion:
-    (setq auto-insert-query nil)
+** List of Templates
+:PROPERTIES:
+:ID:       5938311d-0152-48cb-8371-1acbccb6dfda
+:END:
 
-    (setq auto-insert-directory (concat "~/emacsSnippets/"))
-    (add-hook 'find-file-hook 'auto-insert)
-    (auto-insert-mode 1)
-    :config
-    (setq define-auto-insert nil)
+Extension to template list.
+- First element is the extension in which the auto-insert will expand.
+- Second is a vector with the name of the template and the function to expand it.
+
+#+BEGIN_SRC emacs-lisp
+    (setq auto-insert-alist nil)
     (define-auto-insert "\\.py$" ["template/base-python" autoinsert-yas-expand])
-  )
+    (define-auto-insert "\\.sh$" ["template/base-sh" autoinsert-yas-expand])
 #+END_SRC
