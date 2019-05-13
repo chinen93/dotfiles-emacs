@@ -1,7 +1,7 @@
 #+TITLE:        Custom Functions Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2019-05-12 dom]
+#+DATE-UPDATED: [2019-05-13 seg]
 
 * Functions from Internet
 :PROPERTIES:
@@ -486,8 +486,11 @@ Variables needed to create the buffer menu and to know where to came back after 
   (defvar my/menu-buffer-name "*Start Menu*"
     "Name of the buffer that called, to go back to the right place")
 
-  (defvar my/menu-buffer-message ""
+  (defvar my/menu-buffer-message "Emacs Start Menu\n\n"
     "Message that will appear in Buffer Message")
+
+  (defvar my/meny-number-of-windows nil
+    "Show the number of windows displayed in frame")
 
 #+END_SRC
 
@@ -504,16 +507,24 @@ Create a major mode to hold all keybindings and special configurations for this 
 
 #+END_SRC
 
-*** Macro to execute functions
+*** Helper Functions
 :PROPERTIES:
 :ID:       d83f6819-c8d1-4793-bd61-16d9034f6b9b
 :END:
 #+BEGIN_SRC emacs-lisp
   (defmacro my-macro-call-command (func &optional change-buffer)
+    "Macro to do something"
     `(lambda ()
        (interactive)
-       ;; Delete buffer menu
-       (delete-window (get-buffer-window my/menu-buffer-name))
+
+       ;; Check to see how to delete buffer menu without changing the
+       ;; user window configuration
+       (setq my/menu-number-of-windows (- my/menu-number-of-windows (count-windows)))
+       (if (equal my/menu-number-of-windows 0)
+           (switch-to-prev-buffer)
+         (delete-window (get-buffer-window my/menu-buffer-name)))
+
+       ;; Kill buffer menu
        (kill-buffer my/menu-buffer-name)
 
        (when ,change-buffer
@@ -526,6 +537,11 @@ Create a major mode to hold all keybindings and special configurations for this 
        ;; Reset control variables
        (setq my/menu-buffer-call nil)
        (setq my/menu-window-call nil)))
+
+
+  (defun my-menu-add-doc (doc)
+    "I add some doc"
+    (setq my/menu-buffer-message (concat my/menu-buffer-message "* " doc "\n")))
 #+END_SRC
 
 *** Functions
@@ -538,12 +554,27 @@ List of Functions that will go on buffer menu
 #+BEGIN_SRC emacs-lisp
 
   (define-key start-menu-mode-map (kbd "G") (my-macro-call-command #'my-grep-notes))
-  (define-key start-menu-mode-map (kbd "S") #'save-some-buffers)
-  (define-key start-menu-mode-map (kbd "x") #'save-buffers-kill-emacs)
-  (define-key start-menu-mode-map (kbd "E")
-    (lambda ()
-      (interactive)
-      (start-process "another-emacs" " *another-emacs-buffer*" "emacs")))
+  (my-menu-add-doc "[G]rep Notes")
+
+  (define-key start-menu-mode-map (kbd "S") (my-macro-call-command #'save-some-buffers))
+  (my-menu-add-doc "[S]ave Buffers")
+
+  (define-key start-menu-mode-map (kbd "x") (my-macro-call-command #'save-buffers-kill-emacs))
+  (my-menu-add-doc "E[x]it Emacs")
+
+
+  (defun my-open-emacs ()
+    (interactive)
+    (start-process "another-emacs" " *another-emacs-buffer*" "emacs"))
+  (define-key start-menu-mode-map (kbd "E") (my-macro-call-command #'my-open-emacs))
+  (my-menu-add-doc "Open another [E]macs")
+
+
+  (defun insertTeste ()
+    (interactive)
+    (insert "Teste"))
+  (define-key start-menu-mode-map (kbd "T") (my-macro-call-command #'insertTeste t))
+  (my-menu-add-doc "[T]este")
 #+END_SRC
 
 ** Main Function
@@ -561,6 +592,7 @@ Main function to call the Buffer Menu, it setup the calling buffer and insert al
     ;; Set control variables
     (setq my/menu-buffer-call (buffer-name))
     (setq my/menu-window-call (get-buffer-window my/menu-buffer-call))
+    (setq my/menu-number-of-windows (count-windows))
 
     ;; Go to buffer menu
     (switch-to-buffer-other-window (get-buffer-create my/menu-buffer-name))
@@ -569,15 +601,7 @@ Main function to call the Buffer Menu, it setup the calling buffer and insert al
     (erase-buffer)
 
     ;; Insert buffer menu message
-    (insert
-     "Emacs Start Menu\n"
-     "\n"
-     "* [S]ave all files\n"
-     "* E[x]it Emacs\n"
-     "* Start another [E]macs\n"
-     "* [G]rep Notes\n"
-     "* [D]ate Pick\n"
-     "* [T]est insert\n")
+    (insert my/menu-buffer-message)
 
     ;; Apply buffer menu mode
     (start-menu-mode))
