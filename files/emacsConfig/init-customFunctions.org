@@ -1,7 +1,7 @@
 #+TITLE:        Custom Functions Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2019-05-10 sex]
+#+DATE-UPDATED: [2019-05-12 dom]
 
 * Functions from Internet
 :PROPERTIES:
@@ -477,14 +477,17 @@ Create a Buffer Menu so that my function, that I don't use them very often don't
 Variables needed to create the buffer menu and to know where to came back after the function is done.
 
 #+BEGIN_SRC emacs-lisp
-  (defvar my/buffer-call-menu nil
+  (defvar my/menu-buffer-call nil
     "Buffer that called menu, to go back to it after it is done")
 
-  (defvar my/window-call-menu nil
+  (defvar my/menu-window-call nil
     "Window that called menu, to go back to it after it is done")
 
-  (defvar my/buffer-menu-name "*Start Menu*"
+  (defvar my/menu-buffer-name "*Start Menu*"
     "Name of the buffer that called, to go back to the right place")
+
+  (defvar my/menu-buffer-message ""
+    "Message that will appear in Buffer Message")
 
 #+END_SRC
 
@@ -501,64 +504,46 @@ Create a major mode to hold all keybindings and special configurations for this 
 
 #+END_SRC
 
-*** Functions that Do Not Change Buffer
+*** Macro to execute functions
+:PROPERTIES:
+:ID:       d83f6819-c8d1-4793-bd61-16d9034f6b9b
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defmacro my-macro-call-command (func &optional change-buffer)
+    `(lambda ()
+       (interactive)
+       ;; Delete buffer menu
+       (delete-window (get-buffer-window my/menu-buffer-name))
+       (kill-buffer my/menu-buffer-name)
+
+       (when ,change-buffer
+         ;; Go back to calling window
+         (select-window my/menu-window-call))
+
+       ;; Execute what need to be executed
+       (call-interactively ,func)
+
+       ;; Reset control variables
+       (setq my/menu-buffer-call nil)
+       (setq my/menu-window-call nil)))
+#+END_SRC
+
+*** Functions
 :PROPERTIES:
 :ID:       9ffe670a-b965-4862-8bf7-847df522c827
 :END:
 
-Some functions don't need to change the calling buffer.
+List of Functions that will go on buffer menu
 
 #+BEGIN_SRC emacs-lisp
-  (define-key my/keymap (kbd "M-e") 'my-function-menu)
 
+  (define-key start-menu-mode-map (kbd "G") (my-macro-call-command #'my-grep-notes))
   (define-key start-menu-mode-map (kbd "S") #'save-some-buffers)
   (define-key start-menu-mode-map (kbd "x") #'save-buffers-kill-emacs)
   (define-key start-menu-mode-map (kbd "E")
     (lambda ()
       (interactive)
       (start-process "another-emacs" " *another-emacs-buffer*" "emacs")))
-
-#+END_SRC
-
-*** Function that Change Buffer
-:PROPERTIES:
-:ID:       8f9dcb2c-f189-4c5e-b87f-737552939ff4
-:END:
-
-Some functions need to change the calling buffer
-
-**** Macro to Change Buffer
-:PROPERTIES:
-:ID:       573f3151-94f7-440e-bced-438c52dc077a
-:END:
-
-Create a macro to go back to the calling buffer, so that any change can happen without problem.
-
-#+BEGIN_SRC emacs-lisp
-  (defmacro my-macro-iteractive-function (body)
-    "Execute BODY in the correct buffer, AKA buffer where menu was called"
-    `(lambda ()
-       (interactive)
-       (select-window my/window-call-menu)
-
-       ,body
-       (delete-window (get-buffer-window my/buffer-menu-name))
-       (setq my/buffer-call-menu nil)
-       (setq my/window-call-menu nil)))
-
-#+END_SRC
-
-**** Functions
-:PROPERTIES:
-:ID:       1c34df61-dbc7-4d02-ac53-10b7dd9225a2
-:END:
-
-Functions that change the calling buffer.
-
-#+BEGIN_SRC emacs-lisp
-  (define-key start-menu-mode-map (kbd "T")
-    (my-macro-iteractive-function (insert "TESTE")))
-
 #+END_SRC
 
 ** Main Function
@@ -569,24 +554,42 @@ Functions that change the calling buffer.
 Main function to call the Buffer Menu, it setup the calling buffer and insert all necessary information in the buffer menu.
 
 #+BEGIN_SRC emacs-lisp
-  (defun my-function-menu ()
-    "Make Emacs like MS Windows."
+  (defun my-menu-function ()
+    "Create a Buffer Menu"
     (interactive)
 
-    ;;(split-window-right)
-    (setq my/buffer-call-menu (buffer-name))
-    (setq my/window-call-menu (get-buffer-window my/buffer-call-menu))
+    ;; Set control variables
+    (setq my/menu-buffer-call (buffer-name))
+    (setq my/menu-window-call (get-buffer-window my/menu-buffer-call))
 
-    (switch-to-buffer-other-window (get-buffer-create my/buffer-menu-name))
+    ;; Go to buffer menu
+    (switch-to-buffer-other-window (get-buffer-create my/menu-buffer-name))
 
+    ;; Remove everthing there
     (erase-buffer)
+
+    ;; Insert buffer menu message
     (insert
      "Emacs Start Menu\n"
      "\n"
      "* [S]ave all files\n"
      "* E[x]it Emacs\n"
      "* Start another [E]macs\n"
-     "* [T]est insert")
+     "* [G]rep Notes\n"
+     "* [D]ate Pick\n"
+     "* [T]est insert\n")
+
+    ;; Apply buffer menu mode
     (start-menu-mode))
 
 #+END_SRC
+
+Make M-e open Buffer Menu
+
+#+BEGIN_SRC emacs-lisp
+    (define-key my/keymap (kbd "M-e") 'my-menu-function)
+
+#+END_SRC
+
+
+
