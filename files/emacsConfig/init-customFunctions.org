@@ -1,7 +1,7 @@
 #+TITLE:        Custom Functions Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2019-05-13 seg]
+#+DATE-UPDATED: [2019-05-15 qua]
 
 * Functions from Internet
 :PROPERTIES:
@@ -338,7 +338,7 @@
   (defun my-grep-notes (regexp)
     "Use FIND-GREP in my notes directory."
 
-    (interactive "sWhat to SEARCH for? ")
+    (interactive "sWhat to SEARCH in NOTES for? ")
     (if (< (length regexp) 3)
         (message "Too Short. Try Again!!")
 
@@ -354,8 +354,9 @@
 #+BEGIN_SRC emacs-lisp
   (defun my-grep-directory (regexp)
     "Use FIND-GREP in current Directory"
-
-    (interactive "sWhat to SEARCH for? ")
+    (interactive (let* ((message (concat "sWhat to SEARCH in '" default-directory "' for? "))
+                        (string (read-string message nil 'my-history)))
+                   (list string)))
     (if (< (length regexp) 3)
         (message "Too Short. Try Again!!")
       (my-find-grep default-directory regexp)))
@@ -389,7 +390,7 @@
     (interactive)
 
     (let ((process-connection-type nil))
-        (start-process "" nil "nautilus"
+        (start-process "" nil "nemo"
                        (expand-file-name default-directory))))
 #+END_SRC
 
@@ -513,7 +514,10 @@ Create a major mode to hold all keybindings and special configurations for this 
 :END:
 #+BEGIN_SRC emacs-lisp
   (defmacro my-macro-call-command (func &optional change-buffer)
-    "Macro to do something"
+    "Macro to close functions menu and call iteractively FUNC
+
+  if CHANGE-BUFFER is non nil it will go back to the buffer that
+  called function menu before calling FUNC"
     `(lambda ()
        (interactive)
 
@@ -540,7 +544,7 @@ Create a major mode to hold all keybindings and special configurations for this 
 
 
   (defun my-menu-add-doc (doc)
-    "I add some doc"
+    "I add DOC to function menu list"
     (setq my/menu-buffer-message (concat my/menu-buffer-message "* " doc "\n")))
 #+END_SRC
 
@@ -554,27 +558,42 @@ List of Functions that will go on buffer menu
 #+BEGIN_SRC emacs-lisp
 
   (define-key start-menu-mode-map (kbd "G") (my-macro-call-command #'my-grep-notes))
-  (my-menu-add-doc "[G]rep Notes")
+  (my-menu-add-doc "[G] Grep Notes")
+
+  (define-key start-menu-mode-map (kbd "g") (my-macro-call-command #'my-grep-directory))
+  (my-menu-add-doc "[g] Grep Directory")
+
+  (my-menu-add-doc "===========================================")
+
+  (define-key start-menu-mode-map (kbd "s") (my-macro-call-command #'my-sort-org-headings))
+  (my-menu-add-doc "[s] Sort Org Heading")
+
+  (my-menu-add-doc "===========================================")
 
   (define-key start-menu-mode-map (kbd "S") (my-macro-call-command #'save-some-buffers))
-  (my-menu-add-doc "[S]ave Buffers")
+  (my-menu-add-doc "[S] Save Buffers")
 
   (define-key start-menu-mode-map (kbd "x") (my-macro-call-command #'save-buffers-kill-emacs))
-  (my-menu-add-doc "E[x]it Emacs")
+  (my-menu-add-doc "[x] Exit Emacs")
 
+  (my-menu-add-doc "===========================================")
+
+  (define-key start-menu-mode-map (kbd "p") (my-macro-call-command #'user--clean-buffer t))
+  (my-menu-add-doc "[w] Trim all unecessary Whitespace from Buffer")
+
+  (define-key start-menu-mode-map (kbd "r") (my-macro-call-command #'lunaryorn-rename-file-and-buffer t))
+  (my-menu-add-doc "[r] Rename Buffer and File")
+
+  (define-key start-menu-mode-map (kbd "T") (my-macro-call-command #'xah-open-in-terminal t))
+  (my-menu-add-doc "[T] Open current directory in a Terminal")
+
+  (my-menu-add-doc "===========================================")
 
   (defun my-open-emacs ()
     (interactive)
     (start-process "another-emacs" " *another-emacs-buffer*" "emacs"))
   (define-key start-menu-mode-map (kbd "E") (my-macro-call-command #'my-open-emacs))
-  (my-menu-add-doc "Open another [E]macs")
-
-
-  (defun insertTeste ()
-    (interactive)
-    (insert "Teste"))
-  (define-key start-menu-mode-map (kbd "T") (my-macro-call-command #'insertTeste t))
-  (my-menu-add-doc "[T]este")
+  (my-menu-add-doc "[E] Open another Emacs")
 #+END_SRC
 
 ** Main Function
