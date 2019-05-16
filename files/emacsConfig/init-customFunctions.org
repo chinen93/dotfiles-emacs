@@ -113,18 +113,18 @@
           ((derived-mode-p 'org-mode) (org-narrow-to-subtree))
           (t (narrow-to-defun))))
 
-  (defvar my-indirect-buffer-prefix-name
+  (defvar my/indirect-buffer-prefix-name
     "IndBuf" "Prefix of my indirect buffers")
 
   (defun my-indirect-buffer-get-name (name)
     "Return the name of the indirect buffer."
-    (concat "*" my-indirect-buffer-prefix-name "[" name "]*"))
+    (concat "*" my/indirect-buffer-prefix-name "[" name "]*"))
 
   (defun my-indirect-buffer-p ()
     "A buffer is verified as an indirect buffer if its name is like:
    ,*IndirectBuffer `buffer-name`*"
 
-    (string-match-p my-indirect-buffer-prefix-name (buffer-name)))
+    (string-match-p my/indirect-buffer-prefix-name (buffer-name)))
 
   (defun my-indirect-buffer ()
     "Creates an indirect buffer for the current buffer"
