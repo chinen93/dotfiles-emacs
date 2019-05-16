@@ -1,7 +1,7 @@
 #+TITLE:        Global KeyBinding Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2019-03-17 dom]
+#+DATE-UPDATED: [2019-05-10 sex]
 
 * My keymap
 :PROPERTIES:
@@ -24,7 +24,7 @@
 :ID:       ceded4ce-6562-45c5-bc6d-ba34b169b495
 :END:
 
-*** Números
+*** Numbers
 :PROPERTIES:
 :ID:       c1022498-8e3a-40de-bafb-b4ed681ca57f
 :END:
@@ -43,7 +43,7 @@
 
 #+END_SRC
 
-*** Letras
+*** Letters
 :PROPERTIES:
 :ID:       2d81fb20-bcf3-47b7-a6ad-e728a96c3769
 :END:
@@ -81,7 +81,7 @@
 ** Meta
 :PROPERTIES:
 :ID:       e8b8c1c1-fbcd-4bf2-abe4-1b9b5d37960b
-*** Números
+*** Numbers
 :PROPERTIES:
 :ID:       a06f2d27-2884-48f6-bd31-50d83b29a8ae
 :END:
@@ -100,7 +100,7 @@
 
 #+END_SRC
 
-*** Letras
+*** Letters
 :PROPERTIES:
 :ID:       c54e5102-4c8b-42ac-bebc-f333c3f5f70b
 :END:
@@ -172,7 +172,8 @@
 :PROPERTIES:
 :ID:       08804844-541d-4627-b1a2-0d758ea449e1
 :END:
-*** Números
+
+*** Numbers
 :PROPERTIES:
 :ID:       5e19c69e-b051-41f7-b1ce-a47bc0cd95e2
 :END:
@@ -191,7 +192,7 @@
 
 #+END_SRC
 
-*** Letras
+*** Letters
 :PROPERTIES:
 :ID:       f03f2ccf-86bb-4adf-8147-10fe7f29bdcc
 :END:
@@ -230,7 +231,7 @@
 :PROPERTIES:
 :ID:       94fdacfe-e884-47bb-8e26-ed6111c3cd20
 :END:
-*** Números
+*** Numbers
 :PROPERTIES:
 :ID:       d01d0a0e-5062-4547-9c3f-bc722ad70339
 :END:
@@ -249,7 +250,7 @@
 
 #+END_SRC
 
-*** Letras
+*** Letters
 :PROPERTIES:
 :ID:       7798c1fb-b9fb-43c4-ab87-344edc720b8e
 :END:

@@ -1,7 +1,7 @@
 #+TITLE:        Custom Functions Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2018-12-07 sex]
+#+DATE-UPDATED: [2019-05-15 qua]
 
 * Functions from Internet
 :PROPERTIES:
@@ -338,7 +338,7 @@
   (defun my-grep-notes (regexp)
     "Use FIND-GREP in my notes directory."
 
-    (interactive "sWhat to SEARCH for? ")
+    (interactive "sWhat to SEARCH in NOTES for? ")
     (if (< (length regexp) 3)
         (message "Too Short. Try Again!!")
 
@@ -354,8 +354,9 @@
 #+BEGIN_SRC emacs-lisp
   (defun my-grep-directory (regexp)
     "Use FIND-GREP in current Directory"
-
-    (interactive "sWhat to SEARCH for? ")
+    (interactive (let* ((message (concat "sWhat to SEARCH in '" default-directory "' for? "))
+                        (string (read-string message nil 'my-history)))
+                   (list string)))
     (if (< (length regexp) 3)
         (message "Too Short. Try Again!!")
       (my-find-grep default-directory regexp)))
@@ -389,7 +390,7 @@
     (interactive)
 
     (let ((process-connection-type nil))
-        (start-process "" nil "nautilus"
+        (start-process "" nil "nemo"
                        (expand-file-name default-directory))))
 #+END_SRC
 
@@ -461,4 +462,177 @@
       (s-replace "-" separator date)))
 
 #+END_SRC
+
+* Buffer Menu
+:PROPERTIES:
+:ID:       88a4d770-f89d-4f10-bf9f-b372a5c9f47b
+:END:
+
+Create a Buffer Menu so that my function, that I don't use them very often don't go into oblivion. Making them appear in a simple, more meaningful way.
+
+** Buffer Variables
+:PROPERTIES:
+:ID:       ae35d493-ed68-4dc0-aafd-b834e6de8e0d
+:END:
+
+Variables needed to create the buffer menu and to know where to came back after the function is done.
+
+#+BEGIN_SRC emacs-lisp
+  (defvar my/menu-buffer-call nil
+    "Buffer that called menu, to go back to it after it is done")
+
+  (defvar my/menu-window-call nil
+    "Window that called menu, to go back to it after it is done")
+
+  (defvar my/menu-buffer-name "*Start Menu*"
+    "Name of the buffer that called, to go back to the right place")
+
+  (defvar my/menu-buffer-message "Emacs Start Menu\n\n"
+    "Message that will appear in Buffer Message")
+
+  (defvar my/meny-number-of-windows nil
+    "Show the number of windows displayed in frame")
+
+#+END_SRC
+
+** Buffer Mode
+:PROPERTIES:
+:ID:       e8a4fbe4-5ed6-46db-b8a4-15e5ed886b2f
+:END:
+
+Create a major mode to hold all keybindings and special configurations for this menu.
+
+#+BEGIN_SRC emacs-lisp
+  (define-derived-mode start-menu-mode special-mode "Emacs Start Menu"
+    "A major mode for a buffer with the Emacs Start Menu.")
+
+#+END_SRC
+
+*** Helper Functions
+:PROPERTIES:
+:ID:       d83f6819-c8d1-4793-bd61-16d9034f6b9b
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defmacro my-macro-call-command (func &optional change-buffer)
+    "Macro to close functions menu and call iteractively FUNC
+
+  if CHANGE-BUFFER is non nil it will go back to the buffer that
+  called function menu before calling FUNC"
+    `(lambda ()
+       (interactive)
+
+       ;; Check to see how to delete buffer menu without changing the
+       ;; user window configuration
+       (setq my/menu-number-of-windows (- my/menu-number-of-windows (count-windows)))
+       (if (equal my/menu-number-of-windows 0)
+           (switch-to-prev-buffer)
+         (delete-window (get-buffer-window my/menu-buffer-name)))
+
+       ;; Kill buffer menu
+       (kill-buffer my/menu-buffer-name)
+
+       (when ,change-buffer
+         ;; Go back to calling window
+         (select-window my/menu-window-call))
+
+       ;; Execute what need to be executed
+       (call-interactively ,func)
+
+       ;; Reset control variables
+       (setq my/menu-buffer-call nil)
+       (setq my/menu-window-call nil)))
+
+
+  (defun my-menu-add-doc (doc)
+    "I add DOC to function menu list"
+    (setq my/menu-buffer-message (concat my/menu-buffer-message "* " doc "\n")))
+#+END_SRC
+
+*** Functions
+:PROPERTIES:
+:ID:       9ffe670a-b965-4862-8bf7-847df522c827
+:END:
+
+List of Functions that will go on buffer menu
+
+#+BEGIN_SRC emacs-lisp
+
+  (define-key start-menu-mode-map (kbd "G") (my-macro-call-command #'my-grep-notes))
+  (my-menu-add-doc "[G] Grep Notes")
+
+  (define-key start-menu-mode-map (kbd "g") (my-macro-call-command #'my-grep-directory))
+  (my-menu-add-doc "[g] Grep Directory")
+
+  (my-menu-add-doc "===========================================")
+
+  (define-key start-menu-mode-map (kbd "s") (my-macro-call-command #'my-sort-org-headings))
+  (my-menu-add-doc "[s] Sort Org Heading")
+
+  (my-menu-add-doc "===========================================")
+
+  (define-key start-menu-mode-map (kbd "S") (my-macro-call-command #'save-some-buffers))
+  (my-menu-add-doc "[S] Save Buffers")
+
+  (define-key start-menu-mode-map (kbd "x") (my-macro-call-command #'save-buffers-kill-emacs))
+  (my-menu-add-doc "[x] Exit Emacs")
+
+  (my-menu-add-doc "===========================================")
+
+  (define-key start-menu-mode-map (kbd "p") (my-macro-call-command #'user--clean-buffer t))
+  (my-menu-add-doc "[w] Trim all unecessary Whitespace from Buffer")
+
+  (define-key start-menu-mode-map (kbd "r") (my-macro-call-command #'lunaryorn-rename-file-and-buffer t))
+  (my-menu-add-doc "[r] Rename Buffer and File")
+
+  (define-key start-menu-mode-map (kbd "T") (my-macro-call-command #'xah-open-in-terminal t))
+  (my-menu-add-doc "[T] Open current directory in a Terminal")
+
+  (my-menu-add-doc "===========================================")
+
+  (defun my-open-emacs ()
+    (interactive)
+    (start-process "another-emacs" " *another-emacs-buffer*" "emacs"))
+  (define-key start-menu-mode-map (kbd "E") (my-macro-call-command #'my-open-emacs))
+  (my-menu-add-doc "[E] Open another Emacs")
+#+END_SRC
+
+** Main Function
+:PROPERTIES:
+:ID:       52c946dc-8843-41c3-8edf-960e074c2049
+:END:
+
+Main function to call the Buffer Menu, it setup the calling buffer and insert all necessary information in the buffer menu.
+
+#+BEGIN_SRC emacs-lisp
+  (defun my-menu-function ()
+    "Create a Buffer Menu"
+    (interactive)
+
+    ;; Set control variables
+    (setq my/menu-buffer-call (buffer-name))
+    (setq my/menu-window-call (get-buffer-window my/menu-buffer-call))
+    (setq my/menu-number-of-windows (count-windows))
+
+    ;; Go to buffer menu
+    (switch-to-buffer-other-window (get-buffer-create my/menu-buffer-name))
+
+    ;; Remove everthing there
+    (erase-buffer)
+
+    ;; Insert buffer menu message
+    (insert my/menu-buffer-message)
+
+    ;; Apply buffer menu mode
+    (start-menu-mode))
+
+#+END_SRC
+
+Make M-e open Buffer Menu
+
+#+BEGIN_SRC emacs-lisp
+    (define-key my/keymap (kbd "M-e") 'my-menu-function)
+
+#+END_SRC
+
+
 
