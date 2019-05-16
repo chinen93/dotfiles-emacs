@@ -35,16 +35,11 @@ Create Variable to hold my ledger file
 #+BEGIN_SRC emacs-lisp
   (let* ((year (format-time-string "%Y"))
          (file (concat "Ledger" year ".ledger"))
-         (default (concat "~/Dropbox/" file)))
+         (default (concat my/dropbox-folder file)))
 
     ;; Create variable in a default location
     (defvar my/ledger-file default
-      "Data file where ledger-cli search from.")
-
-    ;; If directory isn't in the same place
-    (when (and (boundp 'my/dropbox-folder)
-               (file-directory-p my/dropbox-folder))
-      (setq my/ledger-file (concat my/dropbox-folder file))))
+      "Data file where ledger-cli search from."))
 
 #+END_SRC
 

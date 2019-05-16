@@ -18,15 +18,7 @@
 
 Set default file where bookmarks will be saved.
 #+BEGIN_SRC emacs-lisp
-  (let* ((filename "emacsBookmark.el")
-         (dropboxFilename (concat my/dropbox-folder filename))
-         (homeFilename (concat "~/" filename)))
-
-    (if (and (boundp 'my/dropbox-folder)
-             (file-directory-p my/dropbox-folder))
-        (setq bookmark-default-file dropboxFilename)
-      (setq bookmark-default-file homeFilename)))
-
+  (setq bookmark-default-file my/bookmark-file)
 #+END_SRC
 
 * Some Configurations

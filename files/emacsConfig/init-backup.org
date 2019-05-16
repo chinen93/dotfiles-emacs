@@ -21,16 +21,7 @@ Backup is a important part of editting text. Because most of the times I make so
 The default directory to store backups is the file's directory that is being editted. However, for me, it makes the directory kind of messy. So to tidy it up a bit I put everything in *"~/.emacs.d/backups"*.
 
 #+BEGIN_SRC emacs-lisp
-  (let* ((filename ".emacs.d/backups")
-         (homeFilename (concat "~/" filename)))
-
-    (setq backup-directory-alist `(("." . ,homeFilename)))
-
-    (when (and (boundp 'my/home-folder)
-               (file-directory-p my/home-folder))
-      (setq backup-directory-alist
-            `(("." . ,(concat my/home-folder filename))))))
-
+  (setq backup-directory-alist `(("." . ,my/backup-folder)))
 #+END_SRC
 
 * DONE How to put every auto-saved backup files into a single directory
@@ -44,16 +35,7 @@ CLOSED: [2019-03-15 sex 18:49]
 *auto-save-file-name-transforms* is a set of transformations that happens to each file before making an auto-save file name. Because the REGEXP is tied to ".*" it means that all files will be transformed by this funciton. In this case, the REGEXP expression replacement is the complete path to a specific directory, which means that every auto-saved file will go into the same directory.
 
 #+BEGIN_SRC emacs-lisp
-  (let* ((filename ".emacs.d/auto-save-list/")
-         (homeFilename (concat "~/" filename)))
-
-    (setq auto-save-file-name-transforms `((".*" ,homeFilename t)))
-
-    (when (and (boundp 'my/home-folder)
-               (file-directory-p my/home-folder))
-      (setq auto-save-file-name-transforms
-            `((".*" ,(concat my/home-folder filename) t)))))
-
+  (setq auto-save-file-name-transforms `((".*" ,my/auto-save-folder t)))
 #+END_SRC
 
 * Configurations

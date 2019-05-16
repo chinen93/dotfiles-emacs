@@ -29,19 +29,10 @@ Load package to be used in this condfiguration.
 
 My default snippets folder is in *~/emacsSnippets*.
 #+BEGIN_SRC emacs-lisp
-  (let* ((folder "emacsSnippets/")
-         (default (concat "~/" folder)))
-
-    ;; Default directories to seek for snippets
-    (setq yas-snippet-dirs
-          ;; Personal Collection
-          `(,default))
-
-    ;; If the home folder is in another place
-    (when (and (boundp 'my/home-folder)
-               (file-directory-p my/home-folder))
-      (setq yas-snippet-dirs
-            `(,(concat my/home-folder folder)))))
+  ;; Default directories to seek for snippets
+  (setq yas-snippet-dirs
+    ;; Personal Collection
+    `(,my/snippets-folder))
 
 #+END_SRC
 
@@ -114,7 +105,7 @@ A mode that comes with Emacs that automagically inserts text into new buffers ba
 Place where to search for templates
 
 #+BEGIN_SRC emacs-lisp
-    (setq auto-insert-directory (concat "~/emacsSnippets/"))
+    (setq auto-insert-directory my/snippets-folder)
 #+END_SRC
 
 ** Don't ask before insertion
