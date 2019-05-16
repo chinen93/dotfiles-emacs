@@ -2,9 +2,7 @@
 # name: defun
 # key: defun
 # --
-(defun function-name (param1 param2)
+(defun ${1:my-function-name} (${2:param1})
   "Docstring for the function.
-PARAM1 is the fisrt parameter that do X.
-PARAM2 is the second parameter that do Y.
 "
-  'body)
+  ${0:'body})
