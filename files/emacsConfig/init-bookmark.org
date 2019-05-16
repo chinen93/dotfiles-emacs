@@ -1,7 +1,15 @@
 #+TITLE:        Bookmark Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2018-11-24 sáb]
+#+DATE-UPDATED: [2019-05-16 qui]
+
+* Provide File
+:PROPERTIES:
+:ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
+:END:
+#+BEGIN_SRC emacs-lisp
+  (provide 'init-bookmark)
+#+END_SRC
 
 * Bookmark File
 :PROPERTIES:

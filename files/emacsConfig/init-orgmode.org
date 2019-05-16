@@ -1,12 +1,19 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2019-05-02 qui]
+#+DATE-UPDATED: [2019-05-16 qui]
 
 [[https://orgmode.org/][Org Mode]]
 
 Org is a mode for keeping notes, maintaining TODO lists, and project planning with a fast and effective plain-text system. It also is an authoring system with unique support for literate programming and reproducible research.
 
+* Provide File
+:PROPERTIES:
+:ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
+:END:
+#+BEGIN_SRC emacs-lisp
+  (provide 'init-orgmode)
+#+END_SRC
 * Load Package: Org Mode
 :PROPERTIES:
 :ID:       5ed0ba9d-5499-4dd2-9aa9-db12bb9d4684

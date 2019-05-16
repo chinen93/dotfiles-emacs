@@ -1,7 +1,7 @@
 #+TITLE:        Ivy Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2019-04-21 dom]
+#+DATE-UPDATED: [2019-05-16 qui]
 
 Emacs is a text editor which don't want to bother the user. So normally it doesn't have an autocompletion function. However for editting text is important to have some sort of help. That one reason for using a completition package is essential to make it a better environment.
 
@@ -33,6 +33,14 @@ Ivy is an interactive interface for completion in Emacs. Emacs uses completion m
 	;; allow input not in order
 	'((t   . ivy--regex-ignore-order)))
 
+#+END_SRC
+
+* Provide File
+:PROPERTIES:
+:ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
+:END:
+#+BEGIN_SRC emacs-lisp
+  (provide 'init-ivy)
 #+END_SRC
 
 

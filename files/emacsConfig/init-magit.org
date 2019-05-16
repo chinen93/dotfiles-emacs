@@ -1,7 +1,7 @@
 #+TITLE:        Magit Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2019-04-21 dom]
+#+DATE-UPDATED: [2019-05-16 qui]
 
 Using [[https://git-scm.com/][Git]] can be sometimes tedious on the command terminal. And switching to it can have much impact on my focus because I have to change context.
 
@@ -21,3 +21,10 @@ One way to help with it is using [[https://magit.vc/][Magit]]. As it describe it
 :PROPERTIES:
 :ID:       36033a21-bb12-406d-9ebb-b4b85b91b2c4
 :END:
+* Provide File
+:PROPERTIES:
+:ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
+:END:
+#+BEGIN_SRC emacs-lisp
+  (provide 'init-magit)
+#+END_SRC
