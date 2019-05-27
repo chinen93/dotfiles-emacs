@@ -1,7 +1,7 @@
 #+TITLE:        Yasnippet Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2019-05-16 qui]
+#+DATE-UPDATED: [2019-05-27 seg]
 
 YASnippet is a template system for Emacs. It allows you to type an abbreviation and automatically expand it into function templates. Bundled language templates include: C, C++, C#, Perl, Python, Ruby, SQL, LaTeX, HTML, CSS and more.
 
@@ -140,7 +140,8 @@ Extension to template list.
 - Second is a vector with the name of the template and the function to expand it.
 
 #+BEGIN_SRC emacs-lisp
-    (setq auto-insert-alist nil)
-    (define-auto-insert "\\.py$" ["template/base-python" autoinsert-yas-expand])
-    (define-auto-insert "\\.sh$" ["template/base-sh" autoinsert-yas-expand])
+  (setq auto-insert-alist nil)
+  (define-auto-insert "\\.py$" ["template/base-python" autoinsert-yas-expand])
+  (define-auto-insert "\\.sh$" ["template/base-sh" autoinsert-yas-expand])
+  (define-auto-insert (regexp-opt '("Makefile" "makefile")) ["template/base-makefile" autoinsert-yas-expand])
 #+END_SRC

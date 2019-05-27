@@ -1,7 +1,7 @@
 #+TITLE:        Programming Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2019-05-16 qui]
+#+DATE-UPDATED: [2019-05-27 seg]
 
 * Provide File
 :PROPERTIES:
@@ -55,6 +55,19 @@
       (if (> tab-count space-count) (setq indent-tabs-mode t))))
 
   (add-hook 'prog-mode-hook 'infer-indentation-style)
+
+#+END_SRC
+
+* Makefiles
+:PROPERTIES:
+:ID:       4c11a174-f933-4bf6-9899-e3a4124e356b
+:END:
+
+https://www.gnu.org/software/make/manual/make.html
+
+#+BEGIN_SRC emacs-lisp
+
+  (add-to-list 'auto-mode-alist `(,(regexp-opt '("Makefile" "makefile")) . makefile-gmake-mode))
 
 #+END_SRC
 

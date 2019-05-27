@@ -1,0 +1,23 @@
+# Makefile Template
+# Change the FILE must have a main function
+# Its ARGUMENTS should be placed into the ARGS variable
+
+FILE = ${filename}
+ARGS = ${arguments}
+
+CFLAG = -Wall -g
+CC = gcc
+LIBS = -lm
+
+.PHONY: clean main
+
+# Execute recipes in sequence cleanning
+all: main clean
+
+main:
+	\${CC} \${CFLAG} \${FILE}.c -o \${FILE} \${LIBS}
+	@echo -------------------------------------
+	./\${FILE} \${ARGS}
+
+clean:
+	@-rm -f \${FILE}
