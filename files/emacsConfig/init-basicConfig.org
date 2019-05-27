@@ -1,9 +1,17 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2019-04-21 dom]
+#+DATE-UPDATED: [2019-05-16 qui]
 
 It doesn't need any external package. Just pure elisp.
+
+* Provide File
+:PROPERTIES:
+:ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
+:END:
+#+BEGIN_SRC emacs-lisp
+  (provide 'init-basicConfig)
+#+END_SRC
 
 * Scratch Buffer
 :PROPERTIES:
@@ -216,18 +224,45 @@ Instead just follow the syslink and edit the real file.
 
 #+END_SRC
 
-* TODO Global Variables
+* Global Variables
+CLOSED: [2019-05-16 qui 13:57]
 :PROPERTIES:
 :ID:       d53815ee-b64e-40f0-9b3a-8be0d6db288e
 :END:
+- State "DONE"       from "WORKING"    [2019-05-16 qui 13:57]
+- State "WORKING"    from "TODO"       [2019-05-16 qui 13:57]
 
-Create variable to hold common directory paths.
+Creation of home folder and derivates from it
 #+BEGIN_SRC emacs-lisp
-  (defvar my/dropbox-folder "~/Dropbox/"
-    "Path to Dropbox Folder")
-
   (defvar my/home-folder "~/"
     "Path to Home Folder")
+
+  (defvar my/snippets-folder (concat my/home-folder "emacsSnippets")
+    "Path to Snippets Folder")
+
+  (defvar my/dropbox-folder (concat my/home-folder "Dropbox/")
+    "Path to Dropbox Folder")
+
+  (defvar my/emacs.d-folder (concat my/home-folder ".emacs.d/") 
+    "Path to .emacs.d/ Folder")
+#+END_SRC
+
+Creation of folders derivated from dropbox/
+#+BEGIN_SRC emacs-lisp
+  (defvar my/bookmark-file (concat my/dropbox-folder "emacsBookmark.el")
+    "Path to Bookmark File")
+
+#+END_SRC
+
+Creation of folders derivated from .emacs.d/
+#+BEGIN_SRC emacs-lisp
+  (defvar my/backup-folder (concat my/emacs.d-folder "backups")
+    "Path to Backup Folder")
+
+  (defvar my/auto-save-folder (concat my/emacs.d-folder "auto-save-list")
+    "Path to Auto Save Folder")
+
+
 #+END_SRC
 
 * Files Modes

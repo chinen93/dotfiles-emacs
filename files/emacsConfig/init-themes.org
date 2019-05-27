@@ -1,7 +1,7 @@
 #+TITLE:        Themes Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2019-05-02 qui]
+#+DATE-UPDATED: [2019-05-16 qui]
 
 A *Theme* is a collection of graphical appearance details in order to change the look and feel of a Graphical User Interface (GUI). Usually comprises a set of shapes and colors.
 
@@ -12,6 +12,13 @@ Particulary, in Emacs' case, the different possibilities of themes are limited, 
 
 "What is the Mode Line?", you may be asking. At the bottom of each window is a mode line, which describes what is going on in the current buffer. Showing the most relevant informations about it, the name of the buffer, it's actived modes, if there is something new and a lot more.
 
+* Provide File
+:PROPERTIES:
+:ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
+:END:
+#+BEGIN_SRC emacs-lisp
+  (provide 'init-themes)
+#+END_SRC
 * Load Package: Zenburn
 :PROPERTIES:
 :ID:       c39c049d-3c1c-4f96-8f82-fa80f41c385e

@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2019-04-20 sáb]
+#+DATE-UPDATED: [2019-05-16 qui]
 
 Emacs has a lot of keybindings, and I can't remember everyone of them. For example each key in the keyboard is related to a command, if you put it in combination with Ctrl or Meta or Crtl + Meta you can create others keybindins for functions. And the problem grows fast and wide. Each mode has a map describing some keybinding configurations that can overwrite others configurations. So I wan't always sure about the key chord I was pressing. 
 
@@ -22,7 +22,13 @@ First things first we need to load the pacakge so that we can build some configu
   (require-package 'hydra)
 
 #+END_SRC
-
+* Provide File
+:PROPERTIES:
+:ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
+:END:
+#+BEGIN_SRC emacs-lisp
+  (provide 'init-hydra)
+#+END_SRC
 * Principal Launcher
 :PROPERTIES:
 :ID:       2eeb3eeb-dd07-4cab-88f3-9ca9da35af21

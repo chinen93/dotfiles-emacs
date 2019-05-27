@@ -1,8 +1,15 @@
 #+TITLE:        Fun Packages Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2018-11-08 Thu]
+#+DATE-UPDATED: [2019-05-16 qui]
 
+* Provide File
+:PROPERTIES:
+:ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
+:END:
+#+BEGIN_SRC emacs-lisp
+  (provide 'init-fun)
+#+END_SRC
 
 * CANCELED Load Package: Typit
 :PROPERTIES:

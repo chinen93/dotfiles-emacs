@@ -1,35 +1,25 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2019-05-02 qui]
+#+DATE-UPDATED: [2019-05-16 qui]
 
 [[https://orgmode.org/][Org Mode]]
 
 Org is a mode for keeping notes, maintaining TODO lists, and project planning with a fast and effective plain-text system. It also is an authoring system with unique support for literate programming and reproducible research.
 
+* Provide File
+:PROPERTIES:
+:ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
+:END:
+#+BEGIN_SRC emacs-lisp
+  (provide 'init-orgmode)
+#+END_SRC
 * Load Package: Org Mode
 :PROPERTIES:
 :ID:       5ed0ba9d-5499-4dd2-9aa9-db12bb9d4684
 :END:
 #+BEGIN_SRC emacs-lisp
   (require 'org)
-
-#+END_SRC
-
-* Default Files
-:PROPERTIES:
-:ID:       aa2a4b3e-8702-4bd2-9c4b-89bed3173229
-:END:
-#+BEGIN_SRC emacs-lisp
-  ;; Set dropbox folder
-  (defvar my/org-dropbox-folder "~/Dropbox/"
-    "Dropbox directory")
-
-  ;; Only set this org variable if there no other variable for the dropbox folder
-  (let ((file my/dropbox-folder))
-    (when (and (boundp 'file)
-               (file-directory-p file))
-      (setq my/org-dropbox-folder my/dropbox-folder)))
 
 #+END_SRC
 
@@ -102,13 +92,13 @@ Set org agenda files
   (setq org-agenda-files nil)
 
   (add-to-list 'org-agenda-files
-               (concat my/org-dropbox-folder "Organizador.org"))
+               (concat my/dropbox-folder "Organizador.org"))
 
   (add-to-list 'org-agenda-files
-               (concat my/org-dropbox-folder "Notes/Projetos.org"))
+               (concat my/dropbox-folder "Notes/Projetos.org"))
 
   (add-to-list 'org-agenda-files
-               (concat my/org-dropbox-folder "Contacts.org"))
+               (concat my/dropbox-folder "Contacts.org"))
 
 #+END_SRC
 
@@ -184,10 +174,10 @@ Main agenda with the most important information to show how the week will be and
       (todo "WORKING"
             ((org-agenda-files
               `,(add-to-list 'org-agenda-files
-                              (concat my/org-dropbox-folder "Notes/pocket.org")))))
+                              (concat my/dropbox-folder "Notes/pocket.org")))))
       (alltodo ""
                ((org-agenda-files
-                 `(,(concat my/org-dropbox-folder "Contacts.org"))))))
+                 `(,(concat my/dropbox-folder "Contacts.org"))))))
      nil))
 #+END_SRC
 
@@ -245,7 +235,7 @@ Main agenda with the most important information to show how the week will be and
    `("n" "All TODO's in Notes"
      ((alltodo ""
                ((org-agenda-files
-                `(,(concat my/org-dropbox-folder "Notes/"))))))
+                `(,(concat my/dropbox-folder "Notes/"))))))
      nil))
 
 #+END_SRC
@@ -280,10 +270,10 @@ Main agenda with the most important information to show how the week will be and
    `("v" "'Viagens' Notes"
      ((agenda ""
               ((org-agenda-files
-                `(,(concat my/org-dropbox-folder "Notes/viagens.org")))))
+                `(,(concat my/dropbox-folder "Notes/viagens.org")))))
       (alltodo ""
                ((org-agenda-files
-                 `(,(concat my/org-dropbox-folder "Notes/viagens.org"))))))
+                 `(,(concat my/dropbox-folder "Notes/viagens.org"))))))
      nil))
 #+END_SRC
 
@@ -728,7 +718,7 @@ Remove all capture templates.
 :ID:       fb54fa73-e4c7-4653-acd4-8357b9adb7bd
 :END:
 #+BEGIN_SRC emacs-lisp
-  (let ((filename (concat my/org-dropbox-folder "Contacts.org"))
+  (let ((filename (concat my/dropbox-folder "Contacts.org"))
         (template "* %^{Nome}
   :PROPERTIES:
   :EMAIL: %^{Email}
@@ -753,7 +743,7 @@ Remove all capture templates.
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (let ((filename (concat my/org-dropbox-folder "Notes/Projetos.org"))
+  (let ((filename (concat my/dropbox-folder "Notes/Projetos.org"))
         (template "* TODO %^{Project Idea}
   %T
   %a
@@ -775,7 +765,7 @@ Remove all capture templates.
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (let ((filename (concat my/org-dropbox-folder "Notes/Conversas.org"))
+  (let ((filename (concat my/dropbox-folder "Notes/Conversas.org"))
         (template "* Conversa: %<%Y-%m-%d>
   <%<%Y-%m-%d>>
 

@@ -1,7 +1,7 @@
 #+TITLE:        Setup Package Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2018-10-03 qua]
+#+DATE-UPDATED: [2019-05-16 qui]
 
 #+BEGIN_SRC emacs-lisp
   (require 'package)
@@ -9,6 +9,13 @@
 
 #+END_SRC
 
+* Provide File
+:PROPERTIES:
+:ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
+:END:
+#+BEGIN_SRC emacs-lisp
+  (provide 'init-setup-package)
+#+END_SRC
 * Set Packages Archives
 :PROPERTIES:
 :ID:       f43abcb0-7fdc-40f3-a161-dc9217ceab98

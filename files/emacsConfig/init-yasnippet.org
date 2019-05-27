@@ -1,7 +1,7 @@
 #+TITLE:        Yasnippet Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2019-05-07 ter]
+#+DATE-UPDATED: [2019-05-16 qui]
 
 YASnippet is a template system for Emacs. It allows you to type an abbreviation and automatically expand it into function templates. Bundled language templates include: C, C++, C#, Perl, Python, Ruby, SQL, LaTeX, HTML, CSS and more.
 
@@ -15,6 +15,13 @@ Load package to be used in this condfiguration.
 
 #+END_SRC
 
+* Provide File
+:PROPERTIES:
+:ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
+:END:
+#+BEGIN_SRC emacs-lisp
+  (provide 'init-yasnippet)
+#+END_SRC
 * Snippets Location
 :PROPERTIES:
 :ID:       bb384859-63d5-4e82-a43d-ff9e341de4f0
@@ -22,19 +29,10 @@ Load package to be used in this condfiguration.
 
 My default snippets folder is in *~/emacsSnippets*.
 #+BEGIN_SRC emacs-lisp
-  (let* ((folder "emacsSnippets/")
-         (default (concat "~/" folder)))
-
-    ;; Default directories to seek for snippets
-    (setq yas-snippet-dirs
-          ;; Personal Collection
-          `(,default))
-
-    ;; If the home folder is in another place
-    (when (and (boundp 'my/home-folder)
-               (file-directory-p my/home-folder))
-      (setq yas-snippet-dirs
-            `(,(concat my/home-folder folder)))))
+  ;; Default directories to seek for snippets
+  (setq yas-snippet-dirs
+    ;; Personal Collection
+    `(,my/snippets-folder))
 
 #+END_SRC
 
@@ -107,7 +105,7 @@ A mode that comes with Emacs that automagically inserts text into new buffers ba
 Place where to search for templates
 
 #+BEGIN_SRC emacs-lisp
-    (setq auto-insert-directory (concat "~/emacsSnippets/"))
+    (setq auto-insert-directory my/snippets-folder)
 #+END_SRC
 
 ** Don't ask before insertion
