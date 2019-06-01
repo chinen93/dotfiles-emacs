@@ -1,7 +1,7 @@
 #+TITLE:        Custom Functions Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2019-05-16 qui]
+#+DATE-UPDATED: [2019-06-01 sáb]
 
 * Provide File
 :PROPERTIES:
@@ -471,6 +471,20 @@
 
 #+END_SRC
 
+** Goto to a random line
+:PROPERTIES:
+:ID:       73fc7bf8-14ae-47ba-88da-c84d3db22265
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defun my-goto-random-line ()
+    "Put cursor in a random line in the current file."
+    (interactive)
+    (let* ((numberOfLines (count-lines (point-min) (point-max)))
+           (line (random numberOfLines)))
+
+      (with-no-warnings
+        (goto-line line))))
+#+END_SRC
 * Buffer Menu
 :PROPERTIES:
 :ID:       88a4d770-f89d-4f10-bf9f-b372a5c9f47b
@@ -594,6 +608,9 @@ List of Functions that will go on buffer menu
 
   (define-key start-menu-mode-map (kbd "T") (my-macro-call-command #'xah-open-in-terminal t))
   (my-menu-add-doc "[T] Open current directory in a Terminal")
+
+  (define-key start-menu-mode-map (kbd "R") (my-macro-call-command #'my-goto-random-line t))
+  (my-menu-add-doc "[R] Go to a random line")
 
   (my-menu-add-doc "===========================================")
 
