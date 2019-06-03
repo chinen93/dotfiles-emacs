@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2019-05-16 qui]
+#+DATE-UPDATED: [2019-06-03 seg]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -20,7 +20,7 @@ Org is a mode for keeping notes, maintaining TODO lists, and project planning wi
 :END:
 #+BEGIN_SRC emacs-lisp
   (require 'org)
-
+  (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 #+END_SRC
 
 * IDs
