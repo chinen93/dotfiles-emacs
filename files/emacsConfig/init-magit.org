@@ -1,7 +1,7 @@
 #+TITLE:        Magit Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2019-05-16 qui]
+#+DATE-UPDATED: [2019-06-06 qui]
 
 Using [[https://git-scm.com/][Git]] can be sometimes tedious on the command terminal. And switching to it can have much impact on my focus because I have to change context.
 
@@ -17,10 +17,38 @@ One way to help with it is using [[https://magit.vc/][Magit]]. As it describe it
 
 #+END_SRC
 
-* TODO Configuration
+* Configuration
 :PROPERTIES:
 :ID:       36033a21-bb12-406d-9ebb-b4b85b91b2c4
 :END:
+
+** Make Magit Status Full screen buffer
+:PROPERTIES:
+:ID:       e55ed150-0ab5-47e3-8f14-a0ffb4d5f18a
+:END:
+#+BEGIN_SRC emacs-lisp
+  ;; full screen magit-status
+  (defadvice magit-status (around magit-fullscreen activate)
+    (window-configuration-to-register :magit-fullscreen)
+    ad-do-it
+    (delete-other-windows))
+
+#+END_SRC
+
+** Quit Magit Status gets to the previous window configuraton
+:PROPERTIES:
+:ID:       8dc85989-5c65-4a0a-a9b7-5c25da0121c3
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defun magit-quit-session ()
+    "Restores the previous window configuration and kills the magit buffer"
+    (interactive)
+    (kill-buffer)
+  (jump-to-register :magit-fullscreen))
+
+#+END_SRC
+
+
 * Provide File
 :PROPERTIES:
 :ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
