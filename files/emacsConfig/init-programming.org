@@ -1,7 +1,7 @@
 #+TITLE:        Programming Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2019-06-03 seg]
+#+DATE-UPDATED: [2019-06-06 qui]
 
 * Provide File
 :PROPERTIES:
@@ -137,7 +137,7 @@ https://www.gnu.org/software/make/manual/make.html
 
 #+END_SRC
 
-*** TODO Configure
+*** Configure
 :PROPERTIES:
 :ID:       4fc998d5-9dd2-4f8b-9199-ece6d217017d
 :END:

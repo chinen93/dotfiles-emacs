@@ -1,7 +1,7 @@
 #+TITLE:        Fun Packages Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2019-05-16 qui]
+#+DATE-UPDATED: [2019-06-06 qui]
 
 * Provide File
 :PROPERTIES:
@@ -131,7 +131,7 @@
     :ensure t)
 #+END_SRC
 
-** TODO Configure
+** Configure
 :PROPERTIES:
 :ID:       e75904b3-6a0f-4407-a4eb-7b20966bdec6
 :END:
