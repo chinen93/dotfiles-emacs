@@ -1,7 +1,7 @@
 #+TITLE:        Custom Functions Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2019-06-01 sáb]
+#+DATE-UPDATED: [2019-06-07 sex]
 
 * Provide File
 :PROPERTIES:
@@ -535,11 +535,20 @@ Create a major mode to hold all keybindings and special configurations for this 
 :ID:       d83f6819-c8d1-4793-bd61-16d9034f6b9b
 :END:
 #+BEGIN_SRC emacs-lisp
-  (defmacro my-macro-call-command (func &optional change-buffer)
-    "Macro to close functions menu and call iteractively FUNC
+  (defun my-menu-add-doc (doc)
+    "I add DOC to function menu list"
+    ;; parallel bind
+    (setq my/menu-buffer-message (concat my/menu-buffer-message "* " doc "\n")))
 
-  if CHANGE-BUFFER is non nil it will go back to the buffer that
-  called function menu before calling FUNC"
+
+  (defun my-menu-add-doc-line ()
+    (my-menu-add-doc "==========================================="))
+
+
+  (defun my-menu-call-command (func &optional change-buffer)
+    "Return an interactive function that executes FUNC in the menu buffer.
+
+  if CHANGE-BUFFER is non-nil executes the command in the buffer that called buffer menu."
     `(lambda ()
        (interactive)
 
@@ -558,19 +567,22 @@ Create a major mode to hold all keybindings and special configurations for this 
          (select-window my/menu-window-call))
 
        ;; Execute what need to be executed
-       (call-interactively ,func)
+       (call-interactively #',func)
 
        ;; Reset control variables
        (setq my/menu-buffer-call nil)
        (setq my/menu-window-call nil)))
 
 
-  (defun my-menu-add-doc (doc)
-    "I add DOC to function menu list"
-    (setq my/menu-buffer-message (concat my/menu-buffer-message "* " doc "\n")))
+  (defun my-menu-add-function(doc key func &optional change-buffer)
+    "Add FUNC to the start-menu-mode-map in KEY, also insert DOC in the buffer menu.
+
+  pass CHANGE-BUFFER to my-menu-call-command."
+    (define-key start-menu-mode-map (kbd key) (my-menu-call-command `,func `,change-buffer))
+    (my-menu-add-doc doc))
 #+END_SRC
 
-*** Functions
+** Buffer Menu Functions
 :PROPERTIES:
 :ID:       9ffe670a-b965-4862-8bf7-847df522c827
 :END:
@@ -579,49 +591,30 @@ List of Functions that will go on buffer menu
 
 #+BEGIN_SRC emacs-lisp
 
-  (define-key start-menu-mode-map (kbd "G") (my-macro-call-command #'my-grep-notes))
-  (my-menu-add-doc "[G] Grep Notes")
+  (my-menu-add-function "[G] Grep Notes" "G" 'my-grep-notes)
+  (my-menu-add-function "[g] Grep Directory" "g" 'my-grep-directory)
+  (my-menu-add-doc-line)
 
-  (define-key start-menu-mode-map (kbd "g") (my-macro-call-command #'my-grep-directory))
-  (my-menu-add-doc "[g] Grep Directory")
 
-  (my-menu-add-doc "===========================================")
+  (my-menu-add-function "[s] Sort Org Heading" "s" 'my-sort-org-headings t)
+  (my-menu-add-function "[S] Save Buffers" "S" 'save-some-buffers)
+  (my-menu-add-function "[X] Exit Emacs" "X" 'save-buffers-kill-emacs)
+  (my-menu-add-doc-line)
 
-  (define-key start-menu-mode-map (kbd "s") (my-macro-call-command #'my-sort-org-headings))
-  (my-menu-add-doc "[s] Sort Org Heading")
 
-  (my-menu-add-doc "===========================================")
-
-  (define-key start-menu-mode-map (kbd "S") (my-macro-call-command #'save-some-buffers))
-  (my-menu-add-doc "[S] Save Buffers")
-
-  (define-key start-menu-mode-map (kbd "x") (my-macro-call-command #'save-buffers-kill-emacs))
-  (my-menu-add-doc "[x] Exit Emacs")
-
-  (my-menu-add-doc "===========================================")
-
-  (define-key start-menu-mode-map (kbd "p") (my-macro-call-command #'user--clean-buffer t))
-  (my-menu-add-doc "[w] Trim all unecessary Whitespace from Buffer")
-
-  (define-key start-menu-mode-map (kbd "r") (my-macro-call-command #'lunaryorn-rename-file-and-buffer t))
-  (my-menu-add-doc "[r] Rename Buffer and File")
-
-  (define-key start-menu-mode-map (kbd "T") (my-macro-call-command #'xah-open-in-terminal t))
-  (my-menu-add-doc "[T] Open current directory in a Terminal")
-
-  (define-key start-menu-mode-map (kbd "R") (my-macro-call-command #'my-goto-random-line t))
-  (my-menu-add-doc "[R] Go to a random line")
-
-  (my-menu-add-doc "===========================================")
+  (my-menu-add-function "[p] Trim all unecessary Whitespace from Buffer" "p" 'user--clean-buffer t)
+  (my-menu-add-function "[r] Rename Buffer and File" "r" 'lunaryorn-rename-file-and-buffer t)
+  (my-menu-add-function "[T] Open current directory in a Terminal" "T" 'xah-open-in-terminal t)
+  (my-menu-add-function "[R] Go to a random line" "R" 'my-goto-random-line t)
+  (my-menu-add-doc-line)
 
   (defun my-open-emacs ()
     (interactive)
     (start-process "another-emacs" " *another-emacs-buffer*" "emacs"))
-  (define-key start-menu-mode-map (kbd "E") (my-macro-call-command #'my-open-emacs))
-  (my-menu-add-doc "[E] Open another Emacs")
+  (my-menu-add-function "[E] Open another Emacs" "E" 'my-open-emacs)
 #+END_SRC
 
-** Main Function
+** Main Function to Call Buffer Menu
 :PROPERTIES:
 :ID:       52c946dc-8843-41c3-8edf-960e074c2049
 :END:
