@@ -512,8 +512,8 @@ Variables needed to create the buffer menu and to know where to came back after 
   (defvar my/menu-buffer-message "Emacs Start Menu\n\n"
     "Message that will appear in Buffer Message")
 
-  (defvar my/meny-number-of-windows nil
-    "Show the number of windows displayed in frame")
+  (defvar my/menu-buffer-hash-table (make-hash-table :test 'equal)
+    "Hash table to hold the relation between number line and function to execute")
 
 #+END_SRC
 
@@ -535,14 +535,30 @@ Create a major mode to hold all keybindings and special configurations for this 
 :ID:       d83f6819-c8d1-4793-bd61-16d9034f6b9b
 :END:
 #+BEGIN_SRC emacs-lisp
-  (defun my-menu-add-doc (doc)
+  (defun my-menu-get-line ()
+    "Get the number of of the last line in my/menu-buffer-message"
+    (let ((lines 0))
+      (with-temp-buffer
+        (insert my/menu-buffer-message)
+        (setq lines (count-lines (point-min) (point-max))))
+        lines))
+
+  (defun my-menu-add-doc (doc func change-buffer)
     "I add DOC to function menu list"
-    ;; parallel bind
-    (setq my/menu-buffer-message (concat my/menu-buffer-message "* " doc "\n")))
+    (let ((item (concat "* " doc "\n"))
+          (num-line (my-menu-get-line)))
+
+      ;; Put number as the key in the hash table
+      (puthash num-line (list change-buffer `,func) my/menu-buffer-hash-table)
+
+      ;; Just put the item in the menu
+      (setq my/menu-buffer-message (concat my/menu-buffer-message
+                                           item))))
 
 
   (defun my-menu-add-doc-line ()
-    (my-menu-add-doc "==========================================="))
+    (let ((line "===========================================\n"))
+      (setq my/menu-buffer-message (concat my/menu-buffer-message line))))
 
 
   (defun my-menu-call-command (func &optional change-buffer)
@@ -579,7 +595,7 @@ Create a major mode to hold all keybindings and special configurations for this 
 
   pass CHANGE-BUFFER to my-menu-call-command."
     (define-key start-menu-mode-map (kbd key) (my-menu-call-command `,func `,change-buffer))
-    (my-menu-add-doc doc))
+    (my-menu-add-doc doc `,func `,change-buffer))
 #+END_SRC
 
 ** Buffer Menu Functions
