@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2019-06-03 seg]
+#+DATE-UPDATED: [2019-06-06 qui]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -174,7 +174,7 @@ Main agenda with the most important information to show how the week will be and
       (todo "WORKING"
             ((org-agenda-files
               `,(add-to-list 'org-agenda-files
-                              (concat my/dropbox-folder "Notes/pocket.org")))))
+                              (concat my/dropbox-folder "Notes/Pocket.org")))))
       (alltodo ""
                ((org-agenda-files
                  `(,(concat my/dropbox-folder "Contacts.org"))))))
