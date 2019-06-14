@@ -1,7 +1,7 @@
 #+TITLE:        Custom Functions Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2019-06-07 sex]
+#+DATE-UPDATED: [2019-06-14 sex]
 
 * Provide File
 :PROPERTIES:
@@ -535,7 +535,7 @@ Create a major mode to hold all keybindings and special configurations for this 
 :ID:       d83f6819-c8d1-4793-bd61-16d9034f6b9b
 :END:
 #+BEGIN_SRC emacs-lisp
-  (defun my-menu-get-line ()
+  (defun my-menu-get-last-line ()
     "Get the number of of the last line in my/menu-buffer-message"
     (let ((lines 0))
       (with-temp-buffer
@@ -546,7 +546,7 @@ Create a major mode to hold all keybindings and special configurations for this 
   (defun my-menu-add-doc (doc func change-buffer)
     "I add DOC to function menu list"
     (let ((item (concat "* " doc "\n"))
-          (num-line (my-menu-get-line)))
+          (num-line (my-menu-get-last-line)))
 
       ;; Put number as the key in the hash table
       (puthash num-line (list change-buffer `,func) my/menu-buffer-hash-table)
@@ -555,11 +555,22 @@ Create a major mode to hold all keybindings and special configurations for this 
       (setq my/menu-buffer-message (concat my/menu-buffer-message
                                            item))))
 
+  (defun my-menu-get-line ()
+    "Get current line"
+    (count-lines (point-min) (point)))
+
+  (defun my-menu-execute-line ()
+    "Execute the function in current line"
+    (interactive)
+    (let* ((num-line (my-menu-get-line))
+           (var (gethash num-line my/menu-buffer-hash-table))
+           (change-buffer (car var))
+           (valor (cadr var)))
+      (call-interactively (my-menu-call-command valor change-buffer))))
 
   (defun my-menu-add-doc-line ()
     (let ((line "===========================================\n"))
       (setq my/menu-buffer-message (concat my/menu-buffer-message line))))
-
 
   (defun my-menu-call-command (func &optional change-buffer)
     "Return an interactive function that executes FUNC in the menu buffer.
@@ -606,6 +617,8 @@ Create a major mode to hold all keybindings and special configurations for this 
 List of Functions that will go on buffer menu
 
 #+BEGIN_SRC emacs-lisp
+
+  (define-key start-menu-mode-map (kbd "x") 'my-menu-execute-line)
 
   (my-menu-add-function "[G] Grep Notes" "G" 'my-grep-notes)
   (my-menu-add-function "[g] Grep Directory" "g" 'my-grep-directory)
