@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2019-06-06 qui]
+#+DATE-UPDATED: [2019-07-24 qua]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -168,6 +168,11 @@ Main agenda with the most important information to show how the week will be and
      ((agenda ""
               ((org-agenda-span 10)
                (org-agenda-start-day "-1d")))
+
+      (alltodo ""
+               ((org-agenda-files
+                 `(,(concat my/dropbox-folder "Notes/NeuralMind.org")))))
+
       (alltodo ""
                ((org-agenda-files
                  `(,my/emacs-config-dir))))
