@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: full docstring
+# key: fulldocstring
+# --
+"""Something.
+
+Args:
+  arg: something.
+
+Return:
+  Something.
+
+  Where:
+    Explain.
+"""
