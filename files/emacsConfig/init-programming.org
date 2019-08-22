@@ -1,7 +1,7 @@
 #+TITLE:        Programming Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2019-06-06 qui]
+#+DATE-UPDATED: [2019-08-22 qui]
 
 * Provide File
 :PROPERTIES:
@@ -58,6 +58,14 @@
 
 #+END_SRC
 
+* Python
+:PROPERTIES:
+:ID:       689c44bc-36b5-4462-8817-9f956fcd7e63
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (setq python-indent-offset 2)
+#+END_SRC
 * Makefiles
 :PROPERTIES:
 :ID:       4c11a174-f933-4bf6-9899-e3a4124e356b
