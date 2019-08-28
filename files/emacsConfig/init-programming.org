@@ -1,7 +1,7 @@
 #+TITLE:        Programming Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2019-08-22 qui]
+#+DATE-UPDATED: [2019-08-27 ter]
 
 * Provide File
 :PROPERTIES:
@@ -208,5 +208,6 @@ CSS
 #+BEGIN_SRC emacs-lisp
   (add-hook 'grep-mode-hook 
             (lambda ()
+              (setq truncate-lines t)
               ))
 #+END_SRC
