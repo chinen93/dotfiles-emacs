@@ -2,7 +2,7 @@
 #+AUTHOR:       Pedro Chinen
 #+EMAIL:        ph.u.chinen@gmail.com
 #+DATE-CREATED: [2019-04-19 sex]
-#+DATE-UPDATED: [2019-05-16 qui]
+#+DATE-UPDATED: [2019-08-29 qui]
 
 Flycheck — Syntax checking for GNU Emacs https://www.flycheck.org/en/latest/index.html
 
@@ -48,6 +48,12 @@ http://flake8.pycqa.org/en/latest/index.html
 If you want Flake8 to be installed for your default Python installation, you can instead use:
 #+BEGIN_SRC sh
   python -m pip install flake8
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'flycheck)
+    (setq flycheck-flake8rc "~/.flake8rc")
+    (setq flycheck-pylintrc "~/.pylintrc"))
 #+END_SRC
 
 * Provide File
