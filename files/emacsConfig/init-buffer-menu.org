@@ -6,7 +6,7 @@
 
 Create a Buffer Menu so that my function, that I don't use them very often don't go into oblivion. Making them appear in a simple, more meaningful way.
 
-* Buffer Variables
+* Variables
 :PROPERTIES:
 :ID:       ae35d493-ed68-4dc0-aafd-b834e6de8e0d
 :END:
@@ -23,11 +23,36 @@ Variables needed to create the buffer menu and to know where to came back after 
   (defvar my/menu-buffer-name "*Start Menu*"
     "Name of the buffer that called, to go back to the right place")
 
-  (defvar my/menu-buffer-message "Emacs Start Menu\n\n"
-    "Message that will appear in Buffer Message")
+#+END_SRC
 
+** Data Structure
+:PROPERTIES:
+:ID:       fd992088-7b53-491e-a286-37502477f5e8
+:END:
+
+#+BEGIN_SRC emacs-lisp
   (defvar my/menu-buffer-hash-table (make-hash-table :test 'equal)
     "Hash table to hold the relation between number line and function to execute")
+
+#+END_SRC
+
+** Menu Initial Message
+:PROPERTIES:
+:ID:       5c8e3e3c-97f0-453c-9f4f-f8e2f2e567f9
+:END:
+
+Header to appear in the buffer menu.
+
+It will be changed later with each new function added to menu.
+
+#+BEGIN_SRC emacs-lisp
+  (defvar my/menu-buffer-message "
+  Emacs Start Menu
+
+  Hitting [x] in any line executes the command behind it.
+  \n\n"
+    "Message that will appear in Buffer Message")
+
 
 #+END_SRC
 
@@ -47,6 +72,11 @@ Create a major mode to hold all keybindings and special configurations for this 
 ** Helper Functions
 :PROPERTIES:
 :ID:       d83f6819-c8d1-4793-bd61-16d9034f6b9b
+:END:
+
+*** Add Text in the Menu
+:PROPERTIES:
+:ID:       1a31fa92-05be-4324-a1b9-d6f6f656b2e1
 :END:
 #+BEGIN_SRC emacs-lisp
   (defun my-menu-get-last-line ()
@@ -69,6 +99,17 @@ Create a major mode to hold all keybindings and special configurations for this 
       (setq my/menu-buffer-message (concat my/menu-buffer-message
                                            item))))
 
+  (defun my-menu-add-doc-line ()
+    (let ((line "===========================================\n"))
+      (setq my/menu-buffer-message (concat my/menu-buffer-message line))))
+
+#+END_SRC
+
+*** Functions to Execute Line
+:PROPERTIES:
+:ID:       2d32fab7-108d-4f0f-9056-f48ddcdeef5e
+:END:
+#+BEGIN_SRC emacs-lisp
   (defun my-menu-get-line ()
     "Get current line"
     (count-lines (point-min) (point)))
@@ -82,10 +123,13 @@ Create a major mode to hold all keybindings and special configurations for this 
            (valor (cadr var)))
       (call-interactively (my-menu-call-command valor change-buffer))))
 
-  (defun my-menu-add-doc-line ()
-    (let ((line "===========================================\n"))
-      (setq my/menu-buffer-message (concat my/menu-buffer-message line))))
+#+END_SRC
 
+*** Add Functions
+:PROPERTIES:
+:ID:       0c0d9d29-dadc-4d2c-b9cb-e8d54a47587d
+:END:
+#+BEGIN_SRC emacs-lisp
   (defun my-menu-call-command (func &optional change-buffer)
     "Return an interactive function that executes FUNC in the menu buffer.
 
@@ -123,7 +167,7 @@ Create a major mode to hold all keybindings and special configurations for this 
     (my-menu-add-doc doc `,func `,change-buffer))
 #+END_SRC
 
-* Buffer Menu Functions
+* Menu Functions
 :PROPERTIES:
 :ID:       9ffe670a-b965-4862-8bf7-847df522c827
 :END:
@@ -141,7 +185,6 @@ List of Functions that will go on buffer menu
 
   (my-menu-add-function "[s] Sort Org Heading" "s" 'my-sort-org-headings t)
   (my-menu-add-function "[S] Save Buffers" "S" 'save-some-buffers)
-  (my-menu-add-function "[X] Exit Emacs" "X" 'save-buffers-kill-emacs)
   (my-menu-add-doc-line)
 
 
