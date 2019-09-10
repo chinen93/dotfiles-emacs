@@ -1,7 +1,7 @@
 #+TITLE:        Buffer Menu Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2019-09-03 ter]
-#+DATE-UPDATED: [2019-09-03 ter]
+#+DATE-UPDATED: [2019-09-10 ter]
 
 
 Create a Buffer Menu so that my function, that I don't use them very often don't go into oblivion. Making them appear in a simple, more meaningful way.
@@ -163,7 +163,8 @@ Create a major mode to hold all keybindings and special configurations for this 
     "Add FUNC to the start-menu-mode-map in KEY, also insert DOC in the buffer menu.
 
   pass CHANGE-BUFFER to my-menu-call-command."
-    (define-key start-menu-mode-map (kbd key) (my-menu-call-command `,func `,change-buffer))
+    (when key
+      (define-key start-menu-mode-map (kbd key) (my-menu-call-command `,func `,change-buffer)))
     (my-menu-add-doc doc `,func `,change-buffer))
 #+END_SRC
 
@@ -172,32 +173,48 @@ Create a major mode to hold all keybindings and special configurations for this 
 :ID:       9ffe670a-b965-4862-8bf7-847df522c827
 :END:
 
-List of Functions that will go on buffer menu
+List of Functions that will go on buffer menu.
 
+Make "x" execute command in the current line.
 #+BEGIN_SRC emacs-lisp
-
   (define-key start-menu-mode-map (kbd "x") 'my-menu-execute-line)
 
+#+END_SRC
+
+
+More common commands.
+#+BEGIN_SRC emacs-lisp
   (my-menu-add-function "[G] Grep Notes" "G" 'my-grep-notes)
   (my-menu-add-function "[g] Grep Directory" "g" 'my-grep-directory)
-  (my-menu-add-doc-line)
-
-
-  (my-menu-add-function "[s] Sort Org Heading" "s" 'my-sort-org-headings t)
-  (my-menu-add-function "[S] Save Buffers" "S" 'save-some-buffers)
-  (my-menu-add-doc-line)
-
-
-  (my-menu-add-function "[p] Trim all unecessary Whitespace from Buffer" "p" 'user--clean-buffer t)
-  (my-menu-add-function "[r] Rename Buffer and File" "r" 'lunaryorn-rename-file-and-buffer t)
   (my-menu-add-function "[T] Open current directory in a Terminal" "T" 'xah-open-in-terminal t)
-  (my-menu-add-function "[R] Go to a random line" "R" 'my-goto-random-line t)
-  (my-menu-add-doc-line)
 
   (defun my-open-emacs ()
     (interactive)
     (start-process "another-emacs" " *another-emacs-buffer*" "emacs"))
   (my-menu-add-function "[E] Open another Emacs" "E" 'my-open-emacs)
+
+  (my-menu-add-doc-line)
+
+#+END_SRC
+
+Not so common commands.
+#+BEGIN_SRC emacs-lisp
+  (my-menu-add-function "[s] Sort Org Heading" "s" 'my-sort-org-headings t)
+  (my-menu-add-function "[S] Save Buffers" "S" 'save-some-buffers)
+  (my-menu-add-doc-line)
+
+  (my-menu-add-function "[p] Trim all unecessary Whitespace from Buffer" "p" 'user--clean-buffer t)
+  (my-menu-add-function "[r] Rename Buffer and File" "r" 'lunaryorn-rename-file-and-buffer t)
+  (my-menu-add-doc-line)
+
+#+END_SRC
+
+Commands without a key attatched to.
+#+BEGIN_SRC emacs-lisp
+  (my-menu-add-function "Go to a random line" nil 'my-goto-random-line t)
+  (my-menu-add-function "Ledger Monthly Balance" nil 'my-ledger-monthly-balance)
+  (my-menu-add-doc-line)
+
 #+END_SRC
 
 * Main Function to Call Buffer Menu
@@ -242,6 +259,3 @@ Make M-e open Buffer Menu
   (define-key my/keymap (kbd "M-e") 'my-menu-function)
 
 #+END_SRC
-
-
-
