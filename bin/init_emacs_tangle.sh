@@ -22,4 +22,7 @@ emacs -nw --batch --eval "
   (org-babel-tangle)
   (kill-buffer))"
 
+echo "============"
+echo
+
 # init_emacs_tangle.sh ends here
