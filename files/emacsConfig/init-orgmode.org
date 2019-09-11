@@ -693,11 +693,10 @@ CLOSED: [2018-11-23 sex 21:51]
 :ID:       89910a66-0e0b-4e9d-a4da-61386dd74c51
 :END:
 - State "DONE"       from "WORKING"    [2018-11-23 sex 21:51]
+
 #+BEGIN_SRC emacs-lisp
-  (use-package org
-    :ensure org-contacts
-    :after org
-    :custom (org-contacts-files '("~/Dropbox/Contacts.org")))
+  (when (boundp 'org-contacts-files)
+    (setq (concat my/dropbox-folder "Contacts.org")))
 #+END_SRC
 
 * Capture Templates
