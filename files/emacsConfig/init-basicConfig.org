@@ -5,6 +5,10 @@
 
 It doesn't need any external package. Just pure elisp.
 
+#+BEGIN_SRC emacs-lisp
+  (setq user-full-name "Pedro Chinen")
+#+END_SRC
+
 * Provide File
 :PROPERTIES:
 :ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
@@ -56,9 +60,10 @@ What to say on the *scratch* buffer.
 
 Set the default enconding to be UTF-8 on everything possible
 #+BEGIN_SRC emacs-lisp
+  (setq locale-coding-system 'utf-8)
+
   (set-language-environment 'utf-8)
   (set-selection-coding-system 'utf-8)
-  (setq locale-coding-system 'utf-8)
   (set-default-coding-systems 'utf-8)
   (set-terminal-coding-system 'utf-8)
   (prefer-coding-system 'utf-8)
@@ -159,6 +164,12 @@ When yanking with mouse, don't move the point. Just yank it.
 #+END_SRC
 
 To yank with the mouse press *<mouse-2>*, which is the middle button.
+
+Hide the mouse while typing
+#+BEGIN_SRC emacs-lisp
+  (setq make-pointer-invisible t)
+
+#+END_SRC
 
 ** Wheel
 :PROPERTIES:
@@ -342,9 +353,10 @@ What things to save in the *savehist-file*. The minibuffer is inserted by defaul
 
 Start server on startup.
 #+BEGIN_SRC emacs-lisp
-  (require 'server)
-  (unless (server-running-p)
-    (server-start))
+  (when (display-graphic-p)
+    (require 'server)
+    (unless (server-running-p)
+      (server-start)))
 
 #+END_SRC
 
