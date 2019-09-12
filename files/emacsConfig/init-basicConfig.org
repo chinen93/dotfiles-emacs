@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2019-05-16 qui]
+#+DATE-UPDATED: [2019-09-12 qui]
 
 It doesn't need any external package. Just pure elisp.
 
@@ -236,6 +236,10 @@ Creation of home folder and derivates from it
 #+BEGIN_SRC emacs-lisp
   (defvar my/home-folder "~/"
     "Path to Home Folder")
+
+  (unless (boundp 'my/emacs-config-dir)
+    (defvar my/emacs-config-dir (concat my/home-folder "emacsConfig")
+      "Path to Emacs Configuration Folder")  )
 
   (defvar my/snippets-folder (concat my/home-folder "emacsSnippets")
     "Path to Snippets Folder")

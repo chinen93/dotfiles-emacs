@@ -3,13 +3,19 @@
 # Script to open a emacs org agenda
 #
 
-EMACS='emacs'
-INITIAL_CONFIG='--no-init-file --no-window-system'
-ORG='--load ~/emacsConfig/init-orgmode.el'
-EVAL='--eval (my-week-and-todo-list)'
+EMACS="emacs"
 
-exec $EMACS $INITIAL_CONFIG $ORG $EVAL
-# echo $EMACS $INITIAL_CONFIG $ORG $EVAL
+BASIC_FILE="$HOME/emacsConfig/elisp/init-basicConfig.el"
+ORG_FILE="$HOME/emacsConfig/elisp/init-orgmode.el"
+INITIAL_CONFIG="--no-init-file --no-window-system"
+BASIC=" --load $BASIC_FILE"
+ORG=" --load $ORG_FILE"
+EVAL="--eval (my-week-and-todo-list)"
+
+if [ -f $FILE ]; then
+
+    exec $EMACS $INITIAL_CONFIG $BASIC $ORG $EVAL
+fi
 
 
 # end of agenda.sh

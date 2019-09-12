@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2019-07-24 qua]
+#+DATE-UPDATED: [2019-09-12 qui]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -422,10 +422,10 @@ https://emacs.stackexchange.com/questions/21366/should-i-have-removed-shell-t-to
       (interactive)
 
       ;; Add a theme.
-      ;; (load-theme 'tango)
+      (load-theme 'tango)
 
-      ;; Get the Agenda indexed by 'n'
-      (org-agenda nil "n")
+      ;; Get the Agenda indexed by 'm'
+      (org-agenda nil "m")
 
       ;; Remove other windows so this is the only one visible
       (delete-other-windows))
