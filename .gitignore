@@ -8,4 +8,5 @@ dotfiles-emacs_old
 
 # compiled configuration files
 files/emacsConfig/elisp/*.el
+files/init-emacs.el
 

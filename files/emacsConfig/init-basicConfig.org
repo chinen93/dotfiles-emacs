@@ -1,9 +1,13 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2019-05-16 qui]
+#+DATE-UPDATED: [2019-09-12 qui]
 
 It doesn't need any external package. Just pure elisp.
+
+#+BEGIN_SRC emacs-lisp
+  (setq user-full-name "Pedro Chinen")
+#+END_SRC
 
 * Provide File
 :PROPERTIES:
@@ -56,9 +60,10 @@ What to say on the *scratch* buffer.
 
 Set the default enconding to be UTF-8 on everything possible
 #+BEGIN_SRC emacs-lisp
+  (setq locale-coding-system 'utf-8)
+
   (set-language-environment 'utf-8)
   (set-selection-coding-system 'utf-8)
-  (setq locale-coding-system 'utf-8)
   (set-default-coding-systems 'utf-8)
   (set-terminal-coding-system 'utf-8)
   (prefer-coding-system 'utf-8)
@@ -160,6 +165,12 @@ When yanking with mouse, don't move the point. Just yank it.
 
 To yank with the mouse press *<mouse-2>*, which is the middle button.
 
+Hide the mouse while typing
+#+BEGIN_SRC emacs-lisp
+  (setq make-pointer-invisible t)
+
+#+END_SRC
+
 ** Wheel
 :PROPERTIES:
 :ID:       0164fe5d-d0b8-4197-997a-4e887c1de983
@@ -236,6 +247,10 @@ Creation of home folder and derivates from it
 #+BEGIN_SRC emacs-lisp
   (defvar my/home-folder "~/"
     "Path to Home Folder")
+
+  (unless (boundp 'my/emacs-config-dir)
+    (defvar my/emacs-config-dir (concat my/home-folder "emacsConfig")
+      "Path to Emacs Configuration Folder")  )
 
   (defvar my/snippets-folder (concat my/home-folder "emacsSnippets")
     "Path to Snippets Folder")
@@ -338,9 +353,10 @@ What things to save in the *savehist-file*. The minibuffer is inserted by defaul
 
 Start server on startup.
 #+BEGIN_SRC emacs-lisp
-  (require 'server)
-  (unless (server-running-p)
-    (server-start))
+  (when (display-graphic-p)
+    (require 'server)
+    (unless (server-running-p)
+      (server-start)))
 
 #+END_SRC
 
