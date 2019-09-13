@@ -21,7 +21,7 @@ remove_create_link(){
         echo "Delete old link $2"
     fi
 
-    echo "Create new link from %1 to $2"
+    echo "Create new link from $1 to $2"
     ln -s $1 $2
     echo
 }
