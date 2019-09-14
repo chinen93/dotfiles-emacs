@@ -62,8 +62,43 @@ Snippets for [[https://joaotavora.github.io/yasnippet/][Yasnippet]] are here. I 
 because I wanted to experience without them first so I could really
 get only the ones I needed.
 
-** files/emacs
+** files/init-emacs.org
 
 This file is only for loading my others configurations files. It is
-the first file that emacs opens. And the default file when
-configurations are made using the **customize** functions.
+the first file that emacs opens.
+
+* Tree of Content
+:PROPERTIES:
+:ID:       3f27e992-90f2-4596-930b-34ebe5e793e2
+:END:
+
+Initial configuration.
+- [[./files/init-emacs.org][init-emacs.org]]
+
+Needed configuration, because here we configure the way to load
+packages and create global variables for the other configurations.
+- [[./files/emacsConfig/init-basicConfig.org][init-basicConfig.org]]
+- [[./files/emacsConfig/init-setup-package.org][init-setup-package.org]]
+- [[./files/emacsConfig/init-keyBinding.org][init-keyBinding.org]]
+
+Place to put functions that do not have anything alike the other
+configurations.
+- [[./files/emacsConfig/init-customFunctions.org][init-customFunctions.org]]
+
+Modules configuration. Each one of these represent a specific aspect
+of Emacs. 
+- [[./files/emacsConfig/init-backup.org][init-backup.org]]
+- [[./files/emacsConfig/init-bookmark.org][init-bookmark.org]]
+- [[./files/emacsConfig/init-buffer-menu.org][init-buffer-menu.org]]
+- [[./files/emacsConfig/init-flycheck.org][init-flycheck.org]]
+- [[./files/emacsConfig/init-fun.org][init-fun.org]]
+- [[./files/emacsConfig/init-hydra.org][init-hydra.org]]
+- [[./files/emacsConfig/init-ivy.org][init-ivy.org]]
+- [[./files/emacsConfig/init-ledger.org][init-ledger.org]]
+- [[./files/emacsConfig/init-magit.org][init-magit.org]]
+- [[./files/emacsConfig/init-orgmode.org][init-orgmode.org]]
+- [[./files/emacsConfig/init-playground.org][init-playground.org]]
+- [[./files/emacsConfig/init-programming.org][init-programming.org]]
+- [[./files/emacsConfig/init-themes.org][init-themes.org]]
+- [[./files/emacsConfig/init-words.org][init-words.org]]
+- [[./files/emacsConfig/init-yasnippet.org][init-yasnippet.org]]
