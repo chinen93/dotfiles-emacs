@@ -1,0 +1,104 @@
+#+TITLE:        README
+#+AUTHOR:       Pedro Chinen
+
+* Dotfiles-Emacs
+
+Emacs Configuration for my personal use. The `C-x` keystroke was giving
+me the pinky problem so I create an alternative for it `M-v` without
+removing the `C-x` neither the `M-x`.
+
+* How to Install
+
+Clone the repository / fork it /  or just download it:
+
+#+BEGIN_SRC sh
+  git clone https://github.com/chinen93/dotfiles-emacs.git
+#+END_SRC
+
+** Linux
+
+Execute the /install.sh/
+
+#+BEGIN_SRC sh
+  ./install.sh
+#+END_SRC
+
+What this shell script does is create a soft link between your home
+directory and this configurations directory.
+
+** Windows
+
+#+BEGIN_SRC sh
+  install_windows.bat
+#+END_SRC
+
+What this shell script does is copy from this configuration
+directory and the .emacs.d folder in your windows computer.
+
+#+BEGIN_SRC sh
+  update_git_folder_windows.bat
+#+END_SRC
+
+And this other script copy back your .emacs.d directory to your
+git directory. Usefull to push your changes to git.
+
+* How the files are stored
+** files/emacsConfig/
+
+All the configurations files are stored here. They have this format
+/init-PACKAGE.el/ where *PACKAGE* is the mode or package the
+configurations is about.
+
+Most of the packages are installed and configurated using
+[[https://github.com/jwiegley/use-package][use-package]]. However, there are some that are built-in emacs and don't
+need this kind of installation.
+
+Because I couldn't find a way to install packages easily on Windows, I
+just use the built-ins and the ones that only use pure elisp.
+
+** files/emacsSnippets/
+
+Snippets for [[https://joaotavora.github.io/yasnippet/][Yasnippet]] are here. I didn't use the default snippets
+because I wanted to experience without them first so I could really
+get only the ones I needed.
+
+** files/init-emacs.org
+
+This file is only for loading my others configurations files. It is
+the first file that emacs opens.
+
+* Tree of Content
+:PROPERTIES:
+:ID:       3f27e992-90f2-4596-930b-34ebe5e793e2
+:END:
+
+Initial configuration.
+- [[./files/init-emacs.org][init-emacs.org]]
+
+Needed configuration, because here we configure the way to load
+packages and create global variables for the other configurations.
+- [[./files/emacsConfig/init-basicConfig.org][init-basicConfig.org]]
+- [[./files/emacsConfig/init-setup-package.org][init-setup-package.org]]
+- [[./files/emacsConfig/init-keyBinding.org][init-keyBinding.org]]
+
+Place to put functions that do not have anything alike the other
+configurations.
+- [[./files/emacsConfig/init-customFunctions.org][init-customFunctions.org]]
+
+Modules configuration. Each one of these represent a specific aspect
+of Emacs. 
+- [[./files/emacsConfig/init-backup.org][init-backup.org]]
+- [[./files/emacsConfig/init-bookmark.org][init-bookmark.org]]
+- [[./files/emacsConfig/init-buffer-menu.org][init-buffer-menu.org]]
+- [[./files/emacsConfig/init-flycheck.org][init-flycheck.org]]
+- [[./files/emacsConfig/init-fun.org][init-fun.org]]
+- [[./files/emacsConfig/init-hydra.org][init-hydra.org]]
+- [[./files/emacsConfig/init-ivy.org][init-ivy.org]]
+- [[./files/emacsConfig/init-ledger.org][init-ledger.org]]
+- [[./files/emacsConfig/init-magit.org][init-magit.org]]
+- [[./files/emacsConfig/init-orgmode.org][init-orgmode.org]]
+- [[./files/emacsConfig/init-playground.org][init-playground.org]]
+- [[./files/emacsConfig/init-programming.org][init-programming.org]]
+- [[./files/emacsConfig/init-themes.org][init-themes.org]]
+- [[./files/emacsConfig/init-words.org][init-words.org]]
+- [[./files/emacsConfig/init-yasnippet.org][init-yasnippet.org]]
