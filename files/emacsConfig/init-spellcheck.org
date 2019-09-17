@@ -1,0 +1,8 @@
+#+TITLE:        Spellcheck Configuration
+#+AUTHOR:       Pedro Chinen
+#+EMAIL:        ph.u.chinen@gmail.com
+#+DATE-CREATED: [2019-09-17 ter]
+#+DATE-UPDATED: [2019-09-17 ter]
+
+
+
