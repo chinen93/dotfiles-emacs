@@ -1,7 +1,7 @@
 #+TITLE:        Global KeyBinding Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2019-05-16 qui]
+#+DATE-UPDATED: [2019-09-20 sex]
 
 * Provide File
 :PROPERTIES:
@@ -411,7 +411,7 @@ First of all, the minor mode is created using the keybindings keymap as the base
 #+END_SRC
 
 
-The minibuffer should behave normally without specific keybindings, so disable it to use the minibuffer.
+The mini buffer should behave normally without specific keybindings, so disable it to use the mini buffer.
 #+BEGIN_SRC emacs-lisp
   (defun my-minibuffer-setup-hook ()
     (my-keys-minor-mode 0))

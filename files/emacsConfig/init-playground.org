@@ -2,7 +2,7 @@
 #+AUTHOR:       Pedro Chinen
 #+EMAIL:        ph.u.chinen@gmail.com
 #+DATE-CREATED: [2018-10-17 qua]
-#+DATE-UPDATED: [2019-06-07 sex]
+#+DATE-UPDATED: [2019-09-20 sex]
 
 * Playground
 :PROPERTIES:
@@ -337,5 +337,5 @@ https://cestlaz.github.io/posts/using-emacs-34-ibuffer-emmet/
 #+END_SRC
 
 
-Criation of  file with all CONSTANTS
+Creation of  file with all CONSTANTS
 https://gitlab.com/jgkamat/dotfiles/blob/master/emacs/.emacs.d/lisp/jay-constants.el

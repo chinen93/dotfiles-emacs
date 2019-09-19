@@ -1,13 +1,13 @@
 #+TITLE:        Yasnippet Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2019-05-27 seg]
+#+DATE-UPDATED: [2019-09-20 sex]
 
-YASnippet is a template system for Emacs. It allows you to type an abbreviation and automatically expand it into function templates. Bundled language templates include: C, C++, C#, Perl, Python, Ruby, SQL, LaTeX, HTML, CSS and more.
+Yasnippet is a template system for Emacs. It allows you to type an abbreviation and automatically expand it into function templates. Bundled language templates include: C, C++, C#, Perl, Python, Ruby, SQL, LaTeX, HTML, CSS and more.
 
 https://joaotavora.github.io/yasnippet/
 
-Load package to be used in this condfiguration.
+Load package to be used in this configuration.
 #+BEGIN_SRC emacs-lisp
   (require-package 'yasnippet)
 
@@ -36,7 +36,7 @@ My default snippets folder is in *~/emacsSnippets*.
 
 #+END_SRC
 
-And they are organized in a specific order, where /printf/, /for/, /while/, /println/, /email/, /time/ are snippets in their respectivly mode directories.
+And they are organized in a specific order, where /printf/, /for/, /while/, /println/, /email/, /time/ are snippets in their respectively mode directories.
 #+BEGIN_SRC text
   .
   |-- c-mode
@@ -53,14 +53,14 @@ And they are organized in a specific order, where /printf/, /for/, /while/, /pri
       `-- time
 #+END_SRC
 
-*.yas-parents* is a file that contains, a whitespace-separated, list with mode names. It represents that those modes have shared snippets. So in the last example when you are in the c-mode you can also use cc-mode and text-mode snippets.
+*.byas-parents* is a file that contains, a whitespace-separated, list with mode names. It represents that those modes have shared snippets. So in the last example when you are in the c-mode you can also use cc-mode and text-mode snippets.
 
 * Configuration
 :PROPERTIES:
 :ID:       505528f7-f256-4161-8fc8-2cba26a63e05
 :END:
 
-Surppress yasnippet backquote changes.
+Suppress Yasnippet back-quote changes.
 #+BEGIN_SRC emacs-lisp
   (setq warning-suppress-types '(yasnippet backquote-change))
 

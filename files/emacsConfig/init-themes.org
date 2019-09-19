@@ -1,16 +1,16 @@
 #+TITLE:        Themes Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2019-05-16 qui]
+#+DATE-UPDATED: [2019-09-20 sex]
 
 A *Theme* is a collection of graphical appearance details in order to change the look and feel of a Graphical User Interface (GUI). Usually comprises a set of shapes and colors.
 
-Particulary, in Emacs' case, the different possibilities of themes are limited, because of the nature of this program. A text editor. So my transformations happens in three ways:
+Particularly, in Emacs' case, the different possibilities of themes are limited, because of the nature of this program. A text editor. So my transformations happens in three ways:
 - Color Scheme.
 - Font used.
 - And basically everything to make the mode line more neat and fun.
 
-"What is the Mode Line?", you may be asking. At the bottom of each window is a mode line, which describes what is going on in the current buffer. Showing the most relevant informations about it, the name of the buffer, it's actived modes, if there is something new and a lot more.
+"What is the Mode Line?", you may be asking. At the bottom of each window is a mode line, which describes what is going on in the current buffer. Showing the most relevant information about it, the name of the buffer, it's activated modes, if there is something new and a lot more.
 
 * Provide File
 :PROPERTIES:
@@ -212,7 +212,7 @@ Package to replace the need for the scroll bar on the sides of the frame. It is 
     (moody-replace-vc-mode))
 
 #+END_SRC
-* Load Pacakge: Minions
+* Load Package: Minions
 :PROPERTIES:
 :ID:       45d6a6c3-0d9c-4fa6-b52c-361b3bb0457a
 :END:

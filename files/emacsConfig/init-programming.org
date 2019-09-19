@@ -1,7 +1,7 @@
 #+TITLE:        Programming Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2019-08-27 ter]
+#+DATE-UPDATED: [2019-09-20 sex]
 
 * Provide File
 :PROPERTIES:
@@ -41,7 +41,7 @@
     :ensure t)
 #+END_SRC
 
-* Function: Infer Identation Style
+* Function: Infer Indentation Style
 :PROPERTIES:
 :ID:       e9f3f607-3995-41a8-9410-f785a03bb36a
 :END:

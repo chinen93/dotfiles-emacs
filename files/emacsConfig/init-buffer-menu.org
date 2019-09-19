@@ -210,7 +210,7 @@ Not so common commands.
 
 #+END_SRC
 
-Commands without a key attatched to.
+Commands without a key attached to.
 #+BEGIN_SRC emacs-lisp
   (my-menu-add-function "Go to a random line" nil 'my-goto-random-line t)
   (my-menu-add-function "Ledger Monthly Balance" nil 'my-ledger-monthly-balance)
