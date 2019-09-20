@@ -15,13 +15,13 @@ Set the default dictionary to be used.
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (when (executable-find "aspell")
-    (setq ispell-program-name (executable-find "aspell"))
-    (setq ispell-dictionary "english")
-    (setq ispell-extra-args
-          (list "--sug-mode=fast" ;; ultra|fast|normal|bad-spellers
-                "--lang=en_US"
-                "--ignore=4")))
+  ;; (when (executable-find "aspell")
+  ;;   (setq ispell-program-name (executable-find "aspell"))
+  ;;   (setq ispell-dictionary "english")
+  ;;   (setq ispell-extra-args
+  ;;         (list "--sug-mode=fast" ;; ultra|fast|normal|bad-spellers
+  ;;               "--lang=en_US"
+  ;;               "--ignore=4")))
 #+END_SRC
 
 * Hunspell
