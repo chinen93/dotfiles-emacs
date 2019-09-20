@@ -2,11 +2,24 @@
 #+AUTHOR:       Pedro Chinen
 #+EMAIL:        ph.u.chinen@gmail.com
 #+DATE-CREATED: [2019-09-17 ter]
-#+DATE-UPDATED: [2019-09-18 qua]
+#+DATE-UPDATED: [2019-09-20 sex]
 
 Set the default dictionary to be used.
 #+BEGIN_SRC emacs-lisp
   (require 'ispell)
+#+END_SRC
+
+* Personal Dictionary
+:PROPERTIES:
+:ID:       864d4907-feca-477e-a642-fa63691f3629
+:END:
+#+BEGIN_SRC emacs-lisp
+  (require 'init-basicConfig)
+
+  (defvar my/personal-directory (concat my/dropbox-folder "emacs-dictionary")
+    "Personal directory location for Spell Checking")
+
+  (setq ispell-personal-dictionary my/personal-directory)
 #+END_SRC
 
 * Aspell
@@ -33,9 +46,15 @@ Set the default dictionary to be used.
     (setq ispell-program-name (executable-find "hunspell"))
     (setq ispell-dictionary "en_US,pt_BR")
     (ispell-set-spellchecker-params)
-    (ispell-hunspell-add-multi-dic "en_US,pt_BR"))
+    (ispell-hunspell-add-multi-dic "en_US,pt_BR")
+    (setq ispell-extra-args `(,(concat "-p " ispell-personal-dictionary))))
+
+  (setq ispell-local-dictionary-alist
+        '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)
+          ("pt_BR" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "pt_BR") nil utf-8)))
 
 #+END_SRC
+
 * Skip Some Regions
 :PROPERTIES:
 :ID:       b6ef7c0c-e1cb-4ba4-81dd-2fa85f572b1e
