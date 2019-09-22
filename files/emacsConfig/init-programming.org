@@ -1,7 +1,7 @@
 #+TITLE:        Programming Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2019-09-20 sex]
+#+DATE-UPDATED: [2019-09-22 dom]
 
 * Provide File
 :PROPERTIES:
@@ -41,6 +41,28 @@
     :ensure t)
 #+END_SRC
 
+** Load Package: Highlight Numbers
+:PROPERTIES:
+:ID:       d2e24169-7f04-410c-b602-7cc6b5bf65d3
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package highlight-numbers
+    :ensure t
+    :init
+    (add-hook 'prog-mode-hook #'highlight-numbers-mode))
+#+END_SRC
+
+** Load Package: Highlight Quoted
+:PROPERTIES:
+:ID:       61d9a389-7cc9-453f-9ce9-6b86dbf872a0
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package highlight-quoted
+    :ensure t
+    :init
+    (add-hook 'emacs-lisp-mode-hook #'highlight-quoted-mode))
+#+END_SRC
+
 * Function: Infer Indentation Style
 :PROPERTIES:
 :ID:       e9f3f607-3995-41a8-9410-f785a03bb36a
@@ -65,6 +87,11 @@
 
 #+BEGIN_SRC emacs-lisp
   (setq python-indent-offset 2)
+
+  (use-package python
+    :defer t
+    :config
+    (define-key python-mode-map (kbd "<backtab>") 'python-indent-shift-left))
 #+END_SRC
 * Makefiles
 :PROPERTIES:
@@ -200,7 +227,7 @@ CSS
 
 #+END_SRC
 
-* TODO GREP MODE
+* GREP MODE
 :PROPERTIES:
 :ID:       5aa7c769-b0aa-45a5-88fb-39331630a85c
 :END:
