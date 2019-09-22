@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2019-09-20 sex]
+#+DATE-UPDATED: [2019-09-22 dom]
 
 Emacs has a lot of keybindings, and I can't remember everyone of them. For example each key in the keyboard is related to a command, if you put it in combination with Ctrl or Meta or Ctrl + Meta you can create others keybindings for functions. And the problem grows fast and wide. Each mode has a map describing some keybinding configurations that can overwrite others configurations. So I wan't always sure about the key chord I was pressing. 
 
@@ -218,6 +218,36 @@ How to create it:
 :ID:       3cae0483-c78e-4dc0-b757-a8292d9788b2
 :END:
 #+BEGIN_SRC emacs-lisp
+  (defhydra eos/hydra-about-emacs ()
+    "
+      About Emacs                                                        [_q_] quit
+      ^^--------------------------------------------------------------------------
+      PID:             %s(emacs-pid)
+      Uptime:          %s(emacs-uptime)
+      Init time:       %s(emacs-init-time)
+      Directory:       %s(identity user-emacs-directory)
+      Invoked from:    %s(concat invocation-directory invocation-name)
+      Version:         %s(identity emacs-version)
+
+      User Info
+      ^^--------------------------------------------------------------------------
+      User name:       %s(user-full-name)
+      Login (real):    %s(user-login-name) (%s(user-real-login-name))
+        UID (real):    %s(user-uid) (%s(user-real-uid))
+        GID (real):    %s(group-gid) (%s(group-real-gid))
+      Mail address:    %s(identity user-mail-address)
+
+      System Info
+      ^^--------------------------------------------------------------------------
+      System name:     %s(system-name)
+      System type:     %s(identity system-type)
+      System config:   %s(identity system-configuration)
+      "
+    ("q" nil nil))
+
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
   (defhydra hydra-functions (:color amaranth :hint nil)
     "
             Useful Functions
@@ -228,7 +258,7 @@ How to create it:
     _p_: Trim whitespaces       _f_: Fill paragraph   _g_: Google
     _k_: Open file              ^ ^                   _h_: Google Translate
     _l_: Open Terminal          ^ ^                   _d_: Define Word
-    _r_: Query Replace Regexp
+    _r_: Query Replace Regexp   ^ ^                   _a_: About Emacs
 
     _m_: My Hydra Functions
 
@@ -249,6 +279,7 @@ How to create it:
     ("g" google-this-ray :color blue)
     ("h" google-translate-smooth-translate :color blue)
     ("d" define-word-at-point :color blue)
+    ("a" eos/hydra-about-emacs/body :color blue)
 
     ;; move around text
     ("<right>" forward-char)
