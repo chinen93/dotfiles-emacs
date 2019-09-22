@@ -90,6 +90,7 @@ of Emacs.
 - [[./files/emacsConfig/init-backup.org][init-backup.org]]
 - [[./files/emacsConfig/init-bookmark.org][init-bookmark.org]]
 - [[./files/emacsConfig/init-buffer-menu.org][init-buffer-menu.org]]
+- [[./files/emacsConfig/init-completion.org][init-completion.org]]
 - [[./files/emacsConfig/init-flycheck.org][init-flycheck.org]]
 - [[./files/emacsConfig/init-fun.org][init-fun.org]]
 - [[./files/emacsConfig/init-hydra.org][init-hydra.org]]
