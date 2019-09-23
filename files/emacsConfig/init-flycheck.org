@@ -2,11 +2,14 @@
 #+AUTHOR:       Pedro Chinen
 #+EMAIL:        ph.u.chinen@gmail.com
 #+DATE-CREATED: [2019-04-19 sex]
-#+DATE-UPDATED: [2019-08-29 qui]
+#+DATE-UPDATED: [2019-09-22 dom]
 
-Flycheck — Syntax checking for GNU Emacs https://www.flycheck.org/en/latest/index.html
+Flycheck — Syntax checking for GNU Emacs
+https://www.flycheck.org/en/latest/index.html
 
-Flycheck is a modern on-the-fly syntax checking extension for GNU Emacs, intended as replacement for the older Flymake extension which is part of GNU Emacs.
+Flycheck is a modern on-the-fly syntax checking extension for GNU
+Emacs, intended as replacement for the older Flymake extension which
+is part of GNU Emacs.
 
 #+BEGIN_SRC text
   Flycheck does not check buffers itself but relies on external programs to check buffers. These programs must be installed separately.
@@ -45,7 +48,8 @@ http://cppcheck.sourceforge.net/
 :END:
 http://flake8.pycqa.org/en/latest/index.html
 
-If you want Flake8 to be installed for your default Python installation, you can instead use:
+If you want Flake8 to be installed for your default Python
+installation, you can instead use:
 #+BEGIN_SRC sh
   python -m pip install flake8
 #+END_SRC

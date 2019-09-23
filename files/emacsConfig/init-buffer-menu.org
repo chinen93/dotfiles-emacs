@@ -1,17 +1,20 @@
 #+TITLE:        Buffer Menu Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2019-09-03 ter]
-#+DATE-UPDATED: [2019-09-20 sex]
+#+DATE-UPDATED: [2019-09-22 dom]
 
 
-Create a Buffer Menu so that my function, that I don't use them very often don't go into oblivion. Making them appear in a simple, more meaningful way.
+Create a Buffer Menu so that my function, that I don't use them very
+often don't go into oblivion. Making them appear in a simple, more
+meaningful way.
 
 * Variables
 :PROPERTIES:
 :ID:       ae35d493-ed68-4dc0-aafd-b834e6de8e0d
 :END:
 
-Variables needed to create the buffer menu and to know where to came back after the function is done.
+Variables needed to create the buffer menu and to know where to came
+back after the function is done.
 
 #+BEGIN_SRC emacs-lisp
   (defvar my/menu-buffer-call nil
@@ -30,6 +33,8 @@ Variables needed to create the buffer menu and to know where to came back after 
 :ID:       fd992088-7b53-491e-a286-37502477f5e8
 :END:
 
+I need some kind of data structure to hold the relationship between
+the line and the function in that line.
 #+BEGIN_SRC emacs-lisp
   (defvar my/menu-buffer-hash-table (make-hash-table :test 'equal)
     "Hash table to hold the relation between number line and function to execute")
@@ -41,9 +46,12 @@ Variables needed to create the buffer menu and to know where to came back after 
 :ID:       5c8e3e3c-97f0-453c-9f4f-f8e2f2e567f9
 :END:
 
-Header to appear in the buffer menu.
 
-It will be changed later with each new function added to menu.
+Message to appear in the buffer menu. There will be a header that will
+not change, it tells how the buffer menu works and how to use it.
+
+The initial message is going to be changed later with each new
+function added to menu.
 
 #+BEGIN_SRC emacs-lisp
   (defvar my/menu-buffer-message "
@@ -61,7 +69,8 @@ It will be changed later with each new function added to menu.
 :ID:       e8a4fbe4-5ed6-46db-b8a4-15e5ed886b2f
 :END:
 
-Create a major mode to hold all keybindings and special configurations for this menu.
+Create a major mode to hold all keybindings and special configurations
+for this menu.
 
 #+BEGIN_SRC emacs-lisp
   (define-derived-mode start-menu-mode special-mode "Emacs Start Menu"
@@ -74,10 +83,17 @@ Create a major mode to hold all keybindings and special configurations for this 
 :ID:       d83f6819-c8d1-4793-bd61-16d9034f6b9b
 :END:
 
+Helper essential functions that without the menu buffer would not work
+properly.
+
 *** Add Text in the Menu
 :PROPERTIES:
 :ID:       1a31fa92-05be-4324-a1b9-d6f6f656b2e1
 :END:
+
+Functions to add text to the menu buffer. Other than adding text this
+part is responsible to link the text to a specific function.
+
 #+BEGIN_SRC emacs-lisp
   (defun my-menu-get-last-line ()
     "Get the number of of the last line in my/menu-buffer-message"
@@ -109,6 +125,9 @@ Create a major mode to hold all keybindings and special configurations for this 
 :PROPERTIES:
 :ID:       2d32fab7-108d-4f0f-9056-f48ddcdeef5e
 :END:
+
+Function to execute the function linked to a line.
+
 #+BEGIN_SRC emacs-lisp
   (defun my-menu-get-line ()
     "Get current line"
@@ -129,6 +148,10 @@ Create a major mode to hold all keybindings and special configurations for this 
 :PROPERTIES:
 :ID:       0c0d9d29-dadc-4d2c-b9cb-e8d54a47587d
 :END:
+
+The most important part, the execution of the functions part. It needs
+to switch to the correct buffer and execute the selected function.
+
 #+BEGIN_SRC emacs-lisp
   (defun my-menu-call-command (func &optional change-buffer)
     "Return an interactive function that executes FUNC in the menu buffer.
@@ -223,7 +246,8 @@ Commands without a key attached to.
 :ID:       52c946dc-8843-41c3-8edf-960e074c2049
 :END:
 
-Main function to call the Buffer Menu, it setup the calling buffer and insert all necessary information in the buffer menu.
+Main function to call the Buffer Menu, it setup the calling buffer and
+insert all necessary information in the buffer menu.
 
 #+BEGIN_SRC emacs-lisp
   (defun my-menu-function ()
@@ -254,7 +278,7 @@ Main function to call the Buffer Menu, it setup the calling buffer and insert al
 :ID:       30e84b9d-7b2e-42a1-91b4-219a7cf14db3
 :END:
 
-Make M-e open Buffer Menu
+Make M-e open Buffer Menu.
 
 #+BEGIN_SRC emacs-lisp
   (define-key my/keymap (kbd "M-e") 'my-menu-function)
