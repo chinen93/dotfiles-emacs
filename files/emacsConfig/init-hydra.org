@@ -3,7 +3,13 @@
 #+DATE-CREATED: [2016-06-29 Wed]
 #+DATE-UPDATED: [2019-09-22 dom]
 
-Emacs has a lot of keybindings, and I can't remember everyone of them. For example each key in the keyboard is related to a command, if you put it in combination with Ctrl or Meta or Ctrl + Meta you can create others keybindings for functions. And the problem grows fast and wide. Each mode has a map describing some keybinding configurations that can overwrite others configurations. So I wan't always sure about the key chord I was pressing. 
+Emacs has a lot of keybindings, and I can't remember everyone of
+them. For example each key in the keyboard is related to a command, if
+you put it in combination with Ctrl or Meta or Ctrl + Meta you can
+create others keybindings for functions. And the problem grows fast
+and wide. Each mode has a map describing some keybinding
+configurations that can overwrite others configurations. So I wan't
+always sure about the key chord I was pressing.
 
 To solve this problem I found this package called: [[https://github.com/abo-abo/hydra][Hydra]]. 
 
@@ -15,9 +21,13 @@ The site tells that:
   - a Hydra.
 #+END_SRC
 
-In reality what it does is simple it creates a configuration that won't be overwritten by a mode key map. Because I can tell which commands are going to be on my hydra family and which key chords I want them to be.
+In reality what it does is simple it creates a configuration that
+won't be overwritten by a mode key map. Because I can tell which
+commands are going to be on my hydra family and which key chords I
+want them to be.
 
-First things first we need to load the package so that we can build some configurations on top of it.
+First things first we need to load the package so that we can build
+some configurations on top of it.
 #+BEGIN_SRC emacs-lisp
   (require-package 'hydra)
 

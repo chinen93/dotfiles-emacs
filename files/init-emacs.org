@@ -1,13 +1,17 @@
 #+TITLE:        Init Emacs
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2019-09-10 ter]
-#+DATE-UPDATED: [2019-09-20 sex]
+#+DATE-UPDATED: [2019-09-22 dom]
 #+PROPERTY: header-args :tangle yes
 
 * Starting of Configuration
 :PROPERTIES:
 :ID:       5a9267f1-2ad4-498c-95c7-8254533d6124
 :END:
+
+
+Just print an indication of the beginning of the configuration. So
+later I can find what was actually loaded and configuration.
 #+BEGIN_SRC emacs-lisp
   (message " ~~~~~~~~~~~~~~~~~~~~~ Start of Configuration ")
 
@@ -15,10 +19,8 @@
   (setq debug-on-quit t)
 #+END_SRC
 
-* Import Basic Libraries
-:PROPERTIES:
-:ID:       5be1148b-f7b8-41f5-a734-31b978a23d1f
-:END:
+Import basic libraries that will be used throughout this
+configuration.
 #+BEGIN_SRC emacs-lisp
   (require 'cl-lib)
 
@@ -28,6 +30,16 @@
 :PROPERTIES:
 :ID:       4dcace5f-a499-424b-b49d-7c4f0fb98736
 :END:
+
+It is really important (actually, it is not so important) to show how
+long it took to initialize the configuration.
+
+It is not really important because normally I will open emacs once or
+twice a day. Even if it took 1 minute to start it would not be so
+devastating as people think it is. 
+
+The benchmark is around 8 seconds without ssd and 2 seconds
+with. After packages are downloaded and all.
 #+BEGIN_SRC emacs-lisp
   ;; Use a hook so the message doesn't get clobbered by other messages.
   (add-hook 'emacs-startup-hook
@@ -209,8 +221,6 @@ The parsing part happens when:
 
 #+END_SRC
 
-#+RESULTS:
-
 * Custom Variables
 :PROPERTIES:
 :ID:       ef388bd1-de62-48a6-bb65-bd94a84fc399
@@ -238,6 +248,8 @@ The parsing part happens when:
 :ID:       14dc97cd-9322-4941-9d3d-925193417d3c
 :END:
 
+Print an indication of the end of the configuration. So I can find
+initialization messages between the begin and end of this Config.
 #+BEGIN_SRC emacs-lisp
   (setq debug-on-error nil)
   (setq debug-on-quit nil)

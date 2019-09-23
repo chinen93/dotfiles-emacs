@@ -1,9 +1,24 @@
 #+TITLE:        Yasnippet Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2019-09-20 sex]
+#+DATE-UPDATED: [2019-09-22 dom]
 
-Yasnippet is a template system for Emacs. It allows you to type an abbreviation and automatically expand it into function templates. Bundled language templates include: C, C++, C#, Perl, Python, Ruby, SQL, LaTeX, HTML, CSS and more.
+Yasnippet is a template system for Emacs. It allows you to type an
+abbreviation and automatically expand it into function
+templates. 
+
+Bundled language templates include: 
+- C
+- C++
+- C#
+- Perl
+- Python
+- Ruby
+- SQL
+- LaTeX
+- HTML
+- CSS
+- and more.
 
 https://joaotavora.github.io/yasnippet/
 
@@ -36,7 +51,9 @@ My default snippets folder is in *~/emacsSnippets*.
 
 #+END_SRC
 
-And they are organized in a specific order, where /printf/, /for/, /while/, /println/, /email/, /time/ are snippets in their respectively mode directories.
+And they are organized in a specific order, where /printf/, /for/,
+/while/, /println/, /email/, /time/ are snippets in their respectively
+mode directories.
 #+BEGIN_SRC text
   .
   |-- c-mode
@@ -53,7 +70,10 @@ And they are organized in a specific order, where /printf/, /for/, /while/, /pri
       `-- time
 #+END_SRC
 
-*.byas-parents* is a file that contains, a whitespace-separated, list with mode names. It represents that those modes have shared snippets. So in the last example when you are in the c-mode you can also use cc-mode and text-mode snippets.
+*.byas-parents* is a file that contains, a whitespace-separated, list
+with mode names. It represents that those modes have shared
+snippets. So in the last example when you are in the c-mode you can
+also use cc-mode and text-mode snippets.
 
 * Configuration
 :PROPERTIES:
@@ -66,7 +86,8 @@ Suppress Yasnippet back-quote changes.
 
 #+END_SRC
 
-Controls indenting applied to snippets. Indent the snippet to the current column.
+Controls indenting applied to snippets. Indent the snippet to the
+current column.
 #+BEGIN_SRC emacs-lisp
   (setq yas-indent-line 'fixed)
 
@@ -88,7 +109,8 @@ Controls indenting applied to snippets. Indent the snippet to the current column
 :END:
 http://www.howardism.org/Technical/Emacs/templates-tutorial.html
 
-A mode that comes with Emacs that automagically inserts text into new buffers based on file extension or the major mode.
+A mode that comes with Emacs that automagically inserts text into new
+buffers based on file extension or the major mode.
 
 #+BEGIN_SRC emacs-lisp
   (use-package autoinsert
@@ -113,7 +135,8 @@ Place where to search for templates
 :ID:       15f88107-1564-46ff-a78d-9ff3aff313e2
 :END:
 
-Don't want to be prompted before insertion. I want this process to be less painful as possible.
+Don't want to be prompted before insertion. I want this process to be
+less painful as possible.
 #+BEGIN_SRC emacs-lisp
     (setq auto-insert-query nil)
 #+END_SRC
@@ -123,7 +146,8 @@ Don't want to be prompted before insertion. I want this process to be less painf
 :ID:       a5ef9ed7-8e18-45e5-816e-147bbffafbd2
 :END:
 
-Use the yasnippet project to expand templates. This allows the usage of yasnippet syntax. Which makes everything consistent.
+Use the yasnippet project to expand templates. This allows the usage
+of yasnippet syntax. Which makes everything consistent.
 #+BEGIN_SRC emacs-lisp
   (defun autoinsert-yas-expand()
     "Replace text in yasnippet template."
@@ -137,7 +161,8 @@ Use the yasnippet project to expand templates. This allows the usage of yasnippe
 
 Extension to template list.
 - First element is the extension in which the auto-insert will expand.
-- Second is a vector with the name of the template and the function to expand it.
+- Second is a vector with the name of the template and the function to
+  expand it.
 
 #+BEGIN_SRC emacs-lisp
   (setq auto-insert-alist nil)
