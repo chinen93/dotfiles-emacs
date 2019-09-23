@@ -1,0 +1,68 @@
+#+TITLE:        Spellcheck Configuration
+#+AUTHOR:       Pedro Chinen
+#+EMAIL:        ph.u.chinen@gmail.com
+#+DATE-CREATED: [2019-09-17 ter]
+#+DATE-UPDATED: [2019-09-20 sex]
+
+Set the default dictionary to be used.
+#+BEGIN_SRC emacs-lisp
+  (require 'ispell)
+#+END_SRC
+
+* Personal Dictionary
+:PROPERTIES:
+:ID:       864d4907-feca-477e-a642-fa63691f3629
+:END:
+#+BEGIN_SRC emacs-lisp
+  (require 'init-basicConfig)
+
+  (defvar my/personal-directory (concat my/dropbox-folder "emacs-dictionary")
+    "Personal directory location for Spell Checking")
+
+  (setq ispell-personal-dictionary my/personal-directory)
+#+END_SRC
+
+* Aspell
+:PROPERTIES:
+:ID:       97cc58ec-258e-49bc-a06b-794552b7d2d1
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  ;; (when (executable-find "aspell")
+  ;;   (setq ispell-program-name (executable-find "aspell"))
+  ;;   (setq ispell-dictionary "english")
+  ;;   (setq ispell-extra-args
+  ;;         (list "--sug-mode=fast" ;; ultra|fast|normal|bad-spellers
+  ;;               "--lang=en_US"
+  ;;               "--ignore=4")))
+#+END_SRC
+
+* Hunspell
+:PROPERTIES:
+:ID:       1ef1cd0d-29c5-4eea-a099-3fd23bde4661
+:END:
+#+BEGIN_SRC emacs-lisp
+  (when (executable-find "hunspell")
+    (setq ispell-program-name (executable-find "hunspell"))
+    (setq ispell-dictionary "en_US,pt_BR")
+    (ispell-set-spellchecker-params)
+    (ispell-hunspell-add-multi-dic "en_US,pt_BR")
+    (setq ispell-extra-args `(,(concat "-p " ispell-personal-dictionary))))
+
+  (setq ispell-local-dictionary-alist
+        '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "en_US") nil utf-8)
+          ("pt_BR" "[[:alpha:]]" "[^[:alpha:]]" "[']" nil ("-d" "pt_BR") nil utf-8)))
+
+#+END_SRC
+
+* Skip Some Regions
+:PROPERTIES:
+:ID:       b6ef7c0c-e1cb-4ba4-81dd-2fa85f572b1e
+:END:
+
+Regions in Org Mode:
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
+  (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
+  (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_EXAMPLE" . "#\\+END_EXAMPLE"))
+#+END_SRC

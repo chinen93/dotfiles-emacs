@@ -1,7 +1,7 @@
 #+TITLE:        Magit Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2019-06-06 qui]
+#+DATE-UPDATED: [2019-09-20 sex]
 
 Using [[https://git-scm.com/][Git]] can be sometimes tedious on the command terminal. And switching to it can have much impact on my focus because I have to change context.
 
@@ -35,7 +35,7 @@ One way to help with it is using [[https://magit.vc/][Magit]]. As it describe it
 
 #+END_SRC
 
-** Quit Magit Status gets to the previous window configuraton
+** Quit Magit Status gets to the previous window configuration
 :PROPERTIES:
 :ID:       8dc85989-5c65-4a0a-a9b7-5c25da0121c3
 :END:

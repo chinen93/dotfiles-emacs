@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2019-09-15 dom]
+#+DATE-UPDATED: [2019-09-20 sex]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -102,7 +102,7 @@ Set org agenda files
 
 #+END_SRC
 
-** Configure some informations
+** Configure some information
 :PROPERTIES:
 :ID:       a75d5c64-9879-4700-b1ad-cd69d1983c7b
 :END:
@@ -127,7 +127,7 @@ Follow link on agenda with mouse click
 
 #+END_SRC
 
-Skip non-rechable files in `org-agenda-files`
+Skip non-reachable files in `org-agenda-files`
 #+BEGIN_SRC emacs-lisp
   (setq org-agenda-skip-unavailable-files t)
 
@@ -186,7 +186,7 @@ Main agenda with the most important information to show how the week will be and
      nil))
 #+END_SRC
 
-*** All DONE Itens from This Week
+*** All DONE Items from This Week
 :PROPERTIES:
 :ID:       2970d122-05c8-47bf-8f60-0ac4e25bcf04
 :END:
@@ -356,7 +356,7 @@ Create Variable to hold all languages that I want to be enabled
 :ID:       81fa4906-c501-4377-aa4c-70e5fee03387
 :END:
 Shell has changed somehow and depending of your
-current `org-version' or `emacs-version' it needs to load '(shell . t)
+current `org-version' or `Emacs-version' it needs to load '(shell . t)
 or '(sh . t)
 https://emacs.stackexchange.com/questions/21366/should-i-have-removed-shell-t-to-clear-an-ob-shell-initialization-error/21368
 #+BEGIN_SRC emacs-lisp
@@ -809,7 +809,7 @@ Remove all capture templates.
 :ID:       2281cf9c-e7b7-4201-83ef-9074a129825e
 :END:
 
-LaTeX (/ˈlɑːtɛx/ LAH-tekh or /ˈleɪtɛx/ LAY-tekh; a shortening of Lamport TeX) is a document preparation system. The writer uses markup tagging conventions to define the general structure of a document (such as article, book, and letter), to stylise text throughout a document (such as bold and italics), and to add citations and cross-references. A TeX distribution such as TeX Live or MikTeX is used to produce an output file (such as PDF or DVI) suitable for printing or digital distribution. Within the typesetting system, its name is stylised as LaTeX.
+LaTeX (/ˈlɑːtɛx/ LAH-tekh or /ˈleɪtɛx/ LAY-tekh; a shortening of Lamport TeX) is a document preparation system. The writer uses markup tagging conventions to define the general structure of a document (such as article, book, and letter), to stylist text throughout a document (such as bold and italics), and to add citations and cross-references. A TeX distribution such as TeX Live or MikTeX is used to produce an output file (such as PDF or DVI) suitable for printing or digital distribution. Within the typesetting system, its name is stylised as LaTeX.
 
 *** LaTeX Classes
 :PROPERTIES:

@@ -1,9 +1,9 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2019-09-12 qui]
+#+DATE-UPDATED: [2019-09-20 sex]
 
-It doesn't need any external package. Just pure elisp.
+It doesn't need any external package. Just pure Elisp.
 
 #+BEGIN_SRC emacs-lisp
   (setq user-full-name "Pedro Chinen")
@@ -58,7 +58,7 @@ What to say on the *scratch* buffer.
 
 [[https://en.wikipedia.org/wiki/UTF-8][UTF-8]] is a variable width character encoding capable of encoding all 1,112,064 valid code points in Unicode using one to four 8-bit bytes. The encoding is defined by the Unicode standard, and was originally designed by Ken Thompson and Rob Pike. The name is derived from Unicode (or Universal Coded Character Set) Transformation Format – 8-bit.
 
-Set the default enconding to be UTF-8 on everything possible
+Set the default encoding to be UTF-8 on everything possible
 #+BEGIN_SRC emacs-lisp
   (setq locale-coding-system 'utf-8)
 
@@ -108,7 +108,7 @@ Don't show start up message
 :END:
 https://www.emacswiki.org/emacs/AlarmBell
 
-When an error occur, change the color of the modeline for a moment. Just to show that something went wrong.
+When an error occur, change the color of the mode-line for a moment. Just to show that something went wrong.
 #+BEGIN_SRC emacs-lisp
   (setq ring-bell-function
         (lambda ()
@@ -142,7 +142,7 @@ Don't just exit emacs without asking. I don't want to lose changes that I made b
 
 #+END_SRC
 
-* Global Identation
+* Global Indentation
 :PROPERTIES:
 :ID:       bb472086-0d4c-4779-9b79-4a4929de4a6e
 :END:
@@ -216,7 +216,7 @@ Example if *delete-selection-mode* is active. [] is the marked region and () is 
 :PROPERTIES:
 :ID:       bef8aaab-999e-4e5b-bece-a3115be808cf
 :END:
-Don't delete file, but move to trash instead. Sometimes I messed up and delete things by miskate. I just want them to be thrown to trash so I can retrieve them later, if needed.
+Don't delete file, but move to trash instead. Sometimes I messed up and delete things by mistake. I just want them to be thrown to trash so I can retrieve them later, if needed.
 #+BEGIN_SRC emacs-lisp
   (setq delete-by-moving-to-trash t)
 
@@ -285,7 +285,7 @@ Creation of folders derivated from .emacs.d/
 :ID:       31c397d5-4b33-49c1-b850-6892b872c131
 :END:
 
-Dotfiles should be loaded with shell-script-mode.
+Dot files should be loaded with shell-script-mode.
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'auto-mode-alist '(".bashrc" . shell-script-mode))
   (add-to-list 'auto-mode-alist '(".bash_profile" . shell-script-mode))
@@ -317,7 +317,7 @@ Set directory to hold history.
 
 #+END_SRC
 
-Start mode to save minibuffer history.
+Start mode to save mini buffer history.
 #+BEGIN_SRC emacs-lisp
   (savehist-mode 1)
 
@@ -335,7 +335,7 @@ Delete duplicated history.
 
 #+END_SRC
 
-What things to save in the *savehist-file*. The minibuffer is inserted by default.
+What things to save in the *savehist-file*. The mini buffer is inserted by default.
 #+BEGIN_SRC emacs-lisp
   (setq savehist-save-minibuffer-history t)
 

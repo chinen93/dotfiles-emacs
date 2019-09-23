@@ -1,9 +1,9 @@
 #+TITLE:        Backup Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2019-05-16 qui]
+#+DATE-UPDATED: [2019-09-20 sex]
 
-Backup is a important part of editting text. Because most of the times I make some mistakes and having the possibility to revert to a cleaner state is gold.
+Backup is a important part of editing text. Because most of the times I make some mistakes and having the possibility to revert to a cleaner state is gold.
 
 * Provide File
 :PROPERTIES:
@@ -18,7 +18,7 @@ Backup is a important part of editting text. Because most of the times I make so
 :ID:       a5f317bc-1b74-410b-89fb-07ebeb91b44f
 :END:
 
-The default directory to store backups is the file's directory that is being editted. However, for me, it makes the directory kind of messy. So to tidy it up a bit I put everything in *"~/.emacs.d/backups"*.
+The default directory to store backups is the file's directory that is being edited. However, for me, it makes the directory kind of messy. So to tidy it up a bit I put everything in *"~/.emacs.d/backups"*.
 
 #+BEGIN_SRC emacs-lisp
   (setq backup-directory-alist `(("." . ,my/backup-folder)))
@@ -32,7 +32,7 @@ CLOSED: [2019-03-15 sex 18:49]
 - State "DONE"       from "WORKING"    [2019-03-15 sex 18:49]
 - State "WORKING"    from "TODO"       [2019-03-15 sex 18:49]
 
-*auto-save-file-name-transforms* is a set of transformations that happens to each file before making an auto-save file name. Because the REGEXP is tied to ".*" it means that all files will be transformed by this funciton. In this case, the REGEXP expression replacement is the complete path to a specific directory, which means that every auto-saved file will go into the same directory.
+*auto-save-file-name-transforms* is a set of transformations that happens to each file before making an auto-save file name. Because the REGEXP is tied to ".*" it means that all files will be transformed by this function. In this case, the REGEXP expression replacement is the complete path to a specific directory, which means that every auto-saved file will go into the same directory.
 
 #+BEGIN_SRC emacs-lisp
   (setq auto-save-file-name-transforms `((".*" ,my/auto-save-folder t)))
@@ -56,7 +56,7 @@ When making a backup create a name with a numeric suffix like:
   Organizador.org.~4~
 #+END_SRC
 
-Create numeric suffix when backing up files. I make this way because I can see what was changed between edits. And It doens't take much space in disk.
+Create numeric suffix when backing up files. I make this way because I can see what was changed between edits. And It does not take much space in disk.
 #+BEGIN_SRC emacs-lisp
   (setq version-control t)
 

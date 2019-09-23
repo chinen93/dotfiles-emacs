@@ -1,7 +1,7 @@
 #+TITLE:        Buffer Menu Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2019-09-03 ter]
-#+DATE-UPDATED: [2019-09-10 ter]
+#+DATE-UPDATED: [2019-09-20 sex]
 
 
 Create a Buffer Menu so that my function, that I don't use them very often don't go into oblivion. Making them appear in a simple, more meaningful way.
@@ -187,6 +187,7 @@ More common commands.
   (my-menu-add-function "[G] Grep Notes" "G" 'my-grep-notes)
   (my-menu-add-function "[g] Grep Directory" "g" 'my-grep-directory)
   (my-menu-add-function "[T] Open current directory in a Terminal" "T" 'xah-open-in-terminal t)
+  (my-menu-add-function "[i] Start a Ispell process" "i" 'ispell t)
 
   (defun my-open-emacs ()
     (interactive)
@@ -209,7 +210,7 @@ Not so common commands.
 
 #+END_SRC
 
-Commands without a key attatched to.
+Commands without a key attached to.
 #+BEGIN_SRC emacs-lisp
   (my-menu-add-function "Go to a random line" nil 'my-goto-random-line t)
   (my-menu-add-function "Ledger Monthly Balance" nil 'my-ledger-monthly-balance)

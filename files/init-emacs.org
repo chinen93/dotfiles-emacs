@@ -1,7 +1,7 @@
 #+TITLE:        Init Emacs
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2019-09-10 ter]
-#+DATE-UPDATED: [2019-09-12 qui]
+#+DATE-UPDATED: [2019-09-20 sex]
 #+PROPERTY: header-args :tangle yes
 
 * Starting of Configuration
@@ -103,7 +103,7 @@ This code is not mine, but I really like it and I'm using it. It makes
 changing things in Emacs's configuration really simple.
 
 You just need a source block with emacs-lisp as its engine and it
-automaticaly parses it to a .el file every
+automatically parses it to a .el file every
 
 The parsing part happens when:
 - The elfile does not exist 
