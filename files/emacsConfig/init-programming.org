@@ -1,7 +1,7 @@
 #+TITLE:        Programming Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2019-09-20 sex]
+#+DATE-UPDATED: [2019-11-12 ter]
 
 * Provide File
 :PROPERTIES:
@@ -64,7 +64,12 @@
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (setq python-indent-offset 2)
+  (setq python-indent-offset 4)
+
+  (use-package python
+    :defer t
+    :config
+    (define-key python-mode-map (kbd "<backtab>") 'python-indent-shift-left))
 #+END_SRC
 * Makefiles
 :PROPERTIES:
