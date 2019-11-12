@@ -55,12 +55,12 @@ docs: https://rgel.readthedocs.io/en/latest/
 :ID:       7536f1eb-0bdb-42f8-b9ac-d649d300ff53
 :END:
 #+BEGIN_SRC emacs-lisp
-    (rg-define-search my-grep-directory
-      "Search files in Current directory"
-      :query ask
-      :format regexp
-      :files "all"
-      :flags ("--ignore-case")
-      :dir current
-      :menu ("Search" "C" "Current"))
+  (rg-define-search my-grep-directory
+    "Search files in Current directory"
+    :query ask
+    :format regexp
+    :files "all"
+    :flags ("--ignore-case")
+    :dir current
+    :menu ("Search" "C" "Current"))
 #+END_SRC
