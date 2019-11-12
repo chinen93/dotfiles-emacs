@@ -258,6 +258,9 @@ Creation of home folder and derivates from it
   (defvar my/dropbox-folder (concat my/home-folder "Dropbox/")
     "Path to Dropbox Folder")
 
+  (defvar my/notes-directory (concat my/dropbox-folder "Notes/")
+    "Notes base directory")
+
   (defvar my/emacs.d-folder (concat my/home-folder ".emacs.d/") 
     "Path to .emacs.d/ Folder")
 #+END_SRC

@@ -1,7 +1,7 @@
 #+TITLE:        Custom Functions Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2019-09-03 ter]
+#+DATE-UPDATED: [2019-11-12 ter]
 
 * Provide File
 :PROPERTIES:
@@ -315,78 +315,6 @@
 :PROPERTIES:
 :ID:       8f9c6ef4-7c8a-4b32-beb3-23ad6ceb5f4b
 :END:
-
-** Find Grep Directory
-:PROPERTIES:
-:ID:       a26183aa-5d9e-43e9-9f07-6508571a0419
-:END:
-#+BEGIN_SRC emacs-lisp
-  (defun my-find-grep (directory regexp)
-    "Use FIND-GREP in DIRECTORY searching for REGEXP"
-
-    (let* ((notes-dir directory)
-           (regex-treated
-            (replace-regexp-in-string " " ".*" regexp))
-           (my-find-c
-            (concat "find " notes-dir  " -type f -exec "))
-           (my-grep-c
-            (concat "grep --color -nH -i -e '" regex-treated "' {} +"))
-           (command (concat my-find-c my-grep-c)))
-
-      ;; find . -type f -exec grep --color -nH -e javascript {} +
-      (grep-find command)
-      (switch-to-buffer-other-frame "*grep*")))
-#+END_SRC
-
-*** Grep Notes
-:PROPERTIES:
-:ID:       03c0055b-4d9d-42fb-9397-413b5bba56b3
-:END:
-#+BEGIN_SRC emacs-lisp
-  (defun my-grep-notes (regexp)
-    "Use FIND-GREP in my notes directory."
-
-    (interactive "sWhat to SEARCH in NOTES for? ")
-    (if (< (length regexp) 3)
-        (message "Too Short. Try Again!!")
-
-      (let ((folder (concat my/dropbox-folder "Notes/")))
-        (my-find-grep folder regexp))))
-
-#+END_SRC
-
-*** Grep Current Directory
-:PROPERTIES:
-:ID:       d4d782ee-45ca-4be8-b08f-f64d10598a3f
-:END:
-#+BEGIN_SRC emacs-lisp
-  (defun my-grep-directory (regexp)
-    "Use FIND-GREP in current Directory"
-    (interactive (let* ((message (concat "sWhat to SEARCH in '" default-directory "' for? "))
-                        (string (read-string message nil 'my-history)))
-                   (list string)))
-    (if (< (length regexp) 3)
-        (message "Too Short. Try Again!!")
-      (my-find-grep default-directory regexp)))
-#+END_SRC
-
-** Find Notes
-:PROPERTIES:
-:ID:       91bedb55-58dc-466d-8f79-96ac23ab8a4d
-:END:
-#+BEGIN_SRC emacs-lisp
-  (defvar my/notes-directory
-    (concat my/dropbox-folder "Notes/")
-    "Notes base directory")
-
-  (defun my-find-notes ()
-    "Find file but initially in Notes Directory"
-    (interactive)
-
-    (when (functionp 'counsel-find-file)
-      (counsel-find-file my/notes-directory)))
-
-#+END_SRC
 
 ** Open File Explorer
 :PROPERTIES:
