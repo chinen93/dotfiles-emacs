@@ -1,18 +1,31 @@
 #+TITLE:        Ledger Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2019-05-16 qui]
+#+DATE-UPDATED: [2019-09-28 sáb]
 
-[[https://www.ledger-cli.org/][Ledger cli]] is a command line accounting tool that provides double-entry
-accounting based on a text journal.
+[[https://www.ledger-cli.org/][Ledger cli]] is a command line accounting tool that provides
+double-entry accounting based on a text journal.
 
 Accounting is simply tracking your money.
 
-When you look at the balance totals for your ledger, you may be surprised to see that Expenses are a positive figure, and Income is a negative figure. It may take some getting used to, but to properly use a general ledger you must think in terms of how money moves.
+When you look at the balance totals for your ledger, you may be
+surprised to see that Expenses are a positive figure, and Income is a
+negative figure. It may take some getting used to, but to properly use
+a general ledger you must think in terms of how money moves.
 
-When you earn money, the money has to come from somewhere. Let’s call that somewhere “society”. In order for society to give you an income, you must take money away (withdraw) from society in order to put it into (make a payment to) your bank. When you then spend that money, it leaves your bank account (a withdrawal) and goes back to society (a payment). This is why Income will appear negative—it reflects the money you have drawn from society—and why Expenses will be positive—it is the amount you’ve given back.
+When you earn money, the money has to come from somewhere. Let’s call
+that somewhere “society”. In order for society to give you an income,
+you must take money away (withdraw) from society in order to put it
+into (make a payment to) your bank. When you then spend that money, it
+leaves your bank account (a withdrawal) and goes back to society (a
+payment). This is why Income will appear negative—it reflects the
+money you have drawn from society—and why Expenses will be positive—it
+is the amount you’ve given back.
 
-every negative figure means that that account or person or place has less money now than when you started your ledger; and every positive figure means that that account or person or place has more money now than when you started your ledger.
+every negative figure means that that account or person or place has
+less money now than when you started your ledger; and every positive
+figure means that that account or person or place has more money now
+than when you started your ledger.
 
 [[https://www.ledger-cli.org/3.0/doc/ledger3.html][Ledger Web Manual]]
 
@@ -105,9 +118,15 @@ CLOSED: [2019-03-14 qui 08:34]
 
     (let ((command (concat my/ledger-cmd
                            my/ledger-file
-                           " balance Expenses "))
+                           " balance "))
           (report-filename "*Monthy Ledger Report*")
           (shell-buffer-name "*TESTE*")
+          (command-parameters (concat "Assets:Bank:Caixa "
+                                      "Assets:Bank:Bradesco "
+                                      "Guardado "
+                                      "Assets:Bank:Nubank$ "
+                                      "Expenses "
+                                      " "))
           (months '(("January   " . "jan")
                     ("Febuary   " . "feb")
                     ("March     " . "mar")
@@ -139,6 +158,7 @@ CLOSED: [2019-03-14 qui 08:34]
         ;; Execute the ledger command and put its result in the report buffer
         (with-current-buffer  shell-buffer-name
           (shell-command (concat command
+                                 command-parameters
                                  "--period 'in "
                                  (cl-rest month)
                                  " "
@@ -153,7 +173,8 @@ CLOSED: [2019-03-14 qui 08:34]
 
 
       ;; Opens report buffer
-      (switch-to-buffer-other-window report-filename)))
+      (switch-to-buffer-other-window report-filename)
+      (read-only-mode)))
 #+END_SRC
 
 * Set Reports

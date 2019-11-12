@@ -1,7 +1,17 @@
 #+TITLE:        Bookmark Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2019-05-16 qui]
+#+DATE-UPDATED: [2019-09-22 dom]
+
+Bookmark is one of my most used function in Emacs. With it I can jump
+to important files in seconds.
+
+I normally bookmark:
+- Dropbox Folder.
+- Git Folder.
+- Emacs Configuration Folder.
+- Current Projects.
+- and a lot of other important files.
 
 * Provide File
 :PROPERTIES:
@@ -32,7 +42,8 @@ Save bookmarks every time you make or delete a bookmark.
 
 #+END_SRC
 
-Bookmarks are displayed in LIFO order
+Bookmarks are displayed in LIFO order. The last bookmarked item is
+going to be on the top of the list.
 #+BEGIN_SRC emacs-lisp
   (setq bookmark-sort-flag nil)
 #+END_SRC

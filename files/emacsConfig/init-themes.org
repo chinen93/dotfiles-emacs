@@ -1,16 +1,24 @@
 #+TITLE:        Themes Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2019-09-20 sex]
+#+DATE-UPDATED: [2019-09-22 dom]
 
-A *Theme* is a collection of graphical appearance details in order to change the look and feel of a Graphical User Interface (GUI). Usually comprises a set of shapes and colors.
+A *Theme* is a collection of graphical appearance details in order to
+change the look and feel of a Graphical User Interface (GUI). Usually
+comprises a set of shapes and colors.
 
-Particularly, in Emacs' case, the different possibilities of themes are limited, because of the nature of this program. A text editor. So my transformations happens in three ways:
+Particularly, in Emacs' case, the different possibilities of themes
+are limited, because of the nature of this program. A text editor. So
+my transformations happens in three ways:
 - Color Scheme.
 - Font used.
 - And basically everything to make the mode line more neat and fun.
 
-"What is the Mode Line?", you may be asking. At the bottom of each window is a mode line, which describes what is going on in the current buffer. Showing the most relevant information about it, the name of the buffer, it's activated modes, if there is something new and a lot more.
+"What is the Mode Line?", you may be asking. At the bottom of each
+window is a mode line, which describes what is going on in the current
+buffer. Showing the most relevant information about it, the name of
+the buffer, it's activated modes, if there is something new and a lot
+more.
 
 * Provide File
 :PROPERTIES:
@@ -145,7 +153,8 @@ Show number of line and column
 :ID:       138ac899-9c43-4ff8-954d-2e40b27a09e7
 :END:
 
-Don't show every major and minor mode that is active in the moment. Just those that are really important.
+Don't show every major and minor mode that is active in the
+moment. Just those that are really important.
 #+BEGIN_SRC emacs-lisp :tangle no
   (use-package diminish
     :ensure t)
@@ -177,7 +186,8 @@ Which modes to diminish and what to show instead.
 :ID:       f2dcede5-e561-4ef5-9832-2bb34d3e63e0
 :END:
 
-Package to replace the need for the scroll bar on the sides of the frame. It is also a bit of color in the frame.
+Package to replace the need for the scroll bar on the sides of the
+frame. It is also a bit of color in the frame.
 #+BEGIN_SRC emacs-lisp
   (use-package nyan-mode
     :ensure t)

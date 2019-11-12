@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2019-09-20 sex]
+#+DATE-UPDATED: [2019-09-22 dom]
 
 It doesn't need any external package. Just pure Elisp.
 
@@ -23,6 +23,10 @@ It doesn't need any external package. Just pure Elisp.
 :END:
 
 What to say on the *scratch* buffer.
+
+I really like to give some information in the scratch buffer. So if
+anyone tries to use this configuration I think it will be easier to
+start using it. However I really don't know for sure.
 #+BEGIN_SRC emacs-lisp
   (setq initial-scratch-message "
   ;; ***************************************************************
@@ -51,12 +55,17 @@ What to say on the *scratch* buffer.
 
 #+END_SRC
 
-* Encoding Charset
+* Encoding Charset UTF 8
 :PROPERTIES:
 :ID:       f59e7297-4e09-498d-8c47-703673a6f5da
 :END:
 
-[[https://en.wikipedia.org/wiki/UTF-8][UTF-8]] is a variable width character encoding capable of encoding all 1,112,064 valid code points in Unicode using one to four 8-bit bytes. The encoding is defined by the Unicode standard, and was originally designed by Ken Thompson and Rob Pike. The name is derived from Unicode (or Universal Coded Character Set) Transformation Format – 8-bit.
+[[https://en.wikipedia.org/wiki/UTF-8][UTF-8]] is a variable width character encoding capable of encoding all
+1,112,064 valid code points in Unicode using one to four 8-bit
+bytes. The encoding is defined by the Unicode standard, and was
+originally designed by Ken Thompson and Rob Pike. The name is derived
+from Unicode (or Universal Coded Character Set) Transformation Format
+– 8-bit.
 
 Set the default encoding to be UTF-8 on everything possible
 #+BEGIN_SRC emacs-lisp
@@ -93,9 +102,10 @@ Don't show start up message
 :ID:       31f0d337-a006-4af2-ac06-26c49175e66a
 :END:
 
-  See the matching pair of parentheses and others characters.
+See the matching pair of parentheses and others characters.
 
-  The Style should be: If the matching parenthesis is on the same page show it, otherwise highlight everything inside.
+The Style should be: If the matching parenthesis is on the same page
+show it, otherwise highlight everything inside.
 #+BEGIN_SRC emacs-lisp
   (show-paren-mode t)
   (setq show-paren-style 'mixed)
@@ -108,7 +118,8 @@ Don't show start up message
 :END:
 https://www.emacswiki.org/emacs/AlarmBell
 
-When an error occur, change the color of the mode-line for a moment. Just to show that something went wrong.
+When an error occur, change the color of the mode-line for a
+moment. Just to show that something went wrong.
 #+BEGIN_SRC emacs-lisp
   (setq ring-bell-function
         (lambda ()
@@ -125,7 +136,7 @@ When an error occur, change the color of the mode-line for a moment. Just to sho
 :ID:       e61fdcf3-d5ef-437f-b13a-efdeab15013e
 :END:
 
-Change (yes/no) to (y/n)
+Change (yes/no) to (y/n) it is faster to confirm prompts.
 #+BEGIN_SRC emacs-lisp
   (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -136,7 +147,8 @@ Change (yes/no) to (y/n)
 :ID:       61a27609-0794-4195-aca4-b39c0a633541
 :END:
 
-Don't just exit emacs without asking. I don't want to lose changes that I made by hitting *C-x C-x* by accident.
+Don't just exit emacs without asking. I don't want to lose changes
+that I made by hitting *C-x C-c* by accident.
 #+BEGIN_SRC emacs-lisp
   (setq confirm-kill-emacs 'yes-or-no-p)
 
@@ -147,7 +159,8 @@ Don't just exit emacs without asking. I don't want to lose changes that I made b
 :ID:       bb472086-0d4c-4779-9b79-4a4929de4a6e
 :END:
 
-Don't indent automatically. Go to the beginning of the newline instead.
+Don't indent automatically. Go to the beginning of the newline
+instead.
 #+BEGIN_SRC emacs-lisp
   (electric-indent-mode -1)
 
@@ -176,7 +189,8 @@ Hide the mouse while typing
 :ID:       0164fe5d-d0b8-4197-997a-4e887c1de983
 :END:
 
-Scroll pleasantly with the mouse wheel. A slow turn moves the buffer up and down few lines at a time.
+Scroll pleasantly with the mouse wheel. A slow turn moves the buffer
+up and down few lines at a time.
 #+BEGIN_SRC emacs-lisp
   (setq mouse-wheel-scroll-amount '(2 ((shift) . 5)))
   (setq mouse-wheel-progressive-speed nil)
@@ -192,20 +206,24 @@ Wheel will follow mouse, So the frame where the mouse is will scroll
 :ID:       78566d3b-c8ae-4ca1-b106-73ad2c7cf238
 :END:
 
-Delete selected text when something is inserted and a mark is active. Without it the new text would remove the mark and just insert the text in the buffer.
+Delete selected text when something is inserted and a mark is
+active. Without it the new text would remove the mark and just insert
+the text in the buffer.
 #+BEGIN_SRC emacs-lisp
   (delete-selection-mode 1)
 
 #+END_SRC
 
-For example if *delete-selection-mode* is inactive. [] is the marked region and () is the current point:
+For example if *delete-selection-mode* is inactive. [] is the marked
+region and () is the current point:
 #+BEGIN_SRC text
   Lorem ipsum dolor sit amet, [consectetur adipiscing elit()], sed do eiusmod tempor.
 
   Lorem ipsum dolor sit amet, consectetur adipiscing elitNEW TEXT, sed do eiusmod tempor.
 #+END_SRC
 
-Example if *delete-selection-mode* is active. [] is the marked region and () is the current point:
+Example if *delete-selection-mode* is active. [] is the marked region
+and () is the current point:
 #+BEGIN_SRC text
   Lorem ipsum dolor sit amet, [consectetur adipiscing elit()], sed do eiusmod tempor.
 
@@ -216,7 +234,10 @@ Example if *delete-selection-mode* is active. [] is the marked region and () is 
 :PROPERTIES:
 :ID:       bef8aaab-999e-4e5b-bece-a3115be808cf
 :END:
-Don't delete file, but move to trash instead. Sometimes I messed up and delete things by mistake. I just want them to be thrown to trash so I can retrieve them later, if needed.
+
+Don't delete file, but move to trash instead. Sometimes I messed up
+and delete things by mistake. I just want them to be thrown to trash
+so I can retrieve them later, if needed.
 #+BEGIN_SRC emacs-lisp
   (setq delete-by-moving-to-trash t)
 
@@ -227,7 +248,10 @@ Don't delete file, but move to trash instead. Sometimes I messed up and delete t
 :ID:       eabe8ead-fcc1-412d-9cdc-da74407d1758
 :END:
 
-A symbolic link is a reference to another file or directory. It can be an absolute or relative path. In emacs, when visiting a symbolic link to a file under version control the default behavior is to ask what to do.
+A symbolic link is a reference to another file or directory. It can be
+an absolute or relative path. In emacs, when visiting a symbolic link
+to a file under version control the default behavior is to ask what to
+do.
 
 Instead just follow the syslink and edit the real file.
 #+BEGIN_SRC emacs-lisp
@@ -303,7 +327,8 @@ Make some files open in emacs-lisp-mode.
   (add-to-list 'auto-mode-alist '("emacs$" . emacs-lisp-mode))
 #+END_SRC
 
-Files that doesn't have any extension should be loaded as fundamental-mode.
+Files that doesn't have any extension should be loaded as
+fundamental-mode.
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'auto-mode-alist '("/[^\\./]*\\'" . fundamental-mode))
 
@@ -338,7 +363,8 @@ Delete duplicated history.
 
 #+END_SRC
 
-What things to save in the *savehist-file*. The mini buffer is inserted by default.
+What things to save in the *savehist-file*. The mini buffer is
+inserted by default.
 #+BEGIN_SRC emacs-lisp
   (setq savehist-save-minibuffer-history t)
 
@@ -368,7 +394,8 @@ Start server on startup.
 :ID:       75f45ca7-b183-4da3-a4f0-d32145b7a0be
 :END:
 
-Dired uses the program *ls* to show all files from a directory, so we can pass its parameters to make it behave like we want.
+Dired uses the program *ls* to show all files from a directory, so we
+can pass its parameters to make it behave like we want.
 
 The ones that I like are:
 -a : show all entries even those "hidden".

@@ -1,11 +1,14 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2019-09-20 sex]
+#+DATE-UPDATED: [2019-09-23 seg]
 
 [[https://orgmode.org/][Org Mode]]
 
-Org is a mode for keeping notes, maintaining TODO lists, and project planning with a fast and effective plain-text system. It also is an authoring system with unique support for literate programming and reproducible research.
+Org is a mode for keeping notes, maintaining TODO lists, and project
+planning with a fast and effective plain-text system. It also is an
+authoring system with unique support for literate programming and
+reproducible research.
 
 * Provide File
 :PROPERTIES:
@@ -157,7 +160,8 @@ Remove all Org Mode agenda commands. To only show my custom commands.
 :ID:       6aa45574-713d-47b0-8756-bd352b8f2e00
 :END:
 
-Main agenda with the most important information to show how the week will be and current working projects.
+Main agenda with the most important information to show how the week
+will be and current working projects.
 
 #+BEGIN_SRC emacs-lisp
   (add-to-list
@@ -282,6 +286,19 @@ Main agenda with the most important information to show how the week will be and
      nil))
 #+END_SRC
 
+*** NeuralMind
+:PROPERTIES:
+:ID:       c337e24a-4b90-4e46-be57-a8c7e071c311
+:END:
+#+BEGIN_SRC emacs-lisp
+  (add-to-list
+   'org-agenda-custom-commands
+
+   '("l" "NeuralMind"
+     ((alltodo ""
+               ((org-agenda-files
+                 `(,(concat my/dropbox-folder "Notes/NeuralMind.org"))))))))
+#+END_SRC
 * Structure Templates
 :PROPERTIES:
 :ID:       abdb3d61-d414-492b-bf87-d670c5f52d82
@@ -790,6 +807,22 @@ Remove all capture templates.
        ,template
        :empty-lines 1)))
 #+END_SRC
+** NeuralMind Template
+:PROPERTIES:
+:ID:       0faee2d9-c51b-4164-99cc-e47b591b816d
+:END:
+#+BEGIN_SRC emacs-lisp
+  (let ((filename (concat my/dropbox-folder "Notes/NeuralMind.org"))
+        (template (concat "* TODO NeuralMind: %^{Qualquer Coisa}"
+                          "\n"
+                          " ")))
+    (add-to-list
+     'org-capture-templates
+     `("N" "NeuralMind" entry
+       (file ,filename)
+       ,template
+       :empty-lines 1)))
+#+END_SRC
 * Export
 :PROPERTIES:
 :ID:       a4a8d233-afea-4f30-98f2-0f5a18fde599
@@ -809,14 +842,23 @@ Remove all capture templates.
 :ID:       2281cf9c-e7b7-4201-83ef-9074a129825e
 :END:
 
-LaTeX (/ˈlɑːtɛx/ LAH-tekh or /ˈleɪtɛx/ LAY-tekh; a shortening of Lamport TeX) is a document preparation system. The writer uses markup tagging conventions to define the general structure of a document (such as article, book, and letter), to stylist text throughout a document (such as bold and italics), and to add citations and cross-references. A TeX distribution such as TeX Live or MikTeX is used to produce an output file (such as PDF or DVI) suitable for printing or digital distribution. Within the typesetting system, its name is stylised as LaTeX.
+LaTeX (/ˈlɑːtɛx/ LAH-tekh or /ˈleɪtɛx/ LAY-tekh; a shortening of
+Lamport TeX) is a document preparation system. The writer uses markup
+tagging conventions to define the general structure of a document
+(such as article, book, and letter), to stylist text throughout a
+document (such as bold and italics), and to add citations and
+cross-references. A TeX distribution such as TeX Live or MikTeX is
+used to produce an output file (such as PDF or DVI) suitable for
+printing or digital distribution. Within the typesetting system, its
+name is stylised as LaTeX.
 
 *** LaTeX Classes
 :PROPERTIES:
 :ID:       4a8759d5-6bc6-4ff3-bc80-0df0a84b72da
 :END:
 
-Alist of LaTeX classes and associated header and structure. If #+LATEX_CLASS is set in the buffer, use its value and the associated information.
+Alist of LaTeX classes and associated header and structure. If #+LATEX_CLASS is 
+set in the buffer, use its value and the associated information.
 
 #+BEGIN_SRC emacs-lisp :tangle no
   (class-name
