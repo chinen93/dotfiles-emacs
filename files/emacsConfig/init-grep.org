@@ -1,0 +1,66 @@
+#+TITLE:        Grep Configuration
+#+AUTHOR:       Pedro Chinen
+#+DATE-CREATED: [2019-11-12 ter]
+#+DATE-UPDATED: [2019-11-12 ter]
+
+github: https://github.com/dajva/rg.el
+docs: https://rgel.readthedocs.io/en/latest/
+
+* Load Package: rg
+:PROPERTIES:
+:ID:       10fb669f-46fa-4bca-902d-b931f79b738d
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package rg
+    :ensure t)
+#+END_SRC
+
+* Define New Search Functions
+:PROPERTIES:
+:ID:       5600f335-530e-4f51-b5d8-956cb23b0588
+:END:
+
+** Search Home
+:PROPERTIES:
+:ID:       aea2c70b-59ff-4b5d-9019-03241295532c
+:END:
+#+BEGIN_SRC emacs-lisp
+  (rg-define-search my-search-home
+    "Search files including hidden in home directory"
+    :query ask
+    :format regexp
+    :files "all"
+    :flags ("--hidden --ignore-case")
+    :dir (getenv "HOME")
+    :menu ("Search" "h" "Home"))
+#+END_SRC
+
+** Search Notes
+:PROPERTIES:
+:ID:       92843039-d468-45c3-ae15-6f869a567378
+:END:
+#+BEGIN_SRC emacs-lisp
+  (rg-define-search my-grep-notes
+    "Search files in Notes directory"
+    :query ask
+    :format regexp
+    :files "org"
+    :flags ("--ignore-case")
+    :dir my/notes-directory
+    :menu ("Search" "N" "Notes"))
+#+END_SRC
+
+** Search Current Directory
+:PROPERTIES:
+:ID:       7536f1eb-0bdb-42f8-b9ac-d649d300ff53
+:END:
+#+BEGIN_SRC emacs-lisp
+  (rg-define-search my-grep-directory
+    "Search files in Current directory"
+    :query ask
+    :format regexp
+    :files "all"
+    :flags ("--ignore-case")
+    :dir current
+    :menu ("Search" "C" "Current"))
+#+END_SRC
