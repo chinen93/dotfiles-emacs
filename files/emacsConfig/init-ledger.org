@@ -1,7 +1,7 @@
 #+TITLE:        Ledger Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2019-10-25 sex]
+#+DATE-UPDATED: [2019-11-18 seg]
 
 [[https://www.ledger-cli.org/][Ledger cli]] is a command line accounting tool that provides
 double-entry accounting based on a text journal.
@@ -121,12 +121,8 @@ CLOSED: [2019-03-14 qui 08:34]
                            " balance "))
           (report-filename "*Monthy Ledger Report*")
           (shell-buffer-name "*TESTE*")
-          (command-parameters (concat "Assets:Bank:Caixa "
-                                      "Assets:Bank:Bradesco "
-                                      "Assets:XP "
-                                      "Guardado "   ;; Assets:Bank:Nubank Guardado
-                                      "Assets:Bank:Nubank$ "
-                                      "Assets:Crédito "
+          (command-parameters (concat "Assets "
+                                      "Credit "
                                       "Expenses "
                                       "Liability "
                                       " "))
