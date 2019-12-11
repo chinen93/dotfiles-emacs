@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2019-09-22 dom]
+#+DATE-UPDATED: [2019-11-25 seg]
 
 Emacs has a lot of keybindings, and I can't remember everyone of
 them. For example each key in the keyboard is related to a command, if
@@ -372,6 +372,12 @@ How to create it:
     ("e" kmacro-end-or-call-macro-repeat)
     ("n" kmacro-insert-counter)
     ("h" elmacro-show-last-macro :color blue)
+
+    ;; move around text
+    ("<right>" forward-char)
+    ("<left>" backward-char)
+    ("<down>" next-line)
+    ("<up>" previous-line)
 
     ("q" nil "quit" :color blue))
 
