@@ -1,0 +1,142 @@
+#+TITLE:        iBuffer Configurations
+#+AUTHOR:       Pedro Chinen
+#+DATE-CREATED: [2020-04-15 qua]
+#+DATE-UPDATED: [2020-04-18 sáb]
+
+* Install and Configure
+:PROPERTIES:
+:ID:       b3a1fc83-beca-4380-9032-13ef9a5d82ee
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package ibuffer
+    :config
+
+    ;; Disable prompt when deleting modified buffer.
+    (setq ibuffer-expert t)
+
+    ;; Display iBuffer in the current window.
+    (setq ibuffer-use-other-window nil)
+
+    ;; Don't show empty filters.
+    (setq ibuffer-show-empty-filter-groups nil)
+
+    ;; Improve the moviment in ibuffer.
+    (setq ibuffer-movement-cycle t)
+    (define-key ibuffer-mode-map (kbd "<up>") 'ibuffer-backward-line)
+    (define-key ibuffer-mode-map (kbd "<down>") 'ibuffer-forward-line)
+    (define-key ibuffer-mode-map (kbd "<right>") 'ibuffer-forward-filter-group)
+    (define-key ibuffer-mode-map (kbd "<left>") 'ibuffer-backward-filter-group)
+    (define-key ibuffer-mode-map (kbd "<tab>") 'ibuffer-toggle-filter-group)
+
+    ;; Set the sorting method for the ibuffer
+    (setq ibuffer-default-sorting-mode 'filename/process)
+
+    ;; Display a header line containing current filters.
+    (setq ibuffer-use-header-line t)
+
+    ;; Don't show a summary
+    (setq ibuffer-display-summary nil)
+
+    (setq ibuffer-default-shrink-to-minimum-size nil))
+#+END_SRC
+
+* Use Human readable Size column
+:PROPERTIES:
+:ID:       c2afc157-0b35-41cd-a80d-49acb754daf1
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (defun ajv/human-readable-file-sizes-to-bytes (string)
+    "Convert a human-readable file size into bytes."
+    (interactive)
+    (cond
+     ((string-suffix-p "G" string t)
+      (* 1000000000 (string-to-number (substring string 0 (- (length string) 1)))))
+     ((string-suffix-p "M" string t)
+      (* 1000000 (string-to-number (substring string 0 (- (length string) 1)))))
+     ((string-suffix-p "K" string t)
+      (* 1000 (string-to-number (substring string 0 (- (length string) 1)))))
+     (t
+      (string-to-number (substring string 0 (- (length string) 1))))
+     )
+    )
+
+  (defun ajv/bytes-to-human-readable-file-sizes (bytes)
+    "Convert number of bytes to human-readable file size."
+    (interactive)
+    (cond
+     ((> bytes 1000000000) (format "%10.1fG" (/ bytes 1000000000.0)))
+     ((> bytes 100000000) (format "%10.0fM" (/ bytes 1000000.0)))
+     ((> bytes 1000000) (format "%10.1fM" (/ bytes 1000000.0)))
+     ((> bytes 100000) (format "%10.0fk" (/ bytes 1000.0)))
+     ((> bytes 1000) (format "%10.1fk" (/ bytes 1000.0)))
+     (t (format "%10d" bytes)))
+    )
+
+  ;; Use human readable Size column instead of original one
+  (define-ibuffer-column size-h
+    (:name "Size"
+           :inline t
+           :summarizer
+           (lambda (column-strings)
+             (let ((total 0))
+               (dolist (string column-strings)
+                 (setq total
+                       ;; like, ewww ...
+                       (+ (float (ajv/human-readable-file-sizes-to-bytes string))
+                          total)))
+               (ajv/bytes-to-human-readable-file-sizes total)))	 ;; :summarizer nil
+           )
+    (ajv/bytes-to-human-readable-file-sizes (buffer-size)))
+
+  ;; Modify the default ibuffer-formats
+  (setq ibuffer-formats
+        '((mark modified read-only locked " "
+                (name 30 30 :left :elide)
+                " "
+                (size-h 11 -1 :right)
+                " "
+                (mode 16 16 :left :elide)
+                " "
+                filename-and-process)
+          (mark " "
+                (name 16 -1)
+                " " filename)))
+#+END_SRC
+
+
+* Group buffers into pre-defined classes
+:PROPERTIES:
+:ID:       06c48111-64e3-4671-b07d-45b7720a101c
+:END:
+
+Define groups
+#+BEGIN_SRC emacs-lisp
+  (setq ibuffer-saved-filter-groups
+        '(("Home"
+           ;; NeuralMind Projects
+           ("Taperead" (or
+                        (filename . "/taperead3/")))
+
+           ;; Normal Configurations
+           ("Emacs Config" (or
+                            (filename . "/emacsConfig/")))
+           ("Dired" (mode . dired-mode))
+           ("Org mode" (or
+                        (name . "^\\*Calendar\\*$")
+                        (name . "^diary$")
+                        (name . "^\\*Org Agenda\\*$")
+                        (mode . org-mode)))
+           ("Help" (or
+                    (name . "^\\*Help\\*$")
+                    (name . "^\\*Bookmark List\\*$")
+                    (name . "^\\*scratch\\*$")
+                    (name . "^\\*Messages\\*$"))))))
+#+END_SRC
+
+Load the saved groups 
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'ibuffer-mode-hook
+            '(lambda ()
+               (ibuffer-switch-to-saved-filter-groups "Home")))
+#+END_SRC

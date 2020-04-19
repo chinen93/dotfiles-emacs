@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2019-11-25 seg]
+#+DATE-UPDATED: [2020-04-16 qui]
 
 Emacs has a lot of keybindings, and I can't remember everyone of
 them. For example each key in the keyboard is related to a command, if
@@ -50,7 +50,7 @@ some configurations on top of it.
     "
      ^Functions^         ^Window^             ^Other Menus^      ^Hydra Menus^
     -^---------^---------^------^-------------^-----------^------^-----------^---
-     _w_: whitespace     _0_: delete window   _b_: buffer        _z_: zoom
+     _w_: whitespace     _0_: delete window   _b_: iBuffer       _z_: zoom
      _V_: bookmark set   _1_: only 1 window   _v_: bookmarks     _y_: YASnippet
      _p_: trim spaces    _2_: divide horiz    _g_: magit         _h_: help
      ^ ^                 _3_: divide vertc    _l_: ledger        _f_: functions
@@ -80,7 +80,7 @@ some configurations on top of it.
     ;; Other menus
     ("(" hydra-macro/body :color blue)
     ("l" ledger-report :color blue)
-    ("b" buffer-menu :color blue)
+    ("b" ibuffer :color blue)
     ("g" magit-status :color blue)
     ("v" bookmark-bmenu-list :color blue)
     ("y" hydra-yasnippet/body :color blue)
