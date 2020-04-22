@@ -1,7 +1,7 @@
 #+TITLE:        iBuffer Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2020-04-15 qua]
-#+DATE-UPDATED: [2020-04-18 sáb]
+#+DATE-UPDATED: [2020-04-22 qua]
 
 * Install and Configure
 :PROPERTIES:
@@ -104,7 +104,6 @@
                 " " filename)))
 #+END_SRC
 
-
 * Group buffers into pre-defined classes
 :PROPERTIES:
 :ID:       06c48111-64e3-4671-b07d-45b7720a101c
@@ -115,6 +114,8 @@ Define groups
   (setq ibuffer-saved-filter-groups
         '(("Home"
            ;; NeuralMind Projects
+           ("Eliot" (or
+                     (filename . "/eliot/")))
            ("Taperead" (or
                         (filename . "/taperead3/")))
 
