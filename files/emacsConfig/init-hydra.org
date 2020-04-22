@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2020-04-16 qui]
+#+DATE-UPDATED: [2020-04-18 sáb]
 
 Emacs has a lot of keybindings, and I can't remember everyone of
 them. For example each key in the keyboard is related to a command, if
@@ -57,6 +57,8 @@ some configurations on top of it.
      _c_: Capture        _4_: other window    _m_: Agenda        _(_: macro
      ^ ^                 ^ ^                  _n_: Narrow Widen  _r_: rectangle
      _e_: Hydra Context  ^ ^                  _F_: Flycheck      ^ ^
+     _i_: Ispell region  ^ ^:                 ^ ^                ^ ^
+     _I_: Ispell buffer  ^ ^:                 ^ ^                ^ ^
 
     "
 
@@ -90,6 +92,9 @@ some configurations on top of it.
     ("r" hydra-rectangle/body :color blue)
     ("n" hydra-narrow-widen/body :color blue)
     ("F" hydra-flycheck/body :color blue)
+
+    ("i" phuc/ispell-dwim :color blue)
+    ("I" ispell-buffer :color blue)
 
     ;; move around text
     ("<right>" forward-char)
