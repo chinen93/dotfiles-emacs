@@ -1,7 +1,7 @@
 #+TITLE:        iBuffer Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2020-04-15 qua]
-#+DATE-UPDATED: [2020-04-22 qua]
+#+DATE-UPDATED: [2020-05-09 sáb]
 
 * Install and Configure
 :PROPERTIES:
@@ -118,6 +118,10 @@ Define groups
                      (filename . "/eliot/")))
            ("Taperead" (or
                         (filename . "/taperead3/")))
+
+           ;; Personal Projects
+           ("PyInvest" (or
+                        (filename . "/pyinvest/")))
 
            ;; Normal Configurations
            ("Emacs Config" (or
