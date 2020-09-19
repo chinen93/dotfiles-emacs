@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2019-09-23 seg]
+#+DATE-UPDATED: [2020-09-19 sáb]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -24,6 +24,14 @@ reproducible research.
 #+BEGIN_SRC emacs-lisp
   (require 'org)
   (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+#+END_SRC
+* Automatically Bookmarks
+:PROPERTIES:
+:ID:       a3e0c760-3e44-47a2-aea1-c24b41644235
+:END:
+#+BEGIN_SRC emacs-lisp
+  (setq org-capture-bookmark nil)
+  (setq org-bookmark-names-plist nil)
 #+END_SRC
 
 * IDs
@@ -77,8 +85,9 @@ reproducible research.
   ;; Load paths to refile in a single go
   (setq org-outline-path-complete-in-steps nil)
 
+  ;; Refile things to the Project file under Note or Task headings
   (setq org-refile-targets
-        '((nil :maxlevel . 3)))
+        `((,(concat my/dropbox-folder "Notes/Projetos.org") :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")))
 #+END_SRC
 
 * Agenda
@@ -298,6 +307,29 @@ will be and current working projects.
      ((alltodo ""
                ((org-agenda-files
                  `(,(concat my/dropbox-folder "Notes/NeuralMind.org"))))))))
+#+END_SRC
+
+*** Get Things Done
+:PROPERTIES:
+:ID:       9c99f396-cf8a-480c-bb8b-b6ec4635090c
+:END:
+#+BEGIN_SRC emacs-lisp
+  (add-to-list
+   'org-agenda-custom-commands
+
+   '("g" "Get Things Done"
+     ((agenda ""
+              ((org-agenda-span 4)
+               (org-agenda-start-day "-1d")))
+      (todo "WORKING"
+            ((org-agenda-files
+              `(,(concat my/dropbox-folder "Notes/Projetos.org")))))
+      (todo ""
+            ((org-agenda-overriding-header "\nInbox\n")
+             (org-agenda-files
+              `(,(concat my/dropbox-folder "Notes/gtd_inbox.org")))))
+      (tags "CLOSED>=\"<today>\""
+            ((org-agenda-overriding-header "\nCompleted today\n"))))))
 #+END_SRC
 * Structure Templates
 :PROPERTIES:
@@ -822,6 +854,22 @@ Remove all capture templates.
        (file ,filename)
        ,template
        :empty-lines 1)))
+#+END_SRC
+** Get Things Done
+:PROPERTIES:
+:ID:       1479e75c-c88e-49a9-8c53-0b2306bd9bc3
+:END:
+#+BEGIN_SRC emacs-lisp
+    (let ((filename (concat my/dropbox-folder "Notes/gtd_inbox.org"))
+          (template (concat "* TODO %?\n"
+                            "/Entered on/ %U"
+                            " ")))
+      (add-to-list
+       'org-capture-templates
+       `("g" "GTD Inbox" entry
+         (file ,filename)
+         ,template
+         :empty-lines 1)))
 #+END_SRC
 * Export
 :PROPERTIES:
