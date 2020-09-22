@@ -63,7 +63,8 @@ reproducible research.
   (setq org-log-repeat 'note)
 
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "WORKING(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
+        '((sequence "TODO(t)" "WORKING(w!)" "TODAY(T!)" "|" "DONE(d!)")
+          (sequence "|" "CANCELED(c@/!)")))
 
   ;; Follows links when press <ENTER> on them
   (setq org-return-follows-link t)
