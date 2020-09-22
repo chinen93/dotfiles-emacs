@@ -62,6 +62,9 @@ reproducible research.
   (setq org-log-done 'note)
   (setq org-log-repeat 'note)
 
+  ;; Put logs into the LOGBOOK
+  (setq org-log-into-drawer t)
+
   ;; ! - log timestamp when changing to this keyword
   ;; @ - log a note when changing to this keyword
   (setq org-todo-keywords
