@@ -872,16 +872,18 @@ Remove all capture templates.
 :ID:       1479e75c-c88e-49a9-8c53-0b2306bd9bc3
 :END:
 #+BEGIN_SRC emacs-lisp
-    (let ((filename (concat my/dropbox-folder "Notes/gtd_inbox.org"))
-          (template (concat "* TODO %?\n"
-                            "/Entered on/ %U"
-                            " ")))
-      (add-to-list
-       'org-capture-templates
-       `("g" "GTD Inbox" entry
-         (file ,filename)
-         ,template
-         :empty-lines 1)))
+  (let ((filename (concat my/dropbox-folder "Notes/gtd_inbox.org"))
+        (template (concat "* TODO %?\n"
+                          ":LOGBOOK:\n"
+                          "Created on %U\n"
+                          ":END:\n"
+                          " ")))
+    (add-to-list
+     'org-capture-templates
+     `("g" "GTD Inbox" entry
+       (file ,filename)
+       ,template
+       :empty-lines 1)))
 #+END_SRC
 * Export
 :PROPERTIES:
