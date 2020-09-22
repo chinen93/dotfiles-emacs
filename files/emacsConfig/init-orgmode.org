@@ -62,6 +62,8 @@ reproducible research.
   (setq org-log-done 'note)
   (setq org-log-repeat 'note)
 
+  ;; ! - log timestamp when changing to this keyword
+  ;; @ - log a note when changing to this keyword
   (setq org-todo-keywords
         '((sequence "TODO(t)" "WORKING(w!)" "TODAY(T!)" "|" "DONE(d!)")
           (sequence "|" "CANCELED(c@/!)")))
