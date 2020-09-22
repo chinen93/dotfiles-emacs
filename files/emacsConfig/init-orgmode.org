@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2020-09-19 sáb]
+#+DATE-UPDATED: [2020-09-22 ter]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -325,17 +325,23 @@ will be and current working projects.
 
    '("g" "Get Things Done"
      ((agenda ""
-              ((org-agenda-span 4)
+              ((org-agenda-overriding-header "\nAgenda\n")
+               (org-agenda-span 4)
                (org-agenda-start-day "-1d")))
+      (todo "TODAY"
+            ((org-agenda-overriding-header "\nToday\n")
+             (org-agenda-files
+              `(,(concat my/dropbox-folder "Notes/Projetos.org")))))
       (todo "WORKING"
-            ((org-agenda-files
+            ((org-agenda-overriding-header "\nWorking\n")
+             (org-agenda-files
               `(,(concat my/dropbox-folder "Notes/Projetos.org")))))
       (todo ""
             ((org-agenda-overriding-header "\nInbox\n")
              (org-agenda-files
               `(,(concat my/dropbox-folder "Notes/gtd_inbox.org")))))
       (tags "CLOSED>=\"<today>\""
-            ((org-agenda-overriding-header "\nCompleted today\n"))))))
+            ((org-agenda-overriding-header "\nCompleted Today\n"))))))
 #+END_SRC
 * Structure Templates
 :PROPERTIES:
