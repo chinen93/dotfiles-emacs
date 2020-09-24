@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2020-09-22 ter]
+#+DATE-UPDATED: [2020-09-23 qua]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -318,6 +318,43 @@ will be and current working projects.
 *** Get Things Done
 :PROPERTIES:
 :ID:       9c99f396-cf8a-480c-bb8b-b6ec4635090c
+:END:
+
+**** Weekly agenda
+:PROPERTIES:
+:ID:       ccccc04c-8e74-42c0-91ca-00a6058d7a25
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defmacro my--create-agenda-custom-tags-todo (tag title)
+    "Create a tags todo custom agenda command to separate todos from each tag.
+  ELEMENTS must be a list of (tag, title) elements.
+  "
+    `(quote (tags-todo ,tag
+                ((org-agenda-overriding-header (concat ,title "\n"))
+                 (org-agenda-files
+                  `(,(concat my/dropbox-folder "Notes/Projetos.org")))))))
+
+  (add-to-list
+   'org-agenda-custom-commands
+
+   `("W" "Weekly Get Things Done"
+     ((agenda ""
+              ((org-agenda-overriding-header "\nAgenda\n")
+               (org-agenda-span 10)
+               (org-agenda-start-day "-1d")))
+
+      ,(my--create-agenda-custom-tags-todo "samia"    "Sâmia")
+      ,(my--create-agenda-custom-tags-todo "taperead" "Taperead")
+      ,(my--create-agenda-custom-tags-todo "emacs"    "Emacs")
+      ,(my--create-agenda-custom-tags-todo "pyinvest" "PyInvest")
+      ,(my--create-agenda-custom-tags-todo "gtd"      "Get Things Done")
+      ,(my--create-agenda-custom-tags-todo "someday"  "Someday")
+
+      )))
+#+END_SRC
+**** Main agenda for GTD
+:PROPERTIES:
+:ID:       d983dcc5-113d-4474-abd1-4f1bcff71d50
 :END:
 #+BEGIN_SRC emacs-lisp
   (add-to-list
