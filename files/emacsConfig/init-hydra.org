@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2020-04-18 sáb]
+#+DATE-UPDATED: [2020-10-03 sáb]
 
 Emacs has a lot of keybindings, and I can't remember everyone of
 them. For example each key in the keyboard is related to a command, if
@@ -495,17 +495,20 @@ How to create it:
     "
      ^Org^
     --------------------------------------------
-     _s_: Store Link
-     _l_: Insert Link
+     _s_: Store Link       _i_: Clock In
+     _l_: Insert Link      _o_: Clock Out
 
-     _r_: Refile
-     _t_: Insert Tag
+     _r_: Refile           _p_: Refile Archive
+     _t_: TODO Workflow
 
     "
     ("s" org-store-link nil :color blue)
     ("l" org-insert-link nil  :color blue)
     ("r" org-refile nil  :color blue)
-    ("t" org-set-tags-command nil  :color blue)
+    ("t" org-todo nil  :color blue)
+    ("i" org-clock-in nil  :color blue)
+    ("o" org-clock-out nil  :color blue)
+    ("p" my-refile-archive :color blue)
 
     ("q" nil "quit" :color blue))
 

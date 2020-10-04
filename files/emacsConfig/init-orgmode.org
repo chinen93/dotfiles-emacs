@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2020-09-23 qua]
+#+DATE-UPDATED: [2020-10-04 dom]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -88,12 +88,27 @@ reproducible research.
   ;; Provide refile targets as paths. Level3 headlin = level1/level2/leve3
   (setq org-refile-use-outline-path 'file)
 
+  ;; Add timestamp when refiling
+  (setq org-log-refile 'time)
+
   ;; Load paths to refile in a single go
   (setq org-outline-path-complete-in-steps nil)
 
   ;; Refile things to the Project file under Note or Task headings
   (setq org-refile-targets
         `((,(concat my/dropbox-folder "Notes/Projetos.org") :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (defun my-refile-archive ()
+    "Refile to the archive file"
+    (interactive)
+    (let ((org-refile-targets
+           `((,(concat my/dropbox-folder "Notes/Projetos_archive.org")
+              :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")))
+          (org-refile-history nil))
+
+      (call-interactively 'org-refile)))
 #+END_SRC
 
 * Agenda
