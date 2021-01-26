@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2020-10-04 dom]
+#+DATE-UPDATED: [2020-11-23 seg]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -363,7 +363,7 @@ will be and current working projects.
       ,(my--create-agenda-custom-tags-todo "emacs"    "Emacs")
       ,(my--create-agenda-custom-tags-todo "pyinvest" "PyInvest")
       ,(my--create-agenda-custom-tags-todo "gtd"      "Get Things Done")
-      ,(my--create-agenda-custom-tags-todo "someday"  "Someday")
+      ,(my--create-agenda-custom-tags-todo "alheios"  "Alheios")
 
       )))
 #+END_SRC

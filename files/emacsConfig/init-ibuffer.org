@@ -1,7 +1,7 @@
 #+TITLE:        iBuffer Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2020-04-15 qua]
-#+DATE-UPDATED: [2020-05-09 sáb]
+#+DATE-UPDATED: [2021-01-26 ter]
 
 * Install and Configure
 :PROPERTIES:
@@ -114,6 +114,8 @@ Define groups
   (setq ibuffer-saved-filter-groups
         '(("Home"
            ;; NeuralMind Projects
+           ("TorchSAC" (or
+                     (filename . "/torchsac/")))
            ("Eliot" (or
                      (filename . "/eliot/")))
            ("Taperead" (or
