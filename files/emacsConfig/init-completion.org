@@ -2,10 +2,13 @@
 #+AUTHOR:       Pedro Chinen
 #+EMAIL:        ph.u.chinen@gmail.com
 #+DATE-CREATED: [2019-09-22 dom]
-#+DATE-UPDATED: [2019-09-22 dom]
+#+DATE-UPDATED: [2020-10-27 ter]
 
 #+BEGIN_SRC emacs-lisp
   (require-package 'company)
+  (require-package 'company-quickhelp)
+
+  (company-quickhelp-mode)
 #+END_SRC
 
 * Configure

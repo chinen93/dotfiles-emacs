@@ -1,7 +1,7 @@
 #+TITLE:        Programming Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2019-11-12 ter]
+#+DATE-UPDATED: [2021-01-26 ter]
 
 * Provide File
 :PROPERTIES:
@@ -91,7 +91,17 @@
   (use-package python
     :defer t
     :config
-    (define-key python-mode-map (kbd "<backtab>") 'python-indent-shift-left))
+    (define-key python-mode-map (kbd "<backtab>") 'python-indent-shift-left)
+
+    )
+
+  (use-package company-jedi
+    :ensure t)
+
+  (defun my/python-mode-hook ()
+    (add-to-list 'company-backends 'company-jedi))
+
+  (add-hook 'python-mode-hook 'my/python-mode-hook)
 #+END_SRC
 * Makefiles
 :PROPERTIES:
@@ -192,7 +202,7 @@ https://www.gnu.org/software/make/manual/make.html
 :ID:       df910dd7-81c1-4eb3-8ee6-aa0983687082
 :END:
 
-CSS 
+CSS
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'auto-mode-alist '(".scss" . css-mode))
 
@@ -233,8 +243,18 @@ CSS
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (add-hook 'grep-mode-hook 
+  (add-hook 'grep-mode-hook
             (lambda ()
               (setq truncate-lines t)
               ))
+#+END_SRC
+
+* LSP
+:PROPERTIES:
+:ID:       8800b068-89e1-49cf-bac1-d41f3cdbdea7
+:END:
+
+
+#+BEGIN_SRC emacs-lisp
+
 #+END_SRC
