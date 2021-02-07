@@ -1,12 +1,22 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2019-09-22 dom]
+#+DATE-UPDATED: [2021-02-07 dom]
 
 It doesn't need any external package. Just pure Elisp.
 
 #+BEGIN_SRC emacs-lisp
   (setq user-full-name "Pedro Chinen")
+#+END_SRC
+
+
+* Lock Files when editing
+:PROPERTIES:
+:ID:       01a30e95-5576-42b4-b4f2-76a498a4b175
+:END:
+https://www.gnu.org/software/emacs/manual/html_node/elisp/File-Locks.html
+#+BEGIN_SRC emacs-lisp
+  (setq create-lockfiles nil)
 #+END_SRC
 
 * Provide File
