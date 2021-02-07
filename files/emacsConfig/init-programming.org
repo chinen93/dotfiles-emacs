@@ -1,7 +1,7 @@
 #+TITLE:        Programming Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2021-01-26 ter]
+#+DATE-UPDATED: [2021-02-07 dom]
 
 * Provide File
 :PROPERTIES:
@@ -119,6 +119,52 @@ https://www.gnu.org/software/make/manual/make.html
 :PROPERTIES:
 :ID:       bf0ca3c0-1538-4113-a93b-5ead7550a378
 :END:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package yaml-mode
+    :ensure t)
+#+END_SRC
+
+** Add node modules to path.
+:PROPERTIES:
+:ID:       87115215-24d7-4cae-8ab2-3b0bfeae4f2f
+:END:
+
+Use the correct node modules, so there is no need to install the module globally.
+
+https://github.com/codesuki/add-node-modules-path
+This file provides add-node-modules-path, which searches the current files parent directories for the node_modules/.bin/ directory and adds it to the buffer local exec-path. This allows Emacs to find project based installs of e.g. eslint.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package add-node-modules-path
+    :ensure t
+    :after flycheck
+    :init
+    (add-hook 'flycheck-mode-hook 'add-node-modules-path))
+#+END_SRC
+
+** Prettier
+:PROPERTIES:
+:ID:       d7d58144-44ff-4c72-ac93-09db3d697691
+:END:
+Prettier is a code formatter to make the programming more consistent.
+https://prettier.io
+
+#+BEGIN_SRC emacs-lisp
+  (use-package prettier-js
+    :ensure t
+    :init
+
+    (add-hook 'rjsx-mode-hook
+              (lambda ()
+                (add-node-modules-path)
+                (prettier-js-mode)))
+    (add-hook 'js2-mode-hook
+              (lambda ()
+                (add-node-modules-path)
+                (prettier-js-mode)))
+  )
+#+END_SRC
 
 ** Load Package: Js2 Mode
 :PROPERTIES:
