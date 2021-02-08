@@ -1,7 +1,7 @@
 #+TITLE:        Programming Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2021-02-07 dom]
+#+DATE-UPDATED: [2021-02-08 seg]
 
 * Provide File
 :PROPERTIES:
@@ -88,12 +88,13 @@
 #+BEGIN_SRC emacs-lisp
   (setq python-indent-offset 4)
 
-  (use-package python
-    :defer t
-    :config
-    (define-key python-mode-map (kbd "<backtab>") 'python-indent-shift-left)
-
-    )
+  (use-package jedi
+    :ensure t
+    :init
+    (add-hook 'python-mode-hook 'jedi:setup)
+    (setq jedi:complete-on-dot t)
+    (setq jedi:tooltip-method nil)
+  )
 
   (use-package company-jedi
     :ensure t)
@@ -102,6 +103,18 @@
     (add-to-list 'company-backends 'company-jedi))
 
   (add-hook 'python-mode-hook 'my/python-mode-hook)
+  (use-package elpy
+    :ensure t
+    :defer t
+    :init
+    (advice-add 'python-mode :before 'elpy-enable)
+    (add-hook 'elpy-mode-hook (lambda () (highlight-indentation-mode -1)))
+    (when (boundp 'elpy-module)
+      (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+      (add-hook 'elpy-mode-hook 'flycheck-mode))
+    (setq eldoc-idle-delay 1)
+    (setq elpy-rpc-backend "jedi")
+  )
 #+END_SRC
 * Makefiles
 :PROPERTIES:
