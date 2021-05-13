@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: daily
+# key: daily
+# --
+
+* `(format-time-string "%Y-%m-%d %A")`
+** TODO Plan
+- Planejar o que vai ser realizado no dia.
+** Work
+*** TODO Lançar Horas
+** Off Work
+** Notes
+** Day Summary
+#+BEGIN: clocktable :scope tree1 :maxlevel 3 :block untilnow
+#+END:
