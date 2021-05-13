@@ -1,7 +1,7 @@
 #+TITLE:        Yasnippet Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2019-09-22 dom]
+#+DATE-UPDATED: [2021-05-12 qua]
 
 Yasnippet is a template system for Emacs. It allows you to type an
 abbreviation and automatically expand it into function
@@ -42,7 +42,9 @@ Load package to be used in this configuration.
 :ID:       bb384859-63d5-4e82-a43d-ff9e341de4f0
 :END:
 
-My default snippets folder is in *~/emacsSnippets*.
+My default snippets folder is in file:~/git/dotfiles-emacs/files/emacsSnippets/]]
+
+
 #+BEGIN_SRC emacs-lisp
   ;; Default directories to seek for snippets
   (setq yas-snippet-dirs
