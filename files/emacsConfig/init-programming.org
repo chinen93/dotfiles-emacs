@@ -1,7 +1,7 @@
 #+TITLE:        Programming Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2021-02-08 seg]
+#+DATE-UPDATED: [2021-02-17 qua]
 
 * Provide File
 :PROPERTIES:
@@ -316,4 +316,16 @@ CSS
 
 #+BEGIN_SRC emacs-lisp
 
+#+END_SRC
+
+* Docker
+:PROPERTIES:
+:ID:       52addfa3-11d4-42ea-a334-b1992afe1b86
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package docker
+    :ensure t)
+
+  (use-package dockerfile-mode
+    :ensure t)
 #+END_SRC
