@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2021-02-07 dom]
+#+DATE-UPDATED: [2021-05-11 ter]
 
 It doesn't need any external package. Just pure Elisp.
 
@@ -105,6 +105,10 @@ Don't show start up message
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-startup-message t)
 
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (setq-default fill-column 80)
 #+END_SRC
 
 ** Show matching parenthesis
