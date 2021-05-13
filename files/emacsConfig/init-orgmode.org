@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2020-11-23 seg]
+#+DATE-UPDATED: [2021-05-12 qua]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -126,6 +126,9 @@ Set org agenda files
 
   (add-to-list 'org-agenda-files
                (concat my/dropbox-folder "Organizador.org"))
+
+  (add-to-list 'org-agenda-files
+               (concat my/dropbox-folder "Daily.org"))
 
   (add-to-list 'org-agenda-files
                (concat my/dropbox-folder "Notes/Projetos.org"))
@@ -380,6 +383,10 @@ will be and current working projects.
               ((org-agenda-overriding-header "\nAgenda\n")
                (org-agenda-span 4)
                (org-agenda-start-day "-1d")))
+      (todo ""
+            ((org-agenda-overriding-header "\nDaily\n")
+             (org-agenda-files
+              `(,(concat my/dropbox-folder "Daily.org")))))
       (todo "TODAY"
             ((org-agenda-overriding-header "\nToday\n")
              (org-agenda-files

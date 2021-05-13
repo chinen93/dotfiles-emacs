@@ -1,7 +1,7 @@
 #+TITLE:        Custom Functions Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2019-11-12 ter]
+#+DATE-UPDATED: [2021-05-12 qua]
 
 * Provide File
 :PROPERTIES:
@@ -311,6 +311,49 @@
                                (expand-file-name default-directory)) )))))
 #+END_SRC
 
+** Isamert Toggle side daily buffer
+:PROPERTIES:
+:ID:       0546665d-de27-4f32-b241-bfe083eff2b0
+:END:
+#+BEGIN_SRC emacs-lisp
+(defun isamert/toggle-side-bullet-org-buffer ()
+  "Toggle `bullet.org` in a side buffer for quick note taking.  The buffer is opened in side window so it can't be accidentaly removed."
+  (interactive)
+  (isamert/toggle-side-buffer-with-file "~/Dropbox/Daily.org"))
+
+(defun isamert/buffer-visible-p (buffer)
+ "Check if given BUFFER is visible or not.  BUFFER is a string representing the buffer name."
+  (or (eq buffer (window-buffer (selected-window))) (get-buffer-window buffer)))
+
+(defun isamert/display-buffer-in-side-window (buffer)
+  "Just like `display-buffer-in-side-window' but only takes a BUFFER and rest of the parameters are for my taste."
+  (select-window
+   (display-buffer-in-side-window
+    buffer
+    (list (cons 'side 'right)
+          (cons 'slot 0)
+          (cons 'window-width 84)
+          (cons 'window-parameters (list (cons 'no-delete-other-windows t)
+                                         (cons 'no-other-window nil)))))))
+
+(defun isamert/remove-window-with-buffer (the-buffer-name)
+  "Remove window containing given THE-BUFFER-NAME."
+  (mapc (lambda (window)
+          (when (string-equal (buffer-name (window-buffer window)) the-buffer-name)
+            (delete-window window)))
+        (window-list (selected-frame))))
+
+(defun isamert/toggle-side-buffer-with-file (file-path)
+  "Toggle FILE-PATH in a side buffer. The buffer is opened in side window so it can't be accidentaly removed."
+  (interactive)
+  (let ((fname (file-name-nondirectory file-path)))
+  (if (isamert/buffer-visible-p fname)
+      (isamert/remove-window-with-buffer fname)
+    (isamert/display-buffer-in-side-window
+     (save-window-excursion
+       (find-file file-path)
+       (current-buffer))))))
+#+END_SRC
 * My Functions
 :PROPERTIES:
 :ID:       8f9c6ef4-7c8a-4b32-beb3-23ad6ceb5f4b
