@@ -1,7 +1,7 @@
 #+TITLE:        Programming Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2021-02-17 qua]
+#+DATE-UPDATED: [2021-10-10 dom]
 
 * Provide File
 :PROPERTIES:
@@ -10,6 +10,7 @@
 #+BEGIN_SRC emacs-lisp
   (provide 'init-programming)
 #+END_SRC
+
 * Packages
 :PROPERTIES:
 :ID:       182bc287-76e2-48b5-882f-3d970cfd930a
@@ -18,6 +19,9 @@
 :PROPERTIES:
 :ID:       35ad56f7-e2fe-4a5d-b94d-890d0a575671
 :END:
+
+The ‘goto-address-mode’ and ‘goto-address-prog-mode’ minor modes highlight URLs and mail addresses, so that you can browse or mail them using a mouse.
+
 #+BEGIN_SRC emacs-lisp
   (use-package goto-addr
     ;; http://xenodium.com/#actionable-urls-in-emacs-buffers
@@ -80,42 +84,36 @@
 
 #+END_SRC
 
+* Projectile
+:PROPERTIES:
+:ID:       8e2b7741-9a1c-45fd-bfb2-c81d57fdfa8f
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :diminish projectile-mode
+    :ensure t
+    :config
+    (progn
+      (projectile-mode +1)
+      (setq projectile-completion-system 'default)
+      (setq projectile-enable-caching t)
+      (setq projectile-use-git-grep t)
+      (add-to-list 'projectile-globally-ignored-files "node-modules")))
+#+END_SRC
+
 * Python
 :PROPERTIES:
 :ID:       689c44bc-36b5-4462-8817-9f956fcd7e63
 :END:
 
-#+BEGIN_SRC emacs-lisp
-  (setq python-indent-offset 4)
-
-  (use-package jedi
+#+begin_src emacs-lisp
+  (use-package pyvenv
     :ensure t
     :init
-    (add-hook 'python-mode-hook 'jedi:setup)
-    (setq jedi:complete-on-dot t)
-    (setq jedi:tooltip-method nil)
-  )
+    (setenv "WORKON_HOME" "~/.virtualenvs/"))
+#+end_src
 
-  (use-package company-jedi
-    :ensure t)
-
-  (defun my/python-mode-hook ()
-    (add-to-list 'company-backends 'company-jedi))
-
-  (add-hook 'python-mode-hook 'my/python-mode-hook)
-  (use-package elpy
-    :ensure t
-    :defer t
-    :init
-    (advice-add 'python-mode :before 'elpy-enable)
-    (add-hook 'elpy-mode-hook (lambda () (highlight-indentation-mode -1)))
-    (when (boundp 'elpy-module)
-      (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-      (add-hook 'elpy-mode-hook 'flycheck-mode))
-    (setq eldoc-idle-delay 1)
-    (setq elpy-rpc-backend "jedi")
-  )
-#+END_SRC
 * Makefiles
 :PROPERTIES:
 :ID:       4c11a174-f933-4bf6-9899-e3a4124e356b
@@ -313,10 +311,14 @@ CSS
 :ID:       8800b068-89e1-49cf-bac1-d41f3cdbdea7
 :END:
 
+#+begin_src emacs-lisp
+  (use-package lsp-mode
+    :ensure t
+    :commands lsp
 
-#+BEGIN_SRC emacs-lisp
-
-#+END_SRC
+    :config
+      (setq lsp-pylsp-server-command "~/git/pyenv/shims/pylsp"))
+#+end_src
 
 * Docker
 :PROPERTIES:
