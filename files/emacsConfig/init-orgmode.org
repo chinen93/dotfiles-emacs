@@ -385,7 +385,11 @@ will be and current working projects.
    'org-agenda-custom-commands
 
    '("g" "Get Things Done"
-     ((agenda ""
+     ((todo ""
+            ((org-agenda-overriding-header "\nPlano Desenvolvimento Pessoal\n")
+             (org-agenda-files
+              `(,(concat my/dropbox-folder "Notes/PlanoDesenvolvimentoPessoal.org")))))
+      (agenda ""
               ((org-agenda-overriding-header "\nAgenda\n")
                (org-agenda-span 4)
                (org-agenda-start-day "-1d")))
