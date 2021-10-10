@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2021-05-12 qua]
+#+DATE-UPDATED: [2021-05-13 qui]
 
 Emacs has a lot of keybindings, and I can't remember everyone of
 them. For example each key in the keyboard is related to a command, if
@@ -76,7 +76,7 @@ some configurations on top of it.
     ("3" split-window-right :color blue)
     ("4" other-window)
 
-    ("d" isamert/toggle-side-bullet-org-buffer :color blue)
+    ("d" isamert/toggle-side-bullet-org-buffer)
     ("c" org-capture :color blue)
     ("m" org-agenda :color blue)
 
