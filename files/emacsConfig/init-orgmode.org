@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2021-05-12 qua]
+#+DATE-UPDATED: [2021-10-10 dom]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -23,6 +23,7 @@ reproducible research.
 :END:
 #+BEGIN_SRC emacs-lisp
   (require 'org)
+  (require 'org-tempo)
   (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 #+END_SRC
 * Automatically Bookmarks
@@ -77,6 +78,11 @@ reproducible research.
   ;; Hide the leading "*" from the headline
   (setq org-startup-indented t
         org-hide-leading-stars t)
+
+  ;; Start org files with hidden headlines, However ignore this values when Org
+  ;; opens agenda files for the first time
+  (setq org-startup-folded 'content
+        org-agenda-inhibit-startup t)
 
 #+END_SRC
 
@@ -411,41 +417,20 @@ Templates for source blocks
 #+BEGIN_SRC emacs-lisp
   (setq org-structure-template-alist nil)
 
-  (add-to-list
-   'org-structure-template-alist
-   `("l"
-     ,(concat "#+BEGIN_SRC emacs-lisp\n"
-              "?\n"
-              "#+END_SRC")))
-
-  (add-to-list
-   'org-structure-template-alist
-   `("ln"
-     ,(concat "#+BEGIN_SRC emacs-lisp :tangle no\n"
-              "?\n"
-              "#+END_SRC")))
-
-  (add-to-list
-   'org-structure-template-alist
-   `("s"
-     ,(concat "#+BEGIN_SRC sh\n"
-              "?\n"
-              "#+END_SRC")))
-
-  (add-to-list
-   'org-structure-template-alist
-    `("t"
-     ,(concat "#+BEGIN_SRC text\n"
-              "?\n"
-              "#+END_SRC")))
-
-  (add-to-list
-   'org-structure-template-alist
-    `("latex"
-     ,(concat "#+BEGIN_SRC latex\n"
-              "?\n"
-              "#+END_SRC")))
-
+  (setq org-structure-template-alist
+        '(("a" . "export ascii")
+          ("c" . "center")
+          ("C" . "comment")
+          ("e" . "example")
+          ("E" . "export")
+          ("m" . "export md")
+          ("h" . "export html")
+          ("l" . "src emacs-lisp")
+          ("p" . "src python")
+          ("q" . "quote")
+          ("s" . "src")
+          ("t" . "text")
+          ("v" . "verse")))
 #+END_SRC
 
 * Babel Load Languages
