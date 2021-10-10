@@ -1,7 +1,7 @@
 #+TITLE:        Setup Package Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2020-10-27 ter]
+#+DATE-UPDATED: [2021-09-21 ter]
 
 #+BEGIN_SRC emacs-lisp
   (require 'package)
@@ -42,7 +42,6 @@
 
   (add-hook 'after-init-hook
             `(lambda ()
-               (setq gc-cons-threshold (* 2 1000 1000))
                (setq gc-cons-percentage 0.1)
                (garbage-collect))
             t)
