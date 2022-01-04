@@ -1,7 +1,7 @@
 #+TITLE:        Programming Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2021-10-10 dom]
+#+DATE-UPDATED: [2021-11-09 ter]
 
 * Provide File
 :PROPERTIES:
@@ -311,13 +311,51 @@ CSS
 :ID:       8800b068-89e1-49cf-bac1-d41f3cdbdea7
 :END:
 
+https://emacs-lsp.github.io/lsp-mode/page/lsp-pylsp/#lsp-pylsp-plugins-pycodestyle-enabled
+
 #+begin_src emacs-lisp
   (use-package lsp-mode
     :ensure t
     :commands lsp
 
     :config
-      (setq lsp-pylsp-server-command "~/git/pyenv/shims/pylsp"))
+      (setq lsp-pylsp-server-command "~/git/pyenv/shims/pylsp")
+      (setq lsp-pylsp-plugins-autopep8-enabled nil)
+      (setq lsp-pylsp-plugins-pylint-enabled t)
+
+      (setq lsp-pyls-plugins-autopep8-enabled nil)
+      (setq lsp-pyls-plugins-pylint-enabled t)
+  )
+
+#+end_src
+
+https://ddavis.io/posts/emacs-python-lsp/
+#+begin_src emacs-lisp
+  (defun dd/py-workon-project-venv ()
+    "Call pyenv-workon with the current projectile project name.
+  This will return the full path of the associated virtual
+  environment found in $WORKON_HOME, or nil if the environment does
+  not exist."
+    (let ((pname (projectile-project-name)))
+      (pyvenv-workon pname)
+      (if (file-directory-p pyvenv-virtual-env)
+          pyvenv-virtual-env
+        (pyvenv-deactivate))))
+
+  (defun dd/py-auto-lsp ()
+    "Turn on lsp mode in a Python project with some automated logic.
+  Try to automatically determine which pyenv virtual environment to
+  activate based on the project name, using
+  `dd/py-workon-project-venv'. If successful, call `lsp'. If we
+  cannot determine the virtualenv automatically, first call the
+  interactive `pyvenv-workon' function before `lsp'"
+    (interactive)
+    (let ((pvenv (dd/py-workon-project-venv)))
+      (if pvenv
+          (lsp)
+        (progn
+          (call-interactively #'pyvenv-workon)
+          (lsp)))))
 #+end_src
 
 * Docker
