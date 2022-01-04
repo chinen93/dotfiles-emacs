@@ -134,10 +134,16 @@ Set org agenda files
                (concat my/dropbox-folder "Organizador.org"))
 
   (add-to-list 'org-agenda-files
-               (concat my/dropbox-folder "Daily.org"))
+               (concat my/dropbox-folder "Notes/Rotina.org"))
+
+  (add-to-list 'org-agenda-files
+               (concat my/dropbox-folder "Notes/Daily.org"))
 
   (add-to-list 'org-agenda-files
                (concat my/dropbox-folder "Notes/Projetos.org"))
+
+  (add-to-list 'org-agenda-files
+               (concat my/dropbox-folder "Notes/Planos.org"))
 
   (add-to-list 'org-agenda-files
                (concat my/dropbox-folder "Contacts.org"))
@@ -783,10 +789,15 @@ https://emacs.stackexchange.com/questions/21366/should-i-have-removed-shell-t-to
     ;; Add hook before save
     (add-hook 'before-save-hook 'my-update-org-timestamp))
 
+  (defun my/org-heading-creation-date ()
+    "Add property to tell when the heading was created"
+    (org-set-property "Created" (format-time-string "%Y-%m-%d")))
+
 
   ;; Add hook to org mode
   (add-hook 'org-mode-hook 'my-org-hook-function)
   (add-hook 'org-insert-heading-hook 'org-id-get-create)
+  (add-hook 'org-insert-heading-hook 'my/org-heading-creation-date)
 
   (add-hook 'org-mode-hook
             ;; Create hook when org mode is enabled
@@ -1000,3 +1011,20 @@ https://journals.ieeeauthorcenter.ieee.org/create-your-ieee-article/authoring-to
                    ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 #+END_SRC
 
+* Org Roam
+:PROPERTIES:
+:ID:       5c26eb5e-fcd3-4975-82c8-91442dcabdbe
+:END:
+
+#+begin_src emacs-lisp
+  (use-package org-roam
+    :ensure t
+    :init
+    (setq org-roam-v2-ack t)
+    :custom
+    (org-roam-directory (file-truename (concat my/dropbox-folder "Notes/")))
+    (org-roam-completion-everywhere t)
+    (org-roam-node-display-template "${title:*} ${tags:50}")
+    :config
+    (org-roam-db-autosync-mode))
+#+end_src
