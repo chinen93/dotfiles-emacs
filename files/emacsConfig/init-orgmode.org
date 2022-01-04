@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2021-10-10 dom]
+#+DATE-UPDATED: [2022-01-04 ter]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -392,17 +392,22 @@ will be and current working projects.
 
    '("g" "Get Things Done"
      ((todo ""
-            ((org-agenda-overriding-header "\nPlano Desenvolvimento Pessoal\n")
+            ((org-agenda-overriding-header "\nPlanos\n")
              (org-agenda-files
-              `(,(concat my/dropbox-folder "Notes/PlanoDesenvolvimentoPessoal.org")))))
+              `(,(concat my/dropbox-folder "Notes/Planos.org")))))
       (agenda ""
               ((org-agenda-overriding-header "\nAgenda\n")
                (org-agenda-span 4)
                (org-agenda-start-day "-1d")))
+      (agenda ""
+              ((org-agenda-overriding-header "\Deadlines\n")
+               (org-agenda-time-grid nil)
+               (org-deadline-warning-days 365)
+               (org-agenda-entry-types '(:deadline))))
       (todo ""
             ((org-agenda-overriding-header "\nDaily\n")
              (org-agenda-files
-              `(,(concat my/dropbox-folder "Daily.org")))))
+              `(,(concat my/dropbox-folder "Notes/Daily.org")))))
       (todo "TODAY"
             ((org-agenda-overriding-header "\nToday\n")
              (org-agenda-files
@@ -416,7 +421,8 @@ will be and current working projects.
              (org-agenda-files
               `(,(concat my/dropbox-folder "Notes/gtd_inbox.org")))))
       (tags "CLOSED>=\"<today>\""
-            ((org-agenda-overriding-header "\nCompleted Today\n"))))))
+            ((org-agenda-overriding-header "\nCompleted Today\n")))
+      )))
 #+END_SRC
 * Structure Templates
 :PROPERTIES:
@@ -978,7 +984,7 @@ name is stylised as LaTeX.
 :ID:       4a8759d5-6bc6-4ff3-bc80-0df0a84b72da
 :END:
 
-Alist of LaTeX classes and associated header and structure. If #+LATEX_CLASS is 
+Alist of LaTeX classes and associated header and structure. If #+LATEX_CLASS is
 set in the buffer, use its value and the associated information.
 
 #+BEGIN_SRC emacs-lisp :tangle no
