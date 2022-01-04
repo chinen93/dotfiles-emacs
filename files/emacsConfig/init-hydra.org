@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2021-05-13 qui]
+#+DATE-UPDATED: [2022-01-04 ter]
 
 Emacs has a lot of keybindings, and I can't remember everyone of
 them. For example each key in the keyboard is related to a command, if
@@ -11,12 +11,12 @@ and wide. Each mode has a map describing some keybinding
 configurations that can overwrite others configurations. So I wan't
 always sure about the key chord I was pressing.
 
-To solve this problem I found this package called: [[https://github.com/abo-abo/hydra][Hydra]]. 
+To solve this problem I found this package called: [[https://github.com/abo-abo/hydra][Hydra]].
 
 The site tells that:
 #+BEGIN_SRC text
   This is a package for GNU Emacs that can be used to tie related
-  commands into a family of short bindings with a common prefix 
+  commands into a family of short bindings with a common prefix
 
   - a Hydra.
 #+END_SRC
@@ -48,56 +48,44 @@ some configurations on top of it.
         ;;; Hydra launcher BEGIN
   (defhydra hydra-launcher (:color amaranth :hint nil)
     "
-     ^Functions^         ^Window^             ^Other Menus^      ^Hydra Menus^
-    -^---------^---------^------^-------------^-----------^------^-----------^---
-     _w_: whitespace     _0_: delete window   _b_: iBuffer       _z_: zoom
-     _V_: bookmark set   _1_: only 1 window   _v_: bookmarks     _y_: YASnippet
-     _p_: trim spaces    _2_: divide horiz    _g_: magit         _h_: help
-     _d_: toggle daily   _3_: divide vertc    _l_: ledger        _f_: functions
-     _c_: Capture        _4_: other window    _m_: Agenda        _(_: macro
-     ^ ^                 ^ ^                  _n_: Narrow Widen  _r_: rectangle
-     _e_: Hydra Context  ^ ^                  _F_: Flycheck      ^ ^
-     _i_: Ispell region  ^ ^:                 ^ ^                ^ ^
-     _I_: Ispell buffer  ^ ^:                 ^ ^                ^ ^
+     ^Functions^         ^Favorites  ^      ^Hydra Menus^
+    -^---------^---------^-----------^------^-----------^---
+     _d_: Toggle daily   _b_: iBuffer       _f_: Functions
+     _V_: Bookmark set   _v_: Bookmarks     _y_: YASnippet
+     _c_: Capture        _g_: Magit         _p_: Projectile
+     _F_: Org Roam Find  _l_: Ledger        _s_: Other Menus
+     ^ ^                 _m_: Agenda
 
+     _e_: Hydra Context
     "
 
-    ;; commands to exec in actual buffer
-    ("p" (user--clean-buffer))
-    ("f" hydra-functions/body :color blue)
+    ;; Functions
     ("w" whitespace-mode)
     ("V" bookmark-set :color blue)
-    ("e" hydra-context-launcher :color blue)
-
-    ;; commands to exit hydra-launcher
-    ("0" delete-window :color blue)
-    ("1" delete-other-windows :color blue)
-    ("2" split-window-below :color blue)
-    ("3" split-window-right :color blue)
-    ("4" other-window)
-
     ("d" isamert/toggle-side-bullet-org-buffer)
     ("c" org-capture :color blue)
-    ("m" org-agenda :color blue)
 
-    ;; Other menus
-    ("(" hydra-macro/body :color blue)
+    ;; Favorites
     ("l" ledger-report :color blue)
     ("b" ibuffer :color blue)
     ("g" magit-status :color blue)
     ("v" bookmark-bmenu-list :color blue)
+    ("m" org-agenda :color blue)
+    ("F" org-roam-node-find :color blue)
+
+    ;; Hydras Menus
+    ("f" hydra-functions/body :color blue)
     ("y" hydra-yasnippet/body :color blue)
-    ("z" hydra-zoom/body :color blue)
-    ("N" hydra-narrow-widen/body :color blue)
-    ("h" hydra-help/body :color blue)
-    ("r" hydra-rectangle/body :color blue)
-    ("n" hydra-narrow-widen/body :color blue)
-    ("F" hydra-flycheck/body :color blue)
+    ("p" hydra-projectile/body :color blue)
+    ("s" hydra-other-hydras-menus/body :color blue)
 
-    ("i" phuc/ispell-dwim :color blue)
-    ("I" ispell-buffer :color blue)
+    ("e" hydra-context-launcher :color blue)
 
-    ;; move around text
+    ;; Hidden letters and commands that can still be used when the Hydra is open.
+    ("0" delete-window :color blue)
+    ("1" delete-other-windows :color blue)
+    ("2" split-window-below :color blue)
+    ("3" split-window-right :color blue)
     ("<right>" forward-char)
     ("<left>" backward-char)
     ("<down>" next-line)
@@ -111,6 +99,22 @@ some configurations on top of it.
     ("q" nil "cancel" :color blue))
 #+END_SRC
 
+* Other Hydras Menus
+#+begin_src emacs-lisp
+
+  (defhydra hydra-other-hydras-menus (:color blue :columns 4)
+
+      ("(" hydra-macro/body "Macros" :color blue)
+      ("z" hydra-zoom/body "Zoom" :color blue)
+      ("N" hydra-narrow-widen/body "Narrow/Widen" :color blue)
+      ("n" hydra-narrow-widen/body "Narrow/Widen" :color blue)
+      ("h" hydra-help/body "Help" :color blue)
+      ("r" hydra-rectangle/body "Rectangle" :color blue)
+      ("F" hydra-flycheck/body "FlyCheck" :color blue)
+      ("L" hydra-math/body "Math Symbols" :color blue)
+
+      ("q" nil "cancel" :color blue))
+#+end_src
 * Narrow Widen Indirect Buffer
 :PROPERTIES:
 :ID:       95c4f5ce-7841-4ca3-9a7d-d117fe0f32dd
@@ -151,6 +155,51 @@ some configurations on top of it.
 
 #+END_SRC
 
+* Smerge Mode
+:PROPERTIES:
+:Created:  2021-12-29
+:ID:       b31ab4bb-6d56-45d7-8007-364e9621969b
+:END:
+#+begin_src emacs-lisp
+  (use-package smerge-mode
+    :config
+    (defhydra unpackaged/smerge-hydra
+      (:color pink :hint nil :post (smerge-auto-leave))
+      "
+  ^Move^       ^Keep^               ^Diff^                 ^Other^
+  ^^-----------^^-------------------^^---------------------^^-------
+  _n_ext       _b_ase               _<_: upper/base        _C_ombine
+  _p_rev       _u_pper              _=_: upper/lower       _r_esolve
+  ^^           _l_ower              _>_: base/lower        _k_ill current
+  ^^           _a_ll                _R_efine
+  ^^           _RET_: current       _E_diff
+  "
+      ("n" smerge-next)
+      ("p" smerge-prev)
+      ("b" smerge-keep-base)
+      ("u" smerge-keep-upper)
+      ("l" smerge-keep-lower)
+      ("a" smerge-keep-all)
+      ("RET" smerge-keep-current)
+      ("\C-m" smerge-keep-current)
+      ("<" smerge-diff-base-upper)
+      ("=" smerge-diff-upper-lower)
+      (">" smerge-diff-base-lower)
+      ("R" smerge-refine)
+      ("E" smerge-ediff)
+      ("C" smerge-combine-with-next)
+      ("r" smerge-resolve)
+      ("k" smerge-kill-current)
+      ("ZZ" (lambda ()
+              (interactive)
+              (save-buffer)
+              (bury-buffer))
+       "Save and bury buffer" :color blue)
+      ("q" nil "cancel" :color blue))
+    :hook (magit-diff-visit-file . (lambda ()
+                                     (when smerge-mode
+                                       (unpackaged/smerge-hydra/body)))))
+#+end_src
 * Flycheck
 :PROPERTIES:
 :ID:       d9197a4c-76fe-4877-b2a0-74c95efbcde1
@@ -267,14 +316,14 @@ How to create it:
   (defhydra hydra-functions (:color amaranth :hint nil)
     "
             Useful Functions
-    ^--------^------------------^-------^-------------^--------^---------------
-    ^Actions:^                  ^Toggle:^             ^Internet^
+    ^--------^------------------^-^----------------------^-------^-------------
+    ^Actions:^                  ^ ^                      ^Toggle:^
 
-    _s_: Sort lines             _t_: Truncate lines   _i_: Word of The day
-    _p_: Trim whitespaces       _f_: Fill paragraph   _g_: Google
-    _k_: Open file              ^ ^                   _h_: Google Translate
-    _l_: Open Terminal          ^ ^                   _d_: Define Word
-    _r_: Query Replace Regexp   ^ ^                   _a_: About Emacs
+    _s_: Sort lines             _i_: Ispell word         _t_: Truncate lines
+    _p_: Trim whitespaces       _I_: Ispell buffer       _f_: Fill paragraph
+    _k_: Open file              ^ ^                      ^ ^
+    _l_: Open Terminal          _d_: Define Word         ^ ^
+    _r_: Query Replace Regexp   _a_: About Emacs         ^ ^
 
     _m_: My Hydra Functions
 
@@ -291,9 +340,8 @@ How to create it:
     ("k" xah-open-in-external-app :color blue)
     ("l" xah-open-in-terminal :color blue)
 
-    ("i" wotd-select :color blue)
-    ("g" google-this-ray :color blue)
-    ("h" google-translate-smooth-translate :color blue)
+    ("i" phuc/ispell-dwim :color blue)
+    ("I" ispell-buffer :color blue)
     ("d" define-word-at-point :color blue)
     ("a" eos/hydra-about-emacs/body :color blue)
 
@@ -407,15 +455,15 @@ How to create it:
     ("y" yank-rectangle nil)
     ("k" kill-rectangle nil)
 
-    ("<right>" forward-char)     
-    ("<left>" backward-char)     
-    ("<down>" next-line)         
-    ("<up>" previous-line)       
+    ("<right>" forward-char)
+    ("<left>" backward-char)
+    ("<down>" next-line)
+    ("<up>" previous-line)
     ("<home>" move-beginning-of-line)
-    ("<end>" move-end-of-line)   
-    ("<RET>" nil :color blue)    
-    ("<ESC>" nil :color blue)    
-  
+    ("<end>" move-end-of-line)
+    ("<RET>" nil :color blue)
+    ("<ESC>" nil :color blue)
+
     ("q" nil "quit" :color blue))
 
 #+END_SRC
@@ -494,22 +542,27 @@ How to create it:
 #+BEGIN_SRC emacs-lisp
   (defhydra hydra-org (:color amaranth :hint nil)
     "
-     ^Org^
-    --------------------------------------------
-     _s_: Store Link       _i_: Clock In
-     _l_: Insert Link      _o_: Clock Out
-
-     _r_: Refile           _p_: Refile Archive
-     _t_: TODO Workflow
+     ^Roam^              ^Clock^         ^Heading^
+    --------------------------------------------------------
+     _r_: Insert Node    _i_: Clock In   _h_: Create ID
+     _f_: Find Node      _o_: Clock Out
+     _t_: Toggle Nodes
+     _F_: Random Node
 
     "
-    ("s" org-store-link nil :color blue)
-    ("l" org-insert-link nil  :color blue)
-    ("r" org-refile nil  :color blue)
-    ("t" org-todo nil  :color blue)
-    ("i" org-clock-in nil  :color blue)
-    ("o" org-clock-out nil  :color blue)
-    ("p" my-refile-archive :color blue)
+
+    ;; Roam
+    ("r" org-roam-node-insert :color blue)
+    ("f" org-roam-node-find :color blue)
+    ("t" org-roam-buffer-toggle :color blue)
+    ("F" org-roam-node-random :color blue)
+
+    ;; Clock
+    ("i" org-clock-in :color blue)
+    ("o" org-clock-out :color blue)
+
+    ;; Heading
+    ("h" org-id-get-create :color blue)
 
     ("q" nil "quit" :color blue))
 
@@ -549,7 +602,7 @@ How to create it:
   org table helper
   _r_ recalculate     _w_ wrap region      _c_ toggle coordinates
   _i_ iterate table   _t_ transpose        _D_ toggle debugger
-  _B_ iterate buffer  _E_ export table     
+  _B_ iterate buffer  _E_ export table
   _e_ eval formula    _s_ sort lines       _d_ edit field
   _q_ quit
   "
@@ -597,3 +650,62 @@ How to create it:
 
 #+END_SRC
 
+* Math
+:PROPERTIES:
+:ID:       5dda6f7f-c07e-4bb7-8e8d-3467bbdd5927
+:END:
+
+Hydra to easily insert greek letter and others math notations.
+
+#+BEGIN_SRC emacs-lisp
+  (defhydra hydra-math (:color amaranth :hint nil)
+      "
+       ^Math Notation^
+      --------------------------------------------
+       _z_: ±     _x_: ÷     _c_: ∑     _v_: ∃
+       _b_: ∄     _n_: ∀     _m_: ∈     _a_: ∉
+       _s_: ∏     _d_: θ     _f_: π     _g_: σ
+       _h_: φ     _j_: α     _k_: β
+      "
+      ("z" (lambda () (interactive)(insert "±"))  :color blue)
+      ("x" (lambda () (interactive)(insert "÷"))  :color blue)
+      ("c" (lambda () (interactive)(insert "∑"))  :color blue)
+      ("v" (lambda () (interactive)(insert "∃"))  :color blue)
+      ("b" (lambda () (interactive)(insert "∄"))  :color blue)
+      ("n" (lambda () (interactive)(insert "∀"))  :color blue)
+      ("m" (lambda () (interactive)(insert "∈"))  :color blue)
+      ("a" (lambda () (interactive)(insert "∉"))  :color blue)
+      ("s" (lambda () (interactive)(insert "∏"))  :color blue)
+      ("d" (lambda () (interactive)(insert "θ"))  :color blue)
+      ("f" (lambda () (interactive)(insert "π"))  :color blue)
+      ("g" (lambda () (interactive)(insert "σ"))  :color blue)
+      ("h" (lambda () (interactive)(insert "φ"))  :color blue)
+      ("j" (lambda () (interactive)(insert "α"))  :color blue)
+      ("k" (lambda () (interactive)(insert "β"))  :color blue)
+
+
+      ;; Hydra expected behavior.
+      ("<right>" forward-char)
+      ("<left>" backward-char)
+      ("<down>" next-line)
+      ("<up>" previous-line)
+      ("<home>" move-beginning-of-line)
+      ("<end>" move-end-of-line)
+      ("<RET>" nil :color blue)
+      ("<ESC>" nil :color blue)
+      ("q" nil "quit" :color blue))
+#+END_SRC
+
+* Projectile
+#+begin_src emacs-lisp
+  (defhydra hydra-projectile (:color blue :hint nil)
+    "
+      ^Projectile^
+      ^-^-------------------------------------------
+      _f_: Find File
+      _g_: Grep
+    "
+    ("f" projectile-find-file)
+    ("g" projectile-grep)
+    )
+#+end_src
