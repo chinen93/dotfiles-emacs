@@ -16,6 +16,18 @@ to perform almost all of their daily version control tasks directly
 from within Emacs. While many fine Git clients exist, only Magit and
 Git itself deserve to be called porcelains.
 
+* Git on Windows
+:PROPERTIES:
+:Created:  2022-01-16
+:ID:       863e1708-8587-4d0a-b49a-6a7d86d5c8f8
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (if (eq system-type 'windows-nt)
+      (add-to-list 'exec-path "C:/Program Files/Git/bin")
+  )
+#+END_SRC
+
 * Load Package: Magit
 :PROPERTIES:
 :ID:       d43d28de-6016-4f12-9505-236e9dcbbbf3
@@ -30,18 +42,6 @@ Git itself deserve to be called porcelains.
 :PROPERTIES:
 :ID:       36033a21-bb12-406d-9ebb-b4b85b91b2c4
 :END:
-
-** Magit on Windows
-:PROPERTIES:
-:Created:  2022-01-16
-:ID:       34914dbb-e5de-4ad5-b7d2-3f0577898e82
-:END:
-
-#+BEGIN_SRC emacs-lisp
-  (if (eq system-type 'windows-nt)
-      (add-to-list 'exec-path "C:/Program Files/Git/bin")
-  )
-#+END_SRC
 
 ** Make Magit Status Full screen buffer
 :PROPERTIES:
