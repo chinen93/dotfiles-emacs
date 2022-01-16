@@ -64,8 +64,19 @@ to happen before they are called.
     "Directory where configuration is stored")
 
   (defvar my/inits-config '("init-setup-package.org"
-                            "init-basicConfig.org"
-                            "init-keyBinding.org")
+			    "init-basicConfig.org"
+			    "init-keyBinding.org"
+			    "init-backup.org"
+			    "init-bookmark.org"
+			    "init-ibuffer.org"
+			    "init-completion.org"
+			    "init-ivy.org"
+			    "init-customFunctions.org"
+			    "init-hydra.org"
+			    "init-spellcheck.org"
+			    "init-orgmode.org"
+			    "init-yasnippet.org")
+
     "Initial order of configurations to be loaded because they have
     dependencies among the others")
 
@@ -87,14 +98,14 @@ directories and others files.
 
 Finally find all configuration files and put them into the sequence.
 #+BEGIN_SRC emacs-lisp
-  ;; Find the configuration files to load.
-  (let ((files (regexp-filter "\.org$" (directory-files my/emacs-config-dir))))
-    (dolist (file files)
+  (if (not (eq system-type 'windows-nt))
+    (let ((files (regexp-filter "\.org$" (directory-files my/emacs-config-dir))))
+      (dolist (file files)
 
-      ;; If file is not in the list, include it.
-      (unless (cl-member file my/inits-config :test 'string=)
-        (setq my/inits-config (append my/inits-config (list file))))))
-
+	;; If file is not in the list, include it.
+	(unless (cl-member file my/inits-config :test 'string=)
+	  (setq my/inits-config (append my/inits-config (list file))))))
+  )
 
   (defvar my/config-org-files my/inits-config
     "Files from which emacs will be applied `tangle-config-org` function
@@ -102,7 +113,7 @@ Finally find all configuration files and put them into the sequence.
 
   ;; Put this files into a path where is possible to load them later.
   (setq load-path (cons (expand-file-name my/emacs-config-dir)
-                        load-path ))
+			load-path ))
 #+END_SRC
 
 * Code to Tangle .org to .el Files

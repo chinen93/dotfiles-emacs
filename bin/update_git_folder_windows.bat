@@ -2,19 +2,17 @@ ECHO OFF
 ECHO --------------------------------------------------------
 ECHO Update git folder with changes on Windows
 
-SET emacsDirectory=%APPDATA%\.emacs.d\
-SET gitDirectory=%USERPROFILE%\Documents\git\dotfiles-emacs\files\
+REM ==================================================================
+REM Change variables to point to the correct path.
+SET emacsFolder=%APPDATA%
+SET gitFolder=%USERPROFILE%\Desktop\Pedro\git\dotfiles-emacs\files\
 
-ECHO --------------------------------------------------------
-ECHO Moving Emacs Configuration Files Folder into Position
-
-COPY /Y %emacsDirectory%\init.el %gitDirectory%\emacs
 ECHO --------------------------------------------------------
 ECHO Moving Emacs Configuration Folder into Position
-
-XCOPY %APPDATA%\emacsConfig %gitDirectory%\emacsConfig /E /I /H
-XCOPY %APPDATA%\emacsSnippets %gitDirectory%\emacsSnippets /E /I /H
-
+XCOPY %emacsFolder%\emacsConfig %gitFolder%\emacsConfig /E /I /H
+XCOPY %emacsFolder%\emacsSnippets %gitFolder%\emacsSnippets /E /I /H
 ECHO --------------------------------------------------------
+
+ECHO Git folder updated, push changes to repository
 
 PAUSE

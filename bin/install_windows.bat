@@ -1,15 +1,33 @@
 ECHO OFF
 ECHO --------------------------------------------------------
 ECHO Installing Emacs Configuration
+
+REM --------------------------------------------------------
+REM Change variables to point to the correct path.
 SET emacsDirectory=%APPDATA%\.emacs.d\
-SET gitDirectory=%USERPROFILE%\Documents\git\dotfiles-emacs\files\
+SET gitDirectory=%USERPROFILE%\Desktop\Pedro\git\dotfiles-emacs\files
+SET initFile=%gitDirectory%\init-emacs.el
+
+ECHO --------------------------------------------------------
+ECHO Checking if init file exists
+IF NOT EXIST %initFile% (
+   ECHO ======================================================================================
+   ECHO ERROR
+   ECHO ---
+   ECHO %initFile% does not exist
+   ECHO run "init_emacs_tangle_windows" first to create it.
+   ECHO ======================================================================================
+   PAUSE
+   EXIT
+)
+
 ECHO --------------------------------------------------------
 ECHO Moving Emacs Configuration Files Folder into Position
 IF EXIST %emacsDirectory%\init.el (
    DEL %emacsDirectory%\init.el
 )
 
-COPY /Y %gitDirectory%\emacs %emacsDirectory%\init.el
+COPY /Y %initFile% %emacsDirectory%\init.el
 ECHO --------------------------------------------------------
 ECHO Moving Emacs Configuration Folder into Position
 IF EXIST %APPDATA%\emacsConfig (
@@ -28,6 +46,10 @@ ECHO --------------------------------------------------------
 ECHO Remove read-only attribute from %emacsDirectory%
 
 ATTRIB -R %emacsDirectory%
+
+ECHO --------------------------------------------------------
+ECHO Delete %initFile% from installation folder
+DEL %initFile%
 
 ECHO --------------------------------------------------------
 
