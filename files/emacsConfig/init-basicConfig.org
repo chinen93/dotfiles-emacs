@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2021-05-11 ter]
+#+DATE-UPDATED: [2022-01-16 dom]
 
 It doesn't need any external package. Just pure Elisp.
 
@@ -293,8 +293,13 @@ Creation of home folder and derivates from it
   (defvar my/snippets-folder (concat my/home-folder "emacsSnippets")
     "Path to Snippets Folder")
 
-  (defvar my/dropbox-folder (concat my/home-folder "Dropbox/")
-    "Path to Dropbox Folder")
+  (if (not (eq system-type 'windows-nt))
+      (defvar my/dropbox-folder (concat my/home-folder "Dropbox/")
+        "Path to Dropbox Folder")
+
+    ;; Windows's dropbox folder
+    (defvar my/dropbox-folder (substitute-in-file-name  "$HOMEPATH/Desktop/Pedro/Dropbox/")
+        "Path to Dropbox Folder"))
 
   (defvar my/notes-directory (concat my/dropbox-folder "Notes/")
     "Notes base directory")

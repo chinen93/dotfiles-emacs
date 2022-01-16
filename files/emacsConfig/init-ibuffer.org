@@ -8,36 +8,35 @@
 :ID:       b3a1fc83-beca-4380-9032-13ef9a5d82ee
 :END:
 #+BEGIN_SRC emacs-lisp
-  (use-package ibuffer
-    :config
+  (require 'ibuffer)
 
-    ;; Disable prompt when deleting modified buffer.
-    (setq ibuffer-expert t)
+  ;; Disable prompt when deleting modified buffer.
+  (setq ibuffer-expert t)
 
-    ;; Display iBuffer in the current window.
-    (setq ibuffer-use-other-window nil)
+  ;; Display iBuffer in the current window.
+  (setq ibuffer-use-other-window nil)
 
-    ;; Don't show empty filters.
-    (setq ibuffer-show-empty-filter-groups nil)
+  ;; Don't show empty filters.
+  (setq ibuffer-show-empty-filter-groups nil)
 
-    ;; Improve the moviment in ibuffer.
-    (setq ibuffer-movement-cycle t)
-    (define-key ibuffer-mode-map (kbd "<up>") 'ibuffer-backward-line)
-    (define-key ibuffer-mode-map (kbd "<down>") 'ibuffer-forward-line)
-    (define-key ibuffer-mode-map (kbd "<right>") 'ibuffer-forward-filter-group)
-    (define-key ibuffer-mode-map (kbd "<left>") 'ibuffer-backward-filter-group)
-    (define-key ibuffer-mode-map (kbd "<tab>") 'ibuffer-toggle-filter-group)
+  ;; Improve the moviment in ibuffer.
+  (setq ibuffer-movement-cycle t)
+  (define-key ibuffer-mode-map (kbd "<up>") 'ibuffer-backward-line)
+  (define-key ibuffer-mode-map (kbd "<down>") 'ibuffer-forward-line)
+  (define-key ibuffer-mode-map (kbd "<right>") 'ibuffer-forward-filter-group)
+  (define-key ibuffer-mode-map (kbd "<left>") 'ibuffer-backward-filter-group)
+  (define-key ibuffer-mode-map (kbd "<tab>") 'ibuffer-toggle-filter-group)
 
-    ;; Set the sorting method for the ibuffer
-    (setq ibuffer-default-sorting-mode 'filename/process)
+  ;; Set the sorting method for the ibuffer
+  (setq ibuffer-default-sorting-mode 'filename/process)
 
-    ;; Display a header line containing current filters.
-    (setq ibuffer-use-header-line t)
+  ;; Display a header line containing current filters.
+  (setq ibuffer-use-header-line t)
 
-    ;; Don't show a summary
-    (setq ibuffer-display-summary nil)
+  ;; Don't show a summary
+  (setq ibuffer-display-summary nil)
 
-    (setq ibuffer-default-shrink-to-minimum-size nil))
+  (setq ibuffer-default-shrink-to-minimum-size nil)
 #+END_SRC
 
 * Use Human readable Size column
@@ -110,8 +109,8 @@
 :END:
 
 #+BEGIN_SRC emacs-lisp
-(use-package ibuffer-vc
-  :ensure t)
+;;(use-package ibuffer-vc
+;;  :ensure t)
 #+END_SRC
 
 Define groups

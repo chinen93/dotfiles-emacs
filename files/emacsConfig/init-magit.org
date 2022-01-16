@@ -1,7 +1,7 @@
 #+TITLE:        Magit Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2019-09-22 dom]
+#+DATE-UPDATED: [2022-01-16 dom]
 
 Using [[https://git-scm.com/][Git]] can be sometimes tedious on the command terminal. And
 switching to it can have much impact on my focus because I have to
@@ -30,6 +30,18 @@ Git itself deserve to be called porcelains.
 :PROPERTIES:
 :ID:       36033a21-bb12-406d-9ebb-b4b85b91b2c4
 :END:
+
+** Magit on Windows
+:PROPERTIES:
+:Created:  2022-01-16
+:ID:       34914dbb-e5de-4ad5-b7d2-3f0577898e82
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (if (eq system-type 'windows-nt)
+      (add-to-list 'exec-path "C:/Program Files/Git/bin")
+  )
+#+END_SRC
 
 ** Make Magit Status Full screen buffer
 :PROPERTIES:

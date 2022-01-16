@@ -1,7 +1,7 @@
 #+TITLE:        Setup Package Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2021-09-21 ter]
+#+DATE-UPDATED: [2022-01-16 dom]
 
 #+BEGIN_SRC emacs-lisp
   (require 'package)
@@ -79,15 +79,12 @@
 :ID:       a90bf7d2-6946-4c3a-a3f8-8a3f2cb68b8c
 :END:
 #+BEGIN_SRC emacs-lisp
-  ;; If not in windows require these configs
-  (unless (eq system-type 'windows-nt)
+  (require-package 'use-package)
+  (setq use-package-verbose t)
+  (setq load-prefer-newer t)
 
-    (require-package 'use-package)
-    (setq use-package-verbose t)
-    (setq load-prefer-newer t)
-
-    (use-package gnu-elpa-keyring-update
-      :ensure t))
+  (use-package gnu-elpa-keyring-update
+    :ensure t)
 
 #+END_SRC
 

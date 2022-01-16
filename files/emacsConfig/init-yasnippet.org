@@ -1,7 +1,7 @@
 #+TITLE:        Yasnippet Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2021-05-12 qua]
+#+DATE-UPDATED: [2022-01-16 dom]
 
 Yasnippet is a template system for Emacs. It allows you to type an
 abbreviation and automatically expand it into function
@@ -115,10 +115,10 @@ A mode that comes with Emacs that automagically inserts text into new
 buffers based on file extension or the major mode.
 
 #+BEGIN_SRC emacs-lisp
-  (use-package autoinsert
-    :init
-    (add-hook 'find-file-hook 'auto-insert)
-    (auto-insert-mode 1))
+;;  (use-package autoinsert
+;;    :init
+;;    (add-hook 'find-file-hook 'auto-insert)
+;;    (auto-insert-mode 1))
 #+END_SRC
 
 ** Set Templates Directory
