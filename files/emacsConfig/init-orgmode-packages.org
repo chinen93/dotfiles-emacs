@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2022-01-15 sáb]
-#+DATE-UPDATED: [2022-01-04 ter]
+#+DATE-UPDATED: [2022-02-08 ter]
 
 * HTML
   :PROPERTIES:
@@ -15,6 +15,8 @@
 :PROPERTIES:
 :ID:       5c26eb5e-fcd3-4975-82c8-91442dcabdbe
 :END:
+
+https://www.orgroam.com/manual.html#Installation
 
 #+begin_src emacs-lisp
   (use-package org-roam
