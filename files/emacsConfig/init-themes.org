@@ -1,7 +1,7 @@
 #+TITLE:        Themes Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2022-01-17 seg]
+#+DATE-UPDATED: [2022-02-16 qua]
 
 A *Theme* is a collection of graphical appearance details in order to
 change the look and feel of a Graphical User Interface (GUI). Usually

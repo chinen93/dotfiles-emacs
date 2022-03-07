@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2022-01-15 sáb]
+#+DATE-UPDATED: [2022-03-07 Mon]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -116,6 +116,18 @@ reproducible research.
 
       (call-interactively 'org-refile)))
 #+END_SRC
+
+* Timestamp
+:PROPERTIES:
+:Created:  2022-02-25
+:ID:       1e82c630-0aee-4ffa-93de-e9a94b16f069
+:END:
+
+Set system's locale for time to be on English mode always.
+
+#+begin_src emacs-lisp
+(setq system-time-locale "C")
+#+end_src
 
 * Agenda
 :PROPERTIES:
@@ -784,6 +796,20 @@ https://emacs.stackexchange.com/questions/21366/should-i-have-removed-shell-t-to
         (my-insert-string point-begin point-end "*"))))
 #+END_SRC
 
+
+** Heading with IDs
+:PROPERTIES:
+:Created:  2022-03-07
+:END:
+
+#+begin_src emacs-lisp
+  (defun my/org-heading-with-id ()
+    (interactive)
+    (progn
+      (org-insert-heading-respect-content)
+      (org-id-get-create)))
+#+end_src
+
 * Hooks
 :PROPERTIES:
 :ID:       97b4a8b1-8d0b-4f54-9c25-44439c58c3f9
@@ -802,7 +828,7 @@ https://emacs.stackexchange.com/questions/21366/should-i-have-removed-shell-t-to
 
   ;; Add hook to org mode
   (add-hook 'org-mode-hook 'my-org-hook-function)
-  (add-hook 'org-insert-heading-hook 'org-id-get-create)
+  ;; (add-hook 'org-insert-heading-hook 'org-id-get-create)
   (add-hook 'org-insert-heading-hook 'my/org-heading-creation-date)
 
   (add-hook 'org-mode-hook
@@ -1007,3 +1033,13 @@ https://journals.ieeeauthorcenter.ieee.org/create-your-ieee-article/authoring-to
                    ("\\paragraph{%s}" . "\\paragraph*{%s}")
                    ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 #+END_SRC
+
+* Key Map Definitions
+:PROPERTIES:
+:Created:  2022-03-07
+:END:
+
+#+begin_src emacs-lisp
+  (with-eval-after-load 'org
+    (define-key org-mode-map (kbd "<C-return>") 'my/org-heading-with-id))
+#+end_src
