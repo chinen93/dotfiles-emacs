@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2022-03-07 Mon]
+#+DATE-UPDATED: [2022-05-12 Thu]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -173,7 +173,6 @@ Skip tasks done in daily/weekly agenda
   (setq org-agenda-skip-deadline-if-done t)
 
 #+END_SRC
-
 
 Default duration for appointments that only have a starting time.
 #+BEGIN_SRC emacs-lisp
@@ -436,6 +435,21 @@ will be and current working projects.
             ((org-agenda-overriding-header "\nCompleted Today\n")))
       )))
 #+END_SRC
+* Diary
+:PROPERTIES:
+:Created:  2022-05-11
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (setq diary-file (concat my/dropbox-folder "Notes/diary"))
+
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-agenda-include-diary t)
+
+#+END_SRC
+
 * Structure Templates
 :PROPERTIES:
 :ID:       abdb3d61-d414-492b-bf87-d670c5f52d82
