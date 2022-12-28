@@ -1,8 +1,12 @@
-ECHO OFF
-ECHO --------------------------------------------------------
-ECHO Installing Emacs Configuration
+@ECHO OFF
 
-REM --------------------------------------------------------
+REM ================================================================================
+REM Install Emacs onto APPDATA folder
+REM   
+REM When cloning the dotfiles repository the files should be copied to APPDATA folder
+REM so that Emacs program can see them and use without problems
+REM ================================================================================
+
 REM Change variables to point to the correct path.
 SET SUFIX=C:\Users\ehidped
 SET gitDirectory=%SUFIX%\Desktop\Pedro\git\dotfiles-emacs\files
@@ -10,10 +14,26 @@ SET initFile=%gitDirectory%\init-emacs.el
 
 SET emacsDirectory=%APPDATA%\.emacs.d\
 
-ECHO Emacs Directory: %emacsDirectory%
-ECHO Git Directory: %gitDirectory%
-ECHO Init File: %initFile%
+ECHO --------------------------------------------------------
+ECHO Installing Emacs Configuration
+ECHO Emacs Directory:
+ECHO   %emacsDirectory%
+ECHO Git Directory:
+ECHO   %gitDirectory%
+ECHO Init File:
+ECHO   %initFile%
 
+SET /p OPTION="Proceed? [y/N]: "
+
+REM ==================================================================
+REM Handle user's option
+IF %OPTION%==y GOTO :install
+IF %OPTION%==Y GOTO :install
+GOTO :end
+
+REM ==================================================================
+REM Install
+:install
 ECHO --------------------------------------------------------
 ECHO Checking if init file exists
 IF NOT EXIST "%initFile%" (
@@ -59,5 +79,7 @@ DEL "%initFile%"
 
 ECHO --------------------------------------------------------
 
+REM ==================================================================
 
+:end
 PAUSE
