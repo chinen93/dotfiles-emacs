@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2022-12-28 Wed]
+#+DATE-UPDATED: [2023-03-22 Wed]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -69,7 +69,7 @@ reproducible research.
   ;; ! - log timestamp when changing to this keyword
   ;; @ - log a note when changing to this keyword
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "WORKING(w!)" "TODAY(T!)" "|" "DONE(d!)")
+        '((sequence "TODO(t)" "WORKING(w!)" "WEEK(W!)" "|" "DONE(d!)")
           (sequence "|" "CANCELED(c@/!)")))
 
   ;; Follows links when press <ENTER> on them
@@ -151,6 +151,9 @@ Set org agenda files
   (add-to-list 'org-agenda-files
                (concat my/dropbox-folder "Notes/Planos.org"))
 
+  (add-to-list 'org-agenda-files
+               (concat my/dropbox-folder "Notes/Datas.org"))
+
 #+END_SRC
 
 ** Configure some information
@@ -210,20 +213,39 @@ Remove all Org Mode agenda commands. To only show my custom commands.
 Main agenda with the most important information to show how the week
 will be and current working projects.
 
+Got the main idea from https://www.philnewton.net/blog/org-agenda-monthly-goals/
+
 #+BEGIN_SRC emacs-lisp
   (add-to-list
    'org-agenda-custom-commands
 
    ;; Custom agenda that show all the TODO tasks
    '("m" "Main Agenda"
-     ((agenda ""
+     (
+      (tags "ativo+PRIORITY=\"A\""
+            ((org-agenda-overriding-header "Objetivos Primários para o ano")
+             (org-agenda-files `(,(concat my/dropbox-folder "Notes/Planos.org")))))
+      (tags "ativo+PRIORITY=\"C\""
+            ((org-agenda-overriding-header "Objetivos Secundários para o ano")
+             (org-agenda-files `(,(concat my/dropbox-folder "Notes/Planos.org")))))
+      (todo "WORKING"
+            ((org-agenda-overriding-header "\nPlanos Atuais\n")
+             (org-agenda-files
+              `(,(concat my/dropbox-folder "Notes/Planos.org")))))
+      (agenda ""
               ((org-agenda-span 10)
+               (org-agenda-log-mode-items '(closed))
+               (org-agenda-show-log t)
                (org-agenda-start-day "-1d")))
+      (todo "TODO"
+            ((org-agenda-overriding-header "\nPlanejamento Semanal\n")
+             (org-agenda-files
+              `(,(concat my/dropbox-folder "Notes/PlanejamentoSemanal.org")))))
       )
      nil))
 #+END_SRC
 
-*** CANCELED All DONE Items from This Week
+*** Monthly Review
 CLOSED: [2022-12-28 Wed 15:46]
 :PROPERTIES:
 :ID:       2970d122-05c8-47bf-8f60-0ac4e25bcf04
@@ -237,14 +259,14 @@ CLOSED: [2022-12-28 Wed 15:46]
    'org-agenda-custom-commands
 
    ;; Custom command to show done task from previous week
-   '("d" "DONE from this week"
+   '("r" "Monthly Review"
      ;; Use normal agenda
      ((agenda ""
               ;; Put some configurations on this agenda
               ;; Show closed tasks and show 7 days starting today
-              ((org-agenda-log-mode-items '(closed))
-               (org-agenda-span 7)
-               (org-agenda-start-day "-6d")
+              ((org-agenda-log-mode-items '(state))
+               (org-agenda-span 30)
+               (org-agenda-start-day "-29d")
                (org-agenda-show-log t)
                (org-agenda-window-setup 'other-window))))
      nil))
@@ -348,7 +370,7 @@ CLOSED: [2022-12-28 Wed 15:46]
                  `(,(concat my/dropbox-folder "Notes/NeuralMind.org"))))))))
 #+END_SRC
 
-*** CANCELED Get Things Done
+*** Get Things Done
 CLOSED: [2022-12-28 Wed 15:49]
 :PROPERTIES:
 :ID:       9c99f396-cf8a-480c-bb8b-b6ec4635090c
@@ -358,9 +380,13 @@ CLOSED: [2022-12-28 Wed 15:49]
   not been used
 :END:
 
-**** Weekly agenda
+**** CANCELED Weekly agenda
+CLOSED: [2023-03-20 Mon 11:47]
 :PROPERTIES:
 :ID:       ccccc04c-8e74-42c0-91ca-00a6058d7a25
+:END:
+:LOGBOOK:
+- State "CANCELED"   from              [2023-03-20 Mon 11:47]
 :END:
 #+BEGIN_SRC emacs-lisp
   (defmacro my--create-agenda-custom-tags-todo (tag title)
@@ -391,45 +417,40 @@ CLOSED: [2022-12-28 Wed 15:49]
       )))
 #+END_SRC
 **** Main agenda for GTD
+CLOSED: [2023-03-20 Mon 11:47]
 :PROPERTIES:
 :ID:       d983dcc5-113d-4474-abd1-4f1bcff71d50
+:END:
+:LOGBOOK:
+- State "CANCELED"   from              [2023-03-20 Mon 11:47]
 :END:
 #+BEGIN_SRC emacs-lisp
   (add-to-list
    'org-agenda-custom-commands
 
-   '("g" "Get Things Done"
-     ((todo ""
-            ((org-agenda-overriding-header "\nPlanos\n")
+   '("n" "Get Things Done"
+     (
+      (todo "TODO"
+            ((org-agenda-overriding-header "\nPlanejamento Semanal\n")
+             (org-agenda-files
+              `(,(concat my/dropbox-folder "Notes/PlanejamentoSemanal.org")))))
+      (todo "WORKING"
+            ((org-agenda-overriding-header "\nPlanos Atuais\n")
              (org-agenda-files
               `(,(concat my/dropbox-folder "Notes/Planos.org")))))
-      (agenda ""
-              ((org-agenda-overriding-header "\nAgenda\n")
-               (org-agenda-span 4)
-               (org-agenda-start-day "-1d")))
-      (agenda ""
-              ((org-agenda-overriding-header "\Deadlines\n")
-               (org-agenda-time-grid nil)
-               (org-deadline-warning-days 365)
-               (org-agenda-entry-types '(:deadline))))
-      (todo ""
-            ((org-agenda-overriding-header "\nDaily\n")
-             (org-agenda-files
-              `(,(concat my/dropbox-folder "Notes/Daily.org")))))
-      (todo "TODAY"
-            ((org-agenda-overriding-header "\nToday\n")
-             (org-agenda-files
-              `(,(concat my/dropbox-folder "Notes/Projetos.org")))))
       (todo "WORKING"
-            ((org-agenda-overriding-header "\nWorking\n")
+            ((org-agenda-overriding-header "\nProjetos Atuais\n")
+             (org-agenda-files
+              `(,(concat my/dropbox-folder "Notes/Projetos.org")))))
+      (todo "WEEK"
+            ((org-agenda-overriding-header "\nAtividades Atuais\n")
              (org-agenda-files
               `(,(concat my/dropbox-folder "Notes/Projetos.org")))))
       (todo ""
-            ((org-agenda-overriding-header "\nInbox\n")
+            ((org-agenda-overriding-header "\nCaptures\n")
              (org-agenda-files
               `(,(concat my/dropbox-folder "Notes/gtd_inbox.org")))))
-      (tags "CLOSED>=\"<today>\""
-            ((org-agenda-overriding-header "\nCompleted Today\n")))
+
       )))
 #+END_SRC
 * Diary
@@ -879,9 +900,13 @@ Remove all capture templates.
 
 [[id:25a25f76-eb2c-4203-8a75-6a49751f0cc7][Capture Template Structures]]
 
-** Contact Template
+** CANCELED Contact Template
+CLOSED: [2023-03-20 Mon 18:10]
 :PROPERTIES:
 :ID:       fb54fa73-e4c7-4653-acd4-8357b9adb7bd
+:END:
+:LOGBOOK:
+- State "CANCELED"   from              [2023-03-20 Mon 18:10]
 :END:
 #+BEGIN_SRC emacs-lisp
   (let ((filename (concat my/dropbox-folder "Contacts.org"))
@@ -903,9 +928,13 @@ Remove all capture templates.
 
 #+END_SRC
 
-** Project Template
+** CANCELED Project Template
+CLOSED: [2023-03-20 Mon 18:10]
 :PROPERTIES:
 :ID:       47c0325c-9ce4-4c35-b376-6836fab45957
+:END:
+:LOGBOOK:
+- State "CANCELED"   from              [2023-03-20 Mon 18:10]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -925,9 +954,13 @@ Remove all capture templates.
 
 #+END_SRC
 
-** Conversa Template
+** CANCELED Conversa Template
+CLOSED: [2023-03-20 Mon 18:10]
 :PROPERTIES:
 :ID:       7fb6d611-0a97-44d4-9d68-a0b5e80b59c9
+:END:
+:LOGBOOK:
+- State "CANCELED"   from              [2023-03-20 Mon 18:10]
 :END:
 
 #+BEGIN_SRC emacs-lisp
@@ -952,9 +985,13 @@ Remove all capture templates.
        ,template
        :empty-lines 1)))
 #+END_SRC
-** NeuralMind Template
+** CANCELED NeuralMind Template
+CLOSED: [2023-03-20 Mon 18:10]
 :PROPERTIES:
 :ID:       0faee2d9-c51b-4164-99cc-e47b591b816d
+:END:
+:LOGBOOK:
+- State "CANCELED"   from              [2023-03-20 Mon 18:10]
 :END:
 #+BEGIN_SRC emacs-lisp
   (let ((filename (concat my/dropbox-folder "Notes/NeuralMind.org"))
@@ -981,7 +1018,7 @@ Remove all capture templates.
                           " ")))
     (add-to-list
      'org-capture-templates
-     `("g" "GTD Inbox" entry
+     `("c" "GTD Inbox" entry
        (file ,filename)
        ,template
        :empty-lines 1)))
