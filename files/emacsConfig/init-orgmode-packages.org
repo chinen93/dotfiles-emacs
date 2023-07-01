@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2022-01-15 sáb]
-#+DATE-UPDATED: [2022-02-08 ter]
+#+DATE-UPDATED: [2023-06-25 Sun]
 
 * HTML
   :PROPERTIES:
@@ -19,14 +19,14 @@
 https://www.orgroam.com/manual.html#Installation
 
 #+begin_src emacs-lisp
-  (use-package org-roam
-    :ensure t
-    :init
-    (setq org-roam-v2-ack t)
-    :custom
-    (org-roam-directory (file-truename (concat my/dropbox-folder "Notes/")))
-    (org-roam-completion-everywhere t)
-    (org-roam-node-display-template "${title:*} ${tags:50}")
-    :config
-    (org-roam-db-autosync-mode))
+  ;; (use-package org-roam
+  ;;   :ensure t
+  ;;   :init
+  ;;   (setq org-roam-v2-ack t)
+  ;;   :custom
+  ;;   (org-roam-directory (file-truename (concat my/dropbox-folder "Notes/")))
+  ;;   (org-roam-completion-everywhere t)
+  ;;   (org-roam-node-display-template "${title:*} ${tags:50}")
+  ;;   :config
+  ;;   (org-roam-db-autosync-mode))
 #+end_src

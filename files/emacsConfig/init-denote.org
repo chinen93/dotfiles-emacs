@@ -1,0 +1,15 @@
+#+TITLE:        Denote Configuration
+#+AUTHOR:       Pedro Chinen
+#+EMAIL:        ph.u.chinen@gmail.com
+#+DATE-CREATED: [2023-06-30 Fri]
+#+DATE-UPDATED: [2023-06-30 Fri]
+
+#+begin_src emacs-lisp
+  (use-package denote
+    :ensure t
+    :custom
+    (denote-directory (expand-file-name my/notes-directory))
+    )
+
+  (add-hook 'dired-mode-hook #'denote-dired-mode)
+#+end_src

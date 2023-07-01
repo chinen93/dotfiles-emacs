@@ -9,7 +9,7 @@ REM ============================================================================
 
 REM Change variables to point to the correct path.
 SET SUFIX=C:\Users\ehidped
-SET gitDirectory=%SUFIX%\Desktop\Pedro\git\dotfiles-emacs\files
+SET gitDirectory=%SUFIX%\Pedro\git\dotfiles-emacs\files
 SET initFile=%gitDirectory%\init-emacs.el
 
 SET emacsDirectory=%APPDATA%\.emacs.d\

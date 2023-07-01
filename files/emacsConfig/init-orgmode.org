@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2023-03-22 Wed]
+#+DATE-UPDATED: [2023-06-30 Fri]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -101,20 +101,20 @@ reproducible research.
   (setq org-outline-path-complete-in-steps nil)
 
   ;; Refile things to the Project file under Note or Task headings
-  (setq org-refile-targets
-        `((,(concat my/dropbox-folder "Notes/Projetos.org") :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")))
+  ;;(setq org-refile-targets
+  ;;      `((,(concat my/dropbox-folder "Notes/Projetos.org") :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-  (defun my-refile-archive ()
-    "Refile to the archive file"
-    (interactive)
-    (let ((org-refile-targets
-           `((,(concat my/dropbox-folder "Notes/Projetos_archive.org")
-              :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")))
-          (org-refile-history nil))
+  ;; (defun my-refile-archive ()
+  ;;   "Refile to the archive file"
+  ;;   (interactive)
+  ;;   (let ((org-refile-targets
+  ;;          `((,(concat my/dropbox-folder "Notes/Projetos_archive.org")
+  ;;             :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")))
+  ;;         (org-refile-history nil))
 
-      (call-interactively 'org-refile)))
+  ;;     (call-interactively 'org-refile)))
 #+END_SRC
 
 * Timestamp
@@ -142,18 +142,10 @@ Set org agenda files
 #+BEGIN_SRC emacs-lisp
   (setq org-agenda-files nil)
 
-  (add-to-list 'org-agenda-files
-               (concat my/dropbox-folder "Notes/Rotina.org"))
-
-  (add-to-list 'org-agenda-files
-               (concat my/dropbox-folder "Notes/Projetos.org"))
-
-  (add-to-list 'org-agenda-files
-               (concat my/dropbox-folder "Notes/Planos.org"))
-
-  (add-to-list 'org-agenda-files
-               (concat my/dropbox-folder "Notes/Datas.org"))
-
+  (add-to-list 'org-agenda-files my/routine-filename)
+  (add-to-list 'org-agenda-files my/projects-filename)
+  (add-to-list 'org-agenda-files my/plans-filename)
+  (add-to-list 'org-agenda-files my/dates-filename)
 #+END_SRC
 
 ** Configure some information
@@ -194,6 +186,10 @@ Agenda show next 7 days and previous 3 days
 
 #+END_SRC
 
+Agenda Prefix Format
+#+begin_src emacs-lisp
+  (setq org-agenda-prefix-format "%t %s")
+#+end_src
 ** Custom Commands
 :PROPERTIES:
 :ID:       9f11523a-b7c1-432a-94b4-d406ca487263
@@ -224,14 +220,13 @@ Got the main idea from https://www.philnewton.net/blog/org-agenda-monthly-goals/
      (
       (tags "ativo+PRIORITY=\"A\""
             ((org-agenda-overriding-header "Objetivos Primários para o ano")
-             (org-agenda-files `(,(concat my/dropbox-folder "Notes/Planos.org")))))
+             (org-agenda-files `(,my/plans-filename))))
       (tags "ativo+PRIORITY=\"C\""
             ((org-agenda-overriding-header "Objetivos Secundários para o ano")
-             (org-agenda-files `(,(concat my/dropbox-folder "Notes/Planos.org")))))
+             (org-agenda-files `(,my/plans-filename))))
       (todo "WORKING"
             ((org-agenda-overriding-header "\nPlanos Atuais\n")
-             (org-agenda-files
-              `(,(concat my/dropbox-folder "Notes/Planos.org")))))
+             (org-agenda-files `(,my/plans-filename))))
       (agenda ""
               ((org-agenda-span 10)
                (org-agenda-log-mode-items '(closed))
@@ -239,8 +234,7 @@ Got the main idea from https://www.philnewton.net/blog/org-agenda-monthly-goals/
                (org-agenda-start-day "-1d")))
       (todo "TODO"
             ((org-agenda-overriding-header "\nPlanejamento Semanal\n")
-             (org-agenda-files
-              `(,(concat my/dropbox-folder "Notes/PlanejamentoSemanal.org")))))
+             (org-agenda-files `(,my/week-plans-filename))))
       )
      nil))
 #+END_SRC
@@ -308,8 +302,7 @@ CLOSED: [2022-12-28 Wed 16:07]
    ;; Custom agenda to show agenda and todo for every note
    `("n" "All TODO's in Notes"
      ((alltodo ""
-               ((org-agenda-files
-                `(,(concat my/dropbox-folder "Notes/"))))))
+               ((org-agenda-files `(,my/notes-directory)))))
      nil))
 
 #+END_SRC
@@ -432,25 +425,19 @@ CLOSED: [2023-03-20 Mon 11:47]
      (
       (todo "TODO"
             ((org-agenda-overriding-header "\nPlanejamento Semanal\n")
-             (org-agenda-files
-              `(,(concat my/dropbox-folder "Notes/PlanejamentoSemanal.org")))))
+             (org-agenda-files `(,my/week-plans-filename))))
       (todo "WORKING"
             ((org-agenda-overriding-header "\nPlanos Atuais\n")
-             (org-agenda-files
-              `(,(concat my/dropbox-folder "Notes/Planos.org")))))
+             (org-agenda-files `(,my/plans-filename))))
       (todo "WORKING"
             ((org-agenda-overriding-header "\nProjetos Atuais\n")
-             (org-agenda-files
-              `(,(concat my/dropbox-folder "Notes/Projetos.org")))))
+             (org-agenda-files `(,my/projects-filename))))
       (todo "WEEK"
             ((org-agenda-overriding-header "\nAtividades Atuais\n")
-             (org-agenda-files
-              `(,(concat my/dropbox-folder "Notes/Projetos.org")))))
+             (org-agenda-files `(,my/projects-filename))))
       (todo ""
             ((org-agenda-overriding-header "\nCaptures\n")
-             (org-agenda-files
-              `(,(concat my/dropbox-folder "Notes/gtd_inbox.org")))))
-
+             (org-agenda-files `(,my/gtd-inbox-filename))))
       )))
 #+END_SRC
 * Diary
@@ -459,7 +446,7 @@ CLOSED: [2023-03-20 Mon 11:47]
 :END:
 
 #+BEGIN_SRC emacs-lisp
-  (setq diary-file (concat my/dropbox-folder "Notes/diary"))
+  (setq diary-file my/diary-filename)
 
 #+END_SRC
 
@@ -1010,7 +997,7 @@ CLOSED: [2023-03-20 Mon 18:10]
 :ID:       1479e75c-c88e-49a9-8c53-0b2306bd9bc3
 :END:
 #+BEGIN_SRC emacs-lisp
-  (let ((filename (concat my/dropbox-folder "Notes/gtd_inbox.org"))
+  (let ((filename my/gtd-inbox-filename)
         (template (concat "* TODO %?\n"
                           ":LOGBOOK:\n"
                           "Created on %U\n"

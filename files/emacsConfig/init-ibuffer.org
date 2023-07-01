@@ -1,7 +1,7 @@
 #+TITLE:        iBuffer Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2020-04-15 qua]
-#+DATE-UPDATED: [2021-10-10 dom]
+#+DATE-UPDATED: [2023-06-30 Fri]
 
 * Install and Configure
 :PROPERTIES:
@@ -91,9 +91,7 @@
   ;; Modify the default ibuffer-formats
   (setq ibuffer-formats
         '((mark modified read-only locked " "
-                (name 30 30 :left :elide)
-                " "
-                (size-h 11 -1 :right)
+                (name 60 60 :left :elide)
                 " "
                 (mode 16 16 :left :elide)
                 " "

@@ -10,8 +10,8 @@ REM ============================================================================
 
 REM Change the lines below to the correct paths
 SET SUFIX=C:\Users\ehidped
-SET emacsProgram=%SUFIX%\Desktop\Pedro\Programas\emacs-27.2-x86_64\bin\runemacs.exe
-SET emacsFilesFolderOriginal=%SUFIX%\Desktop\Pedro\git\dotfiles-emacs\files
+SET emacsProgram=%SUFIX%\Pedro\Programas\emacs-28.2\bin\runemacs.exe
+SET emacsFilesFolderOriginal=%SUFIX%\Pedro\git\dotfiles-emacs\files
 
 REM Windows uses backslash to separate directories change them to forward slashes
 SET emacsFilesFolderForwardSlash=%emacsFilesFolderOriginal:\=/%

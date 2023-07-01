@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2022-07-18 Mon]
+#+DATE-UPDATED: [2023-06-30 Fri]
 
 It doesn't need any external package. Just pure Elisp.
 
@@ -298,7 +298,7 @@ Creation of home folder and derivates from it
         "Path to Dropbox Folder")
 
     ;; Windows's dropbox folder
-    (defvar my/dropbox-folder (substitute-in-file-name  "$HOMEPATH/Desktop/Pedro/Dropbox/")
+    (defvar my/dropbox-folder (substitute-in-file-name  "$HOMEPATH/Pedro/Dropbox/")
         "Path to Dropbox Folder"))
 
   (defvar my/notes-directory (concat my/dropbox-folder "Notes/")
@@ -312,7 +312,6 @@ Creation of folders derivated from dropbox/
 #+BEGIN_SRC emacs-lisp
   (defvar my/bookmark-file (concat my/dropbox-folder "emacsBookmark.el")
     "Path to Bookmark File")
-
 #+END_SRC
 
 Creation of folders derivated from .emacs.d/
@@ -322,9 +321,52 @@ Creation of folders derivated from .emacs.d/
 
   (defvar my/auto-save-folder (concat my/emacs.d-folder "auto-save-list")
     "Path to Auto Save Folder")
-
-
 #+END_SRC
+
+Creation of Organization files
+#+begin_src emacs-lisp
+  (defvar my/plans-filename
+    (let ((filename (concat my/notes-directory "20230630T180038--planos__planos.org")))
+      (if (file-exists-p filename)
+          filename
+        nil)))
+
+  (defvar my/projects-filename
+    (let ((filename (concat my/notes-directory "20230630T180635--projetos__projetos.org")))
+      (if (file-exists-p filename)
+          filename
+        nil)))
+
+  (defvar my/dates-filename
+    (let ((filename (concat my/notes-directory "20230630T155534--datas-importantes.org")))
+      (if (file-exists-p filename)
+          filename
+        nil)))
+
+  (defvar my/routine-filename
+    (let ((filename (concat my/notes-directory "20230630T185646--rotina__organization.org")))
+      (if (file-exists-p filename)
+          filename
+        nil)))
+
+  (defvar my/week-plans-filename
+    (let ((filename (concat my/notes-directory "20230630T175849--planejamento-semanal__review.org")))
+      (if (file-exists-p filename)
+          filename
+        nil)))
+
+  (defvar my/diary-filename
+    (let ((filename (concat my/notes-directory "diary")))
+      (if (file-exists-p filename)
+          filename
+        nil)))
+
+  (defvar my/gtd-inbox-filename
+    (let ((filename (concat my/notes-directory "20230630T164926--gtd-inbox__gtd.org")))
+      (if (file-exists-p filename)
+          filename
+        nil)))
+#+end_src
 
 * Files Modes
 :PROPERTIES:
