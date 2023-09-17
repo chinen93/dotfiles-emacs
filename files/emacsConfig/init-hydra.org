@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2022-01-04 ter]
+#+DATE-UPDATED: [2023-09-17 Sun]
 
 Emacs has a lot of keybindings, and I can't remember everyone of
 them. For example each key in the keyboard is related to a command, if
@@ -39,7 +39,7 @@ some configurations on top of it.
 #+BEGIN_SRC emacs-lisp
   (provide 'init-hydra)
 #+END_SRC
-* Principal Launcher
+* Principal Lauqncher
 :PROPERTIES:
 :ID:       2eeb3eeb-dd07-4cab-88f3-9ca9da35af21
 :END:
@@ -50,33 +50,30 @@ some configurations on top of it.
     "
      ^Functions^         ^Favorites  ^      ^Hydra Menus^
     -^---------^---------^-----------^------^-----------^---
-     _d_: Toggle daily   _b_: iBuffer       _f_: Functions
-     _V_: Bookmark set   _v_: Bookmarks     _y_: YASnippet
-     _c_: Capture        _g_: Magit         _p_: Projectile
-     _F_: Org Roam Find  _l_: Ledger        _s_: Other Menus
-     ^ ^                 _m_: Agenda
+     _V_: Bookmark Set   _b_: iBuffer       _f_: Functions
+     _c_: Capture        _v_: Bookmarks     _y_: YASnippet
+     _w_: Whitespace     _g_: Magit         _s_: Other Menus
+     _d_: Denote         _m_: Agenda
 
      _e_: Hydra Context
+
     "
 
     ;; Functions
-    ("w" whitespace-mode)
+    ("w" whitespace-mode :color blue)
     ("V" bookmark-set :color blue)
-    ("d" isamert/toggle-side-bullet-org-buffer)
     ("c" org-capture :color blue)
+    ("d" denote :color blue)
 
     ;; Favorites
-    ("l" ledger-report :color blue)
     ("b" ibuffer :color blue)
     ("g" magit-status :color blue)
     ("v" bookmark-bmenu-list :color blue)
     ("m" org-agenda :color blue)
-    ("F" org-roam-node-find :color blue)
 
     ;; Hydras Menus
     ("f" hydra-functions/body :color blue)
     ("y" hydra-yasnippet/body :color blue)
-    ("p" hydra-projectile/body :color blue)
     ("s" hydra-other-hydras-menus/body :color blue)
 
     ("e" hydra-context-launcher :color blue)
