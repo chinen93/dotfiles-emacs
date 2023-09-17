@@ -9,37 +9,38 @@ REM ==================================================================
 :menu
 ECHO --------------------------------------------------------
 ECHO Windows main menu for Emacs functions
-ECHO   1) Install Emacs
+ECHO   1) Update git folder with changes
 ECHO   2) Tangle Emacs Lisp
-ECHO   3) Update git folder with changes
+ECHO   3) Install Emacs
 ECHO ==========
 SET /p OPTION="Option: "
 
 REM ==================================================================
 REM Handle user's option
 
-IF %OPTION%==1 GOTO :install_emacs
+IF %OPTION%==1 GOTO :update_git
 IF %OPTION%==2 GOTO :tangle_emacs
-IF %OPTION%==3 GOTO :update_emacs
+IF %OPTION%==3 GOTO :install_emacs
 GOTO :menu
 
 REM ==================================================================
 REM Call real scripts here
 
-:install_emacs
-ECHO Install Emacs
-CALL install_windows.bat
+:update_git
+ECHO Update Git
+CALL ./windows/update_git_folder_windows.bat
 GOTO :end
 
 :tangle_emacs
 ECHO Tangle Emacs
-CALL init_emacs_tangle_windows.bat
+CALL ./windows/init_emacs_tangle_windows.bat
 GOTO :end
 
-:update_git
-ECHO Update Git
-CALL update_git_folder_windows.bat
+:install_emacs
+ECHO Install Emacs
+CALL ./windows/install_windows.bat
 GOTO :end
+
 
 REM ==================================================================
 

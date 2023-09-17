@@ -1,0 +1,11 @@
+#+TITLE:        elgrep Configuration
+#+AUTHOR:       Pedro Chinen
+#+EMAIL:        ph.u.chinen@gmail.com
+#+DATE-CREATED: [2023-09-16 Sat]
+#+DATE-UPDATED: [2023-09-16 Sat]
+
+#+begin_src emacs-lisp
+  (use-package elgrep
+    :ensure t
+    )
+#+end_src

@@ -1,7 +1,7 @@
 #+TITLE:        Init Emacs
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2019-09-10 ter]
-#+DATE-UPDATED: [2022-02-16 qua]
+#+DATE-UPDATED: [2023-09-16 Sat]
 #+PROPERTY: header-args :tangle yes
 
 * Starting of Configuration
@@ -79,6 +79,8 @@ to happen before they are called.
                             ;; Uses use-package
                             "init-themes.org"
                             "init-magit.org"
+                            "init-denote.org"
+                            "init-elgrep.org"
                             "init-orgmode-packages.org")
 
     "Initial order of configurations to be loaded because they have
