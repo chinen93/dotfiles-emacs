@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2023-06-30 Fri]
+#+DATE-UPDATED: [2023-09-17 Sun]
 
 It doesn't need any external package. Just pure Elisp.
 
@@ -326,13 +326,13 @@ Creation of folders derivated from .emacs.d/
 Creation of Organization files
 #+begin_src emacs-lisp
   (defvar my/plans-filename
-    (let ((filename (concat my/notes-directory "20230630T180038--planos__planos.org")))
+    (let ((filename (concat my/notes-directory "20230630T180038--planos__planos_metanote.org")))
       (if (file-exists-p filename)
           filename
         nil)))
 
   (defvar my/projects-filename
-    (let ((filename (concat my/notes-directory "20230630T180635--projetos__projetos.org")))
+    (let ((filename (concat my/notes-directory "20230630T180635--projetos__projetos_metanote.org")))
       (if (file-exists-p filename)
           filename
         nil)))
