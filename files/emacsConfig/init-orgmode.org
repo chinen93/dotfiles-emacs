@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2023-06-30 Fri]
+#+DATE-UPDATED: [2023-09-18 Mon]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -224,17 +224,17 @@ Got the main idea from https://www.philnewton.net/blog/org-agenda-monthly-goals/
       (tags "ativo+PRIORITY=\"C\""
             ((org-agenda-overriding-header "Objetivos Secundários para o ano")
              (org-agenda-files `(,my/plans-filename))))
-      (todo "WORKING"
-            ((org-agenda-overriding-header "\nPlanos Atuais\n")
-             (org-agenda-files `(,my/plans-filename))))
       (agenda ""
               ((org-agenda-span 10)
                (org-agenda-log-mode-items '(closed))
                (org-agenda-show-log t)
                (org-agenda-start-day "-1d")))
-      (todo "TODO"
-            ((org-agenda-overriding-header "\nPlanejamento Semanal\n")
-             (org-agenda-files `(,my/week-plans-filename))))
+      (todo "WORKING"
+            ((org-agenda-overriding-header "\nProjetos Atuais\n")
+             (org-agenda-files `(,my/projects-filename))))
+      (todo ""
+            ((org-agenda-overriding-header "\nCaptures\n")
+             (org-agenda-files `(,my/gtd-inbox-filename))))
       )
      nil))
 #+END_SRC
@@ -363,7 +363,7 @@ CLOSED: [2022-12-28 Wed 15:46]
                  `(,(concat my/dropbox-folder "Notes/NeuralMind.org"))))))))
 #+END_SRC
 
-*** Get Things Done
+*** CANCELED Get Things Done
 CLOSED: [2022-12-28 Wed 15:49]
 :PROPERTIES:
 :ID:       9c99f396-cf8a-480c-bb8b-b6ec4635090c
@@ -409,7 +409,7 @@ CLOSED: [2023-03-20 Mon 11:47]
 
       )))
 #+END_SRC
-**** Main agenda for GTD
+**** CANCELED Main agenda for GTD
 CLOSED: [2023-03-20 Mon 11:47]
 :PROPERTIES:
 :ID:       d983dcc5-113d-4474-abd1-4f1bcff71d50
