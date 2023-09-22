@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2023-09-17 Sun]
+#+DATE-UPDATED: [2023-09-21 Thu]
 
 Emacs has a lot of keybindings, and I can't remember everyone of
 them. For example each key in the keyboard is related to a command, if
@@ -39,7 +39,7 @@ some configurations on top of it.
 #+BEGIN_SRC emacs-lisp
   (provide 'init-hydra)
 #+END_SRC
-* Principal Lauqncher
+* Principal Launcher
 :PROPERTIES:
 :ID:       2eeb3eeb-dd07-4cab-88f3-9ca9da35af21
 :END:
@@ -54,6 +54,7 @@ some configurations on top of it.
      _c_: Capture        _v_: Bookmarks     _y_: YASnippet
      _w_: Whitespace     _g_: Magit         _s_: Other Menus
      _d_: Denote         _m_: Agenda
+     _n_: Elgrep Notes   
 
      _e_: Hydra Context
 
@@ -64,6 +65,7 @@ some configurations on top of it.
     ("V" bookmark-set :color blue)
     ("c" org-capture :color blue)
     ("d" denote :color blue)
+    ("n" my-elgrep-notes :color blue)
 
     ;; Favorites
     ("b" ibuffer :color blue)
