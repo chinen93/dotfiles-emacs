@@ -2,14 +2,30 @@
 #+AUTHOR:       Pedro Chinen
 #+EMAIL:        ph.u.chinen@gmail.com
 #+DATE-CREATED: [2023-06-30 Fri]
-#+DATE-UPDATED: [2023-06-30 Fri]
+#+DATE-UPDATED: [2023-09-24 Sun]
 
 #+begin_src emacs-lisp
-  (use-package denote
-    :ensure t
-    :custom
-    (denote-directory (expand-file-name my/notes-directory))
-    )
+    (use-package denote
+      :ensure t
+      :custom
+      (denote-directory (expand-file-name my/notes-directory))
+      )
 
-  (add-hook 'dired-mode-hook #'denote-dired-mode)
+    (add-hook 'dired-mode-hook #'denote-dired-mode)
+
+    (when (featurep `denote)
+
+      (defun my-denote-change-keywords (keywords)
+        (interactive
+         (list (denote-keywords-prompt)))
+
+        (if-let* ((file (buffer-file-name))
+                  ((denote-file-is-note-p file))
+                  (file-type (denote-filetype-heuristics file)))
+            (progn 
+              (denote--rewrite-keywords file keywords file-type)
+              (denote-rename-file-using-front-matter file t))
+          (user-error "Buffer not visiting a Denote file")))
+
+      )
 #+end_src
