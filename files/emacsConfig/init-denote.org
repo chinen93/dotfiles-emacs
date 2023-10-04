@@ -2,30 +2,86 @@
 #+AUTHOR:       Pedro Chinen
 #+EMAIL:        ph.u.chinen@gmail.com
 #+DATE-CREATED: [2023-06-30 Fri]
-#+DATE-UPDATED: [2023-09-24 Sun]
+#+DATE-UPDATED: [2023-10-04 Wed]
+
+Base configuration for Denote
+#+begin_src emacs-lisp
+  (use-package denote
+    :ensure t
+    :custom
+    (denote-directory (expand-file-name my/notes-directory))
+    )
+
+  (add-hook 'dired-mode-hook #'denote-dired-mode)
+#+end_src
+
+* Denote - Organization Projects
+:PROPERTIES:
+:Created:  2023-10-04
+:END:
+
+** List Maybe/Working Projects
+:PROPERTIES:
+:Created:  2023-10-04
+:END:
 
 #+begin_src emacs-lisp
-    (use-package denote
-      :ensure t
-      :custom
-      (denote-directory (expand-file-name my/notes-directory))
-      )
+  (when (featurep `denote)
 
-    (add-hook 'dired-mode-hook #'denote-dired-mode)
+    (defun my-denote-link-add-current-projects ()
+      "Use command `denote-link-add-links' with '_projetos' for regex"
+      (interactive)
+      (denote-link-add-links (rx (and "_maybe")
+                                 (and "_projetos"))))
 
-    (when (featurep `denote)
+    (defun my-denote-link-add-maybe-projects ()
+      "Use command `denote-link-add-links' with '_projetos' and
+  '_maybe' for regex"
+      (interactive)
+      (denote-link-add-links (rx (and "_maybe")
+                                 (and "_projetos"))))
+    )
+#+end_src
 
-      (defun my-denote-change-keywords (keywords)
-        (interactive
-         (list (denote-keywords-prompt)))
+** Toggle Maybe/Working Projects
+:PROPERTIES:
+:Created:  2023-10-04
+:END:
+#+begin_src emacs-lisp
+  (defun my--denote-keyword-remove (keyword)
+    (if-let* ((file (buffer-file-name))
+              ((denote-file-is-note-p file))
+              (file-type (denote-filetype-heuristics file)))
+        (when-let* ((cur-keywords
+                     (denote-retrieve-keywords-value file file-type))
+                    ((or (listp cur-keywords)
+                         (not (string-blank-p cur-keywords))))
+                    (del-keyword `(,keyword)))
+          (denote--rewrite-keywords
+           file
+           (seq-difference cur-keywords del-keyword)
+           file-type)
+          (denote-rename-file-using-front-matter file t))
+      (user-error "Buffer not visiting a Denote file")))
 
-        (if-let* ((file (buffer-file-name))
-                  ((denote-file-is-note-p file))
-                  (file-type (denote-filetype-heuristics file)))
-            (progn 
-              (denote--rewrite-keywords file keywords file-type)
-              (denote-rename-file-using-front-matter file t))
-          (user-error "Buffer not visiting a Denote file")))
+  (defun my--denote-keyword-add (keyword)
+    (denote-keywords-add `(,keyword)))
 
-      )
+  (defun my-denote-toggle-project ()
+    (interactive)
+    (if-let* ((file (buffer-file-name))
+              ((denote-file-is-note-p file))
+              (file-type (denote-filetype-heuristics file))
+              (keywords
+               (denote-retrieve-keywords-value file file-type)))
+        (cond ((member "maybe" keywords)
+               (progn 
+                 (my--denote-keyword-add "working")
+                 (my--denote-keyword-remove "maybe")))
+              ((member "working" keywords)
+               (progn
+                 (my--denote-keyword-add "maybe")
+                 (my--denote-keyword-remove "working")))
+              (t (my--denote-keyword-add "working")))
+      (user-error "Buffer not visiting a Denote file")))
 #+end_src

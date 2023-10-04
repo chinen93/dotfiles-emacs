@@ -1,7 +1,7 @@
 #+TITLE:        Backup Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2019-09-22 dom]
+#+DATE-UPDATED: [2023-10-04 Wed]
 
 Backup is a important part of editing text. Because most of times I
 make some mistakes and the possibility to revert to a cleaner state is
@@ -22,8 +22,8 @@ the best thing ever.
 
 The default directory to store backups is the file's directory that is
 being edited. However, for me, it makes the directory kind of
-messy. So to tidy it up a bit I put everything in
-*"~/.emacs.d/backups"*.
+messy. So to tidy it up a bit I put everything inside a previously set
+path.
 
 #+BEGIN_SRC emacs-lisp
   (setq backup-directory-alist `(("." . ,my/backup-folder)))

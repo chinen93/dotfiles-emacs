@@ -1,7 +1,7 @@
 #+TITLE:        Bookmark Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2022-04-29 Fri]
+#+DATE-UPDATED: [2023-10-04 Wed]
 
 Bookmark is one of my most used function in Emacs. With it I can jump
 to important files in seconds.
@@ -47,3 +47,28 @@ going to be on the top of the list.
 #+BEGIN_SRC emacs-lisp
   (setq bookmark-sort-flag nil)
 #+END_SRC
+
+
+* Bookmark Menu
+:PROPERTIES:
+:Created:  2023-10-04
+:END:
+
+http://yummymelon.com/devnull/using-bookmarks-in-emacs-like-you-do-in-web-browsers.html
+
+#+begin_src emacs-lisp
+  (easy-menu-define cc/bookmarks-menu nil
+    "Keymap for CC Bookmarks Menu"
+    '("Bookmarks"
+      ["Edit Bookmarks" list-bookmarks
+       :help "Display a list of existing bookmarks."]
+      ["--" nil]
+      ["Add Bookmark" bookmark-set-no-overwrite
+       :help "Set a bookmark named NAME at the current location."]
+      ["---" nil]
+      ["Jump to Bookmark" bookmark-jump
+       :help "Jump to bookmark"]))
+  (easy-menu-add-item global-map '(menu-bar)
+                      cc/bookmarks-menu
+                      "Tools")
+#+end_src

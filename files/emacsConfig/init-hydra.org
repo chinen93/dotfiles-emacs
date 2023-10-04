@@ -1,9 +1,9 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2023-09-21 Thu]
+#+DATE-UPDATED: [2023-10-04 Wed]
 
-Emacs has a lot of keybindings, and I can't remember everyone of
+Emacs has a lot of keybindings, and I can't remember every one of
 them. For example each key in the keyboard is related to a command, if
 you put it in combination with Ctrl or Meta or Ctrl + Meta you can
 create others keybindings for functions. And the problem grows fast
@@ -98,7 +98,7 @@ some configurations on top of it.
     ("q" nil "cancel" :color blue))
 #+END_SRC
 
-* Other Hydras Menus
+* Hydras Menus
 #+begin_src emacs-lisp
 
   (defhydra hydra-other-hydras-menus (:color blue :columns 4)
@@ -114,7 +114,7 @@ some configurations on top of it.
 
       ("q" nil "cancel" :color blue))
 #+end_src
-* Narrow Widen Indirect Buffer
+** Narrow Widen Indirect Buffer
 :PROPERTIES:
 :ID:       95c4f5ce-7841-4ca3-9a7d-d117fe0f32dd
 :END:
@@ -133,7 +133,7 @@ some configurations on top of it.
     ("q" nil "cancel" :color blue))
 #+END_SRC
 
-* Zoom
+** Zoom
 :PROPERTIES:
 :ID:       a612d1b6-c93f-4cb9-bf5b-2787225d62ef
 :END:
@@ -154,7 +154,7 @@ some configurations on top of it.
 
 #+END_SRC
 
-* Smerge Mode
+** Smerge Mode
 :PROPERTIES:
 :Created:  2021-12-29
 :ID:       b31ab4bb-6d56-45d7-8007-364e9621969b
@@ -199,7 +199,7 @@ some configurations on top of it.
   ;;                                    (when smerge-mode
   ;;                                      (unpackaged/smerge-hydra/body)))))
 #+end_src
-* Flycheck
+** Flycheck
 :PROPERTIES:
 :ID:       d9197a4c-76fe-4877-b2a0-74c95efbcde1
 :END:
@@ -228,7 +228,7 @@ some configurations on top of it.
     ("v" flycheck-verify-setup))
 #+END_SRC
 
-* Help
+** Help
 :PROPERTIES:
 :ID:       d9d72056-937d-4a64-9309-09e58a49570c
 :END:
@@ -272,12 +272,12 @@ How to create it:
 
 #+END_SRC
 
-* Custom Functions
+** Custom Functions
 :PROPERTIES:
 :ID:       038b598e-f4c9-434b-9d34-53596ba4e801
 :END:
 
-** Internet and Others Functions
+*** Internet and Others Functions
 :PROPERTIES:
 :ID:       3cae0483-c78e-4dc0-b757-a8292d9788b2
 :END:
@@ -359,7 +359,7 @@ How to create it:
 
 #+END_SRC
 
-** My Functions
+*** My Functions
 :PROPERTIES:
 :ID:       040d5f42-c6dd-46d5-9944-4bc8722a2e7d
 :END:
@@ -378,7 +378,7 @@ How to create it:
     ("o" my-open-file-explorer "Open File Explorer" :color blue)
     ("q" nil "quit" :color blue))
 #+END_SRC
-* Yasnippet
+** Yasnippet
 :PROPERTIES:
 :ID:       b7bb22b6-00f5-4e7e-8c14-a1113f3e6358
 :END:
@@ -403,7 +403,7 @@ How to create it:
     ("q" nil "cancel" :color blue))
 #+END_SRC
 
-* Macro
+** Macro
 :PROPERTIES:
 :ID:       9a9b290b-b306-4902-b51e-e0f38b864dd7
 :END:
@@ -436,7 +436,7 @@ How to create it:
 
 #+END_SRC
 
-* Rectangle
+** Rectangle
 :PROPERTIES:
 :ID:       11231805-dd9e-4d52-b6b8-5cf0ba418c33
 :END:
@@ -467,6 +467,65 @@ How to create it:
 
 #+END_SRC
 
+** Math
+:PROPERTIES:
+:ID:       5dda6f7f-c07e-4bb7-8e8d-3467bbdd5927
+:END:
+
+Hydra to easily insert greek letter and others math notations.
+
+#+BEGIN_SRC emacs-lisp
+  (defhydra hydra-math (:color amaranth :hint nil)
+      "
+       ^Math Notation^
+      --------------------------------------------
+       _z_: ±     _x_: ÷     _c_: ∑     _v_: ∃
+       _b_: ∄     _n_: ∀     _m_: ∈     _a_: ∉
+       _s_: ∏     _d_: θ     _f_: π     _g_: σ
+       _h_: φ     _j_: α     _k_: β
+      "
+      ("z" (lambda () (interactive)(insert "±"))  :color blue)
+      ("x" (lambda () (interactive)(insert "÷"))  :color blue)
+      ("c" (lambda () (interactive)(insert "∑"))  :color blue)
+      ("v" (lambda () (interactive)(insert "∃"))  :color blue)
+      ("b" (lambda () (interactive)(insert "∄"))  :color blue)
+      ("n" (lambda () (interactive)(insert "∀"))  :color blue)
+      ("m" (lambda () (interactive)(insert "∈"))  :color blue)
+      ("a" (lambda () (interactive)(insert "∉"))  :color blue)
+      ("s" (lambda () (interactive)(insert "∏"))  :color blue)
+      ("d" (lambda () (interactive)(insert "θ"))  :color blue)
+      ("f" (lambda () (interactive)(insert "π"))  :color blue)
+      ("g" (lambda () (interactive)(insert "σ"))  :color blue)
+      ("h" (lambda () (interactive)(insert "φ"))  :color blue)
+      ("j" (lambda () (interactive)(insert "α"))  :color blue)
+      ("k" (lambda () (interactive)(insert "β"))  :color blue)
+
+
+      ;; Hydra expected behavior.
+      ("<right>" forward-char)
+      ("<left>" backward-char)
+      ("<down>" next-line)
+      ("<up>" previous-line)
+      ("<home>" move-beginning-of-line)
+      ("<end>" move-end-of-line)
+      ("<RET>" nil :color blue)
+      ("<ESC>" nil :color blue)
+      ("q" nil "quit" :color blue))
+#+END_SRC
+
+** Projectile
+#+begin_src emacs-lisp
+  (defhydra hydra-projectile (:color blue :hint nil)
+    "
+      ^Projectile^
+      ^-^-------------------------------------------
+      _f_: Find File
+      _g_: Grep
+    "
+    ("f" projectile-find-file)
+    ("g" projectile-grep)
+    )
+#+end_src
 * Context Hydra
 :PROPERTIES:
 :ID:       ca1c9c51-872d-418e-bedb-ed3c278931ab
@@ -649,62 +708,3 @@ How to create it:
 
 #+END_SRC
 
-* Math
-:PROPERTIES:
-:ID:       5dda6f7f-c07e-4bb7-8e8d-3467bbdd5927
-:END:
-
-Hydra to easily insert greek letter and others math notations.
-
-#+BEGIN_SRC emacs-lisp
-  (defhydra hydra-math (:color amaranth :hint nil)
-      "
-       ^Math Notation^
-      --------------------------------------------
-       _z_: ±     _x_: ÷     _c_: ∑     _v_: ∃
-       _b_: ∄     _n_: ∀     _m_: ∈     _a_: ∉
-       _s_: ∏     _d_: θ     _f_: π     _g_: σ
-       _h_: φ     _j_: α     _k_: β
-      "
-      ("z" (lambda () (interactive)(insert "±"))  :color blue)
-      ("x" (lambda () (interactive)(insert "÷"))  :color blue)
-      ("c" (lambda () (interactive)(insert "∑"))  :color blue)
-      ("v" (lambda () (interactive)(insert "∃"))  :color blue)
-      ("b" (lambda () (interactive)(insert "∄"))  :color blue)
-      ("n" (lambda () (interactive)(insert "∀"))  :color blue)
-      ("m" (lambda () (interactive)(insert "∈"))  :color blue)
-      ("a" (lambda () (interactive)(insert "∉"))  :color blue)
-      ("s" (lambda () (interactive)(insert "∏"))  :color blue)
-      ("d" (lambda () (interactive)(insert "θ"))  :color blue)
-      ("f" (lambda () (interactive)(insert "π"))  :color blue)
-      ("g" (lambda () (interactive)(insert "σ"))  :color blue)
-      ("h" (lambda () (interactive)(insert "φ"))  :color blue)
-      ("j" (lambda () (interactive)(insert "α"))  :color blue)
-      ("k" (lambda () (interactive)(insert "β"))  :color blue)
-
-
-      ;; Hydra expected behavior.
-      ("<right>" forward-char)
-      ("<left>" backward-char)
-      ("<down>" next-line)
-      ("<up>" previous-line)
-      ("<home>" move-beginning-of-line)
-      ("<end>" move-end-of-line)
-      ("<RET>" nil :color blue)
-      ("<ESC>" nil :color blue)
-      ("q" nil "quit" :color blue))
-#+END_SRC
-
-* Projectile
-#+begin_src emacs-lisp
-  (defhydra hydra-projectile (:color blue :hint nil)
-    "
-      ^Projectile^
-      ^-^-------------------------------------------
-      _f_: Find File
-      _g_: Grep
-    "
-    ("f" projectile-find-file)
-    ("g" projectile-grep)
-    )
-#+end_src

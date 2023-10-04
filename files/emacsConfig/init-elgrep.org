@@ -2,28 +2,40 @@
 #+AUTHOR:       Pedro Chinen
 #+EMAIL:        ph.u.chinen@gmail.com
 #+DATE-CREATED: [2023-09-16 Sat]
-#+DATE-UPDATED: [2023-09-21 Thu]
+#+DATE-UPDATED: [2023-10-04 Wed]
 
 #+begin_src emacs-lisp
   (use-package elgrep
     :ensure t
     )
+#+end_src
 
+* Functions
+:PROPERTIES:
+:Created:  2023-10-04
+:END:
+
+** Search on Notes Directory
+:PROPERTIES:
+:Created:  2023-10-04
+:END:
+
+#+begin_src emacs-lisp
   (when (featurep 'elgrep)
 
-   (defun my-elgrep-notes (regex)
-    (interactive (list (read-regexp "Emacs regexp:" nil)))
+    (defun my-elgrep-notes (regex)
+      (interactive (list (read-regexp "Emacs regexp:" nil)))
 
-    (setq options (list :recursive nil
-                        :interactive t
-                        :depth 0
-                        ))
-    (setq options (elgrep-intern-plist-keys options))
+      (setq options (list :recursive nil
+                          :interactive t
+                          :depth 0
+                          ))
+      (setq options (elgrep-intern-plist-keys options))
 
-    (let* ((dir (directory-file-name my/notes-directory))
-           (file-name-re "\.org")
-           (search-result (apply #'elgrep-search dir file-name-re regex options)))
-      (apply #'elgrep-show search-result dir file-name-re regex options)))
+      (let* ((dir (directory-file-name my/notes-directory))
+             (file-name-re "\.org")
+             (search-result (apply #'elgrep-search dir file-name-re regex options)))
+        (apply #'elgrep-show search-result dir file-name-re regex options)))
 
-  )
+    )
 #+end_src

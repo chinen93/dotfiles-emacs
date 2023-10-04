@@ -1,7 +1,7 @@
 #+TITLE:        Init Emacs
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2019-09-10 ter]
-#+DATE-UPDATED: [2023-09-16 Sat]
+#+DATE-UPDATED: [2023-10-04 Wed]
 #+PROPERTY: header-args :tangle yes
 
 * Starting of Configuration
@@ -56,33 +56,31 @@ with. After packages are downloaded and all.
 :ID:       d2dfcbb6-395c-4f71-8aa1-4a14ede64214
 :END:
 
+#+begin_src emacs-lisp
+  (defvar my/emacs-config-dir "~/emacsConfig/"
+    "Directory where configuration is stored")
+#+end_src
+
 Create initial sequence of configuration files. Load them in this
 particular order because the creation of variables and functions need
 to happen before they are called.
 #+BEGIN_SRC emacs-lisp
-  (defvar my/emacs-config-dir "~/emacsConfig/"
-    "Directory where configuration is stored")
-
-  (defvar my/inits-config '("init-setup-package.org"
+  (defvar my/inits-config '(;; Base configurations
+                            "init-setup-package.org"
                             "init-basicConfig.org"
                             "init-keyBinding.org"
                             "init-backup.org"
+                            ;; Nice to have configurations
                             "init-bookmark.org"
                             "init-ibuffer.org"
-                            "init-completion.org"
                             "init-ivy.org"
                             "init-customFunctions.org"
                             "init-hydra.org"
-                            "init-spellcheck.org"
                             "init-orgmode.org"
                             "init-yasnippet.org"
-                            ;; Uses use-package
-                            "init-themes.org"
-                            "init-magit.org"
                             "init-denote.org"
                             "init-elgrep.org"
-                            "init-orgmode-packages.org")
-
+                            "init-themes.org")
     "Initial order of configurations to be loaded because they have
     dependencies among the others")
 

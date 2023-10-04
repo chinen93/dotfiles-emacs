@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2023-09-17 Sun]
+#+DATE-UPDATED: [2023-10-04 Wed]
 
 It doesn't need any external package. Just pure Elisp.
 
@@ -34,9 +34,9 @@ https://www.gnu.org/software/emacs/manual/html_node/elisp/File-Locks.html
 
 What to say on the *scratch* buffer.
 
-I really like to give some information in the scratch buffer. So if
-anyone tries to use this configuration I think it will be easier to
-start using it. However I really don't know for sure.
+I really like to give some information in the scratch buffer. So if anyone tries
+to use this configuration I think it will be easier to start using it.
+
 #+BEGIN_SRC emacs-lisp
   (setq initial-scratch-message "
   ;; ***************************************************************
@@ -55,7 +55,7 @@ start using it. However I really don't know for sure.
   ;; |------------------------------------+------------------------|
   ;; | C-r : backward regex               | C-s   : forward regex  |
   ;; | C-n : new buffer                   | C-TAB : other-window   |
-  ;; | C-0 : undo                         | M-q   : Hydra Launcher |
+  ;; | C-0 : undo                         |                        |
 
   ;; | Open Hydra Launcher - More commands inside !!               |
   ;; |------------------------------------+------------------------|
@@ -107,8 +107,9 @@ Don't show start up message
 
 #+END_SRC
 
+Column which to line-wrap
 #+BEGIN_SRC emacs-lisp
-  (setq-default fill-column 80)
+  (setq-default fill-column 70)
 #+END_SRC
 
 ** Show matching parenthesis
@@ -274,13 +275,18 @@ Instead just follow the syslink and edit the real file.
 #+END_SRC
 
 * Global Variables
-CLOSED: [2019-05-16 qui 13:57]
 :PROPERTIES:
 :ID:       d53815ee-b64e-40f0-9b3a-8be0d6db288e
 :END:
+:LOGBOOK:
 - State "DONE"       from "WORKING"    [2019-05-16 qui 13:57]
 - State "WORKING"    from "TODO"       [2019-05-16 qui 13:57]
+:END:
 
+** Base Paths
+:PROPERTIES:
+:Created:  2023-10-04
+:END:
 Creation of home folder and derivates from it
 #+BEGIN_SRC emacs-lisp
   (defvar my/home-folder "~/"
@@ -308,6 +314,10 @@ Creation of home folder and derivates from it
     "Path to .emacs.d/ Folder")
 #+END_SRC
 
+** Bookmark and Backups
+:PROPERTIES:
+:Created:  2023-10-04
+:END:
 Creation of folders derivated from dropbox/
 #+BEGIN_SRC emacs-lisp
   (defvar my/bookmark-file (concat my/dropbox-folder "emacsBookmark.el")
@@ -323,6 +333,10 @@ Creation of folders derivated from .emacs.d/
     "Path to Auto Save Folder")
 #+END_SRC
 
+** Organizations Files
+:PROPERTIES:
+:Created:  2023-10-04
+:END:
 Creation of Organization files
 #+begin_src emacs-lisp
   (defvar my/plans-filename
