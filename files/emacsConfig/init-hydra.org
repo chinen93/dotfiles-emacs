@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2023-10-04 Wed]
+#+DATE-UPDATED: [2023-10-06 Fri]
 
 Emacs has a lot of keybindings, and I can't remember every one of
 them. For example each key in the keyboard is related to a command, if
@@ -53,7 +53,7 @@ some configurations on top of it.
      _V_: Bookmark Set   _b_: iBuffer       _f_: Functions
      _c_: Capture        _v_: Bookmarks     _y_: YASnippet
      _w_: Whitespace     _g_: Magit         _s_: Other Menus
-     _d_: Denote         _m_: Agenda
+     _d_: Denote         _m_: Agenda        _D_: Denote Menu
      _n_: Elgrep Notes   
 
      _e_: Hydra Context
@@ -77,6 +77,7 @@ some configurations on top of it.
     ("f" hydra-functions/body :color blue)
     ("y" hydra-yasnippet/body :color blue)
     ("s" hydra-other-hydras-menus/body :color blue)
+    ("D" hydra-denote/body :color blue)
 
     ("e" hydra-context-launcher :color blue)
 
@@ -525,6 +526,38 @@ Hydra to easily insert greek letter and others math notations.
     ("f" projectile-find-file)
     ("g" projectile-grep)
     )
+#+end_src
+** Denote
+:PROPERTIES:
+:Created:  2023-10-05
+:END:
+#+begin_src emacs-lisp
+  (defhydra hydra-denote (:color blue :hint nil)
+    "
+       ^Denote^         ^Projects^
+      ^-^--------------^-^-----------------------------
+      _l_: Link        _w_: Links Working Projects
+      _L_: Add Links   _m_: Links Maybe Projects
+      _r_: Rename      _t_: Toogle Maybe/Working
+      _k_: Add Key     
+      _K_: Remove Key
+
+
+    "
+    ;; Base Denote Heads
+    ("l" denote-link)
+    ("L" denote-add-links)
+    ("r" denote-rename-file-using-front-matter)
+    ("k" denote-keywords-add)
+    ("K" denote-keywords-remove)
+
+    ;; Projects Heads
+    ("w" my-denote-link-add-working-projects)
+    ("m" my-denote-link-add-maybe-projects)
+    ("t" my-denote-toggle-project :color amaranth)
+
+    ("q" nil "cancel" :color blue))
+
 #+end_src
 * Context Hydra
 :PROPERTIES:

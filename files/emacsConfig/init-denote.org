@@ -2,7 +2,7 @@
 #+AUTHOR:       Pedro Chinen
 #+EMAIL:        ph.u.chinen@gmail.com
 #+DATE-CREATED: [2023-06-30 Fri]
-#+DATE-UPDATED: [2023-10-04 Wed]
+#+DATE-UPDATED: [2023-10-05 Thu]
 
 Base configuration for Denote
 #+begin_src emacs-lisp
@@ -28,17 +28,19 @@ Base configuration for Denote
 #+begin_src emacs-lisp
   (when (featurep `denote)
 
-    (defun my-denote-link-add-current-projects ()
+    (defun my-denote-link-add-working-projects ()
       "Use command `denote-link-add-links' with '_projetos' for regex"
       (interactive)
-      (denote-link-add-links (rx (and "_maybe")
-                                 (and "_projetos"))))
+      (denote-link-add-links (rx (and "_projetos")
+                                 (and (zero-or-more anything))
+                                 (and "_working"))))
 
     (defun my-denote-link-add-maybe-projects ()
       "Use command `denote-link-add-links' with '_projetos' and
   '_maybe' for regex"
       (interactive)
       (denote-link-add-links (rx (and "_maybe")
+                                 (and (zero-or-more anything))
                                  (and "_projetos"))))
     )
 #+end_src
