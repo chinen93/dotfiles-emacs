@@ -2,7 +2,7 @@
 #+AUTHOR:       Pedro Chinen
 #+EMAIL:        ph.u.chinen@gmail.com
 #+DATE-CREATED: [2023-06-30 Fri]
-#+DATE-UPDATED: [2023-10-05 Thu]
+#+DATE-UPDATED: [2023-10-09 Mon]
 
 Base configuration for Denote
 #+begin_src emacs-lisp
@@ -20,29 +20,37 @@ Base configuration for Denote
 :Created:  2023-10-04
 :END:
 
+** Regexp to match projects
+:PROPERTIES:
+:Created:  2023-10-09
+:END:
+#+begin_src emacs-lisp
+  (defvar my/regexp-denote-working-projects (rx (and "_projetos")
+                                                (and (zero-or-more anything))
+                                                (and "_working"))
+    "Regexp to search for working projects on a Denote folder")
+
+  (defvar my/regexp-denote-maybe-projects (rx (and "_maybe")
+                                              (and (zero-or-more anything))
+                                              (and "_projetos"))
+    "Regexp to search for maybe projects on a Denote folder")
+#+end_src
 ** List Maybe/Working Projects
 :PROPERTIES:
 :Created:  2023-10-04
 :END:
 
 #+begin_src emacs-lisp
-  (when (featurep `denote)
+  (defun my-denote-link-add-working-projects ()
+    "Use command `denote-link-add-links' with '_projetos' for regex"
+    (interactive)
+    (denote-link-add-links my/regexp-denote-working-projects))
 
-    (defun my-denote-link-add-working-projects ()
-      "Use command `denote-link-add-links' with '_projetos' for regex"
-      (interactive)
-      (denote-link-add-links (rx (and "_projetos")
-                                 (and (zero-or-more anything))
-                                 (and "_working"))))
-
-    (defun my-denote-link-add-maybe-projects ()
-      "Use command `denote-link-add-links' with '_projetos' and
+  (defun my-denote-link-add-maybe-projects ()
+    "Use command `denote-link-add-links' with '_projetos' and
   '_maybe' for regex"
-      (interactive)
-      (denote-link-add-links (rx (and "_maybe")
-                                 (and (zero-or-more anything))
-                                 (and "_projetos"))))
-    )
+    (interactive)
+    (denote-link-add-links my/regexp-denote-maybe-projects))
 #+end_src
 
 ** Toggle Maybe/Working Projects
@@ -86,4 +94,17 @@ Base configuration for Denote
                  (my--denote-keyword-remove "working")))
               (t (my--denote-keyword-add "working")))
       (user-error "Buffer not visiting a Denote file")))
+#+end_src
+
+** Get file paths of Working Projects
+:PROPERTIES:
+:Created:  2023-10-09
+:END:
+
+#+begin_src emacs-lisp
+
+  (defun my--get-list-working-projects ()
+    "Get list with file paths of working projects with Denote"
+
+    (denote-directory-files-matching-regexp my/regexp-denote-working-projects))
 #+end_src

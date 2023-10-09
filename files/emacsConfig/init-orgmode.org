@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2023-09-18 Mon]
+#+DATE-UPDATED: [2023-10-09 Mon]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -229,9 +229,9 @@ Got the main idea from https://www.philnewton.net/blog/org-agenda-monthly-goals/
                (org-agenda-log-mode-items '(closed))
                (org-agenda-show-log t)
                (org-agenda-start-day "-1d")))
-      (todo "WORKING"
+      (todo "TODO"
             ((org-agenda-overriding-header "\nProjetos Atuais\n")
-             (org-agenda-files `(,my/projects-filename))))
+             (org-agenda-files (my--get-list-working-projects))))
       (todo ""
             ((org-agenda-overriding-header "\nCaptures\n")
              (org-agenda-files `(,my/gtd-inbox-filename))))
@@ -998,7 +998,7 @@ CLOSED: [2023-03-20 Mon 18:10]
 :END:
 #+BEGIN_SRC emacs-lisp
   (let ((filename my/gtd-inbox-filename)
-        (template (concat "* TODO %?\n"
+        (template (concat "* %?\n"
                           ":LOGBOOK:\n"
                           "Created on %U\n"
                           ":END:\n"
