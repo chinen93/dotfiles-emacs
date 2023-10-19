@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2023-10-06 Fri]
+#+DATE-UPDATED: [2023-10-19 Thu]
 
 Emacs has a lot of keybindings, and I can't remember every one of
 them. For example each key in the keyboard is related to a command, if
@@ -541,6 +541,8 @@ Hydra to easily insert greek letter and others math notations.
       _r_: Rename      _t_: Toogle Maybe/Working
       _k_: Add Key     
       _K_: Remove Key
+      
+      _p_: Elgrep ID on Notes
 
 
     "
@@ -550,6 +552,8 @@ Hydra to easily insert greek letter and others math notations.
     ("r" denote-rename-file-using-front-matter)
     ("k" denote-keywords-add)
     ("K" denote-keywords-remove)
+
+    ("p" my-elgrep-denote-identifier-notes)
 
     ;; Projects Heads
     ("w" my-denote-link-add-working-projects)
@@ -571,17 +575,20 @@ Hydra to easily insert greek letter and others math notations.
     "
     (interactive)
     (cl-case major-mode
+      ('org-mode (hydra-org/body))
+      ;;; If there was a need for more granulated control inside the major mode
+      ;;; For example, a hydra for org's src block or org's table
+      ;;('org-mode (let* ((elem (org-element-context))
+      ;;                  (etype (car elem))
+      ;;                  (type (org-element-property :type elem)))
+      ;;             (cl-case etype
+      ;;               (src-block (hydra-babel-helper/body))
+      ;;               (link (hydra-org-link-helper/body))
+      ;;               ((table-row table-cell) (hydra-org-table-helper/body) )
+      ;;               (t (message "No specific hydra for %s/%s" etype type)
+      ;;                  (hydra-org/body))))
+      ;;           )
       ('Buffer-menu-mode (hydra-buffer-menu/body))
-      ('org-mode (let* ((elem (org-element-context))
-                        (etype (car elem))
-                        (type (org-element-property :type elem)))
-                   (cl-case etype
-                     (src-block (hydra-babel-helper/body))
-                     (link (hydra-org-link-helper/body))
-                     ((table-row table-cell) (hydra-org-table-helper/body) )
-                     (t (message "No specific hydra for %s/%s" etype type)
-                        (hydra-org/body))))
-                 )
       (t (message "No hydra for this major mode: %s" major-mode))))
 
 #+END_SRC
@@ -633,27 +640,26 @@ Hydra to easily insert greek letter and others math notations.
 #+BEGIN_SRC emacs-lisp
   (defhydra hydra-org (:color amaranth :hint nil)
     "
-     ^Roam^              ^Clock^         ^Heading^
+     ^Functions^         ^Timestamp^       ^YASnippet^
     --------------------------------------------------------
-     _r_: Insert Node    _i_: Clock In   _h_: Create ID
-     _f_: Find Node      _o_: Clock Out
-     _t_: Toggle Nodes
-     _F_: Random Node
-
+     _t_: TODO keyword   _U_: active       _d_: Updates
+     _r_: Refile         _I_: inactive     
+     ^ ^                 _O_: range
+     ^ ^                 _P_: toggle type
     "
 
-    ;; Roam
-    ("r" org-roam-node-insert :color blue)
-    ("f" org-roam-node-find :color blue)
-    ("t" org-roam-buffer-toggle :color blue)
-    ("F" org-roam-node-random :color blue)
+    ;; Functions
+    ("t" org-todo :color blue)
+    ("r" org-refile :color blue)
 
-    ;; Clock
-    ("i" org-clock-in :color blue)
-    ("o" org-clock-out :color blue)
+    ;; Timestamp
+    ("U" org-time-stamp :color blue)
+    ("I" org-time-stamp-inactive :color blue)
+    ("O" (my-yasnippet-expand-snippet "Range Timestamp" 'org-mode) :color blue)
+    ("P" org-clock-out :color blue)
 
-    ;; Heading
-    ("h" org-id-get-create :color blue)
+    ;;  YASnippet
+    ("d" (my-yasnippet-expand-snippet "updates" 'org-mode) :color blue)
 
     ("q" nil "quit" :color blue))
 
@@ -740,4 +746,16 @@ Hydra to easily insert greek letter and others math notations.
     ("q" nil :color blue))
 
 #+END_SRC
+
+
+* Updates
+:PROPERTIES:
+:Created:  2023-10-19
+:END:
+
+[2023-10-19 Thu]
+- Fix hydra context to be for each major mode. The possibility to have more than one context was confunsing. I need to try having a single context first and them move to more than one when I'm more confident.
+- Change Hydra Context Org to be more usefull daily. Remove org roam and clock stuff. Add TODO/Refile/Timestamp/Snippets
+
+==============================
 

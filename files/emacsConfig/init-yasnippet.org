@@ -1,7 +1,7 @@
 #+TITLE:        Yasnippet Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2022-01-16 dom]
+#+DATE-UPDATED: [2023-10-19 Thu]
 
 Yasnippet is a template system for Emacs. It allows you to type an
 abbreviation and automatically expand it into function
@@ -172,3 +172,18 @@ Extension to template list.
   (define-auto-insert "\\.sh$" ["template/base-sh" autoinsert-yas-expand])
   (define-auto-insert (regexp-opt '("Makefile" "makefile")) ["template/base-makefile" autoinsert-yas-expand])
 #+END_SRC
+
+* Custom Functions
+:PROPERTIES:
+:Created:  2023-10-19
+:END:
+
+** Expand given snippet
+:PROPERTIES:
+:Created:  2023-10-19
+:END:
+
+#+begin_src emacs-lisp
+  (defun my-yasnippet-expand-snippet (name mode)
+    (yas-expand-snippet (yas-lookup-snippet name mode)))
+#+end_src

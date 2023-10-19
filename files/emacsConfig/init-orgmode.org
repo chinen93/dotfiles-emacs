@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2023-10-09 Mon]
+#+DATE-UPDATED: [2023-10-19 Thu]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -69,7 +69,7 @@ reproducible research.
   ;; ! - log timestamp when changing to this keyword
   ;; @ - log a note when changing to this keyword
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "WORKING(w!)" "WEEK(W!)" "|" "DONE(d!)")
+        '((sequence "TODO(t!)" "|" "DONE(d!)")
           (sequence "|" "CANCELED(c@/!)")))
 
   ;; Follows links when press <ENTER> on them
@@ -232,7 +232,7 @@ Got the main idea from https://www.philnewton.net/blog/org-agenda-monthly-goals/
       (todo "TODO"
             ((org-agenda-overriding-header "\nProjetos Atuais\n")
              (org-agenda-files (my--get-list-working-projects))))
-      (todo ""
+      (tags "gtd"
             ((org-agenda-overriding-header "\nCaptures\n")
              (org-agenda-files `(,my/gtd-inbox-filename))))
       )
@@ -266,6 +266,34 @@ CLOSED: [2022-12-28 Wed 15:46]
      nil))
 
 #+END_SRC
+
+*** Weekly review
+:PROPERTIES:
+:Created:  2023-10-11
+:END:
+
+#+begin_src emacs-lisp
+  (add-to-list
+     'org-agenda-custom-commands
+
+     '("w" "Weekly Review"
+       (
+        (agenda ""
+                ((org-agenda-log-mode-items '(closed))
+                 (org-agenda-span 8)
+                 (org-agenda-start-day "-7d")
+                 (org-agenda-show-log t)
+                 (org-agenda-window-setup 'other-window)
+                 (org-agenda-files (append org-agenda-files
+                                           (my--get-list-working-projects)
+                                           (my--get-list-maybe-projects)))))
+        (todo "TODO"
+              ((org-agenda-overriding-header "\nProjetos Atuais\n")
+               (org-agenda-files (my--get-list-working-projects))))
+        )
+       nil))
+
+#+end_src
 
 *** CANCELED Current Working Tasks and Immediate Calendar
 :PROPERTIES:
@@ -637,9 +665,13 @@ https://emacs.stackexchange.com/questions/21366/should-i-have-removed-shell-t-to
 
 #+END_SRC
 
-** Toggle Timestamp (Inactive to Active, vice versa)
+** CANCELED Toggle Timestamp (Inactive to Active, vice versa)
+CLOSED: [2023-10-19 Thu 19:06]
 :PROPERTIES:
 :ID:       67c751e1-8e7a-4e38-af90-8201bea4de0e
+:END:
+:LOGBOOK:
+- State "CANCELED"   from              [2023-10-19 Thu 19:06]
 :END:
 #+BEGIN_SRC emacs-lisp
   (defun my-org-toggle-timestamp(beforeList afterList)
@@ -1077,3 +1109,13 @@ https://journals.ieeeauthorcenter.ieee.org/create-your-ieee-article/authoring-to
   (with-eval-after-load 'org
     (define-key org-mode-map (kbd "<C-return>") 'my/org-heading-with-id))
 #+end_src
+
+* Updates
+:PROPERTIES:
+:Created:  2023-10-19
+:END:
+
+[2023-10-19 Thu]
+- Change todo keywords from (TODO WORKING WEEK | DONE CANCELED) to (TODO | DONE CANCELED) was not using those extra ones
+
+==============================
