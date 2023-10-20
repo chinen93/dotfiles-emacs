@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2023-10-19 Thu]
+#+DATE-UPDATED: [2023-10-20 Fri]
 
 Emacs has a lot of keybindings, and I can't remember every one of
 them. For example each key in the keyboard is related to a command, if
@@ -539,11 +539,11 @@ Hydra to easily insert greek letter and others math notations.
       _l_: Link        _w_: Links Working Projects
       _L_: Add Links   _m_: Links Maybe Projects
       _r_: Rename      _t_: Toogle Maybe/Working
-      _k_: Add Key     
+      _k_: Add Key
       _K_: Remove Key
-      
-      _p_: Elgrep ID on Notes
 
+      _p_: Elgrep ID on Notes
+      _r_: Random Note
 
     "
     ;; Base Denote Heads
@@ -554,6 +554,7 @@ Hydra to easily insert greek letter and others math notations.
     ("K" denote-keywords-remove)
 
     ("p" my-elgrep-denote-identifier-notes)
+    ("r" my-denote-random-note)
 
     ;; Projects Heads
     ("w" my-denote-link-add-working-projects)
@@ -561,7 +562,6 @@ Hydra to easily insert greek letter and others math notations.
     ("t" my-denote-toggle-project :color amaranth)
 
     ("q" nil "cancel" :color blue))
-
 #+end_src
 * Context Hydra
 :PROPERTIES:
@@ -756,6 +756,11 @@ Hydra to easily insert greek letter and others math notations.
 [2023-10-19 Thu]
 - Fix hydra context to be for each major mode. The possibility to have more than one context was confunsing. I need to try having a single context first and them move to more than one when I'm more confident.
 - Change Hydra Context Org to be more usefull daily. Remove org roam and clock stuff. Add TODO/Refile/Timestamp/Snippets
+
+==============================
+
+[2023-10-20 Fri]
+- Add denote random note function to denote hydra
 
 ==============================
 

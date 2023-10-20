@@ -2,7 +2,7 @@
 #+AUTHOR:       Pedro Chinen
 #+EMAIL:        ph.u.chinen@gmail.com
 #+DATE-CREATED: [2023-06-30 Fri]
-#+DATE-UPDATED: [2023-10-19 Thu]
+#+DATE-UPDATED: [2023-10-20 Fri]
 
 Base configuration for Denote
 #+begin_src emacs-lisp
@@ -172,12 +172,27 @@ Base configuration for Denote
     (denote-retrieve-filename-identifier (buffer-file-name (current-buffer))))
 #+end_src
 
+*** Open Random Note
+:PROPERTIES:
+:Created:  2023-10-20
+:END:
+#+begin_src emacs-lisp
+  (defun my-denote-random-note ()
+    "Open random denote note"
+    (interactive)
+    (find-file (seq-random-elt (denote-all-files))))
+#+end_src
 * Updates
 :PROPERTIES:
 :Created:  2023-10-19
 :END:
 
 [2023-10-19 Thu]
-Create function to get current buffer identifier
+- Create function to get current buffer identifier
+
+==============================
+
+[2023-10-20 Fri]
+- Create function to open a random denote note
 
 ==============================
