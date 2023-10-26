@@ -2,7 +2,7 @@
 #+AUTHOR:       Pedro Chinen
 #+EMAIL:        ph.u.chinen@gmail.com
 #+DATE-CREATED: [2023-06-30 Fri]
-#+DATE-UPDATED: [2023-10-20 Fri]
+#+DATE-UPDATED: [2023-10-23 Mon]
 
 Base configuration for Denote
 #+begin_src emacs-lisp
@@ -118,6 +118,30 @@ Base configuration for Denote
     (denote-directory-files-matching-regexp my/regexp-denote-maybe-projects))
 #+end_src
 
+*** Working Projects Progress Table
+:PROPERTIES:
+:Created:  2023-10-23
+:END:
+#+begin_src emacs-lisp
+  (defun my--denote-working-projects-org-table-row (project-filename)
+    "Handle each table row"
+    (let ((denote-link (denote-link--format-link project-filename
+                                                 (denote-link--file-type-format 'org-mode nil))))
+      (insert (concat denote-link ", Não\n"))))
+
+  (defun my-denote-working-projects-org-table ()
+    "Add org table with working projects to be reviewed"
+    (interactive)
+    (let* ((working-projects (my--get-list-working-projects))
+           (table (with-temp-buffer
+                    (insert "Projetos Propostos,Avançou?\n")
+                    (mapc 'my--denote-working-projects-org-table-row working-projects)
+                    (buffer-string))))
+      (set-mark-command nil)
+      (insert table)
+      (org-table-create-or-convert-from-region nil)
+      (setq deactivate-mark nil)))
+#+end_src
 ** Organizating Blog
 :PROPERTIES:
 :Created:  2023-10-12
@@ -194,5 +218,10 @@ Base configuration for Denote
 
 [2023-10-20 Fri]
 - Create function to open a random denote note
+
+==============================
+
+[2023-10-23 Mon]
+- Create function to show working projects in a table, so taht the review of those projects can be made clear if they had any progress.
 
 ==============================

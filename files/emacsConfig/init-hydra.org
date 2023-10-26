@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2023-10-20 Fri]
+#+DATE-UPDATED: [2023-10-25 Wed]
 
 Emacs has a lot of keybindings, and I can't remember every one of
 them. For example each key in the keyboard is related to a command, if
@@ -543,6 +543,7 @@ Hydra to easily insert greek letter and others math notations.
       _K_: Remove Key
 
       _p_: Elgrep ID on Notes
+      _P_: Projects Progress
       _r_: Random Note
 
     "
@@ -554,6 +555,7 @@ Hydra to easily insert greek letter and others math notations.
     ("K" denote-keywords-remove)
 
     ("p" my-elgrep-denote-identifier-notes)
+    ("P" my-denote-working-projects-org-table)
     ("r" my-denote-random-note)
 
     ;; Projects Heads
