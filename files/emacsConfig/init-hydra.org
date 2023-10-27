@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2023-10-25 Wed]
+#+DATE-UPDATED: [2023-10-27 Fri]
 
 Emacs has a lot of keybindings, and I can't remember every one of
 them. For example each key in the keyboard is related to a command, if
@@ -538,21 +538,23 @@ Hydra to easily insert greek letter and others math notations.
       ^-^--------------^-^-----------------------------
       _l_: Link        _w_: Links Working Projects
       _L_: Add Links   _m_: Links Maybe Projects
-      _r_: Rename      _t_: Toogle Maybe/Working
+      _R_: Rename      _t_: Toogle Maybe/Working
       _k_: Add Key
       _K_: Remove Key
 
       _p_: Elgrep ID on Notes
       _P_: Projects Progress
       _r_: Random Note
-
+      _M_: Add Missing Links
+      _n_: List Metanotes
     "
     ;; Base Denote Heads
     ("l" denote-link)
     ("L" denote-add-links)
-    ("r" denote-rename-file-using-front-matter)
+    ("R" denote-rename-file-using-front-matter)
     ("k" denote-keywords-add)
     ("K" denote-keywords-remove)
+    ("M" denote-add-missing-links)
 
     ("p" my-elgrep-denote-identifier-notes)
     ("P" my-denote-working-projects-org-table)
@@ -561,6 +563,7 @@ Hydra to easily insert greek letter and others math notations.
     ;; Projects Heads
     ("w" my-denote-link-add-working-projects)
     ("m" my-denote-link-add-maybe-projects)
+    ("n" my-denote-find-metanotes)
     ("t" my-denote-toggle-project :color amaranth)
 
     ("q" nil "cancel" :color blue))
@@ -766,3 +769,8 @@ Hydra to easily insert greek letter and others math notations.
 
 ==============================
 
+[2023-10-27 Fri]
+- Add function open metanotes to denote hydra
+- Add denote add missing links to denote hydra
+
+==============================

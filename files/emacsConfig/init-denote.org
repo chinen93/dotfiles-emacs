@@ -2,7 +2,7 @@
 #+AUTHOR:       Pedro Chinen
 #+EMAIL:        ph.u.chinen@gmail.com
 #+DATE-CREATED: [2023-06-30 Fri]
-#+DATE-UPDATED: [2023-10-23 Mon]
+#+DATE-UPDATED: [2023-10-26 Thu]
 
 Base configuration for Denote
 #+begin_src emacs-lisp
@@ -205,6 +205,16 @@ Base configuration for Denote
     "Open random denote note"
     (interactive)
     (find-file (seq-random-elt (denote-all-files))))
+#+end_src
+*** Open Dired with Metanotes
+:PROPERTIES:
+:Created:  2023-10-25
+:END:
+#+begin_src emacs-lisp
+  (defun my-denote-find-metanotes ()
+    "Find Denote Metanote files"
+    (interactive)
+    (find-lisp-find-dired (car denote-dired-directories) "_metanote"))
 #+end_src
 * Updates
 :PROPERTIES:
