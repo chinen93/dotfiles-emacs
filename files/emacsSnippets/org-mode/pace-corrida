@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: pace-corrida
+# key: pace-corrida
+# --
+
+** `(format-time-string "%Y-%m-%d")` ${1:5.5} km ${2:70} min - ${3:$$(format "%.2f" (/ (string-to-number (yas-field-value 2)) (string-to-number (yas-field-value 1))))} min/km
+- Local: $0
+- Descrição:
