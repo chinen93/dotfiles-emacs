@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2023-10-27 Fri]
+#+DATE-UPDATED: [2023-11-15 Wed]
 
 Emacs has a lot of keybindings, and I can't remember every one of
 them. For example each key in the keyboard is related to a command, if
@@ -645,23 +645,24 @@ Hydra to easily insert greek letter and others math notations.
 #+BEGIN_SRC emacs-lisp
   (defhydra hydra-org (:color amaranth :hint nil)
     "
-     ^Functions^         ^Timestamp^       ^YASnippet^
-    --------------------------------------------------------
-     _t_: TODO keyword   _U_: active       _d_: Updates
-     _r_: Refile         _I_: inactive     
-     ^ ^                 _O_: range
-     ^ ^                 _P_: toggle type
+     ^Functions^          ^Timestamp^       ^YASnippet^
+    ---------------------------------------------------------
+     _t_: TODO keyword    _U_: active       _d_: Updates
+     _r_: Refile          _I_: inactive
+     _p_: Get Plan Upd    _O_: range
+     _P_: Paste Plan Upd
     "
 
     ;; Functions
     ("t" org-todo :color blue)
     ("r" org-refile :color blue)
+    ("p" (my-org-get-plan-update-string) :color blue)
+    ("P" (my-org-paste-plan-update-string) :color blue)
 
     ;; Timestamp
     ("U" org-time-stamp :color blue)
     ("I" org-time-stamp-inactive :color blue)
     ("O" (my-yasnippet-expand-snippet "Range Timestamp" 'org-mode) :color blue)
-    ("P" org-clock-out :color blue)
 
     ;;  YASnippet
     ("d" (my-yasnippet-expand-snippet "updates" 'org-mode) :color blue)

@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2023-10-19 Thu]
+#+DATE-UPDATED: [2023-11-15 Wed]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -860,6 +860,57 @@ CLOSED: [2023-10-19 Thu 19:06]
       (org-id-get-create)))
 #+end_src
 
+** Get Plan Updates
+:PROPERTIES:
+:Created:  2023-11-15
+:END:
+
+#+begin_src emacs-lisp
+  (defvar my/project-closed-timestamp "" "Hold headings' closed timestamp")
+  (defvar my/project-update "" "Holds project update string")
+
+  (defun my--org-get-closed-timestamp ()
+    "Get org closed timestamp from the 'CLOSED:' string
+
+    This value is present when 'org-log-done' is non-nil
+
+    Save the value in 'my--project-closed-timestamp'.
+    "
+    (setq my/project-closed-timestamp "")
+    (org-narrow-to-subtree)
+    (when (search-forward "CLOSED: " nil t nil)
+      (set-mark-command nil)
+      (end-of-line)
+
+      (let ((selection (buffer-substring-no-properties (region-beginning) (region-end))))
+        (setq my/project-closed-timestamp selection)))
+
+    (widen)  
+    my/project-closed-timestamp)
+
+
+  (defun my-org-get-plan-update-string ()
+    "Get project update string and save it in 'my--project-update' variable"
+    (interactive)
+    (setq my/project-update "")
+    (let* ((keywords (org-collect-keywords '("title" "identifier")))
+           (file-title (nth 1 (nth 0 keywords)))
+           (file-id (nth 1 (nth 1 keywords)))
+           (heading-title (nth 4 (org-heading-components)))
+           (closed-timestamp (my/org-get-closed-timestamp))
+           (message-string (concat closed-timestamp " "
+                                   "Proj: [[denote:" file-id "][" file-title "]] - "
+                                   heading-title
+                                   "\n")))
+      (setq my/project-update message-string)))
+
+
+  (defun my-org-paste-plan-update-string ()
+    "Insert 'my--project-update' string"
+    (interactive)
+    (insert my/project-update))
+#+end_src
+
 * Hooks
 :PROPERTIES:
 :ID:       97b4a8b1-8d0b-4f54-9c25-44439c58c3f9
@@ -1117,5 +1168,10 @@ https://journals.ieeeauthorcenter.ieee.org/create-your-ieee-article/authoring-to
 
 [2023-10-19 Thu]
 - Change todo keywords from (TODO WORKING WEEK | DONE CANCELED) to (TODO | DONE CANCELED) was not using those extra ones
+
+==============================
+
+[2023-11-15 Wed]
+- Add Get Plan Updates function
 
 ==============================

@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: updates-plano
+# key: updates-plano
+# --
+
+[`(format-time-string "%Y-%m-%d %a")`]
+Projeto: $1 Atividade: $0
+==============================
