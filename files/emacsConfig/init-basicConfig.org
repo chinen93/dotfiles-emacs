@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2023-10-12 Thu]
+#+DATE-UPDATED: [2023-11-19 Sun]
 
 It doesn't need any external package. Just pure Elisp.
 
@@ -380,6 +380,12 @@ Creation of Organization files
 
   (defvar my/gtd-inbox-filename
     (let ((filename (concat my/notes-directory "20230630T164926--gtd-inbox__gtd.org")))
+      (if (file-exists-p filename)
+          filename
+        nil)))
+
+  (defvar my/daily-diary-filename
+    (let ((filename (concat my/notes-directory "20231119T214733--daily-diary__daily.org")))
       (if (file-exists-p filename)
           filename
         nil)))

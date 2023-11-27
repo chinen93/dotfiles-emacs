@@ -146,6 +146,7 @@ Set org agenda files
   (add-to-list 'org-agenda-files my/projects-filename)
   (add-to-list 'org-agenda-files my/plans-filename)
   (add-to-list 'org-agenda-files my/dates-filename)
+  (add-to-list 'org-agenda-files my/daily-diary-filename)
 #+END_SRC
 
 ** Configure some information
@@ -1089,11 +1090,28 @@ CLOSED: [2023-03-20 Mon 18:10]
                           " ")))
     (add-to-list
      'org-capture-templates
-     `("c" "GTD Inbox" entry
+     `("C" "GTD Inbox" entry
        (file ,filename)
        ,template
        :empty-lines 1)))
 #+END_SRC
+** Daily Diary
+:PROPERTIES:
+:Created:  2023-11-19
+:END:
+
+#+begin_src emacs-lisp
+    (let ((filename my/daily-diary-filename)
+          (template (concat "* %?\n"
+                            "Logged on: %T\n"
+                            "%i\n")))
+      (add-to-list
+       'org-capture-templates
+       `("d" "Daily Diary" entry
+         (file+datetree ,filename)
+         ,template
+         :empty-lines 1)))
+#+end_src
 * Export
 :PROPERTIES:
 :ID:       a4a8d233-afea-4f30-98f2-0f5a18fde599
