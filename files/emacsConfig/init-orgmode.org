@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2023-11-19 Sun]
+#+DATE-UPDATED: [2023-11-28 Tue]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -469,6 +469,21 @@ CLOSED: [2023-03-20 Mon 11:47]
              (org-agenda-files `(,my/gtd-inbox-filename))))
       )))
 #+END_SRC
+** Agenda Highlight
+:PROPERTIES:
+:Created:  2023-11-27
+:END:
+
+#+begin_src emacs-lisp
+  (defun my--highlight-org-agenda ()
+    (highlight-lines-matching-regexp ":daily:" 'my/face-org-agenda-daily)
+    (highlight-lines-matching-regexp ":ImpDate:" 'my/face-org-agenda-important-dates)
+    (highlight-lines-matching-regexp ":OneTime:" 'my/face-org-agenda-one-time)
+    )
+
+  (add-hook 'org-agenda-finalize-hook #'my--highlight-org-agenda)
+#+end_src
+
 * Diary
 :PROPERTIES:
 :Created:  2022-05-11

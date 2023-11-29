@@ -1,7 +1,7 @@
 #+TITLE:        Themes Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2022-02-16 qua]
+#+DATE-UPDATED: [2023-11-28 Tue]
 
 A *Theme* is a collection of graphical appearance details in order to
 change the look and feel of a Graphical User Interface (GUI). Usually
@@ -27,6 +27,32 @@ more.
 #+BEGIN_SRC emacs-lisp
   (provide 'init-themes)
 #+END_SRC
+* My Theme
+:PROPERTIES:
+:Created:  2023-11-27
+:END:
+#+begin_src emacs-lisp
+(defface my/face-org-agenda-daily-diary
+  '((t
+     :foreground "black"
+     :background "papaya whip"))
+  "Face for org agenda daily diary entries"
+  :group 'my/faces)
+
+(defface my/face-org-agenda-important-dates
+  '((t
+     :foreground "black"
+     :background "thistle"))
+  "Face for org agenda important dates entries"
+  :group 'my/faces)
+
+(defface my/face-org-agenda-one-time
+  '((t
+     :foreground "white"
+     :background "indian red"))
+  "Face for org agenda one time entries"
+  :group 'my/faces)
+#+end_src
 * Load Package: Zenburn
 :PROPERTIES:
 :ID:       c39c049d-3c1c-4f96-8f82-fa80f41c385e

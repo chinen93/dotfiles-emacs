@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2023-11-19 Sun]
+#+DATE-UPDATED: [2023-11-27 Mon]
 
 It doesn't need any external package. Just pure Elisp.
 
@@ -349,7 +349,7 @@ Creation of Organization files
         nil)))
 
   (defvar my/projects-filename
-    (let ((filename (concat my/notes-directory "20230630T180635--projetos__projetos_metanote.org")))
+    (let ((filename (concat my/notes-directory "20230630T180635--projetos__metanote_projetos.org")))
       (if (file-exists-p filename)
           filename
         nil)))
