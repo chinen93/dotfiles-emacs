@@ -2,7 +2,7 @@
 #+AUTHOR:       Pedro Chinen
 #+EMAIL:        ph.u.chinen@gmail.com
 #+DATE-CREATED: [2023-06-30 Fri]
-#+DATE-UPDATED: [2023-10-26 Thu]
+#+DATE-UPDATED: [2023-12-03 Sun]
 
 Base configuration for Denote
 #+begin_src emacs-lisp
@@ -125,8 +125,9 @@ Base configuration for Denote
 #+begin_src emacs-lisp
   (defun my--denote-working-projects-org-table-row (project-filename)
     "Handle each table row"
-    (let ((denote-link (denote-link--format-link project-filename
-                                                 (denote-link--file-type-format 'org-mode nil))))
+    (let ((denote-link (denote-format-link project-filename
+                                           (denote-link--file-type-format 'org-mode nil)
+                                           nil)))
       (insert (concat denote-link ", Não\n"))))
 
   (defun my-denote-working-projects-org-table ()
