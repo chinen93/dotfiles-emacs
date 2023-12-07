@@ -1,7 +1,7 @@
 #+TITLE:        Init Emacs
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2019-09-10 ter]
-#+DATE-UPDATED: [2023-10-04 Wed]
+#+DATE-UPDATED: [2023-12-06 Wed]
 #+PROPERTY: header-args :tangle yes
 
 * Starting of Configuration
@@ -69,18 +69,21 @@ to happen before they are called.
                             "init-setup-package.org"
                             "init-basicConfig.org"
                             "init-keyBinding.org"
-                            "init-backup.org"
                             ;; Nice to have configurations
-                            "init-bookmark.org"
-                            "init-ibuffer.org"
-                            "init-ivy.org"
+                            "init-completion.org"
+                            "init-coding.org"
+                            "init-metrics.org"
+                            "init-minibuffer.org"
+                            "init-navigation.org"
+                            "init-personal-organization.org"
+                            "init-reading.org"
+                            "init-writing.org"
+                            "init-spelling.org"
+                            "init-web.org"
                             "init-customFunctions.org"
                             "init-hydra.org"
                             "init-orgmode.org"
-                            "init-yasnippet.org"
-                            "init-denote.org"
-                            "init-elgrep.org"
-                            "init-themes.org")
+                            "init-appearance.org")
     "Initial order of configurations to be loaded because they have
     dependencies among the others")
 

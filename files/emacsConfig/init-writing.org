@@ -1,7 +1,59 @@
-#+TITLE:        Yasnippet Configurations
+#+TITLE:        Writing Configurations
 #+AUTHOR:       Pedro Chinen
-#+DATE-CREATED: [2018-09-23 Sun]
-#+DATE-UPDATED: [2023-10-19 Thu]
+#+DATE-CREATED: [2023-12-06 Wed]
+#+DATE-UPDATED: [2023-12-06 Wed]
+
+* Lock Files when editing
+:PROPERTIES:
+:ID:       01a30e95-5576-42b4-b4f2-76a498a4b175
+:END:
+https://www.gnu.org/software/emacs/manual/html_node/elisp/File-Locks.html
+#+BEGIN_SRC emacs-lisp
+  (setq create-lockfiles nil)
+#+END_SRC
+* Global Indentation
+:PROPERTIES:
+:ID:       bb472086-0d4c-4779-9b79-4a4929de4a6e
+:END:
+
+Don't indent automatically. Go to the beginning of the newline
+instead.
+#+BEGIN_SRC emacs-lisp
+  (electric-indent-mode -1)
+
+#+END_SRC
+* Delete Marked Text When Inserting New Text
+:PROPERTIES:
+:ID:       78566d3b-c8ae-4ca1-b106-73ad2c7cf238
+:END:
+
+Delete selected text when something is inserted and a mark is
+active. Without it the new text would remove the mark and just insert
+the text in the buffer.
+#+BEGIN_SRC emacs-lisp
+  (delete-selection-mode 1)
+
+#+END_SRC
+
+For example if *delete-selection-mode* is inactive. [] is the marked
+region and () is the current point:
+#+BEGIN_SRC text
+  Lorem ipsum dolor sit amet, [consectetur adipiscing elit()], sed do eiusmod tempor.
+
+  Lorem ipsum dolor sit amet, consectetur adipiscing elitNEW TEXT, sed do eiusmod tempor.
+#+END_SRC
+
+Example if *delete-selection-mode* is active. [] is the marked region
+and () is the current point:
+#+BEGIN_SRC text
+  Lorem ipsum dolor sit amet, [consectetur adipiscing elit()], sed do eiusmod tempor.
+
+  Lorem ipsum dolor sit amet, NEW TEXT, sed do eiusmod tempo.
+#+END_SRC
+* Yasnippet
+:PROPERTIES:
+:Created:  2023-12-06
+:END:
 
 Yasnippet is a template system for Emacs. It allows you to type an
 abbreviation and automatically expand it into function
@@ -30,14 +82,7 @@ Load package to be used in this configuration.
 
 #+END_SRC
 
-* Provide File
-:PROPERTIES:
-:ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
-:END:
-#+BEGIN_SRC emacs-lisp
-  (provide 'init-yasnippet)
-#+END_SRC
-* Snippets Location
+** Snippets Location
 :PROPERTIES:
 :ID:       bb384859-63d5-4e82-a43d-ff9e341de4f0
 :END:
@@ -77,7 +122,7 @@ with mode names. It represents that those modes have shared
 snippets. So in the last example when you are in the c-mode you can
 also use cc-mode and text-mode snippets.
 
-* Configuration
+** Configuration
 :PROPERTIES:
 :ID:       505528f7-f256-4161-8fc8-2cba26a63e05
 :END:
@@ -95,7 +140,7 @@ current column.
 
 #+END_SRC
 
-* Enable Yasnippets Globally
+** Enable Yasnippets Globally
 :PROPERTIES:
 :ID:       55addacd-953a-4a5a-b734-1ad0584f6db0
 :END:
@@ -105,7 +150,7 @@ current column.
 
 #+END_SRC
 
-* Auto Insert
+** Auto Insert
 :PROPERTIES:
 :ID:       c60dc91c-d3e9-4d09-93fc-6b6fb64db81b
 :END:
@@ -121,7 +166,7 @@ buffers based on file extension or the major mode.
 ;;    (auto-insert-mode 1))
 #+END_SRC
 
-** Set Templates Directory
+*** Set Templates Directory
 :PROPERTIES:
 :ID:       5a6610c1-650f-4451-b8e1-fbc97ade5f2d
 :END:
@@ -132,7 +177,7 @@ Place where to search for templates
     (setq auto-insert-directory my/snippets-folder)
 #+END_SRC
 
-** Don't ask before insertion
+*** Don't ask before insertion
 :PROPERTIES:
 :ID:       15f88107-1564-46ff-a78d-9ff3aff313e2
 :END:
@@ -143,7 +188,7 @@ less painful as possible.
     (setq auto-insert-query nil)
 #+END_SRC
 
-** How to expand: YASNIPPET
+*** How to expand: YASNIPPET
 :PROPERTIES:
 :ID:       a5ef9ed7-8e18-45e5-816e-147bbffafbd2
 :END:
@@ -156,7 +201,7 @@ of yasnippet syntax. Which makes everything consistent.
     (yas-expand-snippet (buffer-string) (point-min) (point-max)))
 #+END_SRC
 
-** List of Templates
+*** List of Templates
 :PROPERTIES:
 :ID:       5938311d-0152-48cb-8371-1acbccb6dfda
 :END:
@@ -173,12 +218,12 @@ Extension to template list.
   (define-auto-insert (regexp-opt '("Makefile" "makefile")) ["template/base-makefile" autoinsert-yas-expand])
 #+END_SRC
 
-* Custom Functions
+** Custom Functions
 :PROPERTIES:
 :Created:  2023-10-19
 :END:
 
-** Expand given snippet
+*** Expand given snippet
 :PROPERTIES:
 :Created:  2023-10-19
 :END:
@@ -187,3 +232,32 @@ Extension to template list.
   (defun my-yasnippet-expand-snippet (name mode)
     (yas-expand-snippet (yas-lookup-snippet name mode)))
 #+end_src
+
+* Packages
+:PROPERTIES:
+:Created:  2023-12-06
+:END:
+** CANCELED Package: Multiple Cursors
+:PROPERTIES:
+:ID:       49809966-9769-4312-8310-49388e8475f1
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package multiple-cursors
+    :ensure t)
+#+END_SRC
+** CANCELED Package: Expand Region
+:PROPERTIES:
+:ID:       b8bd9444-d023-4fe0-99e4-8b732e3b927a
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package expand-region
+    :ensure t)
+#+END_SRC
+
+* Provide File
+:PROPERTIES:
+:ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
+:END:
+#+BEGIN_SRC emacs-lisp
+  (provide 'init-writing)
+#+END_SRC

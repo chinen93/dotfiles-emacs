@@ -1,0 +1,166 @@
+#+TITLE:        Spelling Configuration
+#+AUTHOR:       Pedro Chinen
+#+DATE-CREATED: [2023-12-06 Wed]
+#+DATE-UPDATED: [2023-12-06 Wed]
+
+* CANCELED Flycheck
+:PROPERTIES:
+:Created:  2023-12-06
+:END:
+Flycheck — Syntax checking for GNU Emacs
+https://www.flycheck.org/en/latest/index.html
+
+Flycheck is a modern on-the-fly syntax checking extension for GNU
+Emacs, intended as replacement for the older Flymake extension which
+is part of GNU Emacs.
+
+#+BEGIN_SRC text
+  Flycheck does not check buffers itself but relies on external programs to check buffers. These programs must be installed separately.
+#+END_SRC
+
+Install Package
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck
+    :ensure t)
+#+END_SRC
+
+Always enable flycheck when programming.
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'flycheck)
+
+    ;; ;; Flycheck gets to be a bit much when warning about checkdoc issues.
+    (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc))
+
+    (add-hook 'prog-mode-hook 'flycheck-mode))
+#+END_SRC
+
+** CANCELED Programming Languages Checkers
+:PROPERTIES:
+:ID:       5bdc1643-4f86-42fd-8f9d-25d1dc06bfa5
+:END:
+
+*** CANCELED C/C++ (Cppcheck)
+:PROPERTIES:
+:ID:       a83b9754-28d3-490b-a245-ce83ab094b3b
+:END:
+http://cppcheck.sourceforge.net/
+
+*** CANCELED Python (Flake8)
+:PROPERTIES:
+:ID:       1b45009e-0005-418e-999c-268e4b262551
+:END:
+http://flake8.pycqa.org/en/latest/index.html
+
+If you want Flake8 to be installed for your default Python
+installation, you can instead use:
+#+BEGIN_SRC sh
+  python -m pip install flake8
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'flycheck)
+    (setq flycheck-flake8rc "~/.flake8rc")
+    (setq flycheck-pylintrc "~/.pylintrc"))
+#+END_SRC
+
+* CANCELED Spellcheck
+:PROPERTIES:
+:Created:  2023-12-06
+:END:
+Set the default dictionary to be used.
+#+BEGIN_SRC emacs-lisp
+  (require 'ispell)
+#+END_SRC
+
+** CANCELED Personal Dictionary
+:PROPERTIES:
+:ID:       864d4907-feca-477e-a642-fa63691f3629
+:END:
+#+BEGIN_SRC emacs-lisp
+  (require 'init-basicConfig)
+
+  (defvar my/personal-directory (concat my/dropbox-folder "emacs-dictionary")
+    "Personal directory location for Spell Checking")
+
+  (setq ispell-personal-dictionary my/personal-directory)
+#+END_SRC
+
+** CANCELED Hunspell
+:PROPERTIES:
+:ID:       1ef1cd0d-29c5-4eea-a099-3fd23bde4661
+:END:
+#+BEGIN_SRC emacs-lisp
+  ;; Tell ispell-mode to use hunspell.
+  (setq ispell-program-name (executable-find "hunspell"))
+  (setq ispell-local-dictionary "en_US")
+
+#+END_SRC
+
+** CANCELED Functions
+:PROPERTIES:
+:ID:       b408df07-b805-49e2-9e6f-78c5b95aa528
+:END:
+#+BEGIN_SRC emacs-lisp
+  (defun phuc/ispell-dwim (&optional beg end)
+    "Run `ispell-region' on the active region or word"
+    (interactive "r")
+    (if (use-region-p)
+        (ispell-region beg end)
+      (ispell-word)))
+#+END_SRC
+
+** CANCELED Skip Some Regions
+:PROPERTIES:
+:ID:       b6ef7c0c-e1cb-4ba4-81dd-2fa85f572b1e
+:END:
+
+Regions in Org Mode:
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'ispell-skip-region-alist '(":\\(PROPERTIES\\|LOGBOOK\\):" . ":END:"))
+  (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_SRC" . "#\\+END_SRC"))
+  (add-to-list 'ispell-skip-region-alist '("#\\+BEGIN_EXAMPLE" . "#\\+END_EXAMPLE"))
+#+END_SRC
+
+* CANCELED Words
+:PROPERTIES:
+:Created:  2023-12-06
+:END:
+** CANCELED Load Package: Define Word
+:PROPERTIES:
+:ID:       d48b2394-6dd7-4c5e-99f5-54d035a80b86
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package define-word
+    :ensure t)
+#+END_SRC
+** CANCELED Load Package: Google Translate
+:PROPERTIES:
+:ID:       a59b4cdf-8a1f-4189-80f1-9cffaa1afbeb
+:END:
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; (use-package google-translate
+  ;;   :ensure t)
+#+END_SRC
+** CANCELED Load Package: Word of The Day
+CLOSED: [2018-09-23 Sun 23:52]
+:PROPERTIES:
+:ID:       858890f5-e5df-44a9-9f96-1e223267c540
+:END:
+- State "CANCELED"   from "DONE"       [2018-09-23 Sun 23:52]
+- State "DONE"       from "WORKING"    [2018-09-23 Sun 23:52]
+- State "WORKING"    from "TODO"       [2018-09-23 Sun 23:52]
+#+BEGIN_SRC emacs-lisp
+  ;; (use-package wotd
+  ;;   :ensure t)
+#+END_SRC
+
+* Provide File
+:PROPERTIES:
+:ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
+:END:
+#+BEGIN_SRC emacs-lisp
+  (provide 'init-spelling)
+#+END_SRC
+
+
+

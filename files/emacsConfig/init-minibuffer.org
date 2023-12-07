@@ -1,7 +1,12 @@
-#+TITLE:        Ivy Configuration
+#+TITLE:        Minibuffer Configuration
 #+AUTHOR:       Pedro Chinen
-#+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2019-09-22 dom]
+#+DATE-CREATED: [2023-12-06 Wed]
+#+DATE-UPDATED: [2023-12-06 Wed]
+
+* Ivy
+:PROPERTIES:
+:Created:  2023-12-06
+:END:
 
 Emacs is a text editor which don't want to bother the user. So
 normally it doesn't have an auto completion function. However for
@@ -28,11 +33,6 @@ through powerful regular expressions.
   (ivy-mode 1)
 
 #+END_SRC
-
-* Configure
-:PROPERTIES:
-:ID:       efbd1606-eff7-43a5-a4e6-8c12b6d229ef
-:END:
 
 Number of result lines to display
 #+BEGIN_SRC emacs-lisp
@@ -64,7 +64,7 @@ Configure regexp engine.
 :ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
 :END:
 #+BEGIN_SRC emacs-lisp
-  (provide 'init-ivy)
+  (provide 'init-minibuffer)
 #+END_SRC
 
 

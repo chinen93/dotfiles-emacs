@@ -1,7 +1,7 @@
 #+TITLE:        Setup Package Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2022-01-16 dom]
+#+DATE-UPDATED: [2023-12-06 Wed]
 
 #+BEGIN_SRC emacs-lisp
   (require 'package)
@@ -48,7 +48,8 @@
 
 #+END_SRC
 
-* Purcell's Way to Install Packages
+* Packages
+** Purcell's Way to Install Packages
 :PROPERTIES:
 :ID:       15764119-011e-4999-8682-03d21e1ee5b5
 :END:
@@ -74,10 +75,12 @@
 
 #+END_SRC
 
-* Load Package *use-package*
+** Package: use-package
 :PROPERTIES:
 :ID:       a90bf7d2-6946-4c3a-a3f8-8a3f2cb68b8c
+:Created:  2023-12-06
 :END:
+
 #+BEGIN_SRC emacs-lisp
   (require-package 'use-package)
   (setq use-package-verbose t)
@@ -88,3 +91,11 @@
 
 #+END_SRC
 
+** Package: try
+:PROPERTIES:
+:Created:  2023-12-06
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package try
+    :ensure t)
+#+END_SRC

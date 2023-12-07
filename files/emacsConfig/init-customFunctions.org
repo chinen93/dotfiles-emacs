@@ -1,15 +1,7 @@
 #+TITLE:        Custom Functions Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2021-05-12 qua]
-
-* Provide File
-:PROPERTIES:
-:ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
-:END:
-#+BEGIN_SRC emacs-lisp
-  (provide 'init-customFunctions)
-#+END_SRC
+#+DATE-UPDATED: [2023-12-06 Wed]
 
 * Functions from Internet
 :PROPERTIES:
@@ -455,4 +447,12 @@
 
       (with-no-warnings
         (goto-line line))))
+#+END_SRC
+
+* Provide File
+:PROPERTIES:
+:ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
+:END:
+#+BEGIN_SRC emacs-lisp
+  (provide 'init-customFunctions)
 #+END_SRC

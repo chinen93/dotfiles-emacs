@@ -1,0 +1,65 @@
+#+TITLE:        Metrics Configuration
+#+AUTHOR:       Pedro Chinen
+#+DATE-CREATED: [2023-12-06 Wed]
+#+DATE-UPDATED: [2023-12-06 Wed]
+
+* Packages
+:PROPERTIES:
+:Created:  2023-12-06
+:END:
+** Package: Key Freq
+:PROPERTIES:
+:ID:       1b7e6097-710e-40dd-8b3f-ce3b07f2996f
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2023-12-06 Wed 17:14]
+:END:
+#+BEGIN_SRC emacs-lisp
+(use-package keyfreq
+    :ensure t)
+#+END_SRC
+
+*** Configure
+:PROPERTIES:
+:ID:       8b55a827-24bb-4d8d-9d6c-a8b1817e8300
+:END:
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'keyfreq)
+    ;; Commands that are not listed in (keyfreq-show)
+    (setq keyfreq-excluded-commands
+	  '(self-insert-command
+	    abort-recursive-edit
+	    backward-char
+	    backward-delete-char-untabify
+	    c-electric-backspace
+	    company-ignore
+	    delete-backward-char
+	    forward-char
+	    helm-next-line
+	    helm-previous-line
+	    left-char
+	    mouse-drag-region
+	    mouse-set-point
+	    mwheel-scroll
+	    next-line
+	    org-delete-backward-char
+	    org-self-insert-command
+	    previous-line
+	    right-char))
+
+    ;; Start keyfreq mode
+    (keyfreq-mode 1)
+
+    ;; Star key freq auto sabex
+    (keyfreq-autosave-mode 1))
+#+END_SRC
+
+
+
+* Provide File
+:PROPERTIES:
+:ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
+:END:
+#+BEGIN_SRC emacs-lisp
+  (provide 'init-metrics)
+#+END_SRC

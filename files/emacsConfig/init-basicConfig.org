@@ -1,277 +1,16 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2023-11-27 Mon]
+#+DATE-UPDATED: [2023-12-06 Wed]
 
 It doesn't need any external package. Just pure Elisp.
 
+* Personal Information
+:PROPERTIES:
+:Created:  2023-12-06
+:END:
 #+BEGIN_SRC emacs-lisp
   (setq user-full-name "Pedro Chinen")
-#+END_SRC
-
-
-* Lock Files when editing
-:PROPERTIES:
-:ID:       01a30e95-5576-42b4-b4f2-76a498a4b175
-:END:
-https://www.gnu.org/software/emacs/manual/html_node/elisp/File-Locks.html
-#+BEGIN_SRC emacs-lisp
-  (setq create-lockfiles nil)
-#+END_SRC
-
-* Provide File
-:PROPERTIES:
-:ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
-:END:
-#+BEGIN_SRC emacs-lisp
-  (provide 'init-basicConfig)
-#+END_SRC
-
-* Scratch Buffer
-:PROPERTIES:
-:ID:       d4c6c814-f72e-41a1-9930-007d52730ae3
-:END:
-
-What to say on the *scratch* buffer.
-
-I really like to give some information in the scratch buffer. So if anyone tries
-to use this configuration I think it will be easier to start using it.
-
-#+BEGIN_SRC emacs-lisp
-  (setq initial-scratch-message "
-  ;; ***************************************************************
-  ;; *************************** SCRATCH ***************************
-  ;; ***************************************************************
-
-  ;; | Copy & Paste                                                |
-  ;; |-------------------------------------------------------------|
-  ;; | M-1 : cut line                     | M-3 : paste clipboard  |
-
-  ;; | New command prefix (C-v) and (M-v)                          |
-  ;; |-------------------------------------------------------------|
-  ;; | M-v M-f : find-file                                         |
-
-  ;; | Useful keybindings                                          |
-  ;; |------------------------------------+------------------------|
-  ;; | C-r : backward regex               | C-s   : forward regex  |
-  ;; | C-n : new buffer                   | C-TAB : other-window   |
-  ;; | C-0 : undo                         |                        |
-
-  ;; | Open Hydra Launcher - More commands inside !!               |
-  ;; |------------------------------------+------------------------|
-  ;; | M-q   : Hydra Launcher                                      |
-
-  ")
-
-#+END_SRC
-
-* Encoding Charset UTF 8
-:PROPERTIES:
-:ID:       f59e7297-4e09-498d-8c47-703673a6f5da
-:END:
-
-[[https://en.wikipedia.org/wiki/UTF-8][UTF-8]] is a variable width character encoding capable of encoding all
-1,112,064 valid code points in Unicode using one to four 8-bit
-bytes. The encoding is defined by the Unicode standard, and was
-originally designed by Ken Thompson and Rob Pike. The name is derived
-from Unicode (or Universal Coded Character Set) Transformation Format
-– 8-bit.
-
-Set the default encoding to be UTF-8 on everything possible
-#+BEGIN_SRC emacs-lisp
-  (setq locale-coding-system 'utf-8)
-
-  (set-language-environment 'utf-8)
-  (set-selection-coding-system 'utf-8)
-  (set-default-coding-systems 'utf-8)
-  (set-terminal-coding-system 'utf-8)
-  (prefer-coding-system 'utf-8)
-
-#+END_SRC
-
-* Better Visual
-:PROPERTIES:
-:ID:       40501f1f-b111-4789-992f-c658bd924d15
-:END:
-
-Remove tool bar at top and scroll bar at right
-#+BEGIN_SRC emacs-lisp
-  (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-  (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-
-#+END_SRC
-
-Don't show start up message
-#+BEGIN_SRC emacs-lisp
-  (setq inhibit-startup-message t)
-
-#+END_SRC
-
-Column which to line-wrap
-#+BEGIN_SRC emacs-lisp
-  (setq-default fill-column 70)
-#+END_SRC
-
-** Show matching parenthesis
-:PROPERTIES:
-:ID:       31f0d337-a006-4af2-ac06-26c49175e66a
-:END:
-
-See the matching pair of parentheses and others characters.
-
-The Style should be: If the matching parenthesis is on the same page
-show it, otherwise highlight everything inside.
-#+BEGIN_SRC emacs-lisp
-  (show-paren-mode t)
-  (setq show-paren-style 'mixed)
-
-#+END_SRC
-
-** Alarm Bell
-:PROPERTIES:
-:ID:       cd778e6d-2bbc-4e08-8b4f-6cd46d965a93
-:END:
-https://www.emacswiki.org/emacs/AlarmBell
-
-When an error occur, change the color of the mode-line for a
-moment. Just to show that something went wrong.
-#+BEGIN_SRC emacs-lisp
-  (setq ring-bell-function
-        (lambda ()
-          (let ((orig-fg (face-foreground 'mode-line)))
-            (set-face-foreground 'mode-line "#F2804F")
-            (run-with-idle-timer 0.1 nil
-                                 (lambda (fg) (set-face-foreground 'mode-line fg))
-                                 orig-fg))))
-
-#+END_SRC
-
-** Prompt yes-no
-:PROPERTIES:
-:ID:       e61fdcf3-d5ef-437f-b13a-efdeab15013e
-:END:
-
-Change (yes/no) to (y/n) it is faster to confirm prompts.
-#+BEGIN_SRC emacs-lisp
-  (fset 'yes-or-no-p 'y-or-n-p)
-
-#+END_SRC
-
-** Ask before leaving Emacs
-:PROPERTIES:
-:ID:       61a27609-0794-4195-aca4-b39c0a633541
-:END:
-
-Don't just exit emacs without asking. I don't want to lose changes
-that I made by hitting *C-x C-c* by accident.
-#+BEGIN_SRC emacs-lisp
-  (setq confirm-kill-emacs 'yes-or-no-p)
-
-#+END_SRC
-
-* Global Indentation
-:PROPERTIES:
-:ID:       bb472086-0d4c-4779-9b79-4a4929de4a6e
-:END:
-
-Don't indent automatically. Go to the beginning of the newline
-instead.
-#+BEGIN_SRC emacs-lisp
-  (electric-indent-mode -1)
-
-#+END_SRC
-
-* Mouse
-:PROPERTIES:
-:ID:       bacabf25-5984-4e0d-8f5d-042ec3f02da1
-:END:
-
-When yanking with mouse, don't move the point. Just yank it.
-#+BEGIN_SRC emacs-lisp
-  (setq mouse-yank-at-point t)
-#+END_SRC
-
-To yank with the mouse press *<mouse-2>*, which is the middle button.
-
-Hide the mouse while typing
-#+BEGIN_SRC emacs-lisp
-  (setq make-pointer-invisible t)
-
-#+END_SRC
-
-** Wheel
-:PROPERTIES:
-:ID:       0164fe5d-d0b8-4197-997a-4e887c1de983
-:END:
-
-Scroll pleasantly with the mouse wheel. A slow turn moves the buffer
-up and down few lines at a time.
-#+BEGIN_SRC emacs-lisp
-  (setq mouse-wheel-scroll-amount '(2 ((shift) . 5)))
-  (setq mouse-wheel-progressive-speed nil)
-#+END_SRC
-
-Wheel will follow mouse, So the frame where the mouse is will scroll
-#+BEGIN_SRC emacs-lisp
-  (setq mouse-wheel-follow-mouse t)
-#+END_SRC
-
-* Delete Marked Text When Inserting New Text
-:PROPERTIES:
-:ID:       78566d3b-c8ae-4ca1-b106-73ad2c7cf238
-:END:
-
-Delete selected text when something is inserted and a mark is
-active. Without it the new text would remove the mark and just insert
-the text in the buffer.
-#+BEGIN_SRC emacs-lisp
-  (delete-selection-mode 1)
-
-#+END_SRC
-
-For example if *delete-selection-mode* is inactive. [] is the marked
-region and () is the current point:
-#+BEGIN_SRC text
-  Lorem ipsum dolor sit amet, [consectetur adipiscing elit()], sed do eiusmod tempor.
-
-  Lorem ipsum dolor sit amet, consectetur adipiscing elitNEW TEXT, sed do eiusmod tempor.
-#+END_SRC
-
-Example if *delete-selection-mode* is active. [] is the marked region
-and () is the current point:
-#+BEGIN_SRC text
-  Lorem ipsum dolor sit amet, [consectetur adipiscing elit()], sed do eiusmod tempor.
-
-  Lorem ipsum dolor sit amet, NEW TEXT, sed do eiusmod tempo.
-#+END_SRC
-
-* Move to Trash Instead of Deleting file
-:PROPERTIES:
-:ID:       bef8aaab-999e-4e5b-bece-a3115be808cf
-:END:
-
-Don't delete file, but move to trash instead. Sometimes I messed up
-and delete things by mistake. I just want them to be thrown to trash
-so I can retrieve them later, if needed.
-#+BEGIN_SRC emacs-lisp
-  (setq delete-by-moving-to-trash t)
-
-#+END_SRC
-
-* Syslinks
-:PROPERTIES:
-:ID:       eabe8ead-fcc1-412d-9cdc-da74407d1758
-:END:
-
-A symbolic link is a reference to another file or directory. It can be
-an absolute or relative path. In emacs, when visiting a symbolic link
-to a file under version control the default behavior is to ask what to
-do.
-
-Instead just follow the syslink and edit the real file.
-#+BEGIN_SRC emacs-lisp
-  (setq vc-follow-symlinks t)
-
 #+END_SRC
 
 * Global Variables
@@ -390,8 +129,206 @@ Creation of Organization files
           filename
         nil)))
 #+end_src
+* Better Visual
+:PROPERTIES:
+:ID:       40501f1f-b111-4789-992f-c658bd924d15
+:END:
 
-* Files Modes
+Remove tool bar at top and scroll bar at right
+#+BEGIN_SRC emacs-lisp
+  (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+  (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+
+#+END_SRC
+
+Don't show start up message
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-startup-message t)
+
+#+END_SRC
+
+Column which to line-wrap
+#+BEGIN_SRC emacs-lisp
+  (setq-default fill-column 70)
+#+END_SRC
+
+** Show matching parenthesis
+:PROPERTIES:
+:ID:       31f0d337-a006-4af2-ac06-26c49175e66a
+:END:
+
+See the matching pair of parentheses and others characters.
+
+The Style should be: If the matching parenthesis is on the same page
+show it, otherwise highlight everything inside.
+#+BEGIN_SRC emacs-lisp
+  (show-paren-mode t)
+  (setq show-paren-style 'mixed)
+
+#+END_SRC
+
+** Alarm Bell
+:PROPERTIES:
+:ID:       cd778e6d-2bbc-4e08-8b4f-6cd46d965a93
+:END:
+https://www.emacswiki.org/emacs/AlarmBell
+
+When an error occur, change the color of the mode-line for a
+moment. Just to show that something went wrong.
+#+BEGIN_SRC emacs-lisp
+  (setq ring-bell-function
+        (lambda ()
+          (let ((orig-fg (face-foreground 'mode-line)))
+            (set-face-foreground 'mode-line "#F2804F")
+            (run-with-idle-timer 0.1 nil
+                                 (lambda (fg) (set-face-foreground 'mode-line fg))
+                                 orig-fg))))
+
+#+END_SRC
+
+** Prompt yes-no
+:PROPERTIES:
+:ID:       e61fdcf3-d5ef-437f-b13a-efdeab15013e
+:END:
+
+Change (yes/no) to (y/n) it is faster to confirm prompts.
+#+BEGIN_SRC emacs-lisp
+  (fset 'yes-or-no-p 'y-or-n-p)
+
+#+END_SRC
+
+** Ask before leaving Emacs
+:PROPERTIES:
+:ID:       61a27609-0794-4195-aca4-b39c0a633541
+:END:
+
+Don't just exit emacs without asking. I don't want to lose changes
+that I made by hitting *C-x C-c* by accident.
+#+BEGIN_SRC emacs-lisp
+  (setq confirm-kill-emacs 'yes-or-no-p)
+
+#+END_SRC
+
+* System Information
+:PROPERTIES:
+:Created:  2023-12-06
+:END:
+** Encoding Charset UTF 8
+:PROPERTIES:
+:ID:       f59e7297-4e09-498d-8c47-703673a6f5da
+:END:
+
+[[https://en.wikipedia.org/wiki/UTF-8][UTF-8]] is a variable width character encoding capable of encoding all
+1,112,064 valid code points in Unicode using one to four 8-bit
+bytes. The encoding is defined by the Unicode standard, and was
+originally designed by Ken Thompson and Rob Pike. The name is derived
+from Unicode (or Universal Coded Character Set) Transformation Format
+– 8-bit.
+
+Set the default encoding to be UTF-8 on everything possible
+#+BEGIN_SRC emacs-lisp
+  (setq locale-coding-system 'utf-8)
+
+  (set-language-environment 'utf-8)
+  (set-selection-coding-system 'utf-8)
+  (set-default-coding-systems 'utf-8)
+  (set-terminal-coding-system 'utf-8)
+  (prefer-coding-system 'utf-8)
+
+#+END_SRC
+** Scratch Buffer
+:PROPERTIES:
+:ID:       d4c6c814-f72e-41a1-9930-007d52730ae3
+:END:
+
+What to say on the *scratch* buffer.
+
+I really like to give some information in the scratch buffer. So if anyone tries
+to use this configuration I think it will be easier to start using it.
+
+#+BEGIN_SRC emacs-lisp
+  (setq initial-scratch-message "
+  ;; ***************************************************************
+  ;; *************************** SCRATCH ***************************
+  ;; ***************************************************************
+
+  ;; | Copy & Paste                                                |
+  ;; |-------------------------------------------------------------|
+  ;; | M-1 : cut line                     | M-3 : paste clipboard  |
+
+  ;; | New command prefix (C-v) and (M-v)                          |
+  ;; |-------------------------------------------------------------|
+  ;; | M-v M-f : find-file                                         |
+
+  ;; | Useful keybindings                                          |
+  ;; |------------------------------------+------------------------|
+  ;; | C-r : backward regex               | C-s   : forward regex  |
+  ;; | C-n : new buffer                   | C-TAB : other-window   |
+  ;; | C-0 : undo                         |                        |
+
+  ;; | Open Hydra Launcher - More commands inside !!               |
+  ;; |------------------------------------+------------------------|
+  ;; | M-q   : Hydra Launcher                                      |
+
+  ")
+
+#+END_SRC
+
+** Mouse
+:PROPERTIES:
+:ID:       bacabf25-5984-4e0d-8f5d-042ec3f02da1
+:END:
+:LOGBOOK:
+- State "TODO"       from              [2023-12-06 Wed 16:12]
+:END:
+
+When yanking with mouse, don't move the point. Just yank it.
+#+BEGIN_SRC emacs-lisp
+  (setq mouse-yank-at-point t)
+#+END_SRC
+
+To yank with the mouse press *<mouse-2>*, which is the middle button.
+
+Hide the mouse while typing
+#+BEGIN_SRC emacs-lisp
+  (setq make-pointer-invisible t)
+
+#+END_SRC
+
+*** Wheel
+:PROPERTIES:
+:ID:       0164fe5d-d0b8-4197-997a-4e887c1de983
+:END:
+
+Scroll pleasantly with the mouse wheel. A slow turn moves the buffer
+up and down few lines at a time.
+#+BEGIN_SRC emacs-lisp
+  (setq mouse-wheel-scroll-amount '(2 ((shift) . 5)))
+  (setq mouse-wheel-progressive-speed nil)
+#+END_SRC
+
+Wheel will follow mouse, So the frame where the mouse is will scroll
+#+BEGIN_SRC emacs-lisp
+  (setq mouse-wheel-follow-mouse t)
+#+END_SRC
+
+** Syslinks
+:PROPERTIES:
+:ID:       eabe8ead-fcc1-412d-9cdc-da74407d1758
+:END:
+
+A symbolic link is a reference to another file or directory. It can be
+an absolute or relative path. In emacs, when visiting a symbolic link
+to a file under version control the default behavior is to ask what to
+do.
+
+Instead just follow the syslink and edit the real file.
+#+BEGIN_SRC emacs-lisp
+  (setq vc-follow-symlinks t)
+
+#+END_SRC
+
+** Files Modes
 :PROPERTIES:
 :ID:       31c397d5-4b33-49c1-b850-6892b872c131
 :END:
@@ -418,7 +355,7 @@ fundamental-mode.
 
 #+END_SRC
 
-* History
+** History
 :PROPERTIES:
 :ID:       e1e00346-355c-4d72-8bb3-68badbaf801b
 :END:
@@ -459,7 +396,7 @@ inserted by default.
 
 #+END_SRC
 
-* Server
+** Server
 :PROPERTIES:
 :ID:       12212ff1-f928-4929-87cc-e6f487588a85
 :END:
@@ -473,7 +410,27 @@ Start server on startup.
 
 #+END_SRC
 
-* Dired
+** Trash
+:PROPERTIES:
+:Created:  2023-12-06
+:END:
+*** Move to Trash Instead of Deleting file
+:PROPERTIES:
+:ID:       bef8aaab-999e-4e5b-bece-a3115be808cf
+:END:
+
+Don't delete file, but move to trash instead. Sometimes I messed up
+and delete things by mistake. I just want them to be thrown to trash
+so I can retrieve them later, if needed.
+#+BEGIN_SRC emacs-lisp
+  (setq delete-by-moving-to-trash t)
+
+#+END_SRC
+* General Configurations
+:PROPERTIES:
+:Created:  2023-12-06
+:END:
+** Dired
 :PROPERTIES:
 :ID:       75f45ca7-b183-4da3-a4f0-d32145b7a0be
 :END:
@@ -497,4 +454,154 @@ Don't show every information about files. Just its name.
     "to be run as hook for `dired-mode'."
     (dired-hide-details-mode 1))
   (add-hook 'dired-mode-hook 'xah-dired-mode-setup)
+#+END_SRC
+** Backup
+:PROPERTIES:
+:Created:  2023-12-06
+:END:
+Backup is a important part of editing text. Because most of times I
+make some mistakes and the possibility to revert to a cleaner state is
+the best thing ever.
+
+*** Set Default Directory
+:PROPERTIES:
+:ID:       a5f317bc-1b74-410b-89fb-07ebeb91b44f
+:END:
+
+The default directory to store backups is the file's directory that is
+being edited. However, for me, it makes the directory kind of
+messy. So to tidy it up a bit I put everything inside a previously set
+path.
+
+#+BEGIN_SRC emacs-lisp
+  (setq backup-directory-alist `(("." . ,my/backup-folder)))
+#+END_SRC
+
+*** DONE How to put every auto-saved backup files into a single directory
+CLOSED: [2019-03-15 sex 18:49]
+:PROPERTIES:
+:ID:       b46630ef-a0a3-4ec3-8d47-104c057070cb
+:END:
+- State "DONE"       from "WORKING"    [2019-03-15 sex 18:49]
+- State "WORKING"    from "TODO"       [2019-03-15 sex 18:49]
+
+*auto-save-file-name-transforms* is a set of transformations that
+happens to each file before making an auto-save file name. Because the
+REGEXP is tied to ".*" it means that all files will be transformed by
+this function. In this case, the REGEXP expression replacement is the
+complete path to a specific directory, which means that every
+auto-saved file will go into the same directory.
+
+#+BEGIN_SRC emacs-lisp
+  (setq auto-save-file-name-transforms `((".*" ,my/auto-save-folder t)))
+#+END_SRC
+
+*** Configurations
+:PROPERTIES:
+:ID:       bb2f8725-32f0-44af-ac1c-ca45a9565b0b
+:END:
+
+Copy the file to the backup's folder.
+#+BEGIN_SRC emacs-lisp
+  (setq backup-by-copying t)
+
+#+END_SRC
+
+When making a backup create a name with a numeric suffix like:
+#+BEGIN_SRC text
+  Organizador.org.~1~
+  Organizador.org.~2~
+  Organizador.org.~4~
+#+END_SRC
+
+Create numeric suffix when backing up files. I make this way because I
+can see what was changed between edits. And It does not take much
+space in disk.
+#+BEGIN_SRC emacs-lisp
+  (setq version-control t)
+
+#+END_SRC
+
+But don't keep too many versions. Just some.
+#+BEGIN_SRC emacs-lisp
+  ;; How many backups to keep
+  (setq kept-new-versions 2)
+  (setq kept-old-versions 2)
+
+  ;; Delete the others
+  (setq delete-old-versions t)
+
+#+END_SRC
+
+** Bookmark
+:PROPERTIES:
+:Created:  2023-12-06
+:END:
+Bookmark is one of my most used function in Emacs. With it I can jump
+to important files in seconds.
+
+I normally bookmark:
+- Dropbox Folder.
+- Git Folder.
+- Emacs Configuration Folder.
+- Current Projects.
+- and a lot of other important files.
+
+*** Bookmark File
+:PROPERTIES:
+:ID:       d72c25e0-8b1c-474f-a228-89dfb8a5da4d
+:END:
+
+Set default file where bookmarks will be saved.
+#+BEGIN_SRC emacs-lisp
+  (setq bookmark-default-file my/bookmark-file)
+#+END_SRC
+
+*** Some Configurations
+:PROPERTIES:
+:ID:       779ef6b3-ea52-4796-9f0a-4be19af7f482
+:END:
+
+Save bookmarks every time you make or delete a bookmark.
+#+BEGIN_SRC emacs-lisp
+  (setq bookmark-save-flag 1)
+
+#+END_SRC
+
+Bookmarks are displayed in LIFO order. The last bookmarked item is
+going to be on the top of the list.
+#+BEGIN_SRC emacs-lisp
+  (setq bookmark-sort-flag nil)
+#+END_SRC
+
+*** Bookmark Menu
+:PROPERTIES:
+:Created:  2023-10-04
+:END:
+
+http://yummymelon.com/devnull/using-bookmarks-in-emacs-like-you-do-in-web-browsers.html
+
+#+begin_src emacs-lisp
+  (easy-menu-define cc/bookmarks-menu nil
+    "Keymap for CC Bookmarks Menu"
+    '("Bookmarks"
+      ["Edit Bookmarks" list-bookmarks
+       :help "Display a list of existing bookmarks."]
+      ["--" nil]
+      ["Add Bookmark" bookmark-set-no-overwrite
+       :help "Set a bookmark named NAME at the current location."]
+      ["---" nil]
+      ["Jump to Bookmark" bookmark-jump
+       :help "Jump to bookmark"]))
+  (easy-menu-add-item global-map '(menu-bar)
+                      cc/bookmarks-menu
+                      "Tools")
+#+end_src
+
+* Provide File
+:PROPERTIES:
+:ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
+:END:
+#+BEGIN_SRC emacs-lisp
+  (provide 'init-basicConfig)
 #+END_SRC

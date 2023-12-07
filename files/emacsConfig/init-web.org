@@ -1,0 +1,31 @@
+#+TITLE:        Web Configuration
+#+AUTHOR:       Pedro Chinen
+#+DATE-CREATED: [2023-12-06 Wed]
+#+DATE-UPDATED: [2023-12-06 Wed]
+
+* CANCELED Package: elfeed
+:PROPERTIES:
+:Created:  2023-12-06
+:END:
+
+#+begin_src emacs-lisp
+  ;; (use-package elfeed
+  ;;   :ensure t)
+
+  ;; (setq elfeed-feeds nil)
+#+end_src
+
+[2023-12-04 Mon]
+- Tried to use, but didn't fit into my workflow
+
+==============================
+
+* Provide File
+:PROPERTIES:
+:ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
+:END:
+#+BEGIN_SRC emacs-lisp
+  (provide 'init-web)
+#+END_SRC
+
+

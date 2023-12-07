@@ -1,0 +1,461 @@
+#+TITLE:        Personal Organization Configuration
+#+AUTHOR:       Pedro Chinen
+#+DATE-CREATED: [2023-12-06 Wed]
+#+DATE-UPDATED: [2023-12-06 Wed]
+
+* Finances
+:PROPERTIES:
+:Created:  2023-12-06
+:END:
+Ledger cli]] is a command line accounting tool that provides
+double-entry accounting based on a text journal.
+
+Accounting is simply tracking your money.
+
+When you look at the balance totals for your ledger, you may be
+surprised to see that Expenses are a positive figure, and Income is a
+negative figure. It may take some getting used to, but to properly use
+a general ledger you must think in terms of how money moves.
+
+When you earn money, the money has to come from somewhere. Let’s call
+that somewhere “society”. In order for society to give you an income,
+you must take money away (withdraw) from society in order to put it
+into (make a payment to) your bank. When you then spend that money, it
+leaves your bank account (a withdrawal) and goes back to society (a
+payment). This is why Income will appear negative—it reflects the
+money you have drawn from society—and why Expenses will be positive—it
+is the amount you’ve given back.
+
+every negative figure means that that account or person or place has
+less money now than when you started your ledger; and every positive
+figure means that that account or person or place has more money now
+than when you started your ledger.
+
+[[https://www.ledger-cli.org/3.0/doc/ledger3.html][Ledger Web Manual]]
+
+** CANCELED Package: Ledger
+:PROPERTIES:
+:ID:       b664f880-a7b5-4e07-9eec-fe5fe8e86a7f
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package ledger-mode
+    :ensure t)
+
+#+END_SRC
+
+*** CANCELED Declare Variables
+:PROPERTIES:
+:ID:       b64515fa-ef09-492e-aa0a-1badfdf3dc08
+:END:
+
+Create Variable to hold my ledger file
+#+BEGIN_SRC emacs-lisp
+  (let* ((year (format-time-string "%Y"))
+         (file (concat "Ledger" year ".ledger"))
+         (default (concat my/dropbox-folder file)))
+
+    ;; Create variable in a default location
+    (defvar my/ledger-file default
+      "Data file where ledger-cli search from."))
+
+#+END_SRC
+
+Set master file
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'ledger-mode)
+    (setq-default ledger-master-file my/ledger-file))
+
+#+END_SRC
+
+Create base command for all reports
+#+BEGIN_SRC emacs-lisp
+    (defvar my/ledger-cmd "ledger -f "
+      "Beginning of every command has to be this")
+
+#+END_SRC
+
+Clear whole transactions, not individual postings.
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'ledger-mode)
+    (setq ledger-clear-whole-transactions t))
+
+#+END_SRC
+
+*** CANCELED Helper Functions
+:PROPERTIES:
+:ID:       114d9d50-2ee3-4641-901f-7bd404efed8a
+:END:
+
+**** CANCELED Clear Ledger on Save
+:PROPERTIES:
+:ID:       8b589487-13a0-4e47-b3a9-c03c2f723582
+:END:
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'ledger-mode)
+    ;; awalker4 mode to clean the ledger buffer
+    ;; https://github.com/awalker4/.dotfiles/blob/master/emacs.d/config.org
+    (defun aw/clean-ledger-on-save ()
+      (interactive)
+      (if (eq major-mode 'ledger-mode)
+          (let ((curr-line (line-number-at-pos)))
+            (ledger-mode-clean-buffer)
+            (line-move (- curr-line 1)))))
+
+    ;; Add Helper function to before save hook
+    (add-hook 'before-save-hook 'aw/clean-ledger-on-save))
+
+#+END_SRC
+
+**** CANCELED See Expenses for all months
+CLOSED: [2019-03-14 qui 08:34]
+:PROPERTIES:
+:ID:       51e6867e-18a9-4cfc-a29c-99968378facb
+:END:
+- State "DONE"       from "WORKING"    [2019-03-14 qui 08:34]
+- State "WORKING"    from "TODO"       [2019-03-14 qui 08:34]
+
+#+BEGIN_SRC emacs-lisp
+  (defun my-ledger-monthly-balance ()
+    "Create an annuary with the balance for each month"
+
+    (interactive)
+
+    (let ((command (concat my/ledger-cmd
+                           my/ledger-file
+                           " balance "))
+          (report-filename "*Monthy Ledger Report*")
+          (shell-buffer-name "*TESTE*")
+          (command-parameters (concat "Assets "
+                                      "Credit "
+                                      "Expenses "
+                                      "Liability "
+                                      " "))
+          (months '(("January   " . "jan")
+                    ("Febuary   " . "feb")
+                    ("March     " . "mar")
+                    ("April     " . "apr")
+                    ("May       " . "may")
+                    ("June      " . "jun")
+                    ("July      " . "jul")
+                    ("August    " . "aug")
+                    ("September " . "sep")
+                    ("October   " . "oct")
+                    ("November  " . "nov")
+                    ("December  " . "dec"))))
+
+      ;; Create report buffer
+      (get-buffer-create report-filename)
+
+      ;; For each month
+      (dolist (month months)
+
+        ;; Create an shell buffer
+        (get-buffer-create shell-buffer-name)
+
+        ;; Put a header for the month
+        (with-current-buffer report-filename
+          (insert (concat "============================= "
+                          (cl-first month)
+                          " \n")))
+
+        ;; Execute the ledger command and put its result in the report buffer
+        (with-current-buffer  shell-buffer-name
+          (shell-command (concat command
+                                 command-parameters
+                                 "--period 'in "
+                                 (cl-rest month)
+                                 " "
+                                 (format-time-string "%Y")
+                                 "'")
+                         shell-buffer-name)
+          (append-to-buffer report-filename
+                            (point-min) (point-max)))
+
+        ;; Kill the shell output buffer
+        (kill-buffer shell-buffer-name))
+
+
+      ;; Opens report buffer
+      (switch-to-buffer-other-window report-filename)
+      (read-only-mode)))
+#+END_SRC
+
+*** CANCELED Set Reports
+:PROPERTIES:
+:ID:       3d4ec914-d5a2-41b2-86cb-ad3b6afe4c3d
+:END:
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'ledger-mode)
+    ;; Clear ledger reports before adding some more
+    (setq ledger-reports nil)
+
+    ;; Add more reports
+    (ledger-reports-add
+     "Balance Assets"
+     (concat my/ledger-cmd my/ledger-file " balance Assets:Bank"))
+
+    (ledger-reports-add
+     "Balance Expenses All"
+     (concat my/ledger-cmd my/ledger-file " balance Expenses"))
+
+    (ledger-reports-add
+     "Balance Expenses This Month"
+     (concat my/ledger-cmd my/ledger-file " balance --period 'this month' Expenses"))
+
+    (ledger-reports-add
+     "Balance Expenses Last Month"
+     (concat my/ledger-cmd my/ledger-file " balance --period 'last month' Expenses"))
+
+    (ledger-reports-add
+     "Register This Month"
+     (concat my/ledger-cmd my/ledger-file " register --period 'this month'"))
+
+    (ledger-reports-add
+     "Register All"
+     (concat my/ledger-cmd my/ledger-file " register"))
+
+    (ledger-reports-add
+     "Balance All" (concat my/ledger-cmd my/ledger-file " balance")))
+#+END_SRC
+
+*** CANCELED Keybinding
+:PROPERTIES:
+:ID:       f1e1508a-11de-495f-8c19-ff75908f36b2
+:END:
+#+BEGIN_SRC emacs-lisp
+  (when (featurep 'ledger-mode)
+    (eval-after-load 'ledger-mode
+      (define-key ledger-mode-map (kbd "M-q") nil)))
+#+END_SRC
+
+* Folders / Directories
+:PROPERTIES:
+:Created:  2023-12-06
+:END:
+
+** Denote
+:PROPERTIES:
+:Created:  2023-12-06
+:END:
+
+Base configuration for Denote
+#+begin_src emacs-lisp
+  (use-package denote
+    :ensure t
+    :custom
+    (denote-directory (expand-file-name my/notes-directory))
+    )
+
+  (add-hook 'dired-mode-hook #'denote-dired-mode)
+#+end_src
+
+*** Custom Functions
+:PROPERTIES:
+:Created:  2023-10-19
+:END:
+**** Organizating Projects
+:PROPERTIES:
+:Created:  2023-10-04
+:END:
+
+***** Regexp to match projects
+:PROPERTIES:
+:Created:  2023-10-09
+:END:
+#+begin_src emacs-lisp
+  (defvar my/regexp-denote-working-projects (rx (and "_projetos")
+                                                (and (zero-or-more anything))
+                                                (and "_working"))
+    "Regexp to search for working projects on a Denote folder")
+
+  (defvar my/regexp-denote-maybe-projects (rx (and "_maybe")
+                                              (and (zero-or-more anything))
+                                              (and "_projetos"))
+    "Regexp to search for maybe projects on a Denote folder")
+#+end_src
+***** List Maybe/Working Projects
+:PROPERTIES:
+:Created:  2023-10-04
+:END:
+
+#+begin_src emacs-lisp
+  (defun my-denote-link-add-working-projects ()
+    "Use command `denote-link-add-links' with '_projetos' for regex"
+    (interactive)
+    (denote-link-add-links my/regexp-denote-working-projects))
+
+  (defun my-denote-link-add-maybe-projects ()
+    "Use command `denote-link-add-links' with '_projetos' and
+  '_maybe' for regex"
+    (interactive)
+    (denote-link-add-links my/regexp-denote-maybe-projects))
+#+end_src
+
+***** Toggle Maybe/Working Projects
+:PROPERTIES:
+:Created:  2023-10-04
+:END:
+#+begin_src emacs-lisp
+  (defun my--denote-keyword-remove (keyword)
+    (if-let* ((file (buffer-file-name))
+              ((denote-file-is-note-p file))
+              (file-type (denote-filetype-heuristics file)))
+        (when-let* ((cur-keywords
+                     (denote-retrieve-keywords-value file file-type))
+                    ((or (listp cur-keywords)
+                         (not (string-blank-p cur-keywords))))
+                    (del-keyword `(,keyword)))
+          (denote--rewrite-keywords
+           file
+           (seq-difference cur-keywords del-keyword)
+           file-type)
+          (denote-rename-file-using-front-matter file t))
+      (user-error "Buffer not visiting a Denote file")))
+
+  (defun my--denote-keyword-add (keyword)
+    (denote-keywords-add `(,keyword)))
+
+  (defun my-denote-toggle-project ()
+    (interactive)
+    (if-let* ((file (buffer-file-name))
+              ((denote-file-is-note-p file))
+              (file-type (denote-filetype-heuristics file))
+              (keywords
+               (denote-retrieve-keywords-value file file-type)))
+        (cond ((member "maybe" keywords)
+               (progn 
+                 (my--denote-keyword-add "working")
+                 (my--denote-keyword-remove "maybe")))
+              ((member "working" keywords)
+               (progn
+                 (my--denote-keyword-add "maybe")
+                 (my--denote-keyword-remove "working")))
+              (t (my--denote-keyword-add "working")))
+      (user-error "Buffer not visiting a Denote file")))
+#+end_src
+
+***** Get file paths of Projects
+:PROPERTIES:
+:Created:  2023-10-09
+:END:
+
+#+begin_src emacs-lisp
+
+  (defun my--get-list-working-projects ()
+    "Get list with file paths of working projects with Denote"
+
+    (denote-directory-files-matching-regexp my/regexp-denote-working-projects))
+
+  (defun my--get-list-maybe-projects ()
+    "Get list with file paths of working projects with Denote"
+
+    (denote-directory-files-matching-regexp my/regexp-denote-maybe-projects))
+#+end_src
+
+***** Working Projects Progress Table
+:PROPERTIES:
+:Created:  2023-10-23
+:END:
+#+begin_src emacs-lisp
+  (defun my--denote-working-projects-org-table-row (project-filename)
+    "Handle each table row"
+    (let ((denote-link (denote-format-link project-filename
+                                           (denote-link--file-type-format 'org-mode nil)
+                                           nil)))
+      (insert (concat denote-link ", Não\n"))))
+
+  (defun my-denote-working-projects-org-table ()
+    "Add org table with working projects to be reviewed"
+    (interactive)
+    (let* ((working-projects (my--get-list-working-projects))
+           (table (with-temp-buffer
+                    (insert "Projetos Propostos,Avançou?\n")
+                    (mapc 'my--denote-working-projects-org-table-row working-projects)
+                    (buffer-string))))
+      (set-mark-command nil)
+      (insert table)
+      (org-table-create-or-convert-from-region nil)
+      (setq deactivate-mark nil)))
+#+end_src
+**** Organizating Blog
+:PROPERTIES:
+:Created:  2023-10-12
+:END:
+
+***** Blog Post Template
+:PROPERTIES:
+:Created:  2023-10-12
+:END:
+#+begin_src emacs-lisp
+    (setq denote-org-capture-specifiers (concat "%i\n"
+                                                "%?\n\n"
+                                                "* References\n"
+                                                "- file:%F\n\n"
+                                                "* Updates\n"
+                                                "%u\n\n"
+                                                "Created blog post\n\n"
+                                                "====================\n"))
+#+end_src
+***** Create new blog post
+:PROPERTIES:
+:Created:  2023-10-12
+:END:
+#+begin_src emacs-lisp
+  (with-eval-after-load 'org-capture
+    (add-to-list 'org-capture-templates
+                 '("n" "New note (with Denote)" plain
+                   (file denote-last-path)
+                   (function
+                    (lambda ()
+                      ;; parallel bind
+                      (let ((denote-directory my/blog-directory))
+                        (denote-org-capture))))
+                   :no-save t
+                   :immediate-finish nil
+                   :kill-buffer t
+                   :jump-to-captured t)))
+#+end_src
+**** Organizating Notes
+:PROPERTIES:
+:Created:  2023-10-19
+:END:
+
+***** Get Identifier for Current Buffer
+:PROPERTIES:
+:Created:  2023-10-19
+:END:
+
+#+begin_src emacs-lisp
+  (defun my-denote-get-current-identifier ()
+    "Get denote identifier for current buffer"
+    (denote-retrieve-filename-identifier (buffer-file-name (current-buffer))))
+#+end_src
+
+***** Open Random Note
+:PROPERTIES:
+:Created:  2023-10-20
+:END:
+#+begin_src emacs-lisp
+  (defun my-denote-random-note ()
+    "Open random denote note"
+    (interactive)
+    (find-file (seq-random-elt (denote-all-files))))
+#+end_src
+***** Open Dired with Metanotes
+:PROPERTIES:
+:Created:  2023-10-25
+:END:
+#+begin_src emacs-lisp
+  (defun my-denote-find-metanotes ()
+    "Find Denote Metanote files"
+    (interactive)
+    (find-lisp-find-dired (car denote-dired-directories) "_metanote"))
+#+end_src
+
+* Provide File
+:PROPERTIES:
+:ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
+:END:
+#+BEGIN_SRC emacs-lisp
+  (provide 'init-personal-organization)
+#+END_SRC

@@ -1,0 +1,43 @@
+#+TITLE:        Reading Configurations
+#+AUTHOR:       Pedro Chinen
+#+DATE-CREATED: [2023-12-06 Wed]
+#+DATE-UPDATED: [2023-12-06 Wed]
+
+* Packages
+:PROPERTIES:
+:Created:  2023-12-06
+:END:
+** CANCELED Package: Nov
+:PROPERTIES:
+:ID:       c521136e-55aa-499c-8919-b85c7e856663
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package nov
+    :ensure t)
+
+  (when (featurep 'nov)
+    (setq nov-text-width most-positive-fixnum)
+    (add-hook 'nov-mode-hook 'visual-line-mode)
+
+    (setq nov-text-width 80)
+
+    (defun my-nov-font-setup ()
+      (face-remap-add-relative
+       'variable-pitch
+       :family "Liberation Serif"
+       :height 1.0))
+
+    (add-hook 'nov-mode-hook 'my-nov-font-setup)
+
+    (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode)))
+#+END_SRC
+
+* Provide File
+:PROPERTIES:
+:ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
+:END:
+#+BEGIN_SRC emacs-lisp
+  (provide 'init-reading)
+#+END_SRC
+
+
