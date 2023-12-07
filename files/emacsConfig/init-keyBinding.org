@@ -1,9 +1,9 @@
 #+TITLE:        Global KeyBinding Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2023-12-06 Wed]
+#+DATE-UPDATED: [2023-12-07 Thu]
 
-* My keymap
+* My Keymap
 :PROPERTIES:
 :ID:       5c801576-8584-432a-8d3d-1606825297b7
 :END:
@@ -17,297 +17,7 @@ keybindings consistent throughout Emacs.
 
 #+END_SRC
 
-* Unbind
-:PROPERTIES:
-:ID:       0f4df504-894d-4dd4-9588-e3c3979ff45d
-:END:
-
-** Ctrl
-:PROPERTIES:
-:ID:       ceded4ce-6562-45c5-bc6d-ba34b169b495
-:END:
-
-*** Numbers
-:PROPERTIES:
-:ID:       c1022498-8e3a-40de-bafb-b4ed681ca57f
-:END:
-#+BEGIN_SRC emacs-lisp
-  (define-key my/keymap (kbd "C-1") nil)
-  (define-key my/keymap (kbd "C-2") nil)
-  (define-key my/keymap (kbd "C-3") nil)
-  (define-key my/keymap (kbd "C-4") nil)
-  (define-key my/keymap (kbd "C-5") nil)
-  (define-key my/keymap (kbd "C-6") nil)
-  (define-key my/keymap (kbd "C-7") nil)
-  (define-key my/keymap (kbd "C-8") nil)
-  (define-key my/keymap (kbd "C-9") nil)
-  (define-key my/keymap (kbd "C-0") nil)
-  (define-key my/keymap (kbd "C--") nil)
-
-#+END_SRC
-
-*** Letters
-:PROPERTIES:
-:ID:       2d81fb20-bcf3-47b7-a6ad-e728a96c3769
-:END:
-#+BEGIN_SRC emacs-lisp
-  ;;;; Unset every single key chord: start with C-
-  (define-key my/keymap (kbd "C-q") nil)
-  (define-key my/keymap (kbd "C-w") nil)
-  (define-key my/keymap (kbd "C-e") nil)
-  (define-key my/keymap (kbd "C-r") nil)
-  (define-key my/keymap (kbd "C-t") nil)
-  ;; (define-key my/keymap (kbd "C-u") nil) ;; digit-argument
-  ;; (define-key my/keymap (kbd "C-i") nil) ;; In emacs C-i is the same as TAB
-  (define-key my/keymap (kbd "C-o") nil)
-  (define-key my/keymap (kbd "C-p") nil)
-  (define-key my/keymap (kbd "C-a") nil)
-  ;; (define-key my/keymap (kbd "C-s") nil) ;; isearch-forward-regexp
-  (define-key my/keymap (kbd "C-d") nil)
-  (define-key my/keymap (kbd "C-f") nil)
-  ;; (define-key my/keymap (kbd "C-g") nil) ;; keyboard-quit
-  (define-key my/keymap (kbd "C-h") nil)
-  (define-key my/keymap (kbd "C-j") nil)
-  (define-key my/keymap (kbd "C-k") nil)
-  ;; (define-key my/keymap (kbd "C-l") nil) ;; recenter-top-botton
-  (define-key my/keymap (kbd "C-ç") nil)
-  (define-key my/keymap (kbd "C-z") nil)
-  ;; (define-key my/keymap (kbd "C-x") nil) ;; prefix-command
-  (define-key my/keymap (kbd "C-c") nil)
-  ;; (define-key my/keymap (kbd "C-v") nil) ;; prefix-command
-  (define-key my/keymap (kbd "C-b") nil)
-  (define-key my/keymap (kbd "C-n") nil)
-  ;; (define-key my/keymap (kbd "C-m") nil) ;; in emacs C-m is the same as RET
-
-#+END_SRC
-
-** Meta
-:PROPERTIES:
-:ID:       e8b8c1c1-fbcd-4bf2-abe4-1b9b5d37960b
-*** Numbers
-:PROPERTIES:
-:ID:       a06f2d27-2884-48f6-bd31-50d83b29a8ae
-:END:
-#+BEGIN_SRC emacs-lisp
-  (define-key my/keymap (kbd "M-1") nil)
-  (define-key my/keymap (kbd "M-2") nil)
-  (define-key my/keymap (kbd "M-3") nil)
-  (define-key my/keymap (kbd "M-4") nil)
-  (define-key my/keymap (kbd "M-5") nil)
-  (define-key my/keymap (kbd "M-6") nil)
-  (define-key my/keymap (kbd "M-7") nil)
-  (define-key my/keymap (kbd "M-8") nil)
-  (define-key my/keymap (kbd "M-9") nil)
-  (define-key my/keymap (kbd "M-0") nil)
-  (define-key my/keymap (kbd "M--") nil)
-
-#+END_SRC
-
-*** Letters
-:PROPERTIES:
-:ID:       c54e5102-4c8b-42ac-bebc-f333c3f5f70b
-:END:
-#+BEGIN_SRC emacs-lisp
-  ;;;; Unset every single key chord: start with M-
-  (define-key my/keymap (kbd "M-q") nil)
-  ;; (define-key my/keymap (kbd "M-w") nil) ;; kill-ring-save
-  (define-key my/keymap (kbd "M-e") nil)
-  (define-key my/keymap (kbd "M-r") nil)
-  (define-key my/keymap (kbd "M-t") nil)
-  (define-key my/keymap (kbd "M-y") nil)
-  (define-key my/keymap (kbd "M-u") nil)
-  (define-key my/keymap (kbd "M-i") nil)
-  (define-key my/keymap (kbd "M-o") nil)
-  (define-key my/keymap (kbd "M-p") nil)
-  (define-key my/keymap (kbd "M-a") nil)
-  (define-key my/keymap (kbd "M-s") nil)
-  (define-key my/keymap (kbd "M-d") nil)
-  (define-key my/keymap (kbd "M-f") nil)
-  (define-key my/keymap (kbd "M-g") nil)
-  (define-key my/keymap (kbd "M-h") nil)
-  (define-key my/keymap (kbd "M-j") nil)
-  (define-key my/keymap (kbd "M-k") nil)
-  (define-key my/keymap (kbd "M-l") nil)
-  (define-key my/keymap (kbd "M-z") nil)
-  ;; (define-key my/keymap (kbd "M-x") nil) ;; execute-extended-command
-  (define-key my/keymap (kbd "M-c") nil)
-  ;; (define-key my/keymap (kbd "M-v") nil) ;; prefix-command
-  (define-key my/keymap (kbd "M-b") nil)
-  (define-key my/keymap (kbd "M-n") nil)
-  (define-key my/keymap (kbd "M-m") nil)
-
-#+END_SRC
-
-** Function
-:PROPERTIES:
-:ID:       73b01cc9-e042-4017-af5b-e1f531d301df
-:END:
-#+BEGIN_SRC emacs-lisp
-  (define-key my/keymap (kbd "<f2>") nil)
-  (define-key my/keymap (kbd "<f3>") nil)
-  (define-key my/keymap (kbd "<f4>") nil)
-  (define-key my/keymap (kbd "<f5>") nil)
-  (define-key my/keymap (kbd "<f6>") nil)
-  (define-key my/keymap (kbd "<f7>") nil)
-  (define-key my/keymap (kbd "<f8>") nil)
-  (define-key my/keymap (kbd "<f9>") nil)
-  (define-key my/keymap (kbd "<f10>") nil)
-  (define-key my/keymap (kbd "<f11>") nil)
-  (define-key my/keymap (kbd "<f12>") nil)
-
-#+END_SRC
-
-** Frequent Mistyped Chords
-:PROPERTIES:
-:ID:       aeeb63ce-042c-4b48-bc35-65c0260460ad
-:END:
-#+BEGIN_SRC emacs-lisp
-  (define-key my/keymap (kbd "C-x DEL") nil)
-  (define-key my/keymap (kbd "C-x f") nil)
-
-#+END_SRC
-
-* Bind
-:PROPERTIES:
-:ID:       54bf97c8-4cae-420f-9486-f2c962af8abe
-:END:
-** Ctrl
-:PROPERTIES:
-:ID:       08804844-541d-4627-b1a2-0d758ea449e1
-:END:
-
-*** Numbers
-:PROPERTIES:
-:ID:       5e19c69e-b051-41f7-b1ce-a47bc0cd95e2
-:END:
-#+BEGIN_SRC emacs-lisp
-  ;; (define-key my/keymap (kbd "C-1"))
-  ;; (define-key my/keymap (kbd "C-2"))
-  ;; (define-key my/keymap (kbd "C-3"))
-  ;; (define-key my/keymap (kbd "C-4"))
-  ;; (define-key my/keymap (kbd "C-5"))
-  ;; (define-key my/keymap (kbd "C-6"))
-  ;; (define-key my/keymap (kbd "C-7"))
-  ;; (define-key my/keymap (kbd "C-8"))
-  ;; (define-key my/keymap (kbd "C-9"))
-  ;; (define-key my/keymap (kbd "C-0"))
-  ;; (define-key my/keymap (kbd "C--"))
-
-#+END_SRC
-
-*** Letters
-:PROPERTIES:
-:ID:       f03f2ccf-86bb-4adf-8147-10fe7f29bdcc
-:END:
-#+BEGIN_SRC emacs-lisp
-  ;; (define-key my/keymap (kbd "C-q"))
-  ;; (define-key my/keymap (kbd "C-w"))
-  ;; (define-key my/keymap (kbd "C-e"))
-  (define-key my/keymap (kbd "C-r") 'isearch-backward-regexp)
-  ;; (define-key my/keymap (kbd "C-t"))
-  ;; (define-key my/keymap (kbd "C-u")) ;; digit-argument
-  ;; (define-key my/keymap (kbd "C-i")) ;; In emacs C-i is the sama as TAB
-  ;; (define-key my/keymap (kbd "C-o"))
-  ;; (define-key my/keymap (kbd "C-p"))
-  ;; (define-key my/keymap (kbd "C-a"))
-  (define-key my/keymap (kbd "C-s") 'isearch-forward-regexp)
-  ;; (define-key my/keymap (kbd "C-d"))
-  ;; (define-key my/keymap (kbd "C-f"))
-  ;; (define-key my/keymap (kbd "C-g")) ;; keyboard-quit
-  ;; (define-key my/keymap (kbd "C-h"))
-  ;; (define-key my/keymap (kbd "C-j"))
-  ;; (define-key my/keymap (kbd "C-k"))
-  ;; (define-key my/keymap (kbd "C-l")) ;; recenter-top-botton
-  ;; (define-key my/keymap (kbd "C-ç"))
-  ;; (define-key my/keymap (kbd "C-z"))
-  ;; (define-key my/keymap (kbd "C-x")) ;; prefix-command
-  ;; (define-key my/keymap (kbd "C-c"))
-  ;; (define-key my/keymap (kbd "C-v")) ;; prefix-command
-  ;; (define-key my/keymap (kbd "C-b"))
-  (define-key my/keymap (kbd "C-n") 'xah-new-empty-buffer)
-  ;; (define-key my/keymap (kbd "C-m")) ;; in emacs C-m is the same as RET
-  (define-key my/keymap (kbd "<C-tab>") 'other-window)
-
-#+END_SRC
-
-** Meta
-:PROPERTIES:
-:ID:       94fdacfe-e884-47bb-8e26-ed6111c3cd20
-:END:
-*** Numbers
-:PROPERTIES:
-:ID:       d01d0a0e-5062-4547-9c3f-bc722ad70339
-:END:
-#+BEGIN_SRC emacs-lisp
-  (define-key my/keymap (kbd "M-1") 'xah-cut-line-or-region)
-  ;; (define-key my/keymap (kbd "M-2"))
-  (define-key my/keymap (kbd "M-3") 'yank)
-  ;; (define-key my/keymap (kbd "M-4"))
-  ;; (define-key my/keymap (kbd "M-5"))
-  ;; (define-key my/keymap (kbd "M-6"))
-  ;; (define-key my/keymap (kbd "M-7"))
-  ;; (define-key my/keymap (kbd "M-8"))
-  ;; (define-key my/keymap (kbd "M-9"))
-  ;; (define-key my/keymap (kbd "M-0"))
-  ;; (define-key my/keymap (kbd "M--"))
-
-#+END_SRC
-
-*** Letters
-:PROPERTIES:
-:ID:       7798c1fb-b9fb-43c4-ab87-344edc720b8e
-:END:
-#+BEGIN_SRC emacs-lisp
-  ;; (define-key my/keymap (kbd "M-q"))
-  ;; (define-key my/keymap (kbd "M-w")) ;; kill-ring-save
-  ;; (define-key my/keymap (kbd "M-e"))
-  ;; (define-key my/keymap (kbd "M-r"))
-  ;; (define-key my/keymap (kbd "M-t"))
-  ;; (define-key my/keymap (kbd "M-y"))
-  ;; (define-key my/keymap (kbd "M-u"))
-  ;; (define-key my/keymap (kbd "M-i"))
-  ;; (define-key my/keymap (kbd "M-o"))
-  ;; (define-key my/keymap (kbd "M-p"))
-  ;; (define-key my/keymap (kbd "M-a"))
-  ;; (define-key my/keymap (kbd "M-s"))
-  ;; (define-key my/keymap (kbd "M-d"))
-  ;; (define-key my/keymap (kbd "M-f"))
-  ;; (define-key my/keymap (kbd "M-g"))
-  ;; (define-key my/keymap (kbd "M-h"))
-  ;; (define-key my/keymap (kbd "M-j"))
-  ;; (define-key my/keymap (kbd "M-k"))
-  ;; (define-key my/keymap (kbd "M-l"))
-  ;; (define-key my/keymap (kbd "M-z"))
-  ;; (define-key my/keymap (kbd "M-x")) ;; execute-extended-command
-  ;; (define-key my/keymap (kbd "M-c"))
-  ;; (define-key my/keymap (kbd "M-v")) ;; prefix-command
-  ;; (define-key my/keymap (kbd "M-b"))
-  ;; (define-key my/keymap (kbd "M-n"))
-  ;; (define-key my/keymap (kbd "M-m"))
-  (define-key my/keymap (kbd "M-0") 'undo)
-
-#+END_SRC
-
-** Function
-:PROPERTIES:
-:ID:       9c446ef2-247e-46df-8b96-9c8c95417ce4
-:END:
-#+BEGIN_SRC emacs-lisp
-    ;; (define-key my/keymap (kbd "<f2>"))
-    ;; (define-key my/keymap (kbd "<f3>"))
-    ;; (define-key my/keymap (kbd "<f4>"))
-    ;; (define-key my/keymap (kbd "<f5>"))
-    ;; (define-key my/keymap (kbd "<f6>"))
-    ;; (define-key my/keymap (kbd "<f7>"))
-    ;; (define-key my/keymap (kbd "<f8>"))
-    ;; (define-key my/keymap (kbd "<f9>"))
-    ;; (define-key my/keymap (kbd "<f10>"))
-    ;; (define-key my/keymap (kbd "<f11>"))
-    ;; (define-key my/keymap (kbd "<f12>"))
-
-#+END_SRC
-
-* New Prefix Command: C-v M-v
+** New Prefix Command: C-v M-v
 :PROPERTIES:
 :ID:       a1dfa7f8-27d3-4282-aab1-6ae0288e3188
 :END:
@@ -323,7 +33,7 @@ keybindings consistent throughout Emacs.
 
 #+END_SRC
 
-* Minor Mode
+** Minor Mode
 :PROPERTIES:
 :ID:       5fa9e8f6-3460-4a22-a980-15124a79e260
 :END:
@@ -374,6 +84,319 @@ keybindings is consistent throughout Emacs.
 
 #+END_SRC
 
+* Reset Keybindings
+:PROPERTIES:
+:Created:  2023-12-07
+:END:
+** Unbind
+:PROPERTIES:
+:ID:       0f4df504-894d-4dd4-9588-e3c3979ff45d
+:END:
+
+*** Ctrl
+:PROPERTIES:
+:ID:       ceded4ce-6562-45c5-bc6d-ba34b169b495
+:END:
+
+**** Numbers
+:PROPERTIES:
+:ID:       c1022498-8e3a-40de-bafb-b4ed681ca57f
+:END:
+#+BEGIN_SRC emacs-lisp
+  (define-key my/keymap (kbd "C-1") nil)
+  (define-key my/keymap (kbd "C-2") nil)
+  (define-key my/keymap (kbd "C-3") nil)
+  (define-key my/keymap (kbd "C-4") nil)
+  (define-key my/keymap (kbd "C-5") nil)
+  (define-key my/keymap (kbd "C-6") nil)
+  (define-key my/keymap (kbd "C-7") nil)
+  (define-key my/keymap (kbd "C-8") nil)
+  (define-key my/keymap (kbd "C-9") nil)
+  (define-key my/keymap (kbd "C-0") nil)
+  (define-key my/keymap (kbd "C--") nil)
+
+#+END_SRC
+
+**** Letters
+:PROPERTIES:
+:ID:       2d81fb20-bcf3-47b7-a6ad-e728a96c3769
+:END:
+#+BEGIN_SRC emacs-lisp
+  ;;;; Unset every single key chord: start with C-
+  (define-key my/keymap (kbd "C-q") nil)
+  (define-key my/keymap (kbd "C-w") nil)
+  (define-key my/keymap (kbd "C-e") nil)
+  (define-key my/keymap (kbd "C-r") nil)
+  (define-key my/keymap (kbd "C-t") nil)
+  ;; (define-key my/keymap (kbd "C-u") nil) ;; digit-argument
+  ;; (define-key my/keymap (kbd "C-i") nil) ;; In emacs C-i is the same as TAB
+  (define-key my/keymap (kbd "C-o") nil)
+  (define-key my/keymap (kbd "C-p") nil)
+  (define-key my/keymap (kbd "C-a") nil)
+  ;; (define-key my/keymap (kbd "C-s") nil) ;; isearch-forward-regexp
+  (define-key my/keymap (kbd "C-d") nil)
+  (define-key my/keymap (kbd "C-f") nil)
+  ;; (define-key my/keymap (kbd "C-g") nil) ;; keyboard-quit
+  (define-key my/keymap (kbd "C-h") nil)
+  (define-key my/keymap (kbd "C-j") nil)
+  (define-key my/keymap (kbd "C-k") nil)
+  ;; (define-key my/keymap (kbd "C-l") nil) ;; recenter-top-botton
+  (define-key my/keymap (kbd "C-ç") nil)
+  (define-key my/keymap (kbd "C-z") nil)
+  ;; (define-key my/keymap (kbd "C-x") nil) ;; prefix-command
+  (define-key my/keymap (kbd "C-c") nil)
+  ;; (define-key my/keymap (kbd "C-v") nil) ;; prefix-command
+  (define-key my/keymap (kbd "C-b") nil)
+  (define-key my/keymap (kbd "C-n") nil)
+  ;; (define-key my/keymap (kbd "C-m") nil) ;; in emacs C-m is the same as RET
+
+#+END_SRC
+
+*** Meta
+:PROPERTIES:
+:ID:       e8b8c1c1-fbcd-4bf2-abe4-1b9b5d37960b
+**** Numbers
+:PROPERTIES:
+:ID:       a06f2d27-2884-48f6-bd31-50d83b29a8ae
+:END:
+#+BEGIN_SRC emacs-lisp
+  (define-key my/keymap (kbd "M-1") nil)
+  (define-key my/keymap (kbd "M-2") nil)
+  (define-key my/keymap (kbd "M-3") nil)
+  (define-key my/keymap (kbd "M-4") nil)
+  (define-key my/keymap (kbd "M-5") nil)
+  (define-key my/keymap (kbd "M-6") nil)
+  (define-key my/keymap (kbd "M-7") nil)
+  (define-key my/keymap (kbd "M-8") nil)
+  (define-key my/keymap (kbd "M-9") nil)
+  (define-key my/keymap (kbd "M-0") nil)
+  (define-key my/keymap (kbd "M--") nil)
+
+#+END_SRC
+
+**** Letters
+:PROPERTIES:
+:ID:       c54e5102-4c8b-42ac-bebc-f333c3f5f70b
+:END:
+#+BEGIN_SRC emacs-lisp
+  ;;;; Unset every single key chord: start with M-
+  (define-key my/keymap (kbd "M-q") nil)
+  ;; (define-key my/keymap (kbd "M-w") nil) ;; kill-ring-save
+  (define-key my/keymap (kbd "M-e") nil)
+  (define-key my/keymap (kbd "M-r") nil)
+  (define-key my/keymap (kbd "M-t") nil)
+  (define-key my/keymap (kbd "M-y") nil)
+  (define-key my/keymap (kbd "M-u") nil)
+  (define-key my/keymap (kbd "M-i") nil)
+  (define-key my/keymap (kbd "M-o") nil)
+  (define-key my/keymap (kbd "M-p") nil)
+  (define-key my/keymap (kbd "M-a") nil)
+  (define-key my/keymap (kbd "M-s") nil)
+  (define-key my/keymap (kbd "M-d") nil)
+  (define-key my/keymap (kbd "M-f") nil)
+  (define-key my/keymap (kbd "M-g") nil)
+  (define-key my/keymap (kbd "M-h") nil)
+  (define-key my/keymap (kbd "M-j") nil)
+  (define-key my/keymap (kbd "M-k") nil)
+  (define-key my/keymap (kbd "M-l") nil)
+  (define-key my/keymap (kbd "M-z") nil)
+  ;; (define-key my/keymap (kbd "M-x") nil) ;; execute-extended-command
+  (define-key my/keymap (kbd "M-c") nil)
+  ;; (define-key my/keymap (kbd "M-v") nil) ;; prefix-command
+  (define-key my/keymap (kbd "M-b") nil)
+  (define-key my/keymap (kbd "M-n") nil)
+  (define-key my/keymap (kbd "M-m") nil)
+
+#+END_SRC
+
+*** Function
+:PROPERTIES:
+:ID:       73b01cc9-e042-4017-af5b-e1f531d301df
+:END:
+#+BEGIN_SRC emacs-lisp
+  (define-key my/keymap (kbd "<f2>") nil)
+  (define-key my/keymap (kbd "<f3>") nil)
+  (define-key my/keymap (kbd "<f4>") nil)
+  (define-key my/keymap (kbd "<f5>") nil)
+  (define-key my/keymap (kbd "<f6>") nil)
+  (define-key my/keymap (kbd "<f7>") nil)
+  (define-key my/keymap (kbd "<f8>") nil)
+  (define-key my/keymap (kbd "<f9>") nil)
+  (define-key my/keymap (kbd "<f10>") nil)
+  (define-key my/keymap (kbd "<f11>") nil)
+  (define-key my/keymap (kbd "<f12>") nil)
+
+#+END_SRC
+
+*** Frequent Mistyped Chords
+:PROPERTIES:
+:ID:       aeeb63ce-042c-4b48-bc35-65c0260460ad
+:END:
+#+BEGIN_SRC emacs-lisp
+  (define-key my/keymap (kbd "C-x DEL") nil)
+  (define-key my/keymap (kbd "C-x f") nil)
+
+#+END_SRC
+
+** Bind
+:PROPERTIES:
+:ID:       54bf97c8-4cae-420f-9486-f2c962af8abe
+:END:
+*** Ctrl
+:PROPERTIES:
+:ID:       08804844-541d-4627-b1a2-0d758ea449e1
+:END:
+
+**** Numbers
+:PROPERTIES:
+:ID:       5e19c69e-b051-41f7-b1ce-a47bc0cd95e2
+:END:
+#+BEGIN_SRC emacs-lisp
+  ;; (define-key my/keymap (kbd "C-1"))
+  ;; (define-key my/keymap (kbd "C-2"))
+  ;; (define-key my/keymap (kbd "C-3"))
+  ;; (define-key my/keymap (kbd "C-4"))
+  ;; (define-key my/keymap (kbd "C-5"))
+  ;; (define-key my/keymap (kbd "C-6"))
+  ;; (define-key my/keymap (kbd "C-7"))
+  ;; (define-key my/keymap (kbd "C-8"))
+  ;; (define-key my/keymap (kbd "C-9"))
+  ;; (define-key my/keymap (kbd "C-0"))
+  ;; (define-key my/keymap (kbd "C--"))
+
+#+END_SRC
+
+**** Letters
+:PROPERTIES:
+:ID:       f03f2ccf-86bb-4adf-8147-10fe7f29bdcc
+:END:
+#+BEGIN_SRC emacs-lisp
+  ;; (define-key my/keymap (kbd "C-q"))
+  ;; (define-key my/keymap (kbd "C-w"))
+  ;; (define-key my/keymap (kbd "C-e"))
+  (define-key my/keymap (kbd "C-r") 'isearch-backward-regexp)
+  ;; (define-key my/keymap (kbd "C-t"))
+  ;; (define-key my/keymap (kbd "C-u")) ;; digit-argument
+  ;; (define-key my/keymap (kbd "C-i")) ;; In emacs C-i is the sama as TAB
+  ;; (define-key my/keymap (kbd "C-o"))
+  ;; (define-key my/keymap (kbd "C-p"))
+  ;; (define-key my/keymap (kbd "C-a"))
+  (define-key my/keymap (kbd "C-s") 'isearch-forward-regexp)
+  ;; (define-key my/keymap (kbd "C-d"))
+  ;; (define-key my/keymap (kbd "C-f"))
+  ;; (define-key my/keymap (kbd "C-g")) ;; keyboard-quit
+  ;; (define-key my/keymap (kbd "C-h"))
+  ;; (define-key my/keymap (kbd "C-j"))
+  ;; (define-key my/keymap (kbd "C-k"))
+  ;; (define-key my/keymap (kbd "C-l")) ;; recenter-top-botton
+  ;; (define-key my/keymap (kbd "C-ç"))
+  ;; (define-key my/keymap (kbd "C-z"))
+  ;; (define-key my/keymap (kbd "C-x")) ;; prefix-command
+  ;; (define-key my/keymap (kbd "C-c"))
+  ;; (define-key my/keymap (kbd "C-v")) ;; prefix-command
+  ;; (define-key my/keymap (kbd "C-b"))
+  (define-key my/keymap (kbd "C-n") 'xah-new-empty-buffer)
+  ;; (define-key my/keymap (kbd "C-m")) ;; in emacs C-m is the same as RET
+  (define-key my/keymap (kbd "<C-tab>") 'other-window)
+
+#+END_SRC
+
+*** Meta
+:PROPERTIES:
+:ID:       94fdacfe-e884-47bb-8e26-ed6111c3cd20
+:END:
+**** Numbers
+:PROPERTIES:
+:ID:       d01d0a0e-5062-4547-9c3f-bc722ad70339
+:END:
+#+BEGIN_SRC emacs-lisp
+  (define-key my/keymap (kbd "M-1") 'xah-cut-line-or-region)
+  ;; (define-key my/keymap (kbd "M-2"))
+  (define-key my/keymap (kbd "M-3") 'yank)
+  ;; (define-key my/keymap (kbd "M-4"))
+  ;; (define-key my/keymap (kbd "M-5"))
+  ;; (define-key my/keymap (kbd "M-6"))
+  ;; (define-key my/keymap (kbd "M-7"))
+  ;; (define-key my/keymap (kbd "M-8"))
+  ;; (define-key my/keymap (kbd "M-9"))
+  ;; (define-key my/keymap (kbd "M-0"))
+  ;; (define-key my/keymap (kbd "M--"))
+
+#+END_SRC
+
+**** Letters
+:PROPERTIES:
+:ID:       7798c1fb-b9fb-43c4-ab87-344edc720b8e
+:END:
+#+BEGIN_SRC emacs-lisp
+  ;; (define-key my/keymap (kbd "M-q"))
+  ;; (define-key my/keymap (kbd "M-w")) ;; kill-ring-save
+  ;; (define-key my/keymap (kbd "M-e"))
+  ;; (define-key my/keymap (kbd "M-r"))
+  ;; (define-key my/keymap (kbd "M-t"))
+  ;; (define-key my/keymap (kbd "M-y"))
+  ;; (define-key my/keymap (kbd "M-u"))
+  ;; (define-key my/keymap (kbd "M-i"))
+  ;; (define-key my/keymap (kbd "M-o"))
+  ;; (define-key my/keymap (kbd "M-p"))
+  ;; (define-key my/keymap (kbd "M-a"))
+  ;; (define-key my/keymap (kbd "M-s"))
+  ;; (define-key my/keymap (kbd "M-d"))
+  ;; (define-key my/keymap (kbd "M-f"))
+  ;; (define-key my/keymap (kbd "M-g"))
+  ;; (define-key my/keymap (kbd "M-h"))
+  ;; (define-key my/keymap (kbd "M-j"))
+  ;; (define-key my/keymap (kbd "M-k"))
+  ;; (define-key my/keymap (kbd "M-l"))
+  ;; (define-key my/keymap (kbd "M-z"))
+  ;; (define-key my/keymap (kbd "M-x")) ;; execute-extended-command
+  ;; (define-key my/keymap (kbd "M-c"))
+  ;; (define-key my/keymap (kbd "M-v")) ;; prefix-command
+  ;; (define-key my/keymap (kbd "M-b"))
+  ;; (define-key my/keymap (kbd "M-n"))
+  ;; (define-key my/keymap (kbd "M-m"))
+  (define-key my/keymap (kbd "M-0") 'undo)
+
+#+END_SRC
+
+*** Function
+:PROPERTIES:
+:ID:       9c446ef2-247e-46df-8b96-9c8c95417ce4
+:END:
+#+BEGIN_SRC emacs-lisp
+    ;; (define-key my/keymap (kbd "<f2>"))
+    ;; (define-key my/keymap (kbd "<f3>"))
+    ;; (define-key my/keymap (kbd "<f4>"))
+    ;; (define-key my/keymap (kbd "<f5>"))
+    ;; (define-key my/keymap (kbd "<f6>"))
+    ;; (define-key my/keymap (kbd "<f7>"))
+    ;; (define-key my/keymap (kbd "<f8>"))
+    ;; (define-key my/keymap (kbd "<f9>"))
+    ;; (define-key my/keymap (kbd "<f10>"))
+    ;; (define-key my/keymap (kbd "<f11>"))
+    ;; (define-key my/keymap (kbd "<f12>"))
+
+#+END_SRC
+* Packages
+:PROPERTIES:
+:Created:  2023-12-07
+:END:
+
+** Package: Which-Key
+:PROPERTIES:
+:Created:  2023-12-07
+:END:
+
+#+begin_src emacs-lisp
+
+  (use-package which-key
+    :ensure t
+    :defer 0.2
+    :delight
+    :custom (which-key-idle-delay 0.5)
+    :config (which-key-mode))
+
+#+end_src
 * Provide File
 :PROPERTIES:
 :ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
