@@ -1,8 +1,7 @@
-
 #+TITLE:        Coding Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2023-12-06 Wed]
-#+DATE-UPDATED: [2023-12-06 Wed]
+#+DATE-UPDATED: [2023-12-07 Thu]
 
 
 * Packages

@@ -1,7 +1,7 @@
 #+TITLE:        Appearance Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2023-12-06 Wed]
-#+DATE-UPDATED: [2023-12-06 Wed]
+#+DATE-UPDATED: [2023-12-07 Thu]
 
 * Themes
 :PROPERTIES:
@@ -163,6 +163,26 @@ more.
     (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 #+END_SRC
 
+* Fonts
+:PROPERTIES:
+:Created:  2023-12-07
+:END:
+
+** Icons
+:PROPERTIES:
+:Created:  2023-12-07
+:END:
+
+#+begin_src emacs-lisp
+
+  (use-package all-the-icons
+    :if (display-graphic-p)
+    :ensure t
+    :commands all-the-icons-install-fonts
+    :config (unless (find-font (font-spec :name "all-the-icons"))
+              (all-the-icons-install-fonts t)))
+
+#+end_src
 * Minibuffer
 :PROPERTIES:
 :Created:  2023-12-06
