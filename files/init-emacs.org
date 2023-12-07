@@ -70,22 +70,26 @@ to happen before they are called.
                             "init-basicConfig.org"
                             "init-keyBinding.org"
                             ;; Nice to have configurations
-                            "init-completion.org"
                             "init-coding.org"
-                            "init-metrics.org"
-                            "init-minibuffer.org"
-                            "init-navigation.org"
-                            "init-personal-organization.org"
-                            "init-reading.org"
-                            "init-writing.org"
-                            "init-spelling.org"
-                            "init-web.org"
+                            "init-completion.org"
                             "init-customFunctions.org"
                             "init-hydra.org"
+                            "init-metrics.org"
+                            "init-minibuffer.org"
+                            ;"init-my-buffer-meny.org"
+                            "init-navigation.org"
                             "init-orgmode.org"
+                            "init-personal-organization.org"
+                            "init-reading.org"
+                            "init-searching.org"
+                            "init-spelling.org"
+                            "init-web.org"
+                            "init-writing.org"
                             "init-appearance.org")
     "Initial order of configurations to be loaded because they have
-    dependencies among the others")
+      dependencies among the others")
+
+
 
 #+END_SRC
 

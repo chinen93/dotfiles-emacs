@@ -244,6 +244,12 @@ Extension to template list.
 #+BEGIN_SRC emacs-lisp
   (use-package multiple-cursors
     :ensure t)
+
+  (when (boundp 'my/keymap)
+    (define-key my/keymap (kbd "C->") 'mc/mark-next-like-this)
+    (define-key my/keymap (kbd "C-<") 'mc/mark-previous-like-this)
+
+    (message "Keybindings for Multiple Cursors loaded "))
 #+END_SRC
 ** CANCELED Package: Expand Region
 :PROPERTIES:
@@ -252,6 +258,11 @@ Extension to template list.
 #+BEGIN_SRC emacs-lisp
   (use-package expand-region
     :ensure t)
+
+  (when (boundp 'my/keymap)
+    (define-key my/keymap (kbd "C-=") 'er/expand-region)
+
+    (message "Keybindings for Expand Region loaded "))
 #+END_SRC
 
 * Provide File

@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2023-11-15 Wed]
+#+DATE-UPDATED: [2023-12-06 Wed]
 
 Emacs has a lot of keybindings, and I can't remember every one of
 them. For example each key in the keyboard is related to a command, if
@@ -753,7 +753,16 @@ Hydra to easily insert greek letter and others math notations.
 
 #+END_SRC
 
+* Keybindings
+:PROPERTIES:
+:Created:  2023-12-06
+:END:
+#+begin_src emacs-lisp
+  (when (boundp 'my/keymap)
+    (define-key my/keymap (kbd "M-q") 'hydra-launcher/body)
 
+    (message "Keybindings for Hydra loaded "))
+#+end_src
 * Updates
 :PROPERTIES:
 :Created:  2023-10-19

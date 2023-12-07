@@ -323,69 +323,6 @@ keybindings consistent throughout Emacs.
 
 #+END_SRC
 
-* Packages
-:PROPERTIES:
-:ID:       3a406e06-9674-4222-a0c8-f0a44a044bfe
-:END:
-
-** Ivy
-:PROPERTIES:
-:ID:       c510633f-0a76-495d-aa52-cf2f064060aa
-:END:
-
-#+BEGIN_SRC emacs-lisp
-  (eval-after-load 'ivy
-    (progn
-      (define-key my/keymap (kbd "C-f") 'swiper-thing-at-point)
-      (define-key my/keymap (kbd "M-x") 'counsel-M-x)
-
-      (define-key my/keymap (kbd "M-v M-f") 'counsel-find-file)
-
-      (message "Keybindings for Ivy loaded ")))
-
-#+END_SRC
-
-** Hydra
-:PROPERTIES:
-:ID:       7fa54987-a393-4e01-82ad-7593599b5cfd
-:END:
-
-#+BEGIN_SRC emacs-lisp
-  (eval-after-load 'init-hydra
-    (progn
-      (define-key my/keymap (kbd "M-q") 'hydra-launcher/body)
-
-      (message "Keybindings for Hydra loaded ")))
-
-#+END_SRC
-
-** Expand Region
-:PROPERTIES:
-:ID:       3c456cd4-3c4a-45e1-99ff-1b2ee6833575
-:END:
-#+BEGIN_SRC emacs-lisp
-  (eval-after-load 'expand-region
-    (progn
-      (define-key my/keymap (kbd "C-=") 'er/expand-region)
-
-      (message "Keybindings for Expand Region loaded ")))
-
-#+END_SRC
-
-** Multiple Cursors
-:PROPERTIES:
-:ID:       fc18cc14-6ea9-4d6f-89ce-6eed0c7e39f0
-:END:
-#+BEGIN_SRC emacs-lisp
-  (eval-after-load 'multiple-cursors
-    (progn
-      (define-key my/keymap (kbd "C->") 'mc/mark-next-like-this)
-      (define-key my/keymap (kbd "C-<") 'mc/mark-previous-like-this)
-
-      (message "Keybindings for Multiple Cursors loaded ")))
-
-#+END_SRC
-
 * Minor Mode
 :PROPERTIES:
 :ID:       5fa9e8f6-3460-4a22-a980-15124a79e260
@@ -436,8 +373,6 @@ keybindings is consistent throughout Emacs.
   (add-hook 'after-load-functions 'my-keys-have-priority)
 
 #+END_SRC
-
-
 
 * Provide File
 :PROPERTIES:
