@@ -35,6 +35,10 @@ Creation of home folder and derivates from it
     (defvar my/emacs-config-dir (concat my/home-folder "emacsConfig")
       "Path to Emacs Configuration Folder"))
 
+  (unless (boundp 'my/emacs-font-folder)
+    (defvar my/emacs-font-folder (concat my/home-folder "emacsFonts")
+      "Path to Emacs Font Folder"))
+
   (defvar my/snippets-folder (concat my/home-folder "emacsSnippets")
     "Path to Snippets Folder")
 

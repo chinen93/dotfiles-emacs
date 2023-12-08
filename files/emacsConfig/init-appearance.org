@@ -25,11 +25,80 @@ buffer. Showing the most relevant information about it, the name of
 the buffer, it's activated modes, if there is something new and a lot
 more.
 
+** Theme Packages
+:PROPERTIES:
+:Created:  2023-12-07
+:END:
+*** CANCELED Package: Zenburn
+:PROPERTIES:
+:ID:       c39c049d-3c1c-4f96-8f82-fa80f41c385e
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package zenburn-theme
+    :ensure t
+    :config
+    ;; use variable-pitch fonts for some headings and titles
+    (setq zenburn-use-variable-pitch t)
+
+    ;; scale headings in org-mode
+    (setq zenburn-scale-org-headlines t)
+
+    ;; scale headings in outline-mode
+    (setq zenburn-scale-outline-headlines t))
+
+#+END_SRC
+
+*** CANCELED Package: Monokai
+:PROPERTIES:
+:ID:       6742532e-84c8-4fba-8b58-094002df97de
+:END:
+#+BEGIN_SRC emacs-lisp :tangle no
+  (use-package monokai-theme
+    :ensure t)
+
+#+END_SRC
+
+*** CANCELED Package: color-theme-sanityinc-tomorrow
+:PROPERTIES:
+:ID:       f797f089-ce9f-4629-bc8f-cca1eb693df1
+:END:
+#+BEGIN_SRC emacs-lisp
+  (use-package color-theme-sanityinc-tomorrow
+    :ensure t)
+
+#+END_SRC
+
+*** Package: Solarized
+:PROPERTIES:
+:Created:  2023-12-07
+:END:
+
+#+begin_src emacs-lisp
+
+  (use-package solarized-theme
+    :ensure t
+    :config
+
+    (setq solarized-height-minus-1 0.8) ;; 0.8
+    (setq solarized-height-plus-1 1.25) ;; 1.1
+    (setq solarized-height-plus-2 1.3) ;; 1.15
+    (setq solarized-height-plus-3 1.35) ;; 1.2
+    (setq solarized-height-plus-4 1.45) ;; 1.3
+
+    (setq solarized-distinct-doc-face t)
+    (setq solarized-high-contrast-mode-line nil)
+    (setq solarized-distinct-fringe-background t)
+
+    (load-theme 'solarized-dark-high-contrast t))
+
+#+end_src
+
 ** My Theme
 :PROPERTIES:
 :Created:  2023-11-27
 :END:
 #+begin_src emacs-lisp
+
 (defface my/face-org-agenda-daily-diary
   '((t
      :foreground "black"
@@ -50,56 +119,20 @@ more.
      :background "indian red"))
   "Face for org agenda one time entries"
   :group 'my/faces)
+
 #+end_src
-** Load Package: Zenburn
-:PROPERTIES:
-:ID:       c39c049d-3c1c-4f96-8f82-fa80f41c385e
-:END:
-#+BEGIN_SRC emacs-lisp
-  (use-package zenburn-theme
-    :ensure t
-    :config
-    ;; use variable-pitch fonts for some headings and titles
-    (setq zenburn-use-variable-pitch t)
 
-    ;; scale headings in org-mode
-    (setq zenburn-scale-org-headlines t)
-
-    ;; scale headings in outline-mode
-    (setq zenburn-scale-outline-headlines t))
-
-#+END_SRC
-
-** CANCELED Load Package: Monokai
-:PROPERTIES:
-:ID:       6742532e-84c8-4fba-8b58-094002df97de
-:END:
-#+BEGIN_SRC emacs-lisp :tangle no
-  (use-package monokai-theme
-    :ensure t)
-
-#+END_SRC
-
-** CANCELED Load Package: color-theme-sanityinc-tomorrow
-:PROPERTIES:
-:ID:       f797f089-ce9f-4629-bc8f-cca1eb693df1
-:END:
-#+BEGIN_SRC emacs-lisp
-  (use-package color-theme-sanityinc-tomorrow
-    :ensure t)
-
-#+END_SRC
-
-** Helper Functions
+*** Helper Functions
 :PROPERTIES:
 :ID:       d2d2479d-783c-4c73-b5ef-5f52eda7f244
 :END:
 
-*** Set Theme
+**** Set Theme
 :PROPERTIES:
 :ID:       9fb64727-0c7e-4f23-a7c5-57662a36ddc1
 :END:
 #+BEGIN_SRC emacs-lisp
+
   (defun sakshamsharma-setTheme (themeName)
     "Set the theme to THEMENAME."
     (interactive "sWhat theme do you want to use? ")
@@ -108,11 +141,12 @@ more.
 
 #+END_SRC
 
-*** Set Font
+**** Set Font
 :PROPERTIES:
 :ID:       dd1e38f4-877f-4b69-8558-b3238c305e26
 :END:
 #+BEGIN_SRC emacs-lisp
+
   (defun sakshamsharma-setFont (fntName)
     "Set the font to FNTNAME."
     (interactive "sWhat font name do you want to set? ")
@@ -124,43 +158,54 @@ more.
 
 #+END_SRC
 
-*** Set Theme and Font on Startup
+**** Set Theme and Font on Startup
 :PROPERTIES:
 :ID:       94e488a7-f590-4ba2-89c4-30c00f9596bb
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   (defun sakshamsharma-frameActions ()
     "Do actions to set up appearance of frame."
     (interactive)
-    (let ((myTheme "zenburn")
-          (myFont (if (not (eq system-type 'windows-nt))
+    (let ((myFont (if (not (eq system-type 'windows-nt))
                       "DejaVu Sans Mono"
                     "Lucida Console")))
       ;; (disableBells)
-      (sakshamsharma-setTheme myTheme)
       (sakshamsharma-setFont myFont)))
 
   (sakshamsharma-frameActions)
 
 #+END_SRC
 
-** Load Package: Rainbow Delimiters
+* Appearance Packages
+:PROPERTIES:
+:Created:  2023-12-07
+:END:
+
+** Package: Rainbow
+:PROPERTIES:
+:Created:  2023-12-07
+:END:
+
+#+begin_src emacs-lisp
+
+(use-package rainbow-mode
+  :ensure t
+  :hook ((prog-mode text-mode) . rainbow-mode))
+
+#+end_src
+
+** Package: Rainbow Delimiters
 :PROPERTIES:
 :ID:       a8dd458b-12a8-4843-812e-311b2ed3eb67
 :END:
 #+BEGIN_SRC emacs-lisp
-  (use-package rainbow-delimiters
-    :ensure t)
-#+END_SRC
 
-*** Configure
-:PROPERTIES:
-:ID:       3b991d9f-6d78-417c-9a2a-fdb2b91197a2
-:END:
-#+BEGIN_SRC emacs-lisp
-  (when (featurep 'rainbow-delimiters)
-    (require 'rainbow-delimiters)
-    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+  (use-package rainbow-delimiters
+    :ensure t
+    :hook ((prog-mode text-mode) . rainbow-delimiters-mode))
+
 #+END_SRC
 
 * Fonts
@@ -168,7 +213,7 @@ more.
 :Created:  2023-12-07
 :END:
 
-** Icons
+** CANCELED Icons
 :PROPERTIES:
 :Created:  2023-12-07
 :END:
@@ -183,6 +228,7 @@ more.
               (all-the-icons-install-fonts t)))
 
 #+end_src
+
 * Minibuffer
 :PROPERTIES:
 :Created:  2023-12-06
@@ -194,6 +240,7 @@ more.
 
 Show number of line and column
 #+begin_src emacs-lisp
+
   (line-number-mode 1)
   (setq column-number-mode t)
 
@@ -207,6 +254,7 @@ Show number of line and column
 Don't show every major and minor mode that is active in the
 moment. Just those that are really important.
 #+BEGIN_SRC emacs-lisp :tangle no
+
   (use-package diminish
     :ensure t)
 
@@ -231,16 +279,10 @@ moment. Just those that are really important.
 Package to replace the need for the scroll bar on the sides of the
 frame. It is also a bit of color in the frame.
 #+BEGIN_SRC emacs-lisp
+
   (use-package nyan-mode
     :ensure t)
 
-#+END_SRC
-
-*** Configure
-:PROPERTIES:
-:ID:       8558203f-ebb1-41de-aa53-e0283e24d701
-:END:
-#+BEGIN_SRC emacs-lisp
   (when (featurep 'nyan-mode)
     ;; Max length of the nyan rainbow trail
     (setq nyan-bar-length 10)
@@ -256,6 +298,7 @@ frame. It is also a bit of color in the frame.
 :END:
 
 #+BEGIN_SRC emacs-lisp
+
   (use-package moody
     :ensure t
     :config
@@ -264,11 +307,13 @@ frame. It is also a bit of color in the frame.
     (moody-replace-vc-mode))
 
 #+END_SRC
+
 ** Load Package: Minions
 :PROPERTIES:
 :ID:       45d6a6c3-0d9c-4fa6-b52c-361b3bb0457a
 :END:
 #+BEGIN_SRC emacs-lisp
+
   (use-package minions
     :ensure t
     :init (minions-mode))

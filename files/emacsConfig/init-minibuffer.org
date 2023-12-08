@@ -153,16 +153,23 @@ Link: https://github.com/minad/marginalia
     :init
     (marginalia-mode))
 
+  (setq vertico-multiform-commands
+        '(("\\`execute-extended-command" unobtrusive
+           (vertico-flat-annotate . t)
+           (marginalia-annotator-registry (command marginalia-annotate-binding)))))
+
+#+end_src
+*** CANCELED Icons
+:PROPERTIES:
+:Created:  2023-12-07
+:END:
+#+begin_src emacs-lisp
+
   (use-package all-the-icons-completion
     :ensure t
     :after (marginalia all-the-icons)
     :hook (marginalia-mode . all-the-icons-completion-marginalia-setup)
     :config (all-the-icons-completion-mode))
-
-  (setq vertico-multiform-commands
-        '(("\\`execute-extended-command" unobtrusive
-           (vertico-flat-annotate . t)
-           (marginalia-annotator-registry (command marginalia-annotate-binding)))))
 
 #+end_src
 ** Package: Orderless
