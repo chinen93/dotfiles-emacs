@@ -1,0 +1,128 @@
+#+TITLE:        Evil Configuration
+#+AUTHOR:       Pedro Chinen
+#+DATE-CREATED: [2023-12-09 Sat]
+#+DATE-UPDATED: [2023-12-09 Sat]
+
+* Package: General
+:PROPERTIES:
+:Created:  2023-12-09
+:END:
+
+#+begin_src emacs-lisp
+
+  (use-package general
+    :ensure t
+    :config
+    (general-evil-setup)
+
+    (general-create-definer my-leader-def
+      :prefix "SPC"
+      :non-normal-prefix "C-SPC"
+      :keymaps '(normal))
+
+    (general-override-mode))
+
+#+end_src
+
+* Package: Evil
+:PROPERTIES:
+:Created:  2023-12-09
+:END:
+
+#+begin_src emacs-lisp
+
+  (use-package evil
+    :ensure t
+    :init
+
+    (setq evil-want-keybinding nil)
+    (setq evil-want-C-i-jump nil)
+
+    (setq evil-mode-line-format '(before . moody-mode-line-buffer-identification))
+
+    :hook
+    (after-init . evil-mode)
+    (after-save . evil-normal-state))
+
+  (with-eval-after-load 'evil-maps
+    (define-key evil-motion-state-map (kbd "SPC") nil)
+    (define-key evil-motion-state-map (kbd "RET") nil)
+    (define-key evil-motion-state-map (kbd "TAB") nil))
+
+#+end_src
+
+
+#+begin_src emacs-lisp
+
+  (with-eval-after-load "evil"
+
+    (general-define-key
+     :states '(normal visual)
+     :keymaps 'org-mode-map
+     :prefix "SPC m"
+     :non-normal-prefix "C-SPC m"
+
+     "" '(nil :which-key "Mode Leader")
+
+     ">" 'org-demote
+     "<" 'org-promote
+
+     "i" '(nil :which-key "Link")
+     "il" 'org-insert-link
+     "ib" 'org-insert-structure-template
+     "ih" 'org-insert-heading))
+
+#+end_src
+
+** Change States on Mode Line
+:PROPERTIES:
+:Created:  2023-12-09
+:END:
+
+#+begin_src emacs-lisp
+
+  (defface my/evil-state-emacs-face
+    '((t (:background "#473c8b" :foreground "#ffffff")))
+    "Evil Mode Emacs State Face")
+
+  (defface my/evil-state-insert-face
+    '((t (:background "#9aff9a" :foreground "#000000")))
+    "Evil Mode Insert State Face")
+
+  (defface my/evil-state-normal-face
+    '((t (:background "#ffffff" :foreground "#000000")))
+    "Evil Mode Normal Stace Face")
+
+  (with-eval-after-load "evil"
+
+    ;; Replace base function to this new function
+    (defun evil-generate-mode-line-tag (&optional state)
+      "Generate the evil mode-line tag for STATE."
+      (let ((tag (evil-state-property state :tag t)))
+        ;; prepare mode-line: add tooltip
+        (if (stringp tag)
+            (propertize tag
+                        'face (cond
+                               ((string= "normal" state)
+                                'my/evil-state-normal-face)
+                               ((string= "insert" state)
+                                'my/evil-state-insert-face)
+                               ((string= "emacs" state)
+                                'my/evil-state-emacs-face))
+                        'help-echo (evil-state-property state :name)
+                        'mouse-face 'mode-line-highlight)
+          tag))))
+
+#+end_src
+
+
+
+* Provide File
+:PROPERTIES:
+:ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
+:END:
+
+#+BEGIN_SRC emacs-lisp
+  (provide 'init-evil)
+#+END_SRC
+

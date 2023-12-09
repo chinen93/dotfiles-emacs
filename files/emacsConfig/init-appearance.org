@@ -1,7 +1,7 @@
 #+TITLE:        Appearance Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2023-12-06 Wed]
-#+DATE-UPDATED: [2023-12-07 Thu]
+#+DATE-UPDATED: [2023-12-09 Sat]
 
 * Themes
 :PROPERTIES:
@@ -229,7 +229,7 @@ more.
 
 #+end_src
 
-* Minibuffer
+* Mode Line
 :PROPERTIES:
 :Created:  2023-12-06
 :END:
@@ -276,6 +276,8 @@ moment. Just those that are really important.
 :ID:       f2dcede5-e561-4ef5-9832-2bb34d3e63e0
 :END:
 
+Link: https://github.com/TeMPOraL/nyan-mode
+
 Package to replace the need for the scroll bar on the sides of the
 frame. It is also a bit of color in the frame.
 #+BEGIN_SRC emacs-lisp
@@ -297,14 +299,17 @@ frame. It is also a bit of color in the frame.
 :ID:       6e3f681f-a8dd-4686-9307-94a7f2ac5b2b
 :END:
 
+Link: https://github.com/tarsius/moody
+
 #+BEGIN_SRC emacs-lisp
 
-  (use-package moody
-    :ensure t
-    :config
-    (setq x-underline-at-descent-line 5)
-    (moody-replace-mode-line-buffer-identification)
-    (moody-replace-vc-mode))
+    (use-package moody
+      :ensure t
+      :config
+      (setq x-underline-at-descent-line t)
+      (setq moody-mode-line-height 30)
+      (moody-replace-mode-line-buffer-identification)
+      (moody-replace-vc-mode))
 
 #+END_SRC
 
@@ -312,6 +317,10 @@ frame. It is also a bit of color in the frame.
 :PROPERTIES:
 :ID:       45d6a6c3-0d9c-4fa6-b52c-361b3bb0457a
 :END:
+
+Link: https://github.com/tarsius/minions
+
+
 #+BEGIN_SRC emacs-lisp
 
   (use-package minions

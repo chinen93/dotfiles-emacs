@@ -1,7 +1,7 @@
 #+TITLE:        Init Emacs
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2019-09-10 ter]
-#+DATE-UPDATED: [2023-12-06 Wed]
+#+DATE-UPDATED: [2023-12-09 Sat]
 #+PROPERTY: header-args :tangle yes
 
 * Starting of Configuration
@@ -51,6 +51,7 @@ with. After packages are downloaded and all.
                        gcs-done)))
 
 #+END_SRC
+
 * Choose Configuration Files to Get Elisp From
 :PROPERTIES:
 :ID:       d2dfcbb6-395c-4f71-8aa1-4a14ede64214
@@ -85,17 +86,18 @@ to happen before they are called.
                             "init-spelling.org"
                             "init-web.org"
                             "init-writing.org"
-                            "init-appearance.org")
+                            "init-appearance.org"
+                            "init-evil.org")
     "Initial order of configurations to be loaded because they have
-      dependencies among the others")
-
-
-
+      dependencies among the others"
+)
 #+END_SRC
 
 Function to get correct files. Otherwise it will try to load
 directories and others files.
+
 #+BEGIN_SRC emacs-lisp
+
   (defun regexp-filter (regexp list)
     "Filter LIST of strings with REGEXP.
   Returning a new list with only the strings left."
@@ -109,6 +111,7 @@ directories and others files.
 
 Finally find all configuration files and put them into the sequence.
 #+BEGIN_SRC emacs-lisp
+
   (if (not (eq system-type 'windows-nt))
     (let ((files (regexp-filter "\.org$" (directory-files my/emacs-config-dir))))
       (dolist (file files)
@@ -125,6 +128,7 @@ Finally find all configuration files and put them into the sequence.
   ;; Put this files into a path where is possible to load them later.
   (setq load-path (cons (expand-file-name my/emacs-config-dir)
 			load-path ))
+
 #+END_SRC
 
 * Code to Tangle .org to .el Files
@@ -265,6 +269,7 @@ The parsing part happens when:
    )
 
 #+END_SRC
+
 * Ending of Configuration
 :PROPERTIES:
 :ID:       14dc97cd-9322-4941-9d3d-925193417d3c
