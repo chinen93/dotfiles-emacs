@@ -1,7 +1,7 @@
 #+TITLE:        Writing Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2023-12-06 Wed]
-#+DATE-UPDATED: [2023-12-06 Wed]
+#+DATE-UPDATED: [2023-12-13 Wed]
 
 * Lock Files when editing
 :PROPERTIES:
