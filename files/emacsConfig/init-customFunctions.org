@@ -1,7 +1,7 @@
 #+TITLE:        Custom Functions Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2023-12-06 Wed]
+#+DATE-UPDATED: [2023-12-11 Mon]
 
 * Functions from Internet
 :PROPERTIES:
@@ -284,6 +284,7 @@
 :PROPERTIES:
 :ID:       510abf7f-6066-4b0b-a586-822fa5f60475
 :END:
+
 #+BEGIN_SRC emacs-lisp
   (defun xah-open-in-terminal ()
     "Open the current dir in a new terminal window.
@@ -307,6 +308,7 @@
 :PROPERTIES:
 :ID:       0546665d-de27-4f32-b241-bfe083eff2b0
 :END:
+
 #+BEGIN_SRC emacs-lisp
 (defun isamert/toggle-side-bullet-org-buffer ()
   "Toggle `bullet.org` in a side buffer for quick note taking.  The buffer is opened in side window so it can't be accidentaly removed."
@@ -346,6 +348,7 @@
        (find-file file-path)
        (current-buffer))))))
 #+END_SRC
+
 * My Functions
 :PROPERTIES:
 :ID:       8f9c6ef4-7c8a-4b32-beb3-23ad6ceb5f4b
