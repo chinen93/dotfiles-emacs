@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2023-11-28 Tue]
+#+DATE-UPDATED: [2023-12-16 Sat]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -13,33 +13,459 @@ reproducible research.
 * Provide File
 :PROPERTIES:
 :ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
+:CUSTOM_ID: customID-0a01efe1-3948-4017-b344-38ecef7b2a48
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   (provide 'init-orgmode)
+
 #+END_SRC
+
 * Load Package: Org Mode
 :PROPERTIES:
 :ID:       5ed0ba9d-5499-4dd2-9aa9-db12bb9d4684
+:CUSTOM_ID: customID-5ed0ba9d-5499-4dd2-9aa9-db12bb9d4684
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   (require 'org)
   (require 'org-tempo)
   (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
-#+END_SRC
-* Automatically Bookmarks
-:PROPERTIES:
-:ID:       a3e0c760-3e44-47a2-aea1-c24b41644235
-:END:
-#+BEGIN_SRC emacs-lisp
-  (setq org-capture-bookmark nil)
-  (setq org-bookmark-names-plist nil)
+
 #+END_SRC
 
-* IDs
+* Agenda
+:PROPERTIES:
+:ID:       741ef6f4-614b-4b2e-b5cf-28a13f9ee9e6
+:CUSTOM_ID: customID-741ef6f4-614b-4b2e-b5cf-28a13f9ee9e6
+:END:
+
+** Set Agenda Files
+:PROPERTIES:
+:ID:       d0b21712-a701-4681-80b7-d805941835e6
+:CUSTOM_ID: customID-d0b21712-a701-4681-80b7-d805941835e6
+:END:
+
+Set org agenda files
+
+Variables are in the file [[file:init-basicConfig.org]]
+
+#+BEGIN_SRC emacs-lisp
+
+  (setq org-agenda-files nil)
+
+  (add-to-list 'org-agenda-files my/routine-filename)
+  (add-to-list 'org-agenda-files my/projects-filename)
+  (add-to-list 'org-agenda-files my/plans-filename)
+  (add-to-list 'org-agenda-files my/dates-filename)
+  (add-to-list 'org-agenda-files my/daily-diary-filename)
+
+#+END_SRC
+
+** Configure some information
+:PROPERTIES:
+:ID:       a75d5c64-9879-4700-b1ad-cd69d1983c7b
+:CUSTOM_ID: customID-a75d5c64-9879-4700-b1ad-cd69d1983c7b
+:END:
+
+Skip tasks done in daily/weekly agenda
+
+#+BEGIN_SRC emacs-lisp
+
+  (setq org-agenda-skip-scheduled-if-done t)
+  (setq org-agenda-skip-deadline-if-done t)
+
+#+END_SRC
+
+Default duration for appointments that only have a starting time.
+
+#+BEGIN_SRC emacs-lisp
+
+  (setq org-agenda-default-appointment-duration 60)
+
+#+END_SRC
+
+Follow link on agenda with mouse click
+
+#+BEGIN_SRC emacs-lisp
+
+  (setq org-agenda-mouse-1-follows-link t)
+
+#+END_SRC
+
+Skip non-reachable files in `org-agenda-files`
+
+#+BEGIN_SRC emacs-lisp
+
+  (setq org-agenda-skip-unavailable-files t)
+
+#+END_SRC
+
+Agenda show next 7 days and previous 3 days
+
+#+BEGIN_SRC emacs-lisp
+
+  (setq org-agenda-span 10)
+  (setq org-agenda-start-on-weekday nil)
+  (setq org-agenda-start-day "-3d")
+
+#+END_SRC
+
+Agenda Prefix Format
+
+#+begin_src emacs-lisp
+
+  (setq org-agenda-prefix-format "%t %s")
+
+#+end_src
+
+** Custom Commands
+:PROPERTIES:
+:ID:       9f11523a-b7c1-432a-94b4-d406ca487263
+:CUSTOM_ID: customID-9f11523a-b7c1-432a-94b4-d406ca487263
+:END:
+
+Remove all Org Mode agenda commands. To only show my custom commands.
+
+#+BEGIN_SRC emacs-lisp
+
+  (setq org-agenda-custom-commands nil)
+
+#+END_SRC
+
+*** Main Agenda: Shows current week
+:PROPERTIES:
+:ID:       6aa45574-713d-47b0-8756-bd352b8f2e00
+:CUSTOM_ID: customID-6aa45574-713d-47b0-8756-bd352b8f2e00
+:END:
+
+Main agenda with the most important information to show how the week
+will be and current working projects.
+
+Got the main idea from https://www.philnewton.net/blog/org-agenda-monthly-goals/
+
+#+BEGIN_SRC emacs-lisp
+
+  (add-to-list
+   'org-agenda-custom-commands
+
+   ;; Custom agenda that show all the TODO tasks
+   '("m" "Main Agenda"
+     (
+      (tags "+PRIORITY=\"A\""
+            ((org-agenda-overriding-header "Objetivos Primários para o ano")
+             (org-agenda-files `(,my/plans-filename))))
+      (tags "+PRIORITY=\"C\""
+            ((org-agenda-overriding-header "Objetivos Secundários para o ano")
+             (org-agenda-files `(,my/plans-filename))))
+      (agenda ""
+              ((org-agenda-span 10)
+               (org-agenda-log-mode-items '(closed))
+               (org-agenda-show-log t)
+               (org-agenda-start-day "-1d")))
+      (todo "TODO"
+            ((org-agenda-overriding-header "\nProjetos Atuais\n")
+             (org-agenda-files (my--get-list-working-projects))))
+      (tags "gtd"
+            ((org-agenda-overriding-header "\nCaptures\n")
+             (org-agenda-files `(,my/gtd-inbox-filename))))
+      )
+     nil))
+
+#+END_SRC
+
+*** Monthly Review
+CLOSED: [2022-12-28 Wed 15:46]
+:PROPERTIES:
+:ID:       2970d122-05c8-47bf-8f60-0ac4e25bcf04
+:CUSTOM_ID: customID-2970d122-05c8-47bf-8f60-0ac4e25bcf04
+:END:
+:LOGBOOK:
+- State "CANCELED"   from              [2022-12-28 Wed 15:46] \\
+  Not been used
+:END:
+
+#+BEGIN_SRC emacs-lisp
+
+  (add-to-list
+   'org-agenda-custom-commands
+
+   ;; Custom command to show done task from previous week
+   '("r" "Monthly Review"
+     ;; Use normal agenda
+     ((agenda ""
+              ;; Put some configurations on this agenda
+              ;; Show closed tasks and show 7 days starting today
+              ((org-agenda-log-mode-items '(state))
+               (org-agenda-span 30)
+               (org-agenda-start-day "-29d")
+               (org-agenda-show-log t)
+               (org-agenda-window-setup 'other-window))))
+     nil))
+
+#+END_SRC
+
+*** Weekly review
+:PROPERTIES:
+:Created:  2023-10-11
+:CUSTOM_ID: customID-b9b62a50-233e-4d07-ad37-853526fb2d43
+:END:
+
+#+begin_src emacs-lisp
+
+  (add-to-list
+     'org-agenda-custom-commands
+
+     '("w" "Weekly Review"
+       (
+        (agenda ""
+                ((org-agenda-log-mode-items '(closed))
+                 (org-agenda-span 8)
+                 (org-agenda-start-day "-7d")
+                 (org-agenda-show-log t)
+                 (org-agenda-window-setup 'other-window)
+                 (org-agenda-files (append org-agenda-files
+                                           (my--get-list-working-projects)
+                                           (my--get-list-maybe-projects)))))
+        (todo "TODO"
+              ((org-agenda-overriding-header "\nProjetos Atuais\n")
+               (org-agenda-files (my--get-list-working-projects))))
+        )
+       nil))
+
+#+end_src
+
+*** CANCELED Current Working Tasks and Immediate Calendar
+:PROPERTIES:
+:ID:       d0be7bcc-8135-4264-91b2-8f16ac337bb2
+:CUSTOM_ID: customID-d0be7bcc-8135-4264-91b2-8f16ac337bb2
+:END:
+
+#+BEGIN_SRC emacs-lisp :tangle no
+
+  (add-to-list
+   'org-agenda-custom-commands
+
+   ;; Custom agenda to show working todo
+   '("w" "Working on tasks"
+     ((agenda ""
+              ((org-agenda-span 4)
+               (org-agenda-start-day "-1d")))
+      (todo "WORKING" nil))
+     nil nil))
+
+#+END_SRC
+
+*** CANCELED All Task in Notes Directory
+CLOSED: [2022-12-28 Wed 16:07]
+:PROPERTIES:
+:ID:       0acfba9f-08a3-4e8b-b625-2547e4837630
+:CUSTOM_ID: customID-0acfba9f-08a3-4e8b-b625-2547e4837630
+:END:
+:LOGBOOK:
+- State "CANCELED"   from              [2022-12-28 Wed 16:07] \\
+  Not been used
+:END:
+
+#+BEGIN_SRC emacs-lisp
+
+  (add-to-list
+   'org-agenda-custom-commands
+
+   ;; Custom agenda to show agenda and todo for every note
+   `("n" "All TODO's in Notes"
+     ((alltodo ""
+               ((org-agenda-files `(,my/notes-directory)))))
+     nil))
+
+#+END_SRC
+
+*** CANCELED All Task in Emacs Config Directory
+:PROPERTIES:
+:ID:       0acfba9f-08a3-4e8b-b625-2547e4837630
+:CUSTOM_ID: customID-0acfba9f-08a3-4e8b-b625-2547e4837630
+:END:
+#+BEGIN_SRC emacs-lisp :tangle no
+
+  (add-to-list
+   'org-agenda-custom-commands
+
+   ;; Custom agenda to show agenda and todo for every note
+   `("e" "All TODO's in Emacs Config Directory"
+     ((alltodo ""
+               ((org-agenda-files
+                `(,my/emacs-config-dir)))))
+     nil))
+
+#+END_SRC
+
+*** CANCELED Notes "Viagens" Agenda
+:PROPERTIES:
+:ID:       a7b76845-2081-4783-abea-1c507242f4f4
+:CUSTOM_ID: customID-a7b76845-2081-4783-abea-1c507242f4f4
+:END:
+
+#+BEGIN_SRC emacs-lisp :tangle no
+
+  (add-to-list
+   'org-agenda-custom-commands
+
+   ;; Custom agenda to show agenda and todo for every note
+   `("v" "'Viagens' Notes"
+     ((agenda ""
+              ((org-agenda-files
+                `(,(concat my/dropbox-folder "Notes/viagens.org")))))
+      (alltodo ""
+               ((org-agenda-files
+                 `(,(concat my/dropbox-folder "Notes/viagens.org"))))))
+     nil))
+
+#+END_SRC
+
+*** CANCELED NeuralMind
+CLOSED: [2022-12-28 Wed 15:46]
+:PROPERTIES:
+:ID:       c337e24a-4b90-4e46-be57-a8c7e071c311
+:CUSTOM_ID: customID-c337e24a-4b90-4e46-be57-a8c7e071c311
+:END:
+:LOGBOOK:
+- State "CANCELED"   from              [2022-12-28 Wed 15:46] \\
+  Not been used
+:END:
+
+#+BEGIN_SRC emacs-lisp
+
+  (add-to-list
+   'org-agenda-custom-commands
+
+   '("l" "NeuralMind"
+     ((alltodo ""
+               ((org-agenda-files
+                 `(,(concat my/dropbox-folder "Notes/NeuralMind.org"))))))))
+
+#+END_SRC
+
+*** CANCELED Get Things Done
+CLOSED: [2022-12-28 Wed 15:49]
+:PROPERTIES:
+:ID:       9c99f396-cf8a-480c-bb8b-b6ec4635090c
+:CUSTOM_ID: customID-9c99f396-cf8a-480c-bb8b-b6ec4635090c
+:END:
+:LOGBOOK:
+- State "CANCELED"   from              [2022-12-28 Wed 15:49] \\
+  not been used
+:END:
+
+**** CANCELED Weekly agenda
+CLOSED: [2023-03-20 Mon 11:47]
+:PROPERTIES:
+:ID:       ccccc04c-8e74-42c0-91ca-00a6058d7a25
+:CUSTOM_ID: customID-ccccc04c-8e74-42c0-91ca-00a6058d7a25
+:END:
+:LOGBOOK:
+- State "CANCELED"   from              [2023-03-20 Mon 11:47]
+:END:
+
+#+BEGIN_SRC emacs-lisp
+
+  (defmacro my--create-agenda-custom-tags-todo (tag title)
+    "Create a tags todo custom agenda command to separate todos from each tag.
+  ELEMENTS must be a list of (tag, title) elements.
+  "
+    `(quote (tags-todo ,tag
+                ((org-agenda-overriding-header (concat ,title "\n"))
+                 (org-agenda-files
+                  `(,(concat my/dropbox-folder "Notes/Projetos.org")))))))
+
+  (add-to-list
+   'org-agenda-custom-commands
+
+   `("W" "Weekly Get Things Done"
+     ((agenda ""
+              ((org-agenda-overriding-header "\nAgenda\n")
+               (org-agenda-span 10)
+               (org-agenda-start-day "-1d")))
+
+      ,(my--create-agenda-custom-tags-todo "samia"    "Sâmia")
+      ,(my--create-agenda-custom-tags-todo "taperead" "Taperead")
+      ,(my--create-agenda-custom-tags-todo "emacs"    "Emacs")
+      ,(my--create-agenda-custom-tags-todo "pyinvest" "PyInvest")
+      ,(my--create-agenda-custom-tags-todo "gtd"      "Get Things Done")
+      ,(my--create-agenda-custom-tags-todo "alheios"  "Alheios")
+
+      )))
+
+#+END_SRC
+
+**** CANCELED Main agenda for GTD
+CLOSED: [2023-03-20 Mon 11:47]
+:PROPERTIES:
+:ID:       d983dcc5-113d-4474-abd1-4f1bcff71d50
+:CUSTOM_ID: customID-d983dcc5-113d-4474-abd1-4f1bcff71d50
+:END:
+:LOGBOOK:
+- State "CANCELED"   from              [2023-03-20 Mon 11:47]
+:END:
+
+#+BEGIN_SRC emacs-lisp
+
+  (add-to-list
+   'org-agenda-custom-commands
+
+   '("n" "Get Things Done"
+     (
+      (todo "TODO"
+            ((org-agenda-overriding-header "\nPlanejamento Semanal\n")
+             (org-agenda-files `(,my/week-plans-filename))))
+      (todo "WORKING"
+            ((org-agenda-overriding-header "\nPlanos Atuais\n")
+             (org-agenda-files `(,my/plans-filename))))
+      (todo "WORKING"
+            ((org-agenda-overriding-header "\nProjetos Atuais\n")
+             (org-agenda-files `(,my/projects-filename))))
+      (todo "WEEK"
+            ((org-agenda-overriding-header "\nAtividades Atuais\n")
+             (org-agenda-files `(,my/projects-filename))))
+      (todo ""
+            ((org-agenda-overriding-header "\nCaptures\n")
+             (org-agenda-files `(,my/gtd-inbox-filename))))
+      )))
+
+#+END_SRC
+
+** Agenda Highlight
+:PROPERTIES:
+:Created:  2023-11-27
+:CUSTOM_ID: customID-7ed691b6-ec3c-4c33-acf1-e54f144996b3
+:END:
+
+#+begin_src emacs-lisp
+
+  (defun my--highlight-org-agenda ()
+    (highlight-lines-matching-regexp ":daily:" 'my/face-org-agenda-daily)
+    (highlight-lines-matching-regexp ":ImpDate:" 'my/face-org-agenda-important-dates)
+    (highlight-lines-matching-regexp ":OneTime:" 'my/face-org-agenda-one-time)
+    )
+
+  (add-hook 'org-agenda-finalize-hook #'my--highlight-org-agenda)
+
+#+end_src
+
+* Configurations
+:PROPERTIES:
+:Created:  2023-12-16
+:CUSTOM_ID: customID-183ee88e-47d5-41bf-b277-9b3f0dd940c0
+:END:
+** IDs
 :PROPERTIES:
 :ID:       bf94cf7d-f656-48ad-b7fe-c6ef9310e1ec
+:CUSTOM_ID: customID-bf94cf7d-f656-48ad-b7fe-c6ef9310e1ec
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   (require 'org-id)
 
   ;; If `org-store-link` is called directly don't create IDs if it already exist
@@ -51,10 +477,12 @@ reproducible research.
 
 #+END_SRC
 
-* Tags, Keywords, Headings
+** Tags, Keywords, Headings
 :PROPERTIES:
 :ID:       d1668e0a-a17a-4fc0-8c60-342b5f5c7891
+:CUSTOM_ID: customID-d1668e0a-a17a-4fc0-8c60-342b5f5c7891
 :END:
+
 #+BEGIN_SRC emacs-lisp
   ;; Place tags directly after headline text, with only one space in between
   (setq org-tags-column 0)
@@ -86,11 +514,14 @@ reproducible research.
   ;; (setq org-agenda-inhibit-startup t)
 #+END_SRC
 
-* Refile
+** Refile
 :PROPERTIES:
 :ID:       cd5cd9be-2d38-496d-85e8-92ecf29ef0f4
+:CUSTOM_ID: customID-cd5cd9be-2d38-496d-85e8-92ecf29ef0f4
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   ;; Provide refile targets as paths. Level3 headlin = level1/level2/leve3
   (setq org-refile-use-outline-path 'file)
 
@@ -103,9 +534,11 @@ reproducible research.
   ;; Refile things to the Project file under Note or Task headings
   ;;(setq org-refile-targets
   ;;      `((,(concat my/dropbox-folder "Notes/Projetos.org") :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")))
+
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
+
   ;; (defun my-refile-archive ()
   ;;   "Refile to the archive file"
   ;;   (interactive)
@@ -115,397 +548,52 @@ reproducible research.
   ;;         (org-refile-history nil))
 
   ;;     (call-interactively 'org-refile)))
+
 #+END_SRC
 
-* Timestamp
+** Timestamp
 :PROPERTIES:
 :Created:  2022-02-25
 :ID:       1e82c630-0aee-4ffa-93de-e9a94b16f069
+:CUSTOM_ID: customID-1e82c630-0aee-4ffa-93de-e9a94b16f069
 :END:
 
 Set system's locale for time to be on English mode always.
 
 #+begin_src emacs-lisp
+
 (setq system-time-locale "C")
-#+end_src
-
-* Agenda
-:PROPERTIES:
-:ID:       741ef6f4-614b-4b2e-b5cf-28a13f9ee9e6
-:END:
-
-** Set Agenda Files
-:PROPERTIES:
-:ID:       d0b21712-a701-4681-80b7-d805941835e6
-:END:
-Set org agenda files
-#+BEGIN_SRC emacs-lisp
-  (setq org-agenda-files nil)
-
-  (add-to-list 'org-agenda-files my/routine-filename)
-  (add-to-list 'org-agenda-files my/projects-filename)
-  (add-to-list 'org-agenda-files my/plans-filename)
-  (add-to-list 'org-agenda-files my/dates-filename)
-  (add-to-list 'org-agenda-files my/daily-diary-filename)
-#+END_SRC
-
-** Configure some information
-:PROPERTIES:
-:ID:       a75d5c64-9879-4700-b1ad-cd69d1983c7b
-:END:
-
-Skip tasks done in daily/weekly agenda
-#+BEGIN_SRC emacs-lisp
-  (setq org-agenda-skip-scheduled-if-done t)
-  (setq org-agenda-skip-deadline-if-done t)
-
-#+END_SRC
-
-Default duration for appointments that only have a starting time.
-#+BEGIN_SRC emacs-lisp
-  (setq org-agenda-default-appointment-duration 60)
-
-#+END_SRC
-
-Follow link on agenda with mouse click
-#+BEGIN_SRC emacs-lisp
-  (setq org-agenda-mouse-1-follows-link t)
-
-#+END_SRC
-
-Skip non-reachable files in `org-agenda-files`
-#+BEGIN_SRC emacs-lisp
-  (setq org-agenda-skip-unavailable-files t)
-
-#+END_SRC
-
-Agenda show next 7 days and previous 3 days
-#+BEGIN_SRC emacs-lisp
-  (setq org-agenda-span 10)
-  (setq org-agenda-start-on-weekday nil)
-  (setq org-agenda-start-day "-3d")
-
-#+END_SRC
-
-Agenda Prefix Format
-#+begin_src emacs-lisp
-  (setq org-agenda-prefix-format "%t %s")
-#+end_src
-** Custom Commands
-:PROPERTIES:
-:ID:       9f11523a-b7c1-432a-94b4-d406ca487263
-:END:
-
-Remove all Org Mode agenda commands. To only show my custom commands.
-#+BEGIN_SRC emacs-lisp
-  (setq org-agenda-custom-commands nil)
-
-#+END_SRC
-
-*** Main Agenda: Shows current week
-:PROPERTIES:
-:ID:       6aa45574-713d-47b0-8756-bd352b8f2e00
-:END:
-
-Main agenda with the most important information to show how the week
-will be and current working projects.
-
-Got the main idea from https://www.philnewton.net/blog/org-agenda-monthly-goals/
-
-#+BEGIN_SRC emacs-lisp
-  (add-to-list
-   'org-agenda-custom-commands
-
-   ;; Custom agenda that show all the TODO tasks
-   '("m" "Main Agenda"
-     (
-      (tags "ativo+PRIORITY=\"A\""
-            ((org-agenda-overriding-header "Objetivos Primários para o ano")
-             (org-agenda-files `(,my/plans-filename))))
-      (tags "ativo+PRIORITY=\"C\""
-            ((org-agenda-overriding-header "Objetivos Secundários para o ano")
-             (org-agenda-files `(,my/plans-filename))))
-      (agenda ""
-              ((org-agenda-span 10)
-               (org-agenda-log-mode-items '(closed))
-               (org-agenda-show-log t)
-               (org-agenda-start-day "-1d")))
-      (todo "TODO"
-            ((org-agenda-overriding-header "\nProjetos Atuais\n")
-             (org-agenda-files (my--get-list-working-projects))))
-      (tags "gtd"
-            ((org-agenda-overriding-header "\nCaptures\n")
-             (org-agenda-files `(,my/gtd-inbox-filename))))
-      )
-     nil))
-#+END_SRC
-
-*** Monthly Review
-CLOSED: [2022-12-28 Wed 15:46]
-:PROPERTIES:
-:ID:       2970d122-05c8-47bf-8f60-0ac4e25bcf04
-:END:
-:LOGBOOK:
-- State "CANCELED"   from              [2022-12-28 Wed 15:46] \\
-  Not been used
-:END:
-#+BEGIN_SRC emacs-lisp
-  (add-to-list
-   'org-agenda-custom-commands
-
-   ;; Custom command to show done task from previous week
-   '("r" "Monthly Review"
-     ;; Use normal agenda
-     ((agenda ""
-              ;; Put some configurations on this agenda
-              ;; Show closed tasks and show 7 days starting today
-              ((org-agenda-log-mode-items '(state))
-               (org-agenda-span 30)
-               (org-agenda-start-day "-29d")
-               (org-agenda-show-log t)
-               (org-agenda-window-setup 'other-window))))
-     nil))
-
-#+END_SRC
-
-*** Weekly review
-:PROPERTIES:
-:Created:  2023-10-11
-:END:
-
-#+begin_src emacs-lisp
-  (add-to-list
-     'org-agenda-custom-commands
-
-     '("w" "Weekly Review"
-       (
-        (agenda ""
-                ((org-agenda-log-mode-items '(closed))
-                 (org-agenda-span 8)
-                 (org-agenda-start-day "-7d")
-                 (org-agenda-show-log t)
-                 (org-agenda-window-setup 'other-window)
-                 (org-agenda-files (append org-agenda-files
-                                           (my--get-list-working-projects)
-                                           (my--get-list-maybe-projects)))))
-        (todo "TODO"
-              ((org-agenda-overriding-header "\nProjetos Atuais\n")
-               (org-agenda-files (my--get-list-working-projects))))
-        )
-       nil))
 
 #+end_src
 
-*** CANCELED Current Working Tasks and Immediate Calendar
-:PROPERTIES:
-:ID:       d0be7bcc-8135-4264-91b2-8f16ac337bb2
-:END:
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  (add-to-list
-   'org-agenda-custom-commands
-
-   ;; Custom agenda to show working todo
-   '("w" "Working on tasks"
-     ((agenda ""
-              ((org-agenda-span 4)
-               (org-agenda-start-day "-1d")))
-      (todo "WORKING" nil))
-     nil nil))
-
-#+END_SRC
-
-*** CANCELED All Task in Notes Directory
-CLOSED: [2022-12-28 Wed 16:07]
-:PROPERTIES:
-:ID:       0acfba9f-08a3-4e8b-b625-2547e4837630
-:END:
-:LOGBOOK:
-- State "CANCELED"   from              [2022-12-28 Wed 16:07] \\
-  Not been used
-:END:
-#+BEGIN_SRC emacs-lisp
-  (add-to-list
-   'org-agenda-custom-commands
-
-   ;; Custom agenda to show agenda and todo for every note
-   `("n" "All TODO's in Notes"
-     ((alltodo ""
-               ((org-agenda-files `(,my/notes-directory)))))
-     nil))
-
-#+END_SRC
-
-*** CANCELED All Task in Emacs Config Directory
-:PROPERTIES:
-:ID:       0acfba9f-08a3-4e8b-b625-2547e4837630
-:END:
-#+BEGIN_SRC emacs-lisp :tangle no
-  (add-to-list
-   'org-agenda-custom-commands
-
-   ;; Custom agenda to show agenda and todo for every note
-   `("e" "All TODO's in Emacs Config Directory"
-     ((alltodo ""
-               ((org-agenda-files
-                `(,my/emacs-config-dir)))))
-     nil))
-
-#+END_SRC
-
-*** CANCELED Notes "Viagens" Agenda
-:PROPERTIES:
-:ID:       a7b76845-2081-4783-abea-1c507242f4f4
-:END:
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  (add-to-list
-   'org-agenda-custom-commands
-
-   ;; Custom agenda to show agenda and todo for every note
-   `("v" "'Viagens' Notes"
-     ((agenda ""
-              ((org-agenda-files
-                `(,(concat my/dropbox-folder "Notes/viagens.org")))))
-      (alltodo ""
-               ((org-agenda-files
-                 `(,(concat my/dropbox-folder "Notes/viagens.org"))))))
-     nil))
-#+END_SRC
-
-*** CANCELED NeuralMind
-CLOSED: [2022-12-28 Wed 15:46]
-:PROPERTIES:
-:ID:       c337e24a-4b90-4e46-be57-a8c7e071c311
-:END:
-:LOGBOOK:
-- State "CANCELED"   from              [2022-12-28 Wed 15:46] \\
-  Not been used
-:END:
-#+BEGIN_SRC emacs-lisp
-  (add-to-list
-   'org-agenda-custom-commands
-
-   '("l" "NeuralMind"
-     ((alltodo ""
-               ((org-agenda-files
-                 `(,(concat my/dropbox-folder "Notes/NeuralMind.org"))))))))
-#+END_SRC
-
-*** CANCELED Get Things Done
-CLOSED: [2022-12-28 Wed 15:49]
-:PROPERTIES:
-:ID:       9c99f396-cf8a-480c-bb8b-b6ec4635090c
-:END:
-:LOGBOOK:
-- State "CANCELED"   from              [2022-12-28 Wed 15:49] \\
-  not been used
-:END:
-
-**** CANCELED Weekly agenda
-CLOSED: [2023-03-20 Mon 11:47]
-:PROPERTIES:
-:ID:       ccccc04c-8e74-42c0-91ca-00a6058d7a25
-:END:
-:LOGBOOK:
-- State "CANCELED"   from              [2023-03-20 Mon 11:47]
-:END:
-#+BEGIN_SRC emacs-lisp
-  (defmacro my--create-agenda-custom-tags-todo (tag title)
-    "Create a tags todo custom agenda command to separate todos from each tag.
-  ELEMENTS must be a list of (tag, title) elements.
-  "
-    `(quote (tags-todo ,tag
-                ((org-agenda-overriding-header (concat ,title "\n"))
-                 (org-agenda-files
-                  `(,(concat my/dropbox-folder "Notes/Projetos.org")))))))
-
-  (add-to-list
-   'org-agenda-custom-commands
-
-   `("W" "Weekly Get Things Done"
-     ((agenda ""
-              ((org-agenda-overriding-header "\nAgenda\n")
-               (org-agenda-span 10)
-               (org-agenda-start-day "-1d")))
-
-      ,(my--create-agenda-custom-tags-todo "samia"    "Sâmia")
-      ,(my--create-agenda-custom-tags-todo "taperead" "Taperead")
-      ,(my--create-agenda-custom-tags-todo "emacs"    "Emacs")
-      ,(my--create-agenda-custom-tags-todo "pyinvest" "PyInvest")
-      ,(my--create-agenda-custom-tags-todo "gtd"      "Get Things Done")
-      ,(my--create-agenda-custom-tags-todo "alheios"  "Alheios")
-
-      )))
-#+END_SRC
-**** CANCELED Main agenda for GTD
-CLOSED: [2023-03-20 Mon 11:47]
-:PROPERTIES:
-:ID:       d983dcc5-113d-4474-abd1-4f1bcff71d50
-:END:
-:LOGBOOK:
-- State "CANCELED"   from              [2023-03-20 Mon 11:47]
-:END:
-#+BEGIN_SRC emacs-lisp
-  (add-to-list
-   'org-agenda-custom-commands
-
-   '("n" "Get Things Done"
-     (
-      (todo "TODO"
-            ((org-agenda-overriding-header "\nPlanejamento Semanal\n")
-             (org-agenda-files `(,my/week-plans-filename))))
-      (todo "WORKING"
-            ((org-agenda-overriding-header "\nPlanos Atuais\n")
-             (org-agenda-files `(,my/plans-filename))))
-      (todo "WORKING"
-            ((org-agenda-overriding-header "\nProjetos Atuais\n")
-             (org-agenda-files `(,my/projects-filename))))
-      (todo "WEEK"
-            ((org-agenda-overriding-header "\nAtividades Atuais\n")
-             (org-agenda-files `(,my/projects-filename))))
-      (todo ""
-            ((org-agenda-overriding-header "\nCaptures\n")
-             (org-agenda-files `(,my/gtd-inbox-filename))))
-      )))
-#+END_SRC
-** Agenda Highlight
-:PROPERTIES:
-:Created:  2023-11-27
-:END:
-
-#+begin_src emacs-lisp
-  (defun my--highlight-org-agenda ()
-    (highlight-lines-matching-regexp ":daily:" 'my/face-org-agenda-daily)
-    (highlight-lines-matching-regexp ":ImpDate:" 'my/face-org-agenda-important-dates)
-    (highlight-lines-matching-regexp ":OneTime:" 'my/face-org-agenda-one-time)
-    )
-
-  (add-hook 'org-agenda-finalize-hook #'my--highlight-org-agenda)
-#+end_src
-
-* Diary
+** Diary
 :PROPERTIES:
 :Created:  2022-05-11
+:CUSTOM_ID: customID-f12c0ca3-8841-4240-82e2-a79926847f72
 :END:
 
 #+BEGIN_SRC emacs-lisp
+
   (setq diary-file my/diary-filename)
 
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
+
   (setq org-agenda-include-diary t)
 
 #+END_SRC
 
-* Structure Templates
+** Structure Templates
 :PROPERTIES:
 :ID:       abdb3d61-d414-492b-bf87-d670c5f52d82
+:CUSTOM_ID: customID-abdb3d61-d414-492b-bf87-d670c5f52d82
 :END:
 
 Templates for source blocks
+
 #+BEGIN_SRC emacs-lisp
+
   (setq org-structure-template-alist nil)
 
   (setq org-structure-template-alist
@@ -522,40 +610,49 @@ Templates for source blocks
           ("s" . "src")
           ("t" . "text")
           ("v" . "verse")))
+
 #+END_SRC
 
-* Babel Load Languages
+** Babel Load Languages
 :PROPERTIES:
 :ID:       3187a406-3e9b-4ddb-839b-4385deca07f1
+:CUSTOM_ID: customID-3187a406-3e9b-4ddb-839b-4385deca07f1
 :END:
 
 Create Variable to hold all languages that I want to be enabled
 #+BEGIN_SRC emacs-lisp
+
   (defvar my/org-languages nil
     "List of languages enabled in Org Mode Blocks")
 
 #+END_SRC
 
-** Add support for Emacs Lisp
+*** Add support for Emacs Lisp
 :PROPERTIES:
 :ID:       e3868b22-706d-48c2-8545-5f79a16dfe30
+:CUSTOM_ID: customID-e3868b22-706d-48c2-8545-5f79a16dfe30
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   (add-to-list
    'my/org-languages
    '(emacs-lisp . t))
 
 #+END_SRC
 
-** Add support for Shell
+*** Add support for Shell
 :PROPERTIES:
 :ID:       81fa4906-c501-4377-aa4c-70e5fee03387
+:CUSTOM_ID: customID-81fa4906-c501-4377-aa4c-70e5fee03387
 :END:
 Shell has changed somehow and depending of your
 current `org-version' or `Emacs-version' it needs to load '(shell . t)
 or '(sh . t)
 https://emacs.stackexchange.com/questions/21366/should-i-have-removed-shell-t-to-clear-an-ob-shell-initialization-error/21368
+
 #+BEGIN_SRC emacs-lisp
+
   (let ((shell-list '(shell . t))
         (sh-list '(sh . t))
         (elem nil))
@@ -570,49 +667,62 @@ https://emacs.stackexchange.com/questions/21366/should-i-have-removed-shell-t-to
 
 #+END_SRC
 
-** Add support for Python
+*** Add support for Python
 :PROPERTIES:
 :ID:       933d309e-8a98-498c-a57f-a1fcc28b41f7
+:CUSTOM_ID: customID-933d309e-8a98-498c-a57f-a1fcc28b41f7
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   (add-to-list
    'my/org-languages
    '(python . t))
 
 #+END_SRC
 
-** Add support for Latex
+*** Add support for Latex
 :PROPERTIES:
 :ID:       b8b399fd-dcac-4b0b-9d85-9b35e2a29f5c
+:CUSTOM_ID: customID-b8b399fd-dcac-4b0b-9d85-9b35e2a29f5c
 :END:
 #+BEGIN_SRC emacs-lisp
+
   (add-to-list
    'my/org-languages
    '(latex . t))
 
 #+END_SRC
 
-** Effectively loads languages
+*** Effectively loads languages
 :PROPERTIES:
 :ID:       f8a20334-6856-448b-976e-dcd7a9f5ea5c
+:CUSTOM_ID: customID-f8a20334-6856-448b-976e-dcd7a9f5ea5c
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   ;; Support to languages in #-begin_src #end_src code
   (org-babel-do-load-languages
    'org-babel-load-languages
    my/org-languages)
+
 #+END_SRC
 
-* Functions
+** Custom Functions
 :PROPERTIES:
 :ID:       82c60e4e-7fc8-44bc-aa49-c947d43dc8b0
+:CUSTOM_ID: customID-82c60e4e-7fc8-44bc-aa49-c947d43dc8b0
 :END:
 
-** What to Do in This Week
+*** What to Do in This Week
 :PROPERTIES:
 :ID:       88aaa898-d7c3-4d43-ad8b-b51ca1e8145b
+:CUSTOM_ID: customID-88aaa898-d7c3-4d43-ad8b-b51ca1e8145b
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   (defun my-week-and-todo-list ()
       "Create a list of this week and todo items"
       (interactive)
@@ -625,13 +735,17 @@ https://emacs.stackexchange.com/questions/21366/should-i-have-removed-shell-t-to
 
       ;; Remove other windows so this is the only one visible
       (delete-other-windows))
+
 #+END_SRC
 
-** Update Org Timestamp
+*** Update Org Timestamp
 :PROPERTIES:
 :ID:       3a743891-504e-4e4d-941b-953fd05ccc6b
+:CUSTOM_ID: customID-3a743891-504e-4e4d-941b-953fd05ccc6b
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   (defun my-update-org-timestamp ()
     "Search for the string 'DATE-UPDATED' and chage the inactive
   timestamp after it."
@@ -666,11 +780,14 @@ https://emacs.stackexchange.com/questions/21366/should-i-have-removed-shell-t-to
 
 #+END_SRC
 
-** Add Ids to All Headings
+*** Add Ids to All Headings
 :PROPERTIES:
 :ID:       5ce021fa-2ef7-4232-ad68-b06c9bc71b85
+:CUSTOM_ID: customID-5ce021fa-2ef7-4232-ad68-b06c9bc71b85
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   (defun my-add-ids-to-all-headings ()
     "Insert ids to every heading in the file. If it already has one do nothing"
     (interactive)
@@ -681,15 +798,18 @@ https://emacs.stackexchange.com/questions/21366/should-i-have-removed-shell-t-to
 
 #+END_SRC
 
-** CANCELED Toggle Timestamp (Inactive to Active, vice versa)
+*** CANCELED Toggle Timestamp (Inactive to Active, vice versa)
 CLOSED: [2023-10-19 Thu 19:06]
 :PROPERTIES:
 :ID:       67c751e1-8e7a-4e38-af90-8201bea4de0e
+:CUSTOM_ID: customID-67c751e1-8e7a-4e38-af90-8201bea4de0e
 :END:
 :LOGBOOK:
 - State "CANCELED"   from              [2023-10-19 Thu 19:06]
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   (defun my-org-toggle-timestamp(beforeList afterList)
     "Toggle a time stamp to active and inactive, vice versa"
 
@@ -738,13 +858,17 @@ CLOSED: [2023-10-19 Thu 19:06]
     (interactive)
 
     (my-org-toggle-timestamp '("<" ">") '("[" "]")))
+
 #+END_SRC
 
-** Id Remove Entry
+*** Id Remove Entry
 :PROPERTIES:
 :ID:       c331d738-e710-46ae-aed1-11b5a9902c14
+:CUSTOM_ID: customID-c331d738-e710-46ae-aed1-11b5a9902c14
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   ;; https://emacs.stackexchange.com/questions/30303/how-to-remove-org-id-drawer-location-file-entry
   (defun org-id-remove-entry ()
   "Remove/delete the ID entry and update the databases.
@@ -755,20 +879,23 @@ CLOSED: [2023-10-19 Thu 19:06]
       (org-back-to-heading t)
       (when (org-entry-delete (point) "ID")
         (org-id-update-id-locations nil 'silent))))
+
 #+END_SRC
 
-** Style Current Text
+*** Style Current Text
 :PROPERTIES:
 :ID:       c2de9ca1-9ca8-4e99-a408-37d581a6c720
+:CUSTOM_ID: customID-c2de9ca1-9ca8-4e99-a408-37d581a6c720
 :END:
 
-*** Function to Get Begin and End Points
+**** Function to Get Begin and End Points
 :PROPERTIES:
 :ID:       4d9b080c-039b-4685-a03b-86cdfe2bb575
+:CUSTOM_ID: customID-4d9b080c-039b-4685-a03b-86cdfe2bb575
 :END:
 
-
 #+BEGIN_SRC emacs-lisp
+
   (defun my-begin-word-or-region ()
     "Get begin of WORD or REGION"
 
@@ -804,13 +931,17 @@ CLOSED: [2023-10-19 Thu 19:06]
 
         ;; Return point
         point-end)))
+
 #+END_SRC
 
-*** Function to Insert Char into Begin and End Point
+**** Function to Insert Char into Begin and End Point
 :PROPERTIES:
 :ID:       aed3fcdf-a49f-4d0e-b727-555fac20e6ba
+:CUSTOM_ID: customID-aed3fcdf-a49f-4d0e-b727-555fac20e6ba
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   (defun my-insert-string (begin end string)
     "Insert STRING in BEGIN and END point"
 
@@ -821,14 +952,17 @@ CLOSED: [2023-10-19 Thu 19:06]
 
     (goto-char begin)
     (insert string))
+
 #+END_SRC
 
-*** Italic
+**** Italic
 :PROPERTIES:
 :ID:       438050d9-4708-4e5a-9d0b-2a1aaa3dcbdb
+:CUSTOM_ID: customID-438050d9-4708-4e5a-9d0b-2a1aaa3dcbdb
 :END:
 
 #+BEGIN_SRC emacs-lisp
+
   (defun my-org-italic-current-text ()
     "Make current WORD or REGION italic"
     (interactive)
@@ -841,14 +975,17 @@ CLOSED: [2023-10-19 Thu 19:06]
             (point-end (my-end-word-or-region)))
 
         (my-insert-string point-begin point-end "/"))))
+
 #+END_SRC
 
-*** Bold
+**** Bold
 :PROPERTIES:
 :ID:       713b4d63-ff3a-479e-b884-70585d4e66f4
+:CUSTOM_ID: customID-713b4d63-ff3a-479e-b884-70585d4e66f4
 :END:
 
 #+BEGIN_SRC emacs-lisp
+
   (defun my-org-bold-current-text ()
     "Make current WORD or REGION bold"
     (interactive)
@@ -861,27 +998,33 @@ CLOSED: [2023-10-19 Thu 19:06]
             (point-end (my-end-word-or-region)))
 
         (my-insert-string point-begin point-end "*"))))
+
 #+END_SRC
 
-** Heading with IDs
+*** Heading with IDs
 :PROPERTIES:
 :Created:  2022-03-07
+:CUSTOM_ID: customID-60b83651-60fb-41bb-a3eb-334757d9f3ad
 :END:
 
 #+begin_src emacs-lisp
+
   (defun my/org-heading-with-id ()
     (interactive)
     (progn
       (org-insert-heading-respect-content)
       (org-id-get-create)))
+
 #+end_src
 
-** Get Plan Updates
+*** Get Plan Updates
 :PROPERTIES:
 :Created:  2023-11-15
+:CUSTOM_ID: customID-3ac816da-43e7-4c6d-8edf-020e05a32daa
 :END:
 
 #+begin_src emacs-lisp
+
   (defvar my/project-closed-timestamp "" "Hold headings' closed timestamp")
   (defvar my/project-update "" "Holds project update string")
 
@@ -926,76 +1069,279 @@ CLOSED: [2023-10-19 Thu 19:06]
     "Insert 'my--project-update' string"
     (interactive)
     (insert my/project-update))
+
 #+end_src
 
-* Hooks
+*** Set Heading Property Created
+:PROPERTIES:
+:Created:  2023-12-16
+:CUSTOM_ID: customID-d2f5c8bb-b47b-4046-a480-81b9a4488965
+:END:
+
+#+begin_src emacs-lisp
+
+(defun my/org-heading-creation ()
+  "Add property to tell when the heading was created"
+  (org-set-property "Created" (format-time-string "%Y-%m-%d")))
+
+#+end_src
+
+*** Set Heading Property Custom_ID
+:PROPERTIES:
+:Created:  2023-12-16
+:CUSTOM_ID: customID-6ca3f43a-29de-4b03-b1aa-b5c5c38347a2
+:END:
+
+#+begin_src emacs-lisp
+
+  ;;; my-org-custom-id Functions
+
+  (defun my-org-custom-id-all-headings ()
+    "Add CUSTOM_ID properties to all headlines in the
+     current file which do not already have one."
+    (interactive)
+    (org-map-entries (lambda () (my-org-custom-id-get-or-create (point)))))
+
+  (defun my-org-custom-id-get-or-create (&optional pom)
+    "Get or Create the CUSTOM_ID property of the entry at point-or-marker POM.
+
+     If POM is nil, refer to the entry at point."
+
+    (interactive)
+    (unless (my--org-custom-id-get (point))
+      (my--org-custom-id-create (point))))
+
+  ;;; Private Helper Functions
+
+  (defun my--org-custom-id-valid-p (custom-id)
+    "Condition to check if CUSTOM_ID is valid."
+    (and custom-id
+         (stringp custom-id)
+         ;; is not whitespace
+         (string-match "\\S-" custom-id)))
+
+  (defun my--org-custom-id-generate-id ()
+    "Generate id for CUSTOM_ID
+
+    If entry at point-or-marker already have an ID, use it to generate the new id."
+
+    (let ((prefix "customID-")
+          (custom-id (if-let ((id (org-entry-get nil "ID")))
+                         id
+                       (org-id-new))))
+      (concat prefix custom-id)))
+  
+
+  (defun my--org-custom-id-create (&optional pom)
+    "Creates the CUSTOM_ID property."
+
+    (org-with-point-at pom
+      (let ((custom-id (my--org-custom-id-generate-id)))
+        (org-entry-put pom "CUSTOM_ID" custom-id)
+        (org-id-add-location custom-id (buffer-file-name (buffer-base-buffer)))
+        custom-id)))
+
+  (defun my--org-custom-id-get (&optional pom)
+    "Get the CUSTOM_ID property of the entry at point-or-marker POM.
+
+     If POM is nil, refer to the entry at point.
+     If the entry does not have an CUSTOM_ID, the function returns nil. However, when
+     CREATE is non nil, create a CUSTOM_ID if none is present already.
+
+     In any case, the CUSTOM_ID of the entry is returned."
+
+    (org-with-point-at pom
+      (let ((custom-id (org-entry-get nil "CUSTOM_ID")))
+        (when (my--org-custom-id-valid-p custom-id)
+          custom-id))))
+
+#+end_src
+
+*** Set Heading Link by Custom_ID
+:PROPERTIES:
+:Created:  2023-12-16
+:CUSTOM_ID: customID-1dc2a24b-d826-4e7c-a952-d54e443afd9a
+:END:
+
+#+begin_src emacs-lisp
+
+  ;;; Link Custom Id Functions
+
+  (defun my-org-custom-link-to-headline ()
+    "Insert an internal link to a headline."
+
+    (interactive)
+    (let* ((headlines (my--org-custom-id-get-headlines))
+           (choice-key (completing-read "Headings: " headlines nil t))
+           (choice (assoc choice-key headlines))
+           (desc (read-string "Description: " choice-key)))
+
+      (org-insert-link buffer-file-name
+                       (my--org-custom-id-parse-link-location choice)
+                       desc)))
+
+  ;;; Link Custom Id Helper Functions
+
+  (defun my--org-custom-id-parse-link-location (HEADLINE-ALIST)
+    "Parse link location based on the given HEADLINE-ALIST"
+  
+    (let ((link-location (assoc :custom-id HEADLINE-ALIST)))
+      (concat "#" (cdr link-location))))
+
+
+  (defun my--org-custom-id-parse-headline (x)
+    "Parse Headline into a list of values.
+
+    Values needed: Title, ID, CUSTOM_ID."
+    (let ((title (plist-get (cadr x) :raw-value))
+          (id (plist-get (cadr x) :ID))
+          (custom-id (plist-get (cadr x) :CUSTOM_ID)))
+
+      `(,title ;; alist key
+        (:title . , title)
+        (:id . ,id)
+        (:custom-id . ,custom-id))))
+
+  (defun my--org-custom-id-get-headlines ()
+    "Run `my--org-custom-id-parse-headline` on current buffer headlines."
+
+    (org-element-map (org-element-parse-buffer) 'headline #'my--org-custom-id-parse-headline))
+#+end_src
+
+** Hooks
 :PROPERTIES:
 :ID:       97b4a8b1-8d0b-4f54-9c25-44439c58c3f9
+:CUSTOM_ID: customID-97b4a8b1-8d0b-4f54-9c25-44439c58c3f9
 :END:
+
 #+BEGIN_SRC emacs-lisp
-  (defun my-org-hook-function ()
-    "Check this file is an org file, is it is execute some functions"
-
-    ;; Add hook before save
-    (add-hook 'before-save-hook 'my-update-org-timestamp))
-
-  (defun my/org-heading-creation-date ()
-    "Add property to tell when the heading was created"
-    (org-set-property "Created" (format-time-string "%Y-%m-%d")))
-
-
   ;; Add hook to org mode
-  (add-hook 'org-mode-hook 'my-org-hook-function)
-  ;; (add-hook 'org-insert-heading-hook 'org-id-get-create)
-  (add-hook 'org-insert-heading-hook 'my/org-heading-creation-date)
-
   (add-hook 'org-mode-hook
-            ;; Create hook when org mode is enabled
-            (lambda()
-              (visual-line-mode t)
-              ))
+            (lambda ()  
+              (add-hook 'before-save-hook 
+                        (lambda ()
+                          (visual-line-mode t)
+                          (when (and (eq major-mode 'org-mode)
+                                     (eq buffer-read-only nil))
+                            (my-update-org-timestamp))))))
+
+
+  (add-hook 'org-insert-heading-hook 
+            (lambda ()
+              (my/org-heading-creation)))
 
 #+END_SRC
 
-* CANCELED Load Package: Org Contacts
-CLOSED: [2018-11-23 sex 21:51]
+** Export
 :PROPERTIES:
-:ID:       89910a66-0e0b-4e9d-a4da-61386dd74c51
+:ID:       a4a8d233-afea-4f30-98f2-0f5a18fde599
+:CUSTOM_ID: customID-a4a8d233-afea-4f30-98f2-0f5a18fde599
 :END:
-- State "DONE"       from "WORKING"    [2018-11-23 sex 21:51]
+
+*** LaTeX
+:PROPERTIES:
+:ID:       2281cf9c-e7b7-4201-83ef-9074a129825e
+:CUSTOM_ID: customID-2281cf9c-e7b7-4201-83ef-9074a129825e
+:END:
+
+LaTeX (/ˈlɑːtɛx/ LAH-tekh or /ˈleɪtɛx/ LAY-tekh; a shortening of
+Lamport TeX) is a document preparation system. The writer uses markup
+tagging conventions to define the general structure of a document
+(such as article, book, and letter), to stylist text throughout a
+document (such as bold and italics), and to add citations and
+cross-references. A TeX distribution such as TeX Live or MikTeX is
+used to produce an output file (such as PDF or DVI) suitable for
+printing or digital distribution. Within the typesetting system, its
+name is stylised as LaTeX.
+
+**** LaTeX Classes
+:PROPERTIES:
+:ID:       4a8759d5-6bc6-4ff3-bc80-0df0a84b72da
+:CUSTOM_ID: customID-4a8759d5-6bc6-4ff3-bc80-0df0a84b72da
+:END:
+
+Alist of LaTeX classes and associated header and structure. If #+LATEX_CLASS is
+set in the buffer, use its value and the associated information.
+
+#+BEGIN_SRC emacs-lisp :tangle no
+
+  (class-name
+   header-string
+   (numbered-section . unnumbered-section)
+   ...)
+
+#+END_SRC
+
+***** IEEE - Institute of Electrical and Electronics Engineers
+:PROPERTIES:
+:ID:       b67e1475-095d-4176-9a9e-d19d918f00be
+:CUSTOM_ID: customID-b67e1475-095d-4176-9a9e-d19d918f00be
+:END:
+
+https://journals.ieeeauthorcenter.ieee.org/create-your-ieee-article/authoring-tools-and-templates/ieee-article-templates/
 
 #+BEGIN_SRC emacs-lisp
-  (when (boundp 'org-contacts-files)
-    (setq (concat my/dropbox-folder "Contacts.org")))
+
+  (require 'ox-latex)
+  (with-eval-after-load 'ox-latex
+    (add-to-list 'org-latex-classes
+                 '("IEEEtran"
+                   "\\documentclass{IEEEtran}
+  [NO-DEFAULT-PACKAGES]
+  [PACKAGES]
+  [EXTRA]"
+                   ("\\section{%s}" . "\\section*{%s}")
+                   ("\\subsection{%s}" . "\\subsection*{%s}")
+                   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+
 #+END_SRC
 
-* Capture Templates
+** Capture Templates
 :PROPERTIES:
 :ID:       d860bf58-caf5-4869-b56b-f74a9150a38a
+:CUSTOM_ID: customID-d860bf58-caf5-4869-b56b-f74a9150a38a
 :END:
 
 Remove all capture templates.
+
 #+BEGIN_SRC emacs-lisp
+
   (setq org-capture-templates nil)
 
 #+END_SRC
 
-** Template Structure
+*** Automatically Bookmarks
 :PROPERTIES:
-:ID:       a9e7947a-772f-476d-8365-8a7b50acde28
+:ID:       a3e0c760-3e44-47a2-aea1-c24b41644235
+:CUSTOM_ID: customID-a3e0c760-3e44-47a2-aea1-c24b41644235
 :END:
 
-[[id:25a25f76-eb2c-4203-8a75-6a49751f0cc7][Capture Template Structures]]
+#+BEGIN_SRC emacs-lisp
 
-** CANCELED Contact Template
+  (setq org-capture-bookmark nil)
+  (setq org-bookmark-names-plist nil)
+
+#+END_SRC
+
+*** Custom Templates
+:PROPERTIES:
+:Created:  2023-12-16
+:CUSTOM_ID: customID-577dc83a-263c-494c-b01d-091031195741
+:END:
+**** CANCELED Contact Template
 CLOSED: [2023-03-20 Mon 18:10]
 :PROPERTIES:
 :ID:       fb54fa73-e4c7-4653-acd4-8357b9adb7bd
+:CUSTOM_ID: customID-fb54fa73-e4c7-4653-acd4-8357b9adb7bd
 :END:
 :LOGBOOK:
 - State "CANCELED"   from              [2023-03-20 Mon 18:10]
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   (let ((filename (concat my/dropbox-folder "Contacts.org"))
         (template "* %^{Nome}
   :PROPERTIES:
@@ -1015,16 +1361,18 @@ CLOSED: [2023-03-20 Mon 18:10]
 
 #+END_SRC
 
-** CANCELED Project Template
+**** CANCELED Project Template
 CLOSED: [2023-03-20 Mon 18:10]
 :PROPERTIES:
 :ID:       47c0325c-9ce4-4c35-b376-6836fab45957
+:CUSTOM_ID: customID-47c0325c-9ce4-4c35-b376-6836fab45957
 :END:
 :LOGBOOK:
 - State "CANCELED"   from              [2023-03-20 Mon 18:10]
 :END:
 
 #+BEGIN_SRC emacs-lisp
+
   (let ((filename (concat my/dropbox-folder "Notes/Projetos.org"))
         (template "* TODO %^{Project Idea}
   %T
@@ -1041,16 +1389,18 @@ CLOSED: [2023-03-20 Mon 18:10]
 
 #+END_SRC
 
-** CANCELED Conversa Template
+**** CANCELED Conversa Template
 CLOSED: [2023-03-20 Mon 18:10]
 :PROPERTIES:
 :ID:       7fb6d611-0a97-44d4-9d68-a0b5e80b59c9
+:CUSTOM_ID: customID-7fb6d611-0a97-44d4-9d68-a0b5e80b59c9
 :END:
 :LOGBOOK:
 - State "CANCELED"   from              [2023-03-20 Mon 18:10]
 :END:
 
 #+BEGIN_SRC emacs-lisp
+
   (let ((filename (concat my/dropbox-folder "Notes/Conversas.org"))
         (template "* Conversa: %<%Y-%m-%d>
   <%<%Y-%m-%d>>
@@ -1071,16 +1421,21 @@ CLOSED: [2023-03-20 Mon 18:10]
        (file ,filename)
        ,template
        :empty-lines 1)))
+
 #+END_SRC
-** CANCELED NeuralMind Template
+
+**** CANCELED NeuralMind Template
 CLOSED: [2023-03-20 Mon 18:10]
 :PROPERTIES:
 :ID:       0faee2d9-c51b-4164-99cc-e47b591b816d
+:CUSTOM_ID: customID-0faee2d9-c51b-4164-99cc-e47b591b816d
 :END:
 :LOGBOOK:
 - State "CANCELED"   from              [2023-03-20 Mon 18:10]
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   (let ((filename (concat my/dropbox-folder "Notes/NeuralMind.org"))
         (template (concat "* TODO NeuralMind: %^{Qualquer Coisa}"
                           "\n"
@@ -1091,12 +1446,17 @@ CLOSED: [2023-03-20 Mon 18:10]
        (file ,filename)
        ,template
        :empty-lines 1)))
+
 #+END_SRC
-** Get Things Done
+
+**** Get Things Done
 :PROPERTIES:
 :ID:       1479e75c-c88e-49a9-8c53-0b2306bd9bc3
+:CUSTOM_ID: customID-1479e75c-c88e-49a9-8c53-0b2306bd9bc3
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   (let ((filename my/gtd-inbox-filename)
         (template (concat "* %?\n"
                           ":LOGBOOK:\n"
@@ -1109,13 +1469,17 @@ CLOSED: [2023-03-20 Mon 18:10]
        (file ,filename)
        ,template
        :empty-lines 1)))
+
 #+END_SRC
-** Daily Diary
+
+**** Daily Diary
 :PROPERTIES:
 :Created:  2023-11-19
+:CUSTOM_ID: customID-e0a62c87-4e5f-47b0-b074-3c1b8e197e82
 :END:
 
 #+begin_src emacs-lisp
+
     (let ((filename my/daily-diary-filename)
           (template (concat "* %?\n"
                             "Logged on: %T\n"
@@ -1126,78 +1490,41 @@ CLOSED: [2023-03-20 Mon 18:10]
          (file+datetree ,filename)
          ,template
          :empty-lines 1)))
+
 #+end_src
-* Export
+
+* CANCELED Load Package: Org Contacts
+CLOSED: [2018-11-23 sex 21:51]
 :PROPERTIES:
-:ID:       a4a8d233-afea-4f30-98f2-0f5a18fde599
+:ID:       89910a66-0e0b-4e9d-a4da-61386dd74c51
+:CUSTOM_ID: customID-89910a66-0e0b-4e9d-a4da-61386dd74c51
 :END:
-
-** LaTeX
-:PROPERTIES:
-:ID:       2281cf9c-e7b7-4201-83ef-9074a129825e
-:END:
-
-LaTeX (/ˈlɑːtɛx/ LAH-tekh or /ˈleɪtɛx/ LAY-tekh; a shortening of
-Lamport TeX) is a document preparation system. The writer uses markup
-tagging conventions to define the general structure of a document
-(such as article, book, and letter), to stylist text throughout a
-document (such as bold and italics), and to add citations and
-cross-references. A TeX distribution such as TeX Live or MikTeX is
-used to produce an output file (such as PDF or DVI) suitable for
-printing or digital distribution. Within the typesetting system, its
-name is stylised as LaTeX.
-
-*** LaTeX Classes
-:PROPERTIES:
-:ID:       4a8759d5-6bc6-4ff3-bc80-0df0a84b72da
-:END:
-
-Alist of LaTeX classes and associated header and structure. If #+LATEX_CLASS is
-set in the buffer, use its value and the associated information.
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  (class-name
-   header-string
-   (numbered-section . unnumbered-section)
-   ...)
-#+END_SRC
-
-**** IEEE - Institute of Electrical and Electronics Engineers
-:PROPERTIES:
-:ID:       b67e1475-095d-4176-9a9e-d19d918f00be
-:END:
-
-https://journals.ieeeauthorcenter.ieee.org/create-your-ieee-article/authoring-tools-and-templates/ieee-article-templates/
+- State "DONE"       from "WORKING"    [2018-11-23 sex 21:51]
 
 #+BEGIN_SRC emacs-lisp
-  (require 'ox-latex)
-  (with-eval-after-load 'ox-latex
-    (add-to-list 'org-latex-classes
-                 '("IEEEtran"
-                   "\\documentclass{IEEEtran}
-  [NO-DEFAULT-PACKAGES]
-  [PACKAGES]
-  [EXTRA]"
-                   ("\\section{%s}" . "\\section*{%s}")
-                   ("\\subsection{%s}" . "\\subsection*{%s}")
-                   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+
+  (when (boundp 'org-contacts-files)
+    (setq (concat my/dropbox-folder "Contacts.org")))
+
 #+END_SRC
 
 * Key Map Definitions
 :PROPERTIES:
 :Created:  2022-03-07
+:CUSTOM_ID: customID-eee22f98-348d-4233-a0ff-d1ad448551cd
 :END:
 
 #+begin_src emacs-lisp
+
   (with-eval-after-load 'org
     (define-key org-mode-map (kbd "<C-return>") 'my/org-heading-with-id))
+
 #+end_src
 
 * Updates
 :PROPERTIES:
 :Created:  2023-10-19
+:CUSTOM_ID: customID-98b2fb55-4175-47ac-8d1a-112643eb3f5c
 :END:
 
 [2023-10-19 Thu]
@@ -1209,3 +1536,4 @@ https://journals.ieeeauthorcenter.ieee.org/create-your-ieee-article/authoring-to
 - Add Get Plan Updates function
 
 ==============================
+
