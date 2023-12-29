@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2023-12-16 Sat]
+#+DATE-UPDATED: [2023-12-29 Fri]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -56,11 +56,11 @@ Variables are in the file [[file:init-basicConfig.org]]
 
   (setq org-agenda-files nil)
 
-  (add-to-list 'org-agenda-files my/routine-filename)
-  (add-to-list 'org-agenda-files my/projects-filename)
-  (add-to-list 'org-agenda-files my/plans-filename)
-  (add-to-list 'org-agenda-files my/dates-filename)
-  (add-to-list 'org-agenda-files my/daily-diary-filename)
+  (add-to-list 'org-agenda-files my/notes-routine-filename)
+  (add-to-list 'org-agenda-files my/notes-projects-filename)
+  (add-to-list 'org-agenda-files my/notes-plans-filename)
+  (add-to-list 'org-agenda-files my/notes-dates-filename)
+  (add-to-list 'org-agenda-files my/notes-daily-diary-filename)
 
 #+END_SRC
 
@@ -156,10 +156,10 @@ Got the main idea from https://www.philnewton.net/blog/org-agenda-monthly-goals/
      (
       (tags "+PRIORITY=\"A\""
             ((org-agenda-overriding-header "Objetivos Primários para o ano")
-             (org-agenda-files `(,my/plans-filename))))
+             (org-agenda-files `(,my/notes-plans-filename))))
       (tags "+PRIORITY=\"C\""
             ((org-agenda-overriding-header "Objetivos Secundários para o ano")
-             (org-agenda-files `(,my/plans-filename))))
+             (org-agenda-files `(,my/notes-plans-filename))))
       (agenda ""
               ((org-agenda-span 10)
                (org-agenda-log-mode-items '(closed))
@@ -170,7 +170,7 @@ Got the main idea from https://www.philnewton.net/blog/org-agenda-monthly-goals/
              (org-agenda-files (my--get-list-working-projects))))
       (tags "gtd"
             ((org-agenda-overriding-header "\nCaptures\n")
-             (org-agenda-files `(,my/gtd-inbox-filename))))
+             (org-agenda-files `(,my/notes-gtd-inbox-filename))))
       )
      nil))
 
@@ -277,7 +277,7 @@ CLOSED: [2022-12-28 Wed 16:07]
    ;; Custom agenda to show agenda and todo for every note
    `("n" "All TODO's in Notes"
      ((alltodo ""
-               ((org-agenda-files `(,my/notes-directory)))))
+               ((org-agenda-files `(,my/config-notes-folder)))))
      nil))
 
 #+END_SRC
@@ -316,10 +316,10 @@ CLOSED: [2022-12-28 Wed 16:07]
    `("v" "'Viagens' Notes"
      ((agenda ""
               ((org-agenda-files
-                `(,(concat my/dropbox-folder "Notes/viagens.org")))))
+                `(,(concat my/config-dropbox-folder "Notes/viagens.org")))))
       (alltodo ""
                ((org-agenda-files
-                 `(,(concat my/dropbox-folder "Notes/viagens.org"))))))
+                 `(,(concat my/config-dropbox-folder "Notes/viagens.org"))))))
      nil))
 
 #+END_SRC
@@ -343,7 +343,7 @@ CLOSED: [2022-12-28 Wed 15:46]
    '("l" "NeuralMind"
      ((alltodo ""
                ((org-agenda-files
-                 `(,(concat my/dropbox-folder "Notes/NeuralMind.org"))))))))
+                 `(,(concat my/config-dropbox-folder "Notes/NeuralMind.org"))))))))
 
 #+END_SRC
 
@@ -377,7 +377,7 @@ CLOSED: [2023-03-20 Mon 11:47]
     `(quote (tags-todo ,tag
                 ((org-agenda-overriding-header (concat ,title "\n"))
                  (org-agenda-files
-                  `(,(concat my/dropbox-folder "Notes/Projetos.org")))))))
+                  `(,(concat my/config-dropbox-folder "Notes/Projetos.org")))))))
 
   (add-to-list
    'org-agenda-custom-commands
@@ -418,19 +418,19 @@ CLOSED: [2023-03-20 Mon 11:47]
      (
       (todo "TODO"
             ((org-agenda-overriding-header "\nPlanejamento Semanal\n")
-             (org-agenda-files `(,my/week-plans-filename))))
+             (org-agenda-files `(,my/notes-week-plans-filename))))
       (todo "WORKING"
             ((org-agenda-overriding-header "\nPlanos Atuais\n")
-             (org-agenda-files `(,my/plans-filename))))
+             (org-agenda-files `(,my/notes-plans-filename))))
       (todo "WORKING"
             ((org-agenda-overriding-header "\nProjetos Atuais\n")
-             (org-agenda-files `(,my/projects-filename))))
+             (org-agenda-files `(,my/notes-projects-filename))))
       (todo "WEEK"
             ((org-agenda-overriding-header "\nAtividades Atuais\n")
-             (org-agenda-files `(,my/projects-filename))))
+             (org-agenda-files `(,my/notes-projects-filename))))
       (todo ""
             ((org-agenda-overriding-header "\nCaptures\n")
-             (org-agenda-files `(,my/gtd-inbox-filename))))
+             (org-agenda-files `(,my/notes-gtd-inbox-filename))))
       )))
 
 #+END_SRC
@@ -473,7 +473,7 @@ CLOSED: [2023-03-20 Mon 11:47]
 
   ;; Change File which holds all IDs
   ;; (setq org-id-locations-file
-  ;;       (concat my/dropbox-folder ".org-id-location"))
+  ;;       (concat my/config-dropbox-folder ".org-id-location"))
 
 #+END_SRC
 
@@ -533,7 +533,7 @@ CLOSED: [2023-03-20 Mon 11:47]
 
   ;; Refile things to the Project file under Note or Task headings
   ;;(setq org-refile-targets
-  ;;      `((,(concat my/dropbox-folder "Notes/Projetos.org") :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")))
+  ;;      `((,(concat my/config-dropbox-folder "Notes/Projetos.org") :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")))
 
 #+END_SRC
 
@@ -543,7 +543,7 @@ CLOSED: [2023-03-20 Mon 11:47]
   ;;   "Refile to the archive file"
   ;;   (interactive)
   ;;   (let ((org-refile-targets
-  ;;          `((,(concat my/dropbox-folder "Notes/Projetos_archive.org")
+  ;;          `((,(concat my/config-dropbox-folder "Notes/Projetos_archive.org")
   ;;             :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")))
   ;;         (org-refile-history nil))
 
@@ -574,7 +574,7 @@ Set system's locale for time to be on English mode always.
 
 #+BEGIN_SRC emacs-lisp
 
-  (setq diary-file my/diary-filename)
+  (setq diary-file my/notes-diary-filename)
 
 #+END_SRC
 
@@ -1036,16 +1036,19 @@ CLOSED: [2023-10-19 Thu 19:06]
     Save the value in 'my--project-closed-timestamp'.
     "
     (setq my/project-closed-timestamp "")
-    (org-narrow-to-subtree)
-    (beginning-of-buffer)
-    (when (search-forward "CLOSED: " nil t nil)
-      (set-mark-command nil)
-      (end-of-line)
+    (save-excursion
+      (org-narrow-to-subtree)
+      (beginning-of-buffer)
+      (when (search-forward "CLOSED: " nil t nil)
+        (set-mark-command nil)
+        (end-of-line)
 
-      (let ((selection (buffer-substring-no-properties (region-beginning) (region-end))))
-        (setq my/project-closed-timestamp selection)))
+        (let ((selection (buffer-substring-no-properties (region-beginning) (region-end))))
+          (setq my/project-closed-timestamp selection))
 
-    (widen)  
+        (deactivate-mark))
+
+      (widen))
     my/project-closed-timestamp)
 
 
@@ -1060,15 +1063,15 @@ CLOSED: [2023-10-19 Thu 19:06]
            (closed-timestamp (my--org-get-closed-timestamp))
            (message-string (concat closed-timestamp " "
                                    "Proj: [[denote:" file-id "][" file-title "]] - "
-                                   heading-title
-                                   "\n")))
+                                   heading-title)))
       (setq my/project-update message-string)))
 
 
   (defun my-org-paste-plan-update-string ()
     "Insert 'my--project-update' string"
     (interactive)
-    (insert my/project-update))
+    (insert my/project-update)
+    (setq my/project-update ""))
 
 #+end_src
 
@@ -1208,6 +1211,42 @@ CLOSED: [2023-10-19 Thu 19:06]
     (org-element-map (org-element-parse-buffer) 'headline #'my--org-custom-id-parse-headline))
 #+end_src
 
+*** Update Project Plan Automatically
+:PROPERTIES:
+:Created:  2023-12-28
+:END:
+#+begin_src emacs-lisp
+
+  (defun my-plan-update-project ()
+    (interactive)
+
+    (save-excursion 
+      (my-org-get-plan-update-string)
+      (let ((plan-buffer (my--plan-open-project-plan-filename)))
+        (my--plan-update-heading plan-buffer))))
+
+  (defun my--plan-open-project-plan-filename ()
+    (save-excursion 
+      (with-current-buffer (buffer-name)
+        (beginning-of-buffer)
+        (when (search-forward "Plano" nil t nil)
+             (forward-word)
+             (org-open-at-point)
+             (buffer-name)))))
+
+  (defun my--plan-update-heading (plan-buffer)
+    (when plan-buffer
+      (with-current-buffer (get-buffer-create plan-buffer)
+        (beginning-of-buffer)
+        (org-next-visible-heading 1)
+        (org-narrow-to-subtree)
+        (end-of-buffer)
+        (newline)
+        (my-org-paste-plan-update-string)
+        (widen))))
+
+#+end_src
+
 ** Hooks
 :PROPERTIES:
 :ID:       97b4a8b1-8d0b-4f54-9c25-44439c58c3f9
@@ -1342,7 +1381,7 @@ CLOSED: [2023-03-20 Mon 18:10]
 
 #+BEGIN_SRC emacs-lisp
 
-  (let ((filename (concat my/dropbox-folder "Contacts.org"))
+  (let ((filename (concat my/config-dropbox-folder "Contacts.org"))
         (template "* %^{Nome}
   :PROPERTIES:
   :EMAIL: %^{Email}
@@ -1373,7 +1412,7 @@ CLOSED: [2023-03-20 Mon 18:10]
 
 #+BEGIN_SRC emacs-lisp
 
-  (let ((filename (concat my/dropbox-folder "Notes/Projetos.org"))
+  (let ((filename (concat my/config-dropbox-folder "Notes/Projetos.org"))
         (template "* TODO %^{Project Idea}
   %T
   %a
@@ -1401,7 +1440,7 @@ CLOSED: [2023-03-20 Mon 18:10]
 
 #+BEGIN_SRC emacs-lisp
 
-  (let ((filename (concat my/dropbox-folder "Notes/Conversas.org"))
+  (let ((filename (concat my/config-dropbox-folder "Notes/Conversas.org"))
         (template "* Conversa: %<%Y-%m-%d>
   <%<%Y-%m-%d>>
 
@@ -1436,7 +1475,7 @@ CLOSED: [2023-03-20 Mon 18:10]
 
 #+BEGIN_SRC emacs-lisp
 
-  (let ((filename (concat my/dropbox-folder "Notes/NeuralMind.org"))
+  (let ((filename (concat my/config-dropbox-folder "Notes/NeuralMind.org"))
         (template (concat "* TODO NeuralMind: %^{Qualquer Coisa}"
                           "\n"
                           " ")))
@@ -1457,7 +1496,7 @@ CLOSED: [2023-03-20 Mon 18:10]
 
 #+BEGIN_SRC emacs-lisp
 
-  (let ((filename my/gtd-inbox-filename)
+  (let ((filename my/notes-gtd-inbox-filename)
         (template (concat "* %?\n"
                           ":LOGBOOK:\n"
                           "Created on %U\n"
@@ -1480,7 +1519,7 @@ CLOSED: [2023-03-20 Mon 18:10]
 
 #+begin_src emacs-lisp
 
-    (let ((filename my/daily-diary-filename)
+    (let ((filename my/notes-daily-diary-filename)
           (template (concat "* %?\n"
                             "Logged on: %T\n"
                             "%i\n")))
@@ -1504,7 +1543,7 @@ CLOSED: [2018-11-23 sex 21:51]
 #+BEGIN_SRC emacs-lisp
 
   (when (boundp 'org-contacts-files)
-    (setq (concat my/dropbox-folder "Contacts.org")))
+    (setq (concat my/config-dropbox-folder "Contacts.org")))
 
 #+END_SRC
 

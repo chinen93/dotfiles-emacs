@@ -1,7 +1,7 @@
 #+TITLE:        Spelling Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2023-12-06 Wed]
-#+DATE-UPDATED: [2023-12-06 Wed]
+#+DATE-UPDATED: [2023-12-27 Wed]
 
 * CANCELED Flycheck
 :PROPERTIES:
@@ -79,7 +79,7 @@ Set the default dictionary to be used.
 #+BEGIN_SRC emacs-lisp
   (require 'init-basicConfig)
 
-  (defvar my/personal-directory (concat my/dropbox-folder "emacs-dictionary")
+  (defvar my/personal-directory (concat my/config-dropbox-folder "emacs-dictionary")
     "Personal directory location for Spell Checking")
 
   (setq ispell-personal-dictionary my/personal-directory)

@@ -1,17 +1,19 @@
 #+TITLE:        Custom Functions Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2023-12-11 Mon]
+#+DATE-UPDATED: [2023-12-27 Wed]
 
 * Functions from Internet
 :PROPERTIES:
 :ID:       985d140b-eca1-4397-9e3c-71543075a4d4
 :END:
 ** Clean Buffer
+
 :PROPERTIES:
 :ID:       bf95cbf3-c7da-4d1c-a9a7-6c08235855aa
 :END:
 #+BEGIN_SRC emacs-lisp
+
   (defun user--clean-buffer ()
     "Cleans the buffer by re-indenting, changing tabs to spaces, and removing trailing whitespace."
     (interactive)
@@ -25,13 +27,16 @@
 
     ;; Turn tabs into spaces
     (untabify (point-min) (point-max)))
+
 #+END_SRC
 
 ** Endless Fill or Unfill
 :PROPERTIES:
 :ID:       57cc1ea5-2d58-494d-bcd9-2485647ed20e
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   ;; URL: http://endlessparentheses.com/fill-and-unfill-paragraphs-with-a-single-key.html?source=rss
   (defun endless-fill-or-unfill ()
     "Like `fill-paragraph', but unfill if used twice."
@@ -49,13 +54,16 @@
              fill-column)))
       ;; Call fill-paragraph, because it uses fill-column
       (call-interactively #'fill-paragraph)))
+
 #+END_SRC
 
 ** Help Measure Time of Execution of Body
 :PROPERTIES:
 :ID:       75b07b42-571a-4c13-bbfa-ae5facb130ff
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   (defmacro help/measure-time (&rest body)
     "Measure the time it takes to evaluate BODY.
 
@@ -63,13 +71,16 @@
     `(let ((time (current-time)))
        ,@body
        (message "%.06f" (float-time (time-since time)))))
+
 #+END_SRC
 
 ** Lunaryorn Rename File and Buffer
 :PROPERTIES:
 :ID:       0a16883e-caec-43c9-bd33-980062961c45
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   (defun lunaryorn-rename-file-and-buffer ()
     "Rename the current file and buffer."
     (interactive)
@@ -84,13 +95,16 @@
        (t
         (rename-file filename new-name 'force-overwrite)
         (set-visited-file-name new-name 'no-query 'along-with-file)))))
+
 #+END_SRC
 
 ** Narrow or Widen dwin
 :PROPERTIES:
 :ID:       f00c2a20-0367-41d7-a2d9-db61185a39a9
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   (defun narrow-or-widen-dwim (p)
     "If the buffer is narrowed, it widens. Otherwise, it narrows intelligently.
    Intelligently means: region, subtree, or defun, whichever applies
@@ -146,13 +160,16 @@
         (message "This is already an Indirect Buffer!")
       (my-indirect-buffer)
       (call-interactively #'narrow-or-widen-dwim)))
+
 #+END_SRC
 
 ** Xah Cut Line or Region
 :PROPERTIES:
 :ID:       01659420-a2e6-4dc3-a8f2-ab9b5a72313d
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   (defun xah-cut-line-or-region ()
       "Cut current line, or text selection.
        When `universal-argument' is called first,
@@ -210,13 +227,16 @@
 
              ;; end of line
              (line-end-position))))))
+
 #+END_SRC
 
 ** Xah New Empty Buffer
 :PROPERTIES:
 :ID:       5ca2b3f0-bcc7-4d59-b644-224ca8be878a
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   ;; URL: http://ergoemacs.org/emacs/emacs_new_empty_buffer.html
   (defun xah-new-empty-buffer ()
     "Open a new empty buffer."
@@ -243,13 +263,16 @@
 
       ;; set variable buffer-other-save 't'
       (setq buffer-other-save t)))
+
 #+END_SRC
 
 ** Xah Open in External App
 :PROPERTIES:
 :ID:       209c7f8f-c3d5-4deb-bcbc-caa347eec7df
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   (defun xah-open-in-external-app ()
     "Open the current file or dired marked files in external app.
    The app is chosen from your OS's preference.
@@ -278,6 +301,7 @@
           (mapc
            (lambda ($fpath) (let ((process-connection-type nil))
                               (start-process "" nil "xdg-open" $fpath))) $file-list))))))
+
 #+END_SRC
 
 ** Xah Open in Terminal
@@ -286,6 +310,7 @@
 :END:
 
 #+BEGIN_SRC emacs-lisp
+
   (defun xah-open-in-terminal ()
     "Open the current dir in a new terminal window.
    URL `http://ergoemacs.org/emacs/emacs_dired_open_file_in_ext_apps.html'
@@ -302,6 +327,7 @@
         (start-process "" nil "gnome-terminal"
                        (concat "--working-directory="
                                (expand-file-name default-directory)) )))))
+
 #+END_SRC
 
 ** Isamert Toggle side daily buffer
@@ -310,6 +336,7 @@
 :END:
 
 #+BEGIN_SRC emacs-lisp
+
 (defun isamert/toggle-side-bullet-org-buffer ()
   "Toggle `bullet.org` in a side buffer for quick note taking.  The buffer is opened in side window so it can't be accidentaly removed."
   (interactive)
@@ -347,6 +374,7 @@
      (save-window-excursion
        (find-file file-path)
        (current-buffer))))))
+
 #+END_SRC
 
 * My Functions
@@ -358,7 +386,9 @@
 :PROPERTIES:
 :ID:       a3f9001c-330c-4347-83cc-97110a8f4413
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   (defun my-open-file-explorer ()
     "Open current directory in the file explorer"
     (interactive)
@@ -372,7 +402,9 @@
 :PROPERTIES:
 :ID:       879adb21-70ec-4a72-833b-262250a1bff3
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   (defun my-sort-org-headings ()
     "Sort subtree of an org file as Alfabetical and TODO keyword order"
     (interactive)
@@ -392,6 +424,7 @@
 
         ;; Sort entries by todo keyword order
         (org-sort-entries nil ?o nil nil nil t))))
+
 #+END_SRC
 
 ** Update Org Ids
@@ -400,8 +433,9 @@
 :END:
 
 #+BEGIN_SRC emacs-lisp
+
   (defvar my/org-directories
-    `(,my/emacs-config-dir ,my/notes-directory ,my/dropbox-folder)
+    `(,my/emacs-config-dir ,my/config-notes-folder ,my/config-dropbox-folder)
     "Directories where exist important Org Modes files that need to
   have its IDs known")
 
@@ -420,13 +454,16 @@
 
       ;; Consume the list updating every ID
       (org-id-update-id-locations org-files)))
+
 #+END_SRC
 
 ** Pick date with Org
 :PROPERTIES:
 :ID:       2ab262c3-eaa3-4ff0-88e5-1a01c1bdb26f
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   (defun my-org-pick-date (&optional separator)
     "Pick a date with org function and them put the SEPARATOR."
 
@@ -441,7 +478,9 @@
 :PROPERTIES:
 :ID:       73fc7bf8-14ae-47ba-88da-c84d3db22265
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   (defun my-goto-random-line ()
     "Put cursor in a random line in the current file."
     (interactive)
@@ -450,6 +489,7 @@
 
       (with-no-warnings
         (goto-line line))))
+
 #+END_SRC
 
 * Provide File

@@ -1,9 +1,9 @@
 #+TITLE:        Navigation Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2023-12-06 Wed]
-#+DATE-UPDATED: [2023-12-06 Wed]
+#+DATE-UPDATED: [2023-12-26 Tue]
 
-* Packagxe: iBuffer
+* Package: iBuffer
 :PROPERTIES:
 :Created:  2023-12-06
 :END:
@@ -50,6 +50,7 @@
 :END:
 
 #+BEGIN_SRC emacs-lisp
+
   (defun ajv/human-readable-file-sizes-to-bytes (string)
     "Convert a human-readable file size into bytes."
     (interactive)
@@ -154,6 +155,18 @@ Load the saved groups
             '(lambda ()
                (ibuffer-switch-to-saved-filter-groups "Home")))
 #+END_SRC
+
+* Keybindings
+:PROPERTIES:
+:Created:  2023-12-26
+:END:
+
+#+begin_src emacs-lisp
+
+(define-mykeymap-key "M-v b" 'ibuffer)
+
+#+end_src
+
 * Provide File
 :PROPERTIES:
 :ID:       0a01efe1-3948-4017-b344-38ecef7b2a48

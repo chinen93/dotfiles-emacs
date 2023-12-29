@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2023-12-13 Wed]
+#+DATE-UPDATED: [2023-12-29 Fri]
 
 Emacs has a lot of keybindings, and I can't remember every one of
 them. For example each key in the keyboard is related to a command, if
@@ -57,13 +57,13 @@ some configurations on top of it.
   ;;; Hydra launcher BEGIN
   (defhydra hydra-launcher (:color amaranth :hint nil)
     "
-     ^Functions^         ^Favorites  ^      ^Hydra Menus^
-    -^---------^---------^-----------^------^-----------^---
-     _V_: Bookmark Set   _b_: iBuffer       _f_: Functions
-     _c_: Capture        _v_: Bookmarks     _y_: YASnippet
-     _w_: Whitespace     _g_: Magit         _s_: Other Menus
-     _d_: Denote         _m_: Agenda        _D_: Denote Menu
-     _n_: Elgrep Notes   
+     ^Functions^         ^Favorites  ^
+    -^---------^---------^-----------^--
+     _V_: Bookmark Set   _b_: iBuffer
+     _c_: Capture        _v_: Bookmarks
+     _w_: Whitespace     _g_: Magit
+     _d_: Denote         _m_: Agenda
+     _n_: Elgrep Notes
 
      _e_: Hydra Context
 
@@ -81,12 +81,6 @@ some configurations on top of it.
     ("g" magit-status :color blue)
     ("v" bookmark-bmenu-list :color blue)
     ("m" org-agenda :color blue)
-
-    ;; Hydras Menus
-    ("f" hydra-functions/body :color blue)
-    ("y" hydra-yasnippet/body :color blue)
-    ("s" hydra-other-hydras-menus/body :color blue)
-    ("D" hydra-denote/body :color blue)
 
     ("e" hydra-context-launcher :color blue)
 
@@ -110,23 +104,6 @@ some configurations on top of it.
 #+END_SRC
 
 * Hydras Menus
-
-#+begin_src emacs-lisp
-
-  (defhydra hydra-other-hydras-menus (:color blue :columns 4)
-
-      ("(" hydra-macro/body "Macros" :color blue)
-      ("z" hydra-zoom/body "Zoom" :color blue)
-      ("N" hydra-narrow-widen/body "Narrow/Widen" :color blue)
-      ("n" hydra-narrow-widen/body "Narrow/Widen" :color blue)
-      ("h" hydra-help/body "Help" :color blue)
-      ("r" hydra-rectangle/body "Rectangle" :color blue)
-      ("F" hydra-flycheck/body "FlyCheck" :color blue)
-      ("L" hydra-math/body "Math Symbols" :color blue)
-
-      ("q" nil "cancel" :color blue))
-
-#+end_src
 
 ** Narrow Widen Indirect Buffer
 :PROPERTIES:
@@ -616,6 +593,66 @@ Hydra to easily insert greek letter and others math notations.
 
 #+end_src
 
+** Bookmark
+:PROPERTIES:
+:Created:  2023-12-26
+:END:
+
+#+begin_src emacs-lisp
+
+  (defhydra hydra-bookmark (:color blue :hint nil)
+    "
+       ^Bookmark^      
+      ^-^--------------
+      _l_: Bookmarks List 
+      _L_: Bookmark Set
+
+    "
+    ;; Base Bookmark Heads
+    ("l" bookmark-bmenu-list)
+    ("L" bookmark-set)
+
+    ("q" nil "cancel" :color blue))
+
+#+end_src
+
+** Personal Directories and Files
+:PROPERTIES:
+:Created:  2023-12-26
+:END:
+
+#+begin_src emacs-lisp
+
+  (defhydra hydra-personal-files (:color blue :hint nil)
+    "
+       ^Reviews^               ^Emacs Dir^     ^Important Files^
+      ^-^---------------------^-^-------------^-^---------------------------
+      _d_: Daily Workflow     _C_: Configs    _P_: Plans
+      _w_: Weekly Workflow    _S_: Snippets   _p_: Projects
+      _m_: Monthly Workflow   ^ ^             _g_: Get Things Done Inbox
+      _r_: Review File
+
+    "
+
+    ;; Review Heads
+    ("d" (find-file my/daily-workflow)) 
+    ("w" (find-file my/weekly-workflow)) 
+    ("m" (find-file my/monthly-workflow)) 
+    ("r" (find-file my/review-file)) 
+
+    ;; Emacs Dir Heads
+    ("C" (find-file my/emacs-config-dir)) 
+    ("S" (find-file my/snippets-folder))
+
+    ;; Important Files Heads
+    ("p" (find-file my/notes-plans-filename))
+    ("P" (find-file my/notes-projects-filename))
+    ("g" (find-file my/notes-gtd-inbox-filename))
+
+    ("q" nil "cancel" :color blue))
+
+#+end_src
+
 * Context Hydra
 :PROPERTIES:
 :ID:       ca1c9c51-872d-418e-bedb-ed3c278931ab
@@ -703,15 +740,13 @@ Hydra to easily insert greek letter and others math notations.
     ---------------------------------------------------------
      _t_: TODO keyword    _U_: active       _d_: Updates
      _r_: Refile          _I_: inactive
-     _p_: Get Plan Upd    _O_: range
-     _P_: Paste Plan Upd
+     _P_: Plan Update     _O_: range
     "
 
     ;; Functions
     ("t" org-todo :color blue)
     ("r" org-refile :color blue)
-    ("p" (my-org-get-plan-update-string) :color blue)
-    ("P" (my-org-paste-plan-update-string) :color blue)
+    ("P" my-plan-update-project :color blue)
 
     ;; Timestamp
     ("U" org-time-stamp :color blue)
@@ -820,10 +855,20 @@ Hydra to easily insert greek letter and others math notations.
 
 #+begin_src emacs-lisp
 
-  (when (boundp 'my/keymap)
-    (define-key my/keymap (kbd "M-q") 'hydra-launcher/body)
+  (define-mykeymap-key "M-q" 'hydra-launcher/body)
 
-    (message "Keybindings for Hydra loaded "))
+  (define-mykeymap-key "M-v h F" 'hydra-flycheck/body)
+  (define-mykeymap-key "M-v h M" 'hydra-math/body)
+  (define-mykeymap-key "M-v h b" 'hydra-bookmark/body)
+  (define-mykeymap-key "M-v h d" 'hydra-denote/body)
+  (define-mykeymap-key "M-v h f" 'hydra-functions/body)
+  (define-mykeymap-key "M-v h p" 'hydra-personal-files/body)
+  (define-mykeymap-key "M-v h h" 'hydra-help/body)
+  (define-mykeymap-key "M-v h m" 'hydra-macro/body)
+  (define-mykeymap-key "M-v h n" 'hydra-narrow-widen/body)
+  (define-mykeymap-key "M-v h r" 'hydra-rectangle/body)
+  (define-mykeymap-key "M-v h y" 'hydra-yasnippet/body)
+  (define-mykeymap-key "M-v h z" 'hydra-zoom/body)
 
 #+end_src
 
@@ -846,5 +891,12 @@ Hydra to easily insert greek letter and others math notations.
 [2023-10-27 Fri]
 - Add function open metanotes to denote hydra
 - Add denote add missing links to denote hydra
+
+==============================
+
+[2023-12-26 Tue]
+- Change keybindings to mykeymap instead of hydra inside hydra
+- Add bookmark hydra
+- Add personal hydra
 
 ==============================

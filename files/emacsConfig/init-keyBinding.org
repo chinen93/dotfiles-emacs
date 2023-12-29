@@ -1,7 +1,7 @@
 #+TITLE:        Global KeyBinding Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2023-12-09 Sat]
+#+DATE-UPDATED: [2023-12-25 Mon]
 
 * My Keymap
 :PROPERTIES:
@@ -17,21 +17,44 @@ keybindings consistent throughout Emacs.
 
 #+END_SRC
 
-** New Prefix Command: C-v M-v
+** New Prefix Command: C-v or M-v
 :PROPERTIES:
 :ID:       a1dfa7f8-27d3-4282-aab1-6ae0288e3188
 :END:
 
 #+BEGIN_SRC emacs-lisp
+
   ;;;; Define new prefix command
   (define-prefix-command 'my-prefix-command)
   (define-key my/keymap (kbd "C-v") 'my-prefix-command)
   (define-key my/keymap (kbd "M-v") 'my-prefix-command)
 
-  ;;;; Key binding using my prefix command
-  (define-key my/keymap (kbd "M-v M-f") 'find-file)
-
 #+END_SRC
+
+*** Macro to Add Key to My Keymap
+:PROPERTIES:
+:Created:  2023-12-25
+:END:
+
+#+begin_src emacs-lisp
+
+  (defmacro define-mykeymap-key (key function)
+    `(when (boundp 'my/keymap)
+       (define-key my/keymap (kbd ,key) ,function)))
+
+#+end_src
+
+** Add Initial Functions to Keymap
+:PROPERTIES:
+:Created:  2023-12-25
+:END:
+
+#+begin_src emacs-lisp
+
+  ;;;; Key binding using my prefix command
+  (define-mykeymap-key '"M-v M-f" 'find-file)
+
+#+end_src
 
 ** Minor Mode
 :PROPERTIES:

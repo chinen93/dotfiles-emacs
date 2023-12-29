@@ -1,9 +1,9 @@
 #+TITLE:        Evil Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2023-12-09 Sat]
-#+DATE-UPDATED: [2023-12-11 Mon]
+#+DATE-UPDATED: [2023-12-25 Mon]
 
-* Package: General
+* CANCELED Package: General
 :PROPERTIES:
 :Created:  2023-12-09
 :END:
@@ -19,7 +19,7 @@
 
 #+end_src
 
-** Leader Key as Space
+** CANCELED Leader Key as Space
 :PROPERTIES:
 :Created:  2023-12-09
 :END:
@@ -43,7 +43,7 @@
 
 #+end_src
 
-* Package: Evil
+* CANCELED Package: Evil
 :PROPERTIES:
 :Created:  2023-12-09
 :END:
@@ -65,7 +65,7 @@
 
 #+end_src
 
-** Change Default Keybindings
+** CANCELED Change Default Keybindings
 :PROPERTIES:
 :Created:  2023-12-09
 :END:
@@ -79,7 +79,7 @@
 
 #+end_src
 
-** Change States on Mode Line
+** CANCELED Change States on Mode Line
 :PROPERTIES:
 :Created:  2023-12-09
 :END:
@@ -120,12 +120,12 @@
 
 #+end_src
 
-* Other Modes Configurations
+* CANCELED Other Modes Configurations
 :PROPERTIES:
 :Created:  2023-12-09
 :END:
 
-** Orgmode
+** CANCELED Orgmode
 :PROPERTIES:
 :Created:  2023-12-09
 :END:

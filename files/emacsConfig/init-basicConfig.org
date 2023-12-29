@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2023-12-07 Thu]
+#+DATE-UPDATED: [2023-12-27 Wed]
 
 It doesn't need any external package. Just pure Elisp.
 
@@ -22,61 +22,109 @@ It doesn't need any external package. Just pure Elisp.
 - State "WORKING"    from "TODO"       [2019-05-16 qui 13:57]
 :END:
 
+#+begin_src emacs-lisp
+
+  (defmacro my-defvar (symbol filename description)
+    "Do some checks before creating the variable"
+
+    `(my--defvar-check-filename ,filename)
+
+    `(defvar ,symbol ,filename ,description))
+
+  ;;; Private Functions
+
+  (defun my--defvar-check-filename (filename)
+    "Checks if filename is exists"
+
+    (when (not (file-exists-p filename))
+      (throw 'file-does-not-exists filename)))
+
+#+end_src
+
 ** Base Paths
 :PROPERTIES:
 :Created:  2023-10-04
 :END:
 Creation of home folder and derivates from it
 #+BEGIN_SRC emacs-lisp
-  (defvar my/home-folder "~/"
-    "Path to Home Folder")
 
-  (unless (boundp 'my/emacs-config-dir)
-    (defvar my/emacs-config-dir (concat my/home-folder "emacsConfig")
-      "Path to Emacs Configuration Folder"))
+  (my-defvar my/config-home-folder
+             "~/"
+             "Path to Home Folder")
 
-  (unless (boundp 'my/emacs-font-folder)
-    (defvar my/emacs-font-folder (concat my/home-folder "emacsFonts")
-      "Path to Emacs Font Folder"))
+  (my-defvar my/config-emacs.d-folder
+             (concat my/config-home-folder ".emacs.d/") 
+             "Path to .emacs.d/ Folder")
 
-  (defvar my/snippets-folder (concat my/home-folder "emacsSnippets")
-    "Path to Snippets Folder")
-
-  (if (not (eq system-type 'windows-nt))
-      (defvar my/dropbox-folder (concat my/home-folder "Dropbox/")
-        "Path to Dropbox Folder")
-
-    ;; Windows's dropbox folder
-    (defvar my/dropbox-folder (substitute-in-file-name  "$HOMEPATH/Pedro/Dropbox/")
-        "Path to Dropbox Folder"))
-
-  (defvar my/notes-directory (concat my/dropbox-folder "Notes/")
-    "Notes base directory")
-
-  (defvar my/blog-directory (concat my/notes-directory "Blog/")
-    "Blog base directory")
-
-  (defvar my/emacs.d-folder (concat my/home-folder ".emacs.d/") 
-    "Path to .emacs.d/ Folder")
 #+END_SRC
 
-** Bookmark and Backups
+*** Dropbox
+:PROPERTIES:
+:Created:  2023-12-27
+:END:
+
+#+begin_src emacs-lisp
+
+  (if (not (eq system-type 'windows-nt))
+      (my-defvar my/config-dropbox-folder
+                 (concat my/config-home-folder "Dropbox/")
+                 "Path to Dropbox Folder")
+    ;; Windows's dropbox folder
+    (my-defvar my/config-dropbox-folder
+               (substitute-in-file-name  "$HOMEPATH/Pedro/Dropbox/")
+               "Path to Dropbox Folder"))
+
+  (my-defvar my/config-notes-folder
+             (concat my/config-dropbox-folder "Notes/")
+             "path to Notes Folder")
+
+#+end_src
+
+*** Emacs
+:PROPERTIES:
+:Created:  2023-12-27
+:END:
+
+#+begin_src emacs-lisp
+
+  (my-defvar my/emacs-config-dir
+             (concat my/config-home-folder "emacsConfig")
+             "Path to Emacs Configuration Folder")
+
+  (my-defvar my/emacs-font-folder
+             (concat my/config-home-folder "emacsFonts")
+             "Path to Emacs Font Folder")
+
+  (my-defvar my/snippets-folder
+             (concat my/config-home-folder "emacsSnipet")
+             "Path to Emacs Snippet Folder")
+
+#+end_src
+
+**** Bookmark and Backups
 :PROPERTIES:
 :Created:  2023-10-04
 :END:
 Creation of folders derivated from dropbox/
 #+BEGIN_SRC emacs-lisp
-  (defvar my/bookmark-file (concat my/dropbox-folder "emacsBookmark.el")
-    "Path to Bookmark File")
+
+  (my-defvar my/bookmark-file
+             (concat my/config-dropbox-folder "emacsBookmark.el")
+             "Path to Bookmark File")
+
 #+END_SRC
 
 Creation of folders derivated from .emacs.d/
 #+BEGIN_SRC emacs-lisp
-  (defvar my/backup-folder (concat my/emacs.d-folder "backups")
-    "Path to Backup Folder")
 
-  (defvar my/auto-save-folder (concat my/emacs.d-folder "auto-save-list")
-    "Path to Auto Save Folder")
+  (my-defvar my/backup-folder
+             (concat my/config-emacs.d-folder "backups")
+             "Path to Backup Folder")
+
+  (my-defvar my/auto-save-folder
+             (concat my/config-emacs.d-folder "auto-save-list")
+             "Path to Auto Save Folder")
+
 #+END_SRC
 
 ** Organizations Files
@@ -84,55 +132,47 @@ Creation of folders derivated from .emacs.d/
 :Created:  2023-10-04
 :END:
 Creation of Organization files
+
 #+begin_src emacs-lisp
-  (defvar my/plans-filename
-    (let ((filename (concat my/notes-directory "20230630T180038--planos__planos_metanote.org")))
-      (if (file-exists-p filename)
-          filename
-        nil)))
 
-  (defvar my/projects-filename
-    (let ((filename (concat my/notes-directory "20230630T180635--projetos__metanote_projetos.org")))
-      (if (file-exists-p filename)
-          filename
-        nil)))
+  (my-defvar my/config-blog-folder
+             (concat my/config-notes-folder "Blog/")
+             "path to Blog Folder")
 
-  (defvar my/dates-filename
-    (let ((filename (concat my/notes-directory "20230630T155534--datas-importantes.org")))
-      (if (file-exists-p filename)
-          filename
-        nil)))
 
-  (defvar my/routine-filename
-    (let ((filename (concat my/notes-directory "20230630T185646--rotina__organization.org")))
-      (if (file-exists-p filename)
-          filename
-        nil)))
+  (my-defvar my/notes-plans-filename
+             (concat my/config-notes-folder "20230630T180038--planos__planos_metanote.org")
+             "Personal Organization Plan Filename")
 
-  (defvar my/week-plans-filename
-    (let ((filename (concat my/notes-directory "20230630T175849--planejamento-semanal__review.org")))
-      (if (file-exists-p filename)
-          filename
-        nil)))
+  (my-defvar my/notes-projects-filename
+             (concat my/config-notes-folder "20230630T180635--projetos__metanote_projetos.org")
+             "Personal Organization Project Filename")
 
-  (defvar my/diary-filename
-    (let ((filename (concat my/notes-directory "diary")))
-      (if (file-exists-p filename)
-          filename
-        nil)))
+  (my-defvar my/notes-dates-filename
+             (concat my/config-notes-folder "20230630T155534--datas-importantes.org")
+             "Personal Organization Important Dates Filename")
 
-  (defvar my/gtd-inbox-filename
-    (let ((filename (concat my/notes-directory "20230630T164926--gtd-inbox__gtd.org")))
-      (if (file-exists-p filename)
-          filename
-        nil)))
+  (my-defvar my/notes-routine-filename
+             (concat my/config-notes-folder "20230630T185646--rotina__organization.org")
+             "Personal Organization Routine Filename")
 
-  (defvar my/daily-diary-filename
-    (let ((filename (concat my/notes-directory "20231119T214733--daily-diary__daily.org")))
-      (if (file-exists-p filename)
-          filename
-        nil)))
+  (my-defvar my/notes-week-plans-filename
+             (concat my/config-notes-folder "20230630T175849--planejamento-semanal__review.org")
+             "Personal Organization Weekly Plans Filename")
+
+  (my-defvar my/notes-diary-filename
+             (concat my/config-notes-folder "diary")
+             "Personal Organization Diary Filename")
+
+  (my-defvar my/notes-gtd-inbox-filename
+             (concat my/config-notes-folder "20230630T164926--gtd-inbox__gtd.org")
+             "Personal Organization Get Things Done Inbox Filename")
+
+  (my-defvar my/notes-daily-diary-filename
+             (concat my/config-notes-folder "20231119T214733--daily-diary__daily.org")
+             "Personal Organization Daily Diary Filename")
 #+end_src
+
 * Better Visual
 :PROPERTIES:
 :ID:       40501f1f-b111-4789-992f-c658bd924d15
@@ -240,6 +280,7 @@ Set the default encoding to be UTF-8 on everything possible
   (prefer-coding-system 'utf-8)
 
 #+END_SRC
+
 ** Scratch Buffer
 :PROPERTIES:
 :ID:       d4c6c814-f72e-41a1-9930-007d52730ae3
@@ -366,7 +407,7 @@ fundamental-mode.
 
 Set directory to hold history.
 #+BEGIN_SRC emacs-lisp
-  (setq savehist-file (concat my/home-folder ".emacs.d/savehist"))
+  (setq savehist-file (concat my/config-home-folder ".emacs.d/savehist"))
 
 #+END_SRC
 
@@ -428,8 +469,8 @@ and delete things by mistake. I just want them to be thrown to trash
 so I can retrieve them later, if needed.
 #+BEGIN_SRC emacs-lisp
   (setq delete-by-moving-to-trash t)
-
 #+END_SRC
+
 * General Configurations
 :PROPERTIES:
 :Created:  2023-12-06
@@ -459,6 +500,7 @@ Don't show every information about files. Just its name.
     (dired-hide-details-mode 1))
   (add-hook 'dired-mode-hook 'xah-dired-mode-setup)
 #+END_SRC
+
 ** Backup
 :PROPERTIES:
 :Created:  2023-12-06
@@ -604,8 +646,25 @@ http://yummymelon.com/devnull/using-bookmarks-in-emacs-like-you-do-in-web-browse
 
 * Provide File
 :PROPERTIES:
+
 :ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
 :END:
 #+BEGIN_SRC emacs-lisp
   (provide 'init-basicConfig)
 #+END_SRC
+
+* Updates
+:PROPERTIES:
+:Created:  2023-12-26
+:END:
+
+[2023-12-26 Tue]
+- Fix org source block open/close lines
+
+==============================
+
+[2023-12-26 Tue]
+- Improve Global Variables creation
+
+==============================
+

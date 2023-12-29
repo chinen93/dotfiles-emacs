@@ -1,16 +1,20 @@
 #+TITLE:        Writing Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2023-12-06 Wed]
-#+DATE-UPDATED: [2023-12-13 Wed]
+#+DATE-UPDATED: [2023-12-26 Tue]
 
 * Lock Files when editing
 :PROPERTIES:
 :ID:       01a30e95-5576-42b4-b4f2-76a498a4b175
 :END:
 https://www.gnu.org/software/emacs/manual/html_node/elisp/File-Locks.html
+
 #+BEGIN_SRC emacs-lisp
+
   (setq create-lockfiles nil)
+
 #+END_SRC
+
 * Global Indentation
 :PROPERTIES:
 :ID:       bb472086-0d4c-4779-9b79-4a4929de4a6e
@@ -18,10 +22,13 @@ https://www.gnu.org/software/emacs/manual/html_node/elisp/File-Locks.html
 
 Don't indent automatically. Go to the beginning of the newline
 instead.
+
 #+BEGIN_SRC emacs-lisp
+
   (electric-indent-mode -1)
 
 #+END_SRC
+
 * Delete Marked Text When Inserting New Text
 :PROPERTIES:
 :ID:       78566d3b-c8ae-4ca1-b106-73ad2c7cf238
@@ -30,7 +37,9 @@ instead.
 Delete selected text when something is inserted and a mark is
 active. Without it the new text would remove the mark and just insert
 the text in the buffer.
+
 #+BEGIN_SRC emacs-lisp
+
   (delete-selection-mode 1)
 
 #+END_SRC
@@ -50,6 +59,7 @@ and () is the current point:
 
   Lorem ipsum dolor sit amet, NEW TEXT, sed do eiusmod tempo.
 #+END_SRC
+
 * Yasnippet
 :PROPERTIES:
 :Created:  2023-12-06
@@ -75,7 +85,9 @@ Bundled language templates include:
 https://joaotavora.github.io/yasnippet/
 
 Load package to be used in this configuration.
+
 #+BEGIN_SRC emacs-lisp
+
   (require-package 'yasnippet)
 
   (message "Yasnippet - Loaded")
