@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2023-12-27 Wed]
+#+DATE-UPDATED: [2023-12-30 Sat]
 
 It doesn't need any external package. Just pure Elisp.
 
@@ -80,54 +80,7 @@ Creation of home folder and derivates from it
 
 #+end_src
 
-*** Emacs
-:PROPERTIES:
-:Created:  2023-12-27
-:END:
-
-#+begin_src emacs-lisp
-
-  (my-defvar my/emacs-config-dir
-             (concat my/config-home-folder "emacsConfig")
-             "Path to Emacs Configuration Folder")
-
-  (my-defvar my/emacs-font-folder
-             (concat my/config-home-folder "emacsFonts")
-             "Path to Emacs Font Folder")
-
-  (my-defvar my/snippets-folder
-             (concat my/config-home-folder "emacsSnipet")
-             "Path to Emacs Snippet Folder")
-
-#+end_src
-
-**** Bookmark and Backups
-:PROPERTIES:
-:Created:  2023-10-04
-:END:
-Creation of folders derivated from dropbox/
-#+BEGIN_SRC emacs-lisp
-
-  (my-defvar my/bookmark-file
-             (concat my/config-dropbox-folder "emacsBookmark.el")
-             "Path to Bookmark File")
-
-#+END_SRC
-
-Creation of folders derivated from .emacs.d/
-#+BEGIN_SRC emacs-lisp
-
-  (my-defvar my/backup-folder
-             (concat my/config-emacs.d-folder "backups")
-             "Path to Backup Folder")
-
-  (my-defvar my/auto-save-folder
-             (concat my/config-emacs.d-folder "auto-save-list")
-             "Path to Auto Save Folder")
-
-#+END_SRC
-
-** Organizations Files
+**** Organizations Files
 :PROPERTIES:
 :Created:  2023-10-04
 :END:
@@ -171,7 +124,68 @@ Creation of Organization files
   (my-defvar my/notes-daily-diary-filename
              (concat my/config-notes-folder "20231119T214733--daily-diary__daily.org")
              "Personal Organization Daily Diary Filename")
+
+  (my-defvar my/notes-process-daily-review-filename
+             (concat my/config-notes-folder "20231129T184116--passos-do-review-diário__process.org")
+             "Process daily review Filename")
+
+  (my-defvar my/notes-process-weekly-review-filename
+             (concat my/config-notes-folder "20230718T175027--passos-do-review-semanal__process.org")
+             "Process weekly review Filename")
+
+  (my-defvar my/notes-process-monthly-review-filename
+             (concat my/config-notes-folder "20230718T175112--passos-do-review-mensal__process.org")
+             "Process monthly review Filename")
+
+
 #+end_src
+
+*** Emacs
+:PROPERTIES:
+:Created:  2023-12-27
+:END:
+
+#+begin_src emacs-lisp
+
+  (my-defvar my/emacs-config-dir
+             (concat my/config-home-folder "emacsConfig")
+             "Path to Emacs Configuration Folder")
+
+  (my-defvar my/emacs-font-folder
+             (concat my/config-home-folder "emacsFonts")
+             "Path to Emacs Font Folder")
+
+  (my-defvar my/snippets-folder
+             (concat my/config-home-folder "emacsSnippets")
+             "Path to Emacs Snippet Folder")
+
+#+end_src
+
+**** Bookmark and Backups
+:PROPERTIES:
+:Created:  2023-10-04
+:END:
+Creation of folders derivated from dropbox/
+#+BEGIN_SRC emacs-lisp
+
+  (my-defvar my/bookmark-file
+             (concat my/config-dropbox-folder "emacsBookmark.el")
+             "Path to Bookmark File")
+
+#+END_SRC
+
+Creation of folders derivated from .emacs.d/
+#+BEGIN_SRC emacs-lisp
+
+  (my-defvar my/backup-folder
+             (concat my/config-emacs.d-folder "backups")
+             "Path to Backup Folder")
+
+  (my-defvar my/auto-save-folder
+             (concat my/config-emacs.d-folder "auto-save-list")
+             "Path to Auto Save Folder")
+
+#+END_SRC
 
 * Better Visual
 :PROPERTIES:

@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2023-12-29 Fri]
+#+DATE-UPDATED: [2023-12-30 Sat]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -1218,6 +1218,12 @@ CLOSED: [2023-10-19 Thu 19:06]
 #+begin_src emacs-lisp
 
   (defun my-plan-update-project ()
+    "Update Plan Activities from the Project Activity.
+
+  When on a Project Ativity:
+  - Opens the Plan
+  - Finds the correct position
+  - Insert the Project Activity"
     (interactive)
 
     (save-excursion 
@@ -1226,6 +1232,7 @@ CLOSED: [2023-10-19 Thu 19:06]
         (my--plan-update-heading plan-buffer))))
 
   (defun my--plan-open-project-plan-filename ()
+    "Search in the Project file for the Plan org link"
     (save-excursion 
       (with-current-buffer (buffer-name)
         (beginning-of-buffer)
@@ -1235,6 +1242,7 @@ CLOSED: [2023-10-19 Thu 19:06]
              (buffer-name)))))
 
   (defun my--plan-update-heading (plan-buffer)
+    "Finds the correct position and insert the Project Activity in the Plan buffer"
     (when plan-buffer
       (with-current-buffer (get-buffer-create plan-buffer)
         (beginning-of-buffer)
@@ -1244,6 +1252,41 @@ CLOSED: [2023-10-19 Thu 19:06]
         (newline)
         (my-org-paste-plan-update-string)
         (widen))))
+
+#+end_src
+
+*** Open Link Same Frame
+:PROPERTIES:
+:Created:  2023-12-30
+:END:
+#+begin_src emacs-lisp
+
+  (defun my-org-link-open-same-frame ()
+    "Open link in the same frame"
+    (interactive)
+    (let ((org-link-frame-setup (cl-acons 'file 'find-file org-link-frame-setup)))
+      (org-open-at-point)))
+
+#+end_src
+
+*** Org Return Do What I Mean
+:PROPERTIES:
+:Created:  2023-12-30
+:END:
+#+begin_src emacs-lisp
+
+  (defun my-org-return-dwim ()
+    "Execute code based on org-element
+
+  Elements:
+  - Link: Open link same frame
+  - Default: Create new Heading"
+    (interactive)
+    (let* ((elem (org-element-context))
+           (etype (car elem)))
+      (cl-case etype
+        (link (my-org-link-open-same-frame))
+        (t (my/org-heading-with-id)))))
 
 #+end_src
 
@@ -1259,10 +1302,11 @@ CLOSED: [2023-10-19 Thu 19:06]
             (lambda ()  
               (add-hook 'before-save-hook 
                         (lambda ()
-                          (visual-line-mode t)
                           (when (and (eq major-mode 'org-mode)
                                      (eq buffer-read-only nil))
                             (my-update-org-timestamp))))))
+
+  (add-hook 'org-mode-hook 'turn-on-visual-line-mode)
 
 
   (add-hook 'org-insert-heading-hook 
@@ -1556,7 +1600,7 @@ CLOSED: [2018-11-23 sex 21:51]
 #+begin_src emacs-lisp
 
   (with-eval-after-load 'org
-    (define-key org-mode-map (kbd "<C-return>") 'my/org-heading-with-id))
+    (define-key org-mode-map (kbd "<C-return>") 'my-org-return-dwim))
 
 #+end_src
 
@@ -1575,4 +1619,3 @@ CLOSED: [2018-11-23 sex 21:51]
 - Add Get Plan Updates function
 
 ==============================
-
