@@ -1,7 +1,7 @@
 #+TITLE:        Personal Organization Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2023-12-06 Wed]
-#+DATE-UPDATED: [2024-01-07 Sun]
+#+DATE-UPDATED: [2024-01-08 Mon]
 
 * Finances
 :PROPERTIES:
@@ -481,7 +481,8 @@ Base configuration for Denote
           (description (my--denote-get-description)))
       (setq my/denote-link-information (list identifier
                                              (concat "#" custom-search)
-                                             description))))
+                                             description))
+      (message (concat "Link to: '" description "' created"))))
 
   (defun my-denote-link-with-custom-search ()
     "Insert denote link with custom search

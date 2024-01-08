@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2023-12-30 Sat]
+#+DATE-UPDATED: [2024-01-08 Mon]
 
 Emacs has a lot of keybindings, and I can't remember every one of
 them. For example each key in the keyboard is related to a command, if
@@ -557,31 +557,31 @@ Hydra to easily insert greek letter and others math notations.
 
   (defhydra hydra-denote (:color blue :hint nil)
     "
-       ^Denote^         ^Projects^
-      ^-^--------------^-^-----------------------------
-      _l_: Link        _w_: Links Working Projects
-      _L_: Add Links   _m_: Links Maybe Projects
-      _R_: Rename      _t_: Toogle Maybe/Working
-      _k_: Add Key
-      _K_: Remove Key
+       ^Denote^
 
-      _p_: Elgrep ID on Notes
-      _P_: Projects Progress
-      _r_: Random Note
-      _M_: Add Missing Links
-      _n_: List Metanotes
+       ^Links^            ^Projects^                   ^Functions^
+      ^-^----------------^-^--------------------------^-^-----------
+      _l_: Link          _w_: Links Working Projects  _p_: Elgrep ID on Notes
+      _L_: Add Links     _m_: Links Maybe Projects    _P_: Projects Progress
+      _r_: Rename        _t_: Toogle Maybe/Working    _R_: Random Note
+      _k_: Add Key       ^ ^                          _n_: List Metanotes
+      _K_: Remove Key    ^ ^                          _c_: Get Custom ID Link
+      _M_: Missing Links ^ ^                          _C_: Insert Custom ID Link
     "
     ;; Base Denote Heads
     ("l" denote-link)
     ("L" denote-add-links)
-    ("R" denote-rename-file-using-front-matter)
+    ("r" denote-rename-file-using-front-matter)
     ("k" denote-keywords-add)
     ("K" denote-keywords-remove)
     ("M" denote-add-missing-links)
 
+    ;; Functions
     ("p" my-elgrep-denote-identifier-notes)
     ("P" my-denote-working-projects-org-table)
-    ("r" my-denote-random-note)
+    ("R" my-denote-random-note)
+    ("c" my-denote-link-get-or-create-custom-id)
+    ("C" my-denote-link-with-custom-search)
 
     ;; Projects Heads
     ("w" my-denote-link-add-working-projects)

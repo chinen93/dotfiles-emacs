@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2024-01-07 Sun]
+#+DATE-UPDATED: [2024-01-08 Mon]
 
 [[https://orgmode.org/][Org Mode]]
 
