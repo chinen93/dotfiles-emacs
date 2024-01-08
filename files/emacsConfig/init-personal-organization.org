@@ -1,7 +1,7 @@
 #+TITLE:        Personal Organization Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2023-12-06 Wed]
-#+DATE-UPDATED: [2023-12-27 Wed]
+#+DATE-UPDATED: [2024-01-07 Sun]
 
 * Finances
 :PROPERTIES:
@@ -273,6 +273,7 @@ Base configuration for Denote
                                               (and "_projetos"))
     "Regexp to search for maybe projects on a Denote folder")
 #+end_src
+
 ***** List Maybe/Working Projects
 :PROPERTIES:
 :Created:  2023-10-04
@@ -377,6 +378,7 @@ Base configuration for Denote
       (org-table-create-or-convert-from-region nil)
       (setq deactivate-mark nil)))
 #+end_src
+
 **** Organizating Blog
 :PROPERTIES:
 :Created:  2023-10-12
@@ -396,6 +398,7 @@ Base configuration for Denote
                                                 "Created blog post\n\n"
                                                 "====================\n"))
 #+end_src
+
 ***** Create new blog post
 :PROPERTIES:
 :Created:  2023-10-12
@@ -415,6 +418,7 @@ Base configuration for Denote
                    :kill-buffer t
                    :jump-to-captured t)))
 #+end_src
+
 **** Organizating Notes
 :PROPERTIES:
 :Created:  2023-10-19
@@ -435,12 +439,14 @@ Base configuration for Denote
 :PROPERTIES:
 :Created:  2023-10-20
 :END:
+
 #+begin_src emacs-lisp
   (defun my-denote-random-note ()
     "Open random denote note"
     (interactive)
     (find-file (seq-random-elt (denote-all-files))))
 #+end_src
+
 ***** Open Dired with Metanotes
 :PROPERTIES:
 :Created:  2023-10-25
@@ -450,6 +456,66 @@ Base configuration for Denote
     "Find Denote Metanote files"
     (interactive)
     (find-lisp-find-dired (car denote-dired-directories) "_metanote"))
+#+end_src
+
+**** Link with Custom ID
+:PROPERTIES:
+:Created:  2024-01-07
+:END:
+
+#+begin_src emacs-lisp
+
+  (defvar my/denote-org-link-format "[[denote:%s::%s][%s]]"
+    "Format of Org link to note.
+  The value is passed to `format' with IDENTIFIER, CUSTOM_SEARCH and TITLE
+  arguments, in this order.")
+
+  (defvar my/denote-link-information nil
+    "Identifier, Custom Search and Title to be used on the link creation, in this order")
+
+  (defun my-denote-link-get-or-create-custom-id ()
+    "Save current heading's custom id information to be used on link creation."
+    (interactive)
+    (let ((identifier (my--denote-get-identifier))
+          (custom-search (my-org-custom-id-get-or-create))
+          (description (my--denote-get-description)))
+      (setq my/denote-link-information (list identifier
+                                             (concat "#" custom-search)
+                                             description))))
+
+  (defun my-denote-link-with-custom-search ()
+    "Insert denote link with custom search
+
+  Clear the my/denote-link-information variable."
+    (interactive)
+    (if my/denote-link-information
+      (let ((identifier (nth 0 my/denote-link-information))
+            (custom-search (nth 1 my/denote-link-information))
+            (title (nth 2 my/denote-link-information)))
+        (when (and identifier custom-search title)
+          (insert (format my/denote-org-link-format
+                          identifier
+                          custom-search
+                          title))))
+      (message "my/denote-link-information empty"))
+    (setq my/denote-link-information nil))
+
+  ;;; Private Helper Functions
+
+  (defun my--denote-get-identifier ()
+    "Get Denote Identifier for the current buffer"
+    (with-current-buffer (current-buffer)
+      (save-excursion
+        (goto-char (point-min))
+        (re-search-forward denote-id-regexp nil t)
+        (match-string-no-properties 0))))
+
+  (defun my--denote-get-description ()
+    "Get Denote description for the current heading"
+    (with-current-buffer (current-buffer)
+      (let ((title (cadar (org-collect-keywords '("TITLE"))))
+            (heading (org-entry-get nil "ITEM")))
+        (concat title " - " heading))))
 #+end_src
 
 * Provide File
