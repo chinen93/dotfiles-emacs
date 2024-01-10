@@ -489,19 +489,28 @@ Base configuration for Denote
 
   Clear the my/denote-link-information variable."
     (interactive)
-    (if my/denote-link-information
-      (let ((identifier (nth 0 my/denote-link-information))
-            (custom-search (nth 1 my/denote-link-information))
-            (title (nth 2 my/denote-link-information)))
-        (when (and identifier custom-search title)
-          (insert (format my/denote-org-link-format
-                          identifier
-                          custom-search
-                          title))))
-      (message "my/denote-link-information empty"))
-    (setq my/denote-link-information nil))
+    (if-let (formatted-link (my--denote-link-format-custom-search))
+        (progn 
+          (insert formatted-link)
+          (setq my/denote-link-information nil))
+      (message "my/denote-link-information empty")))
 
   ;;; Private Helper Functions
+
+  (defun my--denote-link-format-custom-search ()
+    "Return the right format to insert custom search denote link"
+    (if my/denote-link-information
+        (let ((identifier (nth 0 my/denote-link-information))
+              (custom-search (nth 1 my/denote-link-information))
+              (title (nth 2 my/denote-link-information)))
+          (when (and identifier custom-search title)
+            (format my/denote-org-link-format
+                    identifier
+                    custom-search
+                    title)))
+      (progn 
+        (message "my/denote-link-information empty")
+        nil)))
 
   (defun my--denote-get-identifier ()
     "Get Denote Identifier for the current buffer"

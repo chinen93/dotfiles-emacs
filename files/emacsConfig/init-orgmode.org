@@ -1028,12 +1028,36 @@ CLOSED: [2023-10-19 Thu 19:06]
   (defvar my/project-closed-timestamp "" "Hold headings' closed timestamp")
   (defvar my/project-update "" "Holds project update string")
 
+  (defun my-org-get-plan-update-string ()
+    "Get project update string and save it in 'my/project-update' variable"
+    (interactive)
+    (setq my/project-update "")
+    (let* ((custom-id (my-denote-link-get-or-create-custom-id))
+           (denote-link (my--denote-link-format-custom-search))
+           (todo-keyword (org-entry-get nil "TODO"))
+           (closed-timestamp (my--org-get-closed-timestamp))
+           (message-string (concat "- "
+                                   closed-timestamp " "
+                                   todo-keyword " "
+                                   denote-link)))
+      (setq my/project-update message-string)))
+
+  (defun my-org-paste-plan-update-string ()
+    "Insert 'my/project-update' string"
+    (interactive)
+    (insert my/project-update)
+    (setq my/project-update ""))
+
+
+  ;;; Private Helper Functions
+
+
   (defun my--org-get-closed-timestamp ()
     "Get org closed timestamp from the 'CLOSED:' string
 
     This value is present when 'org-log-done' is non-nil
 
-    Save the value in 'my--project-closed-timestamp'.
+    Save the value in 'my/project-closed-timestamp'.
     "
     (setq my/project-closed-timestamp "")
     (save-excursion
@@ -1050,28 +1074,6 @@ CLOSED: [2023-10-19 Thu 19:06]
 
       (widen))
     my/project-closed-timestamp)
-
-
-  (defun my-org-get-plan-update-string ()
-    "Get project update string and save it in 'my--project-update' variable"
-    (interactive)
-    (setq my/project-update "")
-    (let* ((keywords (org-collect-keywords '("title" "identifier")))
-           (file-title (nth 1 (nth 0 keywords)))
-           (file-id (nth 1 (nth 1 keywords)))
-           (heading-title (nth 4 (org-heading-components)))
-           (closed-timestamp (my--org-get-closed-timestamp))
-           (message-string (concat closed-timestamp " "
-                                   "Proj: [[denote:" file-id "][" file-title "]] - "
-                                   heading-title)))
-      (setq my/project-update message-string)))
-
-
-  (defun my-org-paste-plan-update-string ()
-    "Insert 'my--project-update' string"
-    (interactive)
-    (insert my/project-update)
-    (setq my/project-update ""))
 
 #+end_src
 
