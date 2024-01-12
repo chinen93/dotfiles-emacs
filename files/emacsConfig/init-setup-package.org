@@ -1,7 +1,7 @@
 #+TITLE:        Setup Package Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2023-12-06 Wed]
+#+DATE-UPDATED: [2024-01-09 Tue]
 
 #+BEGIN_SRC emacs-lisp
   (require 'package)

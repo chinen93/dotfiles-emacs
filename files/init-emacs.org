@@ -1,7 +1,7 @@
 #+TITLE:        Init Emacs
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2019-09-10 ter]
-#+DATE-UPDATED: [2023-12-09 Sat]
+#+DATE-UPDATED: [2024-01-12 Fri]
 #+PROPERTY: header-args :tangle yes
 
 * Starting of Configuration
@@ -77,7 +77,7 @@ to happen before they are called.
                             "init-hydra.org"
                             "init-metrics.org"
                             "init-minibuffer.org"
-                            ;"init-my-buffer-meny.org"
+                            ;;"init-my-buffer-menu.org"
                             "init-navigation.org"
                             "init-orgmode.org"
                             "init-personal-organization.org"
@@ -87,10 +87,10 @@ to happen before they are called.
                             "init-web.org"
                             "init-writing.org"
                             "init-appearance.org"
-                            "init-evil.org")
+                            "init-evil.org"
+                            "init-tests.org")
     "Initial order of configurations to be loaded because they have
-      dependencies among the others"
-)
+        dependencies among the others")
 #+END_SRC
 
 Function to get correct files. Otherwise it will try to load
