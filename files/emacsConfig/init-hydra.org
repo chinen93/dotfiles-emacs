@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2024-01-08 Mon]
+#+DATE-UPDATED: [2024-01-11 Thu]
 
 Emacs has a lot of keybindings, and I can't remember every one of
 them. For example each key in the keyboard is related to a command, if
@@ -630,7 +630,7 @@ Hydra to easily insert greek letter and others math notations.
       _d_: Daily Workflow     _C_: Configs    _P_: Plans
       _w_: Weekly Workflow    _S_: Snippets   _p_: Projects
       _m_: Monthly Workflow   ^ ^             _g_: Get Things Done Inbox
-      _r_: Review File
+      _r_: Review File        ^ ^             _l_: Ledger
 
     "
 
@@ -648,6 +648,7 @@ Hydra to easily insert greek letter and others math notations.
     ("p" (find-file my/notes-plans-filename))
     ("P" (find-file my/notes-projects-filename))
     ("g" (find-file my/notes-gtd-inbox-filename))
+    ("l" (find-file my/ledger-file))
 
     ("q" nil "cancel" :color blue))
 

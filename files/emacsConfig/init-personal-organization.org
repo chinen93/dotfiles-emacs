@@ -1,7 +1,7 @@
 #+TITLE:        Personal Organization Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2023-12-06 Wed]
-#+DATE-UPDATED: [2024-01-08 Mon]
+#+DATE-UPDATED: [2024-01-12 Fri]
 
 * Finances
 :PROPERTIES:
@@ -33,23 +33,32 @@ than when you started your ledger.
 
 [[https://www.ledger-cli.org/3.0/doc/ledger3.html][Ledger Web Manual]]
 
-** CANCELED Package: Ledger
+** Package: Ledger
 :PROPERTIES:
 :ID:       b664f880-a7b5-4e07-9eec-fe5fe8e86a7f
 :END:
 #+BEGIN_SRC emacs-lisp
+
   (use-package ledger-mode
-    :ensure t)
+    :ensure t
+    :config
+    ;; Clear whole transactions, not individual postings.
+    (setq ledger-clear-whole-transactions t))
 
 #+END_SRC
 
-*** CANCELED Declare Variables
+*** Declare Variables
 :PROPERTIES:
 :ID:       b64515fa-ef09-492e-aa0a-1badfdf3dc08
 :END:
 
+**** Master Ledger File
+:PROPERTIES:
+:Created:  2024-01-11
+:END:
 Create Variable to hold my ledger file
 #+BEGIN_SRC emacs-lisp
+
   (let* ((year (format-time-string "%Y"))
          (file (concat "Ledger" year ".ledger"))
          (default (concat my/config-dropbox-folder file)))
@@ -62,35 +71,64 @@ Create Variable to hold my ledger file
 
 Set master file
 #+BEGIN_SRC emacs-lisp
+
   (when (featurep 'ledger-mode)
     (setq-default ledger-master-file my/ledger-file))
 
 #+END_SRC
 
+**** Ledger Program Command
+:PROPERTIES:
+:Created:  2024-01-11
+:END:
 Create base command for all reports
 #+BEGIN_SRC emacs-lisp
-    (defvar my/ledger-cmd "ledger -f "
-      "Beginning of every command has to be this")
+  (defvar my/ledger-cmd (concat "ledger -f " my/ledger-file)
+    "Ledger command for selected file")
+
+  (defvar my/ledger-web-cmd (concat "ledger -f " my/ledger-file)
+    "Ledger Web command for selected file")
+
+  (when (eq system-type 'windows-nt)
+    (let ((path "C:/Users/ehidped/Pedro/Programas/hledger-windows-x64/")
+          (file-argument (concat " -f " my/ledger-file)))
+      (setq my/ledger-cmd (concat path "hledger.exe" file-argument))
+      (setq my/ledger-web-cmd (concat path "hledger-web.exe" file-argument))))
 
 #+END_SRC
 
-Clear whole transactions, not individual postings.
-#+BEGIN_SRC emacs-lisp
-  (when (featurep 'ledger-mode)
-    (setq ledger-clear-whole-transactions t))
-
-#+END_SRC
-
-*** CANCELED Helper Functions
+*** Helper Functions
 :PROPERTIES:
 :ID:       114d9d50-2ee3-4641-901f-7bd404efed8a
 :END:
 
-**** CANCELED Clear Ledger on Save
+**** Check Ledger File is Valid
+:PROPERTIES:
+:Created:  2024-01-11
+:END:
+
+#+begin_src emacs-lisp
+
+  (when (featurep 'ledger-mode)
+    (defun my-ledger-check ()
+      "Check if my/ledger-file has erros"
+
+      (interactive)
+      (when (eq major-mode 'ledger-mode)
+        (eshell-command (concat my/ledger-cmd " " "check"))))
+
+    ;; Add Helper function to before save hook
+    (add-hook 'before-save-hook 'my-ledger-check))
+
+#+end_src
+
+**** Clear Ledger on Save
 :PROPERTIES:
 :ID:       8b589487-13a0-4e47-b3a9-c03c2f723582
-:END:
+:END
+
 #+BEGIN_SRC emacs-lisp
+
   (when (featurep 'ledger-mode)
     ;; awalker4 mode to clean the ledger buffer
     ;; https://github.com/awalker4/.dotfiles/blob/master/emacs.d/config.org
@@ -105,6 +143,23 @@ Clear whole transactions, not individual postings.
     (add-hook 'before-save-hook 'aw/clean-ledger-on-save))
 
 #+END_SRC
+
+**** Open Ledger Web
+:PROPERTIES:
+:Created:  2024-01-12
+:END:
+
+#+begin_src emacs-lisp
+
+  (when (featurep 'ledger-mode)
+    (defun my-ledger-web ()
+      "Run Ledger Web"
+
+      (interactive)
+      (let ((proc (start-process "cmd" nil "cmd.exe" "/C" "start" "cmd.exe" "/K" my/ledger-web-cmd)))
+        (set-process-query-on-exit-flag proc nil))))
+
+#+end_src
 
 **** CANCELED See Expenses for all months
 CLOSED: [2019-03-14 qui 08:34]
@@ -535,3 +590,4 @@ Base configuration for Denote
 #+BEGIN_SRC emacs-lisp
   (provide 'init-personal-organization)
 #+END_SRC
+ 

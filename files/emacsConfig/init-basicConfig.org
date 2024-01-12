@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2023-12-30 Sat]
+#+DATE-UPDATED: [2024-01-11 Thu]
 
 It doesn't need any external package. Just pure Elisp.
 
@@ -71,7 +71,7 @@ Creation of home folder and derivates from it
                  "Path to Dropbox Folder")
     ;; Windows's dropbox folder
     (my-defvar my/config-dropbox-folder
-               (substitute-in-file-name  "$HOMEPATH/Pedro/Dropbox/")
+               (concat "C:" (replace-regexp-in-string "\\\\" "/" (substitute-in-file-name  "$HOMEPATH/Pedro/Dropbox/") t t))
                "Path to Dropbox Folder"))
 
   (my-defvar my/config-notes-folder
