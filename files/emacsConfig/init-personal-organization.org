@@ -1,7 +1,7 @@
 #+TITLE:        Personal Organization Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2023-12-06 Wed]
-#+DATE-UPDATED: [2024-01-12 Fri]
+#+DATE-UPDATED: [2024-01-13 Sat]
 
 * Finances
 :PROPERTIES:
@@ -191,7 +191,7 @@ Create base command for all reports
     "Check if my/ledger-file has erros"
 
     (interactive)
-    (my--ledger-run-command (concat my/ledger-cmd " " "balance --color=no")))
+    (my--ledger-run-command (concat my/ledger-cmd " " "balance --tree --color=no")))
 
 #+end_src
 

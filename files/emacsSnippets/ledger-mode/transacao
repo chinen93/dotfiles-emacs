@@ -3,5 +3,5 @@
 # key: transacao
 # --
 `(format-time-string "%Y/%m/%d")`
-    Expenses:                        R$ 00.00
+    Expenses:                        00.00 BRL
     Assets:
