@@ -101,24 +101,44 @@ Create base command for all reports
 :PROPERTIES:
 :ID:       114d9d50-2ee3-4641-901f-7bd404efed8a
 :END:
-
-**** Check Ledger File is Valid
+**** Log Information
 :PROPERTIES:
-:Created:  2024-01-11
+:Created:  2024-01-12
 :END:
 
 #+begin_src emacs-lisp
 
-  (when (featurep 'ledger-mode)
-    (defun my-ledger-check ()
-      "Check if my/ledger-file has erros"
+  (defvar my/ledger-log-buffer "*LEDGER LOG*"
+    "Ledger Log Buffer name")
 
-      (interactive)
-      (when (eq major-mode 'ledger-mode)
-        (eshell-command (concat my/ledger-cmd " " "check"))))
+  (defun my--ledger-log (command result)
+    "Log COMMAND and RESULT on my/ledger-log-buffer"
 
-    ;; Add Helper function to before save hook
-    (add-hook 'before-save-hook 'my-ledger-check))
+    (with-current-buffer (get-buffer-create my/ledger-log-buffer)
+      (goto-char (point-max))
+      (let ((time-string (format-time-string "%Y-%m-%d %H:%M:%S"))
+            (result-string (if (not result)
+                               "Command Successful \n"
+                             result)))
+        (insert (concat time-string ": " command "\n"
+                        result-string "\n")))
+      (goto-char (point-max))))
+
+#+end_src
+
+**** Wrapper to Run Commands
+:PROPERTIES:
+:Created:  2024-01-12
+:END:
+
+#+begin_src emacs-lisp
+
+  (defun my--ledger-run-command (command)
+    "Wrapper to do checks on run command"
+    (let ((command-result (eshell-command-result command)))
+          (my--ledger-log command command-result)
+          (switch-to-buffer-other-window (get-buffer-create my/ledger-log-buffer))
+          (find-file-other-window my/ledger-file)))
 
 #+end_src
 
@@ -129,20 +149,53 @@ Create base command for all reports
 
 #+BEGIN_SRC emacs-lisp
 
-  (when (featurep 'ledger-mode)
-    ;; awalker4 mode to clean the ledger buffer
-    ;; https://github.com/awalker4/.dotfiles/blob/master/emacs.d/config.org
-    (defun aw/clean-ledger-on-save ()
-      (interactive)
-      (if (eq major-mode 'ledger-mode)
-          (let ((curr-line (line-number-at-pos)))
-            (ledger-mode-clean-buffer)
-            (line-move (- curr-line 1)))))
-
-    ;; Add Helper function to before save hook
-    (add-hook 'before-save-hook 'aw/clean-ledger-on-save))
+  ;; awalker4 mode to clean the ledger buffer
+  ;; https://github.com/awalker4/.dotfiles/blob/master/emacs.d/config.org
+  (defun aw/clean-ledger-on-save ()
+    (interactive)
+    (when (eq major-mode 'ledger-mode)
+      (let ((curr-line (line-number-at-pos)))
+        (ledger-mode-clean-buffer)
+        (line-move (- curr-line 1)))))
 
 #+END_SRC
+
+*** Functions
+:PROPERTIES:
+:Created:  2024-01-12
+:END:
+**** Check Ledger File is Valid
+:PROPERTIES:
+:Created:  2024-01-11
+:END:
+
+#+begin_src emacs-lisp
+
+  (defun my-ledger-check ()
+    "Check if my/ledger-file has erros"
+
+    (interactive)
+    (when (eq major-mode 'ledger-mode)
+      (my--ledger-run-command (concat my/ledger-cmd " " "check"))))
+
+#+end_src
+
+**** Ledger Balance
+:PROPERTIES:
+:Created:  2024-01-12
+:END:
+
+#+begin_src emacs-lisp
+
+  (defun my-ledger-balance ()
+    "Check if my/ledger-file has erros"
+
+    (interactive)
+    (my--ledger-run-command (concat my/ledger-cmd " " "balance --color=no")))
+
+#+end_src
+
+(eshell-command-result (concat my/ledger-cmd " " "balance"))
 
 **** Open Ledger Web
 :PROPERTIES:
@@ -277,11 +330,28 @@ CLOSED: [2019-03-14 qui 08:34]
 :PROPERTIES:
 :ID:       f1e1508a-11de-495f-8c19-ff75908f36b2
 :END:
+
 #+BEGIN_SRC emacs-lisp
+
   (when (featurep 'ledger-mode)
     (eval-after-load 'ledger-mode
       (define-key ledger-mode-map (kbd "M-q") nil)))
 #+END_SRC
+
+*** Hooks
+:PROPERTIES:
+:Created:  2024-01-12
+:END:
+
+#+begin_src emacs-lisp
+
+  (add-hook 'before-save-hook (lambda () 
+                                (aw/clean-ledger-on-save)))
+
+  (add-hook 'after-save-hook (lambda () 
+                                (my-ledger-check)))  
+
+#+end_src
 
 * Folders / Directories
 :PROPERTIES:
