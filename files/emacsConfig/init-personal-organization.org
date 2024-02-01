@@ -1,7 +1,8 @@
+
 #+TITLE:        Personal Organization Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2023-12-06 Wed]
-#+DATE-UPDATED: [2024-01-30 Tue]
+#+DATE-UPDATED: [2024-02-01 Thu]
 
 * Finances
 :PROPERTIES:
@@ -90,12 +91,57 @@ Create base command for all reports
     "Ledger Web command for selected file")
 
   (when (eq system-type 'windows-nt)
-    (let ((path "C:/Users/ehidped/Pedro/Programas/hledger-windows-x64/")
-          (file-argument (concat " -f " my/ledger-file)))
-      (setq my/ledger-cmd (concat path "hledger.exe" file-argument))
-      (setq my/ledger-web-cmd (concat path "hledger-web.exe" file-argument))))
+    (let* ((path "C:/Users/ehidped/Pedro/Programas/hledger-windows-x64/")
+           (binary (concat path "hledger.exe"))
+           (file-argument (concat " -f " my/ledger-file)))
+      (setq my/ledger-cmd (concat binary file-argument))
+      (setq my/ledger-web-cmd (concat path "hledger-web.exe" file-argument))
+
+      (setq ledger-binary-path binary)))
 
 #+END_SRC
+
+*** Functions to Work with hledger
+:PROPERTIES:
+:Created:  2024-02-01
+:END:
+
+#+begin_src emacs-lisp
+  (defun ledger-exec-ledger (input-buffer &optional output-buffer &rest args)
+    "Run Ledger using INPUT-BUFFER.
+  Optionally capture output in OUTPUT-BUFFER, and pass ARGS on the
+  command line.  Returns OUTPUT-BUFFER if ledger succeeded,
+  otherwise the error output is displayed and an error is raised."
+    (unless (and ledger-binary-path
+                 (or (and (file-exists-p ledger-binary-path)
+                          (file-executable-p ledger-binary-path))
+                     (executable-find ledger-binary-path)))
+      (error "`ledger-binary-path' (value: %s) is not executable" ledger-binary-path))
+    (let ((buf (or input-buffer (find-file-noselect (ledger-master-file))))
+          (outbuf (or output-buffer
+                      (generate-new-buffer " *ledger-tmp*")))
+          (errfile (make-temp-file "ledger-errors")))
+      (unwind-protect
+          (with-current-buffer buf
+            (let ((exit-code
+                   (let ((coding-system-for-write 'utf-8)
+                         (coding-system-for-read 'utf-8))
+                     (apply #'call-process-region
+                            (append (list (point-min) (point-max)
+                                          ledger-binary-path nil (list outbuf errfile) nil "-f" "-")
+                                    ;;  Remove this because hledger does not have --date-format argument
+                                    ;; (list "--date-format" ledger-default-date-format) 
+                                    args))
+                     ;; (message "%s" (append (list (point-min) (point-max)
+                     ;;                      ledger-binary-path nil (list outbuf errfile) nil "-f" "-")
+                     ;;                args))
+                     )))
+              (if (ledger-exec-success-p exit-code outbuf)
+                  outbuf
+                (display-buffer (ledger-exec-handle-error errfile))
+                (error "Ledger execution failed"))))
+        (delete-file errfile))))
+#+end_src
 
 *** Helper Functions
 :PROPERTIES:

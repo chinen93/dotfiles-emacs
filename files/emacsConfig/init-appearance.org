@@ -1,7 +1,7 @@
 #+TITLE:        Appearance Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2023-12-06 Wed]
-#+DATE-UPDATED: [2023-12-09 Sat]
+#+DATE-UPDATED: [2024-02-01 Thu]
 
 * Themes
 :PROPERTIES:
@@ -93,35 +93,6 @@ more.
 
 #+end_src
 
-** My Theme
-:PROPERTIES:
-:Created:  2023-11-27
-:END:
-#+begin_src emacs-lisp
-
-(defface my/face-org-agenda-daily-diary
-  '((t
-     :foreground "black"
-     :background "papaya whip"))
-  "Face for org agenda daily diary entries"
-  :group 'my/faces)
-
-(defface my/face-org-agenda-important-dates
-  '((t
-     :foreground "black"
-     :background "thistle"))
-  "Face for org agenda important dates entries"
-  :group 'my/faces)
-
-(defface my/face-org-agenda-one-time
-  '((t
-     :foreground "white"
-     :background "indian red"))
-  "Face for org agenda one time entries"
-  :group 'my/faces)
-
-#+end_src
-
 *** Helper Functions
 :PROPERTIES:
 :ID:       d2d2479d-783c-4c73-b5ef-5f52eda7f244
@@ -177,6 +148,35 @@ more.
   (sakshamsharma-frameActions)
 
 #+END_SRC
+
+** My Theme
+:PROPERTIES:
+:Created:  2023-11-27
+:END:
+#+begin_src emacs-lisp
+
+(defface my/face-org-agenda-daily-diary
+  '((t
+     :foreground "black"
+     :background "papaya whip"))
+  "Face for org agenda daily diary entries"
+  :group 'my/faces)
+
+(defface my/face-org-agenda-important-dates
+  '((t
+     :foreground "black"
+     :background "thistle"))
+  "Face for org agenda important dates entries"
+  :group 'my/faces)
+
+(defface my/face-org-agenda-one-time
+  '((t
+     :foreground "white"
+     :background "indian red"))
+  "Face for org agenda one time entries"
+  :group 'my/faces)
+
+#+end_src
 
 * Appearance Packages
 :PROPERTIES:
