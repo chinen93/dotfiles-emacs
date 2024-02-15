@@ -2,7 +2,7 @@
 #+TITLE:        Personal Organization Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2023-12-06 Wed]
-#+DATE-UPDATED: [2024-02-01 Thu]
+#+DATE-UPDATED: [2024-02-15 Thu]
 
 * Finances
 :PROPERTIES:
@@ -699,6 +699,39 @@ Base configuration for Denote
         (concat title " - " heading))))
 #+end_src
 
+**** Add Missing Links
+:PROPERTIES:
+:Created:  2024-02-15
+:END:
+
+Recreate this function from the version controlled code.
+
+#+begin_src emacs-lisp
+
+(defun my-denote-add-missing-links (regexp &optional id-only)
+  "Insert missing links to all notes matching REGEXP.
+Similar to `denote-add-links' but insert only links not yet
+present in the current buffer.
+Optional ID-ONLY has the same meaning as in `denote-link': it
+inserts links with just the identifier."
+  (interactive
+   (list
+    (read-regexp "Insert links matching REGEX: " nil 'denote-link--add-links-history)
+    current-prefix-arg))
+  (let* ((current-file (buffer-file-name))
+         (file-type (denote-filetype-heuristics current-file))
+         (current-id (denote--link-in-context-regexp file-type))
+         (linked-files (denote-link--expand-identifiers current-id)))
+    (if-let ((found-files (delete current-file
+                                  (denote-directory-files-matching-regexp regexp)))
+             (final-files (seq-difference found-files linked-files))
+             (beg (point)))
+        (progn
+          (insert (denote-link--prepare-links final-files file-type id-only))
+          (denote-link-buttonize-buffer beg (point)))
+      (message "No links matching `%s' that aren't yet present in the current buffer" regexp))))
+
+#+end_src
 * Provide File
 :PROPERTIES:
 :ID:       0a01efe1-3948-4017-b344-38ecef7b2a48
