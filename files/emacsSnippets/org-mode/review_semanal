@@ -17,4 +17,6 @@ Pessoal
 
 Projetos
 
-`(my-denote-working-projects-org-table)`
+(progn (next-line) (my-denote-working-projects-org-table))
+
+========================================
