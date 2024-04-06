@@ -2,7 +2,7 @@
 #+TITLE:        Personal Organization Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2023-12-06 Wed]
-#+DATE-UPDATED: [2024-02-15 Thu]
+#+DATE-UPDATED: [2024-04-05 Fri]
 
 * Finances
 :PROPERTIES:
@@ -424,14 +424,25 @@ Base configuration for Denote
 :PROPERTIES:
 :Created:  2023-10-19
 :END:
-**** Organizating Projects
+**** CANCELED Organizating Projects
+CLOSED: [2024-04-05 Fri 22:42]
 :PROPERTIES:
 :Created:  2023-10-04
 :END:
+:LOGBOOK:
+- State "CANCELED"   from              [2024-04-05 Fri 22:42]
+- State "TODO"       from "DONE"       [2024-04-05 Fri 22:42]
+- State "DONE"       from "CANCELED"   [2024-04-05 Fri 22:42]
+- State "CANCELED"   from              [2024-04-05 Fri 22:37]
+:END:
 
-***** Regexp to match projects
+***** CANCELED Regexp to match projects
+CLOSED: [2024-04-05 Fri 22:37]
 :PROPERTIES:
 :Created:  2023-10-09
+:END:
+:LOGBOOK:
+- State "CANCELED"   from              [2024-04-05 Fri 22:37]
 :END:
 #+begin_src emacs-lisp
   (defvar my/regexp-denote-working-projects (rx (and "_projetos")
@@ -445,9 +456,13 @@ Base configuration for Denote
     "Regexp to search for maybe projects on a Denote folder")
 #+end_src
 
-***** List Maybe/Working Projects
+***** CANCELED List Maybe/Working Projects
+CLOSED: [2024-04-05 Fri 22:37]
 :PROPERTIES:
 :Created:  2023-10-04
+:END:
+:LOGBOOK:
+- State "CANCELED"   from              [2024-04-05 Fri 22:37]
 :END:
 
 #+begin_src emacs-lisp
@@ -463,9 +478,13 @@ Base configuration for Denote
     (denote-link-add-links my/regexp-denote-maybe-projects))
 #+end_src
 
-***** Toggle Maybe/Working Projects
+***** CANCELED Toggle Maybe/Working Projects
+CLOSED: [2024-04-05 Fri 22:37]
 :PROPERTIES:
 :Created:  2023-10-04
+:END:
+:LOGBOOK:
+- State "CANCELED"   from              [2024-04-05 Fri 22:37]
 :END:
 #+begin_src emacs-lisp
   (defun my--denote-keyword-remove (keyword)
@@ -506,9 +525,13 @@ Base configuration for Denote
       (user-error "Buffer not visiting a Denote file")))
 #+end_src
 
-***** Get file paths of Projects
+***** CANCELED Get file paths of Projects
+CLOSED: [2024-04-05 Fri 22:38]
 :PROPERTIES:
 :Created:  2023-10-09
+:END:
+:LOGBOOK:
+- State "CANCELED"   from              [2024-04-05 Fri 22:38]
 :END:
 
 #+begin_src emacs-lisp
@@ -524,9 +547,13 @@ Base configuration for Denote
     (denote-directory-files-matching-regexp my/regexp-denote-maybe-projects))
 #+end_src
 
-***** Working Projects Progress Table
+***** CANCELED Working Projects Progress Table
+CLOSED: [2024-04-05 Fri 22:38]
 :PROPERTIES:
 :Created:  2023-10-23
+:END:
+:LOGBOOK:
+- State "CANCELED"   from              [2024-04-05 Fri 22:38]
 :END:
 #+begin_src emacs-lisp
   (defun my--denote-working-projects-org-table-row (project-filename)
@@ -732,6 +759,16 @@ inserts links with just the identifier."
       (message "No links matching `%s' that aren't yet present in the current buffer" regexp))))
 
 #+end_src
+
+* Updates
+:PROPERTIES:
+:Created:  2024-04-05
+:END:
+[2024-04-05 Fri]
+- Removed Maybe/Working tag functions from denote. They are not necessary anymore. More trouble than benefits from using them
+
+==============================
+
 * Provide File
 :PROPERTIES:
 :ID:       0a01efe1-3948-4017-b344-38ecef7b2a48

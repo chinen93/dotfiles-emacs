@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2024-01-08 Mon]
+#+DATE-UPDATED: [2024-04-05 Fri]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -167,7 +167,7 @@ Got the main idea from https://www.philnewton.net/blog/org-agenda-monthly-goals/
                (org-agenda-start-day "-1d")))
       (todo "TODO"
             ((org-agenda-overriding-header "\nProjetos Atuais\n")
-             (org-agenda-files (my--get-list-working-projects))))
+             (org-agenda-files (denote-directory-files "_projetos"))))
       (tags "gtd"
             ((org-agenda-overriding-header "\nCaptures\n")
              (org-agenda-files `(,my/notes-gtd-inbox-filename))))
@@ -227,8 +227,7 @@ CLOSED: [2022-12-28 Wed 15:46]
                  (org-agenda-show-log t)
                  (org-agenda-window-setup 'other-window)
                  (org-agenda-files (append org-agenda-files
-                                           (my--get-list-working-projects)
-                                           (my--get-list-maybe-projects)))))
+                                           (denote-directory-files "_projetos")))))
         (todo "TODO"
               ((org-agenda-overriding-header "\nProjetos Atuais\n")
                (org-agenda-files (my--get-list-working-projects))))
@@ -1614,8 +1613,8 @@ CLOSED: [2018-11-23 sex 21:51]
 :CUSTOM_ID: customID-98b2fb55-4175-47ac-8d1a-112643eb3f5c
 :END:
 
-[2023-10-19 Thu]
-- Change todo keywords from (TODO WORKING WEEK | DONE CANCELED) to (TODO | DONE CANCELED) was not using those extra ones
+[2024-04-05 Fri]
+- Replace get denote maybe/working projects with only denote get projects tag
 
 ==============================
 
@@ -1623,3 +1622,10 @@ CLOSED: [2018-11-23 sex 21:51]
 - Add Get Plan Updates function
 
 ==============================
+
+[2023-10-19 Thu]
+- Change todo keywords from (TODO WORKING WEEK | DONE CANCELED) to (TODO | DONE CANCELED) was not using those extra ones
+
+==============================
+
+
