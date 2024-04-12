@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2024-01-11 Thu]
+#+DATE-UPDATED: [2024-04-11 Thu]
 
 It doesn't need any external package. Just pure Elisp.
 
@@ -36,8 +36,10 @@ It doesn't need any external package. Just pure Elisp.
   (defun my--defvar-check-filename (filename)
     "Checks if filename is exists"
 
-    (when (not (file-exists-p filename))
-      (throw 'file-does-not-exists filename)))
+    (unless (file-exists-p filename)
+      (throw 'file-does-not-exists filename))
+
+    t)
 
 #+end_src
 

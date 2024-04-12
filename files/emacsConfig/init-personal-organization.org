@@ -1,8 +1,7 @@
-
 #+TITLE:        Personal Organization Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2023-12-06 Wed]
-#+DATE-UPDATED: [2024-04-05 Fri]
+#+DATE-UPDATED: [2024-04-11 Thu]
 
 * Finances
 :PROPERTIES:
