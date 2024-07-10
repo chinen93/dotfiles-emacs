@@ -1,7 +1,7 @@
 #+TITLE:        Init Emacs
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2019-09-10 ter]
-#+DATE-UPDATED: [2024-01-12 Fri]
+#+DATE-UPDATED: [2024-07-09 Tue]
 #+PROPERTY: header-args :tangle yes
 
 * Starting of Configuration
@@ -58,14 +58,17 @@ with. After packages are downloaded and all.
 :END:
 
 #+begin_src emacs-lisp
+
   (defvar my/emacs-config-dir "~/emacsConfig/"
     "Directory where configuration is stored")
+
 #+end_src
 
 Create initial sequence of configuration files. Load them in this
 particular order because the creation of variables and functions need
 to happen before they are called.
 #+BEGIN_SRC emacs-lisp
+
   (defvar my/inits-config '(;; Base configurations
                             "init-setup-package.org"
                             "init-basicConfig.org"
@@ -91,6 +94,7 @@ to happen before they are called.
                             "init-tests.org")
     "Initial order of configurations to be loaded because they have
         dependencies among the others")
+
 #+END_SRC
 
 Function to get correct files. Otherwise it will try to load
@@ -116,9 +120,9 @@ Finally find all configuration files and put them into the sequence.
     (let ((files (regexp-filter "\.org$" (directory-files my/emacs-config-dir))))
       (dolist (file files)
 
-	;; If file is not in the list, include it.
-	(unless (cl-member file my/inits-config :test 'string=)
-	  (setq my/inits-config (append my/inits-config (list file))))))
+        ;; If file is not in the list, include it.
+        (unless (cl-member file my/inits-config :test 'string=)
+          (setq my/inits-config (append my/inits-config (list file))))))
   )
 
   (defvar my/config-org-files my/inits-config
@@ -126,10 +130,41 @@ Finally find all configuration files and put them into the sequence.
     To transform those org files into acturla elisp files.")
 
   ;; Put this files into a path where is possible to load them later.
-  (setq load-path (cons (expand-file-name my/emacs-config-dir)
-			load-path ))
+  (add-to-list 'load-path (expand-file-name my/emacs-config-dir))
+
 
 #+END_SRC
+
+* Load Tests
+:PROPERTIES:
+:Created:  2024-07-09
+:END:
+
+#+begin_src emacs-lisp
+
+  (defvar my/emacs-config-tests-dir "~/emacsConfig/tests/"
+    "Directory where configuration tests are stored")
+
+  (add-to-list 'load-path (expand-file-name my/emacs-config-tests-dir))
+
+  (defun my-tests-load-emacs-config-tests ()
+    "Load my emacs configuration tests"
+    (interactive)
+
+    (let ((load-it (lambda (f)
+                     (load-file (concat (file-name-as-directory my/emacs-config-tests-dir) f)))
+                   ))
+      (mapc load-it (directory-files my/emacs-config-tests-dir nil "\\.el$"))))
+
+  (my-tests-load-emacs-config-tests)
+
+  (defun my-tests-ert-all-tests ()
+    "Run all ert available tests"
+    (interactive)
+
+    (ert t))
+
+#+end_src
 
 * Code to Tangle .org to .el Files
 :PROPERTIES:
