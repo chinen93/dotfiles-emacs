@@ -1,13 +1,53 @@
 ;; test-helper-functions.el                    -*- lexical-binding: t; -*-
 
-;; Test things that *should* happen.
-(ert-deftest bbbbb-addition-test ()
-  (should (= (+ 1 2) 3)))
+(ert-deftest my-test--test-get-full-path-filename ()
+  "Test get full path filename"
+  :tags '(my-test-functions)
 
-;; Test things that your library *should trigger errors* for.
-(ert-deftest bbbbb-div-by-0-test ()
-  (should-error (/ 0 0)
-                :type 'arith-error))
+  (let* ((filename "filename")
+         (filepath (my--test-get-fullpath-filename filename)))
+    (should (file-name-absolute-p filepath))))
 
+(ert-deftest my-test--test-create-file ()
+  "Test Creation of Test File
+
+  Delete test file after checking"
+  :tags '(my-test-functions)
+
+  (let* ((filename "filename")
+         (filepath (my--test-get-fullpath-filename filename)))
+    (unwind-protect
+        (progn 
+          (should (not (file-exists-p filepath)))
+          (my-test-create-file filename)
+          (should (file-exists-p filepath)))
+
+      (my-test-delete-file filename filepath))
+
+    (should (not (file-exists-p filepath)))))
+
+(ert-deftest my-test--test-create-file--with-body ()
+  "Test Creation of Test File
+
+  Delete test file after checking"
+  :tags '(my-test-functions)
+
+  (let* ((filename "filename")
+         (filepath (my--test-get-fullpath-filename filename))
+         (body "TEST\nBODY"))
+
+    (unwind-protect
+        (progn
+          (should (not (file-exists-p filepath)))
+          (my-test-create-file filename body)
+          (should (file-exists-p filepath))
+          (with-current-buffer filename
+            (should (string-match-p body (buffer-string)))))
+
+      (my-test-delete-file filename filepath))
+
+    (should (not (file-exists-p filepath)))))
+
+;; ========================
 
 (provide 'test-helper-function)
