@@ -7,6 +7,7 @@
          (buffer (find-file-noselect file 'nowarn))
          (body (or body "")))
     (with-current-buffer buffer
+      (org-mode)
       (point-min)
       (insert body)
       (write-file file nil))))
@@ -17,6 +18,17 @@
   (ignore-errors
     (kill-buffer filename)
     (delete-file filepath)))
+
+(defmacro my-with-test-file (filename body &rest rest)
+  "Create FILENAME with BODY and then evaluate REST"
+  `(let* ((buffer-name ,filename)
+          (buffer (my-test-create-file buffer-name ,body))
+          (filepath (my--test-get-fullpath-filename buffer-name)))
+     (with-current-buffer buffer-name
+       (unwind-protect
+           (progn 
+             ,@rest)
+         (my-test-delete-file buffer-name filepath)))))
 
 ;; ============ Private Functions ============
 

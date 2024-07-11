@@ -7,6 +7,14 @@
   "my-test-denote-filename"
   "Denote filename for test purposes")
 
+(defvar my-test/denote-identifier-value
+  "20240411T185646"
+  "Denote identifier value for test purposes")
+
+(defvar my-test/denote-description-value
+  "Test - "
+  "Denote description value for test purposes")
+
 (defvar my-test/denote-identifier
   (concat "#+title:      Test \n"
           "#+identifier: 20240411T185646")
@@ -18,53 +26,33 @@
   "Test if my-denote-get-description returns a valid description"
   :tags '(link-custom-id)
 
-  (let* ((buffer-name my-test/denote-filename)
-         (buffer (my-test-create-file buffer-name my-test/denote-identifier))
-         (filepath (my--test-get-fullpath-filename buffer-name)))
-    (with-current-buffer buffer-name
-      (unwind-protect
-          (progn 
-            (should (equal (my--denote-get-description) "Test - ")))
-        (my-test-delete-file buffer-name filepath)))))
+  (my-with-test-file my-test/denote-filename
+                     my-test/denote-identifier
+                     (should (equal (my--denote-get-description) my-test/denote-description-value))))
 
 (ert-deftest my-test--denote-get-description--invalid ()
   "Test if my-denote-get-description returns a invalid description"
   :tags '(link-custom-id)
 
-  (let* ((buffer-name my-test/denote-filename)
-         (buffer (my-test-create-file buffer-name))
-         (filepath (my--test-get-fullpath-filename buffer-name)))
-    (with-current-buffer buffer-name
-      (unwind-protect
-          (progn 
-            (should (equal (my--denote-get-description) " - ")))
-        (my-test-delete-file buffer-name filepath)))))
+  (my-with-test-file my-test/denote-filename
+                     nil
+                     (should (equal (my--denote-get-description) " - "))))
 
 (ert-deftest my-test--denote-get-identifier--valid ()
   "Test if my-denote-get-identifier returns a valid identifier"
   :tags '(link-custom-id)
 
-  (let* ((buffer-name my-test/denote-filename)
-         (buffer (my-test-create-file buffer-name my-test/denote-identifier))
-         (filepath (my--test-get-fullpath-filename buffer-name)))
-    (with-current-buffer buffer-name
-      (unwind-protect
-          (progn 
-            (should (equal (my--denote-get-identifier) "20240411T185646")))
-        (my-test-delete-file buffer-name filepath)))))
+  (my-with-test-file my-test/denote-filename
+                     my-test/denote-identifier
+                     (should (equal (my--denote-get-identifier) my-test/denote-identifier-value))))
 
 (ert-deftest my-test--denote-get-identifier--invalid ()
   "Test if my-denote-get-identifier returns a invalid identifier"
   :tags '(link-custom-id)
 
-  (let* ((buffer-name my-test/denote-filename)
-         (buffer (my-test-create-file buffer-name))
-         (filepath (my--test-get-fullpath-filename buffer-name)))
-    (with-current-buffer buffer-name
-      (unwind-protect
-          (progn 
-            (should-error (my--denote-get-identifier) :type 'args-out-of-range))
-        (my-test-delete-file buffer-name filepath)))))
+  (my-with-test-file my-test/denote-filename
+                     nil
+                     (should-error (my--denote-get-identifier) :type 'args-out-of-range)))
 
 (ert-deftest my-test--denote-link-format-custom-search--empty ()
   "Test formatting denote link for custom ID when empty"
@@ -77,9 +65,9 @@
   "Test formatting denote link for custom ID"
   :tags '(link-custom-id)
 
-  (let* ((identifier "20240411T185646")
+  (let* ((identifier my-test/denote-identifier-value)
          (custom-search "#TestFile")
-         (title "Test - ")
+         (title my-test/denote-description-value)
          (my/denote-link-information (list identifier custom-search title)))
     (should (equal (my--denote-link-format-custom-search)
                    "[[denote:20240411T185646::#TestFile][Test - ]]"))))
@@ -88,9 +76,14 @@
   "Test if custom id is created and returned"
   :tags '(link-custom-id)
 
-  ;; (my-denote-link-get-or-create-custom-id)
-
-  (should 't))
+  (my-with-test-file my-test/denote-filename
+		     my-test/denote-identifier
+                     (my-denote-link-get-or-create-custom-id)
+		     (save-buffer)
+                     (should (equal (safe-length my/denote-link-information) 3))
+                     (should (equal (nth 0 my/denote-link-information) my-test/denote-identifier-value))
+                     (should (string-prefix-p "#" (nth 1 my/denote-link-information)))
+                     (should (equal (nth 2 my/denote-link-information) my-test/denote-description-value))))
 
 ;; ========================
 

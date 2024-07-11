@@ -10,12 +10,9 @@
   "Test if file name is a valid file"
   :tags '(defvar-check-filename)
 
-  (let* ((buffer-name "defvar-check-filename")
-         (buffer (my-test-create-file buffer-name))
-         (filepath (my--test-get-fullpath-filename buffer-name)))
-    (unwind-protect
-        (should (my--defvar-check-filename filepath))
-      (my-test-delete-file buffer-name filepath))))
+  (my-with-test-file "defvar-check-filename"
+		     nil
+		     (should (my--defvar-check-filename filepath))))
 
 ;; ========================
 
