@@ -28,7 +28,15 @@
        (unwind-protect
            (progn 
              ,@rest)
-         (my-test-delete-file buffer-name filepath)))))
+         (my-test-delete-file buffer-name filepath)
+	 ))))
+
+(defmacro my-with-test-org-file (filename body &rest rest)
+  "Create Org Mode FILENAME with BODY and then evaluate REST"
+  `(my-with-test-file ,filename
+		      ,body
+		      (org-mode)
+		      ,@rest))
 
 ;; ============ Private Functions ============
 

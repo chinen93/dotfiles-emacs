@@ -72,7 +72,7 @@
     (should (equal (my--denote-link-format-custom-search)
                    "[[denote:20240411T185646::#TestFile][Test - ]]"))))
 
-(ert-deftest my-test--my-denote-link-get-or-create-custom-id--create ()
+(ert-deftest my-test--denote-link-get-or-create-custom-id--create ()
   "Test if custom id is created and returned"
   :tags '(link-custom-id)
 
