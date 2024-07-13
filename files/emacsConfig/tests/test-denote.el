@@ -28,7 +28,8 @@
 
   (my-with-test-file my-test/denote-filename
                      my-test/denote-identifier
-                     (should (equal (my--denote-get-description) my-test/denote-description-value))))
+                     (should-eq (my--denote-get-description)
+				my-test/denote-description-value)))
 
 (ert-deftest my-test--denote-get-description--invalid ()
   "Test if my-denote-get-description returns a invalid description"
@@ -36,7 +37,8 @@
 
   (my-with-test-file my-test/denote-filename
                      nil
-                     (should (equal (my--denote-get-description) " - "))))
+                     (should-eq (my--denote-get-description)
+				" - ")))
 
 (ert-deftest my-test--denote-get-identifier--valid ()
   "Test if my-denote-get-identifier returns a valid identifier"
@@ -44,7 +46,8 @@
 
   (my-with-test-file my-test/denote-filename
                      my-test/denote-identifier
-                     (should (equal (my--denote-get-identifier) my-test/denote-identifier-value))))
+                     (should-eq (my--denote-get-identifier)
+				my-test/denote-identifier-value)))
 
 (ert-deftest my-test--denote-get-identifier--invalid ()
   "Test if my-denote-get-identifier returns a invalid identifier"
@@ -59,7 +62,8 @@
   :tags '(link-custom-id)
 
   (let ((my/denote-link-information nil))
-    (should (equal (my--denote-link-format-custom-search) nil))))
+    (should-eq (my--denote-link-format-custom-search)
+	       nil)))
 
 (ert-deftest my-test--denote-link-format-custom-search--valid ()
   "Test formatting denote link for custom ID"
@@ -69,8 +73,8 @@
          (custom-search "#TestFile")
          (title my-test/denote-description-value)
          (my/denote-link-information (list identifier custom-search title)))
-    (should (equal (my--denote-link-format-custom-search)
-                   "[[denote:20240411T185646::#TestFile][Test - ]]"))))
+    (should-eq (my--denote-link-format-custom-search)
+               "[[denote:20240411T185646::#TestFile][Test - ]]")))
 
 (ert-deftest my-test--denote-link-get-or-create-custom-id--create ()
   "Test if custom id is created and returned"
@@ -80,10 +84,10 @@
 		     my-test/denote-identifier
                      (my-denote-link-get-or-create-custom-id)
 		     (save-buffer)
-                     (should (equal (safe-length my/denote-link-information) 3))
-                     (should (equal (nth 0 my/denote-link-information) my-test/denote-identifier-value))
+                     (should-eq (safe-length my/denote-link-information)3)
+                     (should-eq (nth 0 my/denote-link-information) my-test/denote-identifier-value)
                      (should (string-prefix-p "#" (nth 1 my/denote-link-information)))
-                     (should (equal (nth 2 my/denote-link-information) my-test/denote-description-value))))
+                     (should-eq (nth 2 my/denote-link-information) my-test/denote-description-value)))
 
 ;; ========================
 

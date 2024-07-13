@@ -28,7 +28,7 @@
        (unwind-protect
            (progn 
              ,@rest)
-         (my-test-delete-file buffer-name filepath)
+	 (my-test-delete-file buffer-name filepath)
 	 ))))
 
 (defmacro my-with-test-org-file (filename body &rest rest)
@@ -37,6 +37,10 @@
 		      ,body
 		      (org-mode)
 		      ,@rest))
+
+(defmacro should-eq (first second)
+  "Macro to shorten (should (equal )) common command to test"
+  `(should (equal ,first ,second)))
 
 ;; ============ Private Functions ============
 
