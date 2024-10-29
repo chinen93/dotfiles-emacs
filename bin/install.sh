@@ -4,7 +4,7 @@
 dirCurrent=$(pwd)
 
 # Where configurations files are stored.
-dirFiles=$(pwd)/files
+dirFiles=$(pwd)/../files
 
 # Create function to link configuration to HOME/
 remove_create_link(){

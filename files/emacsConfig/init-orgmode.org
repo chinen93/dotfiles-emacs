@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2024-04-05 Fri]
+#+DATE-UPDATED: [2024-10-24 Thu]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -550,7 +550,7 @@ CLOSED: [2023-03-20 Mon 11:47]
 
 #+END_SRC
 
-** Timestamp
+** Time stamp
 :PROPERTIES:
 :Created:  2022-02-25
 :ID:       1e82c630-0aee-4ffa-93de-e9a94b16f069
@@ -562,6 +562,23 @@ Set system's locale for time to be on English mode always.
 #+begin_src emacs-lisp
 
 (setq system-time-locale "C")
+
+#+end_src
+
+
+*** Update Time Stamp
+:PROPERTIES:
+:Created:  2024-10-24
+:END:
+
+#+begin_src emacs-lisp
+
+ ;; Update Org files with last modified date when #+lastmod: is available
+  (setq time-stamp-active t
+        time-stamp-start "#\\+lastmod:[ \t]*"
+        time-stamp-end "$"
+        time-stamp-format "[%04Y-%02m-%02d %a]")
+  (add-hook 'before-save-hook 'time-stamp nil)
 
 #+end_src
 

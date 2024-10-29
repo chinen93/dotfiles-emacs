@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2024-04-11 Thu]
+#+DATE-UPDATED: [2024-08-30 Fri]
 
 It doesn't need any external package. Just pure Elisp.
 
@@ -69,7 +69,7 @@ Creation of home folder and derivates from it
 
   (if (not (eq system-type 'windows-nt))
       (my-defvar my/config-dropbox-folder
-                 (concat my/config-home-folder "Dropbox/")
+                 (concat my/config-home-folder "Pedro/Dropbox/")
                  "Path to Dropbox Folder")
     ;; Windows's dropbox folder
     (my-defvar my/config-dropbox-folder
@@ -505,7 +505,7 @@ The ones that I like are:
 -H : follow symbolic links.
 --group-directories-first : directory before files.
 #+BEGIN_SRC emacs-lisp
-  (setq dired-listing-switches "-alH --group-directories-first")
+  ;;(setq dired-listing-switches "-alH --group-directories-first")
 
 #+END_SRC
 
@@ -516,6 +516,11 @@ Don't show every information about files. Just its name.
     (dired-hide-details-mode 1))
   (add-hook 'dired-mode-hook 'xah-dired-mode-setup)
 #+END_SRC
+
+#+begin_src emacs-lisp
+  (when (string= system-type "darwin")       
+    (setq dired-use-ls-dired nil))
+#+end_src
 
 ** Backup
 :PROPERTIES:

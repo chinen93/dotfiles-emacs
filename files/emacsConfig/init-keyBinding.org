@@ -1,7 +1,7 @@
 #+TITLE:        Global KeyBinding Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2023-12-25 Mon]
+#+DATE-UPDATED: [2024-09-25 Wed]
 
 * My Keymap
 :PROPERTIES:
@@ -422,6 +422,20 @@ keybindings is consistent throughout Emacs.
     :delight
     :custom (which-key-idle-delay 0.5)
     :config (which-key-mode))
+
+#+end_src
+
+* MAC Configurations
+:PROPERTIES:
+:Created:  2024-09-09
+:END:
+
+#+begin_src emacs-lisp
+
+  (when (equal system-type 'darwin)
+    (message "MAC KeyBindings Configuration")
+    (define-key my/keymap (kbd "M-SPC") 'set-mark-command)
+ )
 
 #+end_src
 

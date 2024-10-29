@@ -17,7 +17,6 @@ echo "File: $FILE"
 echo ""
 emacs -nw --batch --eval "
 (progn
-  (require 'org-install)
   (find-file (expand-file-name \"$FILE\" \"$DIR\"))
   (org-babel-tangle)
   (kill-buffer))"

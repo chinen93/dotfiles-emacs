@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: new hugo post
+# key: hugonew
+# --
+#+title: $1
+#+date: [`(format-time-string "%Y-%m-%d %a")`]
+#+lastmod: [`(format-time-string "%Y-%m-%d %a")`]
+#+tags[]: $0
+#+draft: true
