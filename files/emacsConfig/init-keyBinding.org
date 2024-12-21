@@ -1,7 +1,7 @@
 #+TITLE:        Global KeyBinding Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2024-09-25 Wed]
+#+DATE-UPDATED: [2024-12-20 Fri]
 
 * My Keymap
 :PROPERTIES:
@@ -390,18 +390,17 @@ keybindings is consistent throughout Emacs.
 :END:
 
 #+BEGIN_SRC emacs-lisp
-    ;; (define-key my/keymap (kbd "<f2>"))
-    ;; (define-key my/keymap (kbd "<f3>"))
-    ;; (define-key my/keymap (kbd "<f4>"))
-    ;; (define-key my/keymap (kbd "<f5>"))
-    ;; (define-key my/keymap (kbd "<f6>"))
-    ;; (define-key my/keymap (kbd "<f7>"))
-    ;; (define-key my/keymap (kbd "<f8>"))
-    ;; (define-key my/keymap (kbd "<f9>"))
-    ;; (define-key my/keymap (kbd "<f10>"))
-    ;; (define-key my/keymap (kbd "<f11>"))
-    ;; (define-key my/keymap (kbd "<f12>"))
-
+  ;; (define-key my/keymap (kbd "<f2>"))
+  ;; (define-key my/keymap (kbd "<f3>"))
+  ;; (define-key my/keymap (kbd "<f4>"))
+  ;; (define-key my/keymap (kbd "<f5>"))
+  ;; (define-key my/keymap (kbd "<f6>"))
+  ;; (define-key my/keymap (kbd "<f7>"))
+  ;; (define-key my/keymap (kbd "<f8>"))
+  ;; (define-key my/keymap (kbd "<f9>"))
+  ;; (define-key my/keymap (kbd "<f10>"))
+  ;; (define-key my/keymap (kbd "<f11>"))
+  ;; (define-key my/keymap (kbd "<f12>"))
 #+END_SRC
 
 * Packages
@@ -431,11 +430,12 @@ keybindings is consistent throughout Emacs.
 :END:
 
 #+begin_src emacs-lisp
-
   (when (equal system-type 'darwin)
     (message "MAC KeyBindings Configuration")
     (define-key my/keymap (kbd "M-SPC") 'set-mark-command)
- )
+    (define-key my/keymap (kbd "<home>") 'move-beginning-of-line)
+    (define-key my/keymap (kbd "<end>") 'move-end-of-line)
+    )
 
 #+end_src
 
