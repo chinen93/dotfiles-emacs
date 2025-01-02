@@ -1,7 +1,7 @@
 #+TITLE:        Personal Organization Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2023-12-06 Wed]
-#+DATE-UPDATED: [2024-12-20 Fri]
+#+DATE-UPDATED: [2025-01-01 Wed]
 
 * Finances
 :PROPERTIES:
@@ -59,11 +59,16 @@ than when you started your ledger.
 
 #+begin_src emacs-lisp
   (when (featurep 'ledger-mode)
-    (setq ledger-reports
-          '(("bal"            "%(binary) -f %(ledger-file) bal")
-            ("bal this month" "%(binary) -f %(ledger-file) bal -p %(month) -S amount")
-            ("bal this year"  "%(binary) -f %(ledger-file) bal -p 'this year'")
-            ("account"        "%(binary) -f %(ledger-file) reg %(account)"))))
+    (let ((binary "%(binary) -f %(ledger-file) "))
+      (setq ledger-reports
+            `(("bal"            ,(concat binary "bal"))
+              ("bal this month" ,(concat binary "bal -p %(month) -S amount"))
+              ("bal this year"  ,(concat binary "bal -p 'this year'"))
+              ("bal last month" ,(concat binary "bal -p 'last month' -S amount"))
+              ("bal last year"  ,(concat binary "bal -p 'last year'"))
+              ("account"        ,(concat binary "reg %(account)")))
+            )))
+
 #+end_src
 
 *** Declare Variables
@@ -78,13 +83,17 @@ than when you started your ledger.
 Create Variable to hold my ledger file
 #+BEGIN_SRC emacs-lisp
 
-  (let* ((year (format-time-string "%Y"))
-         (file (concat "Ledger" year ".ledger"))
-         (default (concat my/config-dropbox-folder file)))
+  ;; (let* ((year (format-time-string "%Y"))
+  ;;        (file (concat "Ledger" year ".ledger"))
+  ;;        (default (concat my/config-dropbox-folder file)))
 
-    ;; Create variable in a default location
-    (defvar my/ledger-file default
-      "Data file where ledger-cli search from."))
+  ;;   ;; Create variable in a default location
+  ;;   (defvar my/ledger-file default
+  ;;     "Data file where ledger-cli search from."))
+
+  ;; Create variable in a default location
+  (defvar my/ledger-file (concat my/config-dropbox-folder "LedgerEUA.ledger")
+    "Data file where ledger-cli search from.")
 
 #+END_SRC
 
