@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2024-04-05 Fri]
+#+DATE-UPDATED: [2025-01-04 Sat]
 
 Emacs has a lot of keybindings, and I can't remember every one of
 them. For example each key in the keyboard is related to a command, if
@@ -678,6 +678,7 @@ Hydra to easily insert greek letter and others math notations.
       ;;                  (hydra-org/body))))
       ;;           )
       ('Buffer-menu-mode (hydra-buffer-menu/body))
+      ('ledger-report-mode (hydra-ledger-report/body))
       (t (message "No hydra for this major mode: %s" major-mode))))
 
 #+END_SRC
@@ -845,6 +846,32 @@ Hydra to easily insert greek letter and others math notations.
 
 #+END_SRC
 
+** Ledger
+:PROPERTIES:
+:Created:  2025-01-04
+:END:
+
+#+BEGIN_SRC emacs-lisp
+
+  (defhydra hydra-ledger-report (:color amaranth :hint nil)
+    "
+     ^Month^        ˆYearˆ
+    ---------------------------------------------------------
+     _n_: Next      _N_: Next
+     _p_: Previous  _P_: Previous
+    "
+
+    ;; Functions
+    ("n" ledger-report-next-month)
+    ("p" ledger-report-previous-month)
+    ("N" ledger-report-next-year)
+    ("P" ledger-report-previous-year)
+
+
+    ("q" nil "quit" :color blue))
+
+#+END_SRC
+
 * Keybindings
 :PROPERTIES:
 :Created:  2023-12-06
@@ -868,7 +895,6 @@ Hydra to easily insert greek letter and others math notations.
   (define-mykeymap-key "M-v h z" 'hydra-zoom/body)
 
 #+end_src
-
 * Updates
 :PROPERTIES:
 :Created:  2023-10-19

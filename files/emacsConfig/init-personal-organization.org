@@ -1,7 +1,7 @@
 #+TITLE:        Personal Organization Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2023-12-06 Wed]
-#+DATE-UPDATED: [2025-01-01 Wed]
+#+DATE-UPDATED: [2025-01-04 Sat]
 
 * Finances
 :PROPERTIES:
@@ -56,17 +56,49 @@ than when you started your ledger.
 :PROPERTIES:
 :Created:  2024-12-20
 :END:
+#+begin_src emacs-lisp
+  (defun ledger-report-year-format-specifier ()
+    "Substitute current year."
+    (with-current-buffer (or ledger-report-buffer-name (current-buffer))
+      (let* ((month (or ledger-report-current-month (ledger-report--current-month)))
+             (year (car month)))
+        (format "%s" year))))
+
+  (setq ledger-report-format-specifiers
+        '(("ledger-file" . ledger-report-ledger-file-format-specifier)
+          ("binary" . ledger-report-binary-format-specifier)
+          ("payee" . ledger-report-payee-format-specifier)
+          ("account" . ledger-report-account-format-specifier)
+          ("month" . ledger-report-month-format-specifier)
+          ("tagname" . ledger-report-tagname-format-specifier)
+          ("tagvalue" . ledger-report-tagvalue-format-specifier)
+
+          ;; My changes to the report format specifiers
+          ("year" . ledger-report-year-format-specifier)))
+
+  (defun ledger-report-previous-year ()
+    "Rebuild report with transactions from the previous month."
+    (interactive)
+    (ledger-report--change-month -12))
+
+  (defun ledger-report-next-year ()
+    "Rebuild report with transactions from the next month."
+    (interactive)
+    (ledger-report--change-month 12))
+#+end_src
 
 #+begin_src emacs-lisp
   (when (featurep 'ledger-mode)
     (let ((binary "%(binary) -f %(ledger-file) "))
       (setq ledger-reports
-            `(("bal"            ,(concat binary "bal"))
-              ("bal this month" ,(concat binary "bal -p %(month) -S amount"))
-              ("bal this year"  ,(concat binary "bal -p 'this year'"))
-              ("bal last month" ,(concat binary "bal -p 'last month' -S amount"))
-              ("bal last year"  ,(concat binary "bal -p 'last year'"))
-              ("account"        ,(concat binary "reg %(account)")))
+            `(
+              ("bal"            ,(concat binary "bal"))
+              ("bal month" ,(concat binary "bal -p %(month) -S amount"))
+              ("bal month summary" ,(concat binary "bal -p %(month) -S amount --depth 2"))
+              ("bal year"  ,(concat binary "bal -p %(year) -S amount"))
+              ("bal year summary" ,(concat binary "bal -p %(year) -S amount --depth 2"))
+              ("account"        ,(concat binary "reg %(account)"))
+              )
             )))
 
 #+end_src
