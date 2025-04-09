@@ -1,7 +1,7 @@
 #+TITLE:        Minibuffer Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2023-12-06 Wed]
-#+DATE-UPDATED: [2023-12-26 Tue]
+#+DATE-UPDATED: [2025-04-04 Fri]
 
 * General Configuration
 :PROPERTIES:
@@ -217,7 +217,8 @@ Link: https://github.com/minad/consult
   (use-package consult
     :after vertico
     :ensure t
-    :bind ("C-f" . consult-line)
+    :bind (("C-f" . consult-line)
+           ("s-f" . consult-line))
     :custom
 
     ;;; Loads the previous search term
