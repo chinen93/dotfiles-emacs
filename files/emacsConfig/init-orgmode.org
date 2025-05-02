@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2024-10-24 Thu]
+#+DATE-UPDATED: [2025-05-02 Fri]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -154,23 +154,17 @@ Got the main idea from https://www.philnewton.net/blog/org-agenda-monthly-goals/
    ;; Custom agenda that show all the TODO tasks
    '("m" "Main Agenda"
      (
-      (tags "+PRIORITY=\"A\""
-            ((org-agenda-overriding-header "Objetivos Primários para o ano")
-             (org-agenda-files `(,my/notes-plans-filename))))
-      (tags "+PRIORITY=\"C\""
-            ((org-agenda-overriding-header "Objetivos Secundários para o ano")
-             (org-agenda-files `(,my/notes-plans-filename))))
+      (tags ":organization:todo_daily:"
+            ((org-agenda-overriding-header "Atividades do Dia")
+             (org-agenda-files `(,my/notes-routine-filename))))
+      (tags "gtd"
+            ((org-agenda-overriding-header "\nCaptures\n")
+             (org-agenda-files `(,my/notes-gtd-inbox-filename))))
       (agenda ""
               ((org-agenda-span 10)
                (org-agenda-log-mode-items '(closed))
                (org-agenda-show-log t)
                (org-agenda-start-day "-1d")))
-      (todo "TODO"
-            ((org-agenda-overriding-header "\nProjetos Atuais\n")
-             (org-agenda-files (denote-directory-files "_projetos"))))
-      (tags "gtd"
-            ((org-agenda-overriding-header "\nCaptures\n")
-             (org-agenda-files `(,my/notes-gtd-inbox-filename))))
       )
      nil))
 
