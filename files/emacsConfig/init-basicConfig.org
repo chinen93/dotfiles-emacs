@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2024-08-30 Fri]
+#+DATE-UPDATED: [2025-06-06 Fri]
 
 It doesn't need any external package. Just pure Elisp.
 
@@ -486,6 +486,31 @@ so I can retrieve them later, if needed.
 #+BEGIN_SRC emacs-lisp
   (setq delete-by-moving-to-trash t)
 #+END_SRC
+** Better Keyboard Quit Command
+:PROPERTIES:
+:Created:  2025-06-06
+:END:
+https://emacsredux.com/blog/2025/06/01/let-s-make-keyboard-quit-smarter/
+
+#+begin_src emacs-lisp
+
+(defun er-keyboard-quit ()
+  "Smater version of the built-in `keyboard-quit'.
+
+The generic `keyboard-quit' does not do the expected thing when
+the minibuffer is open.  Whereas we want it to close the
+minibuffer, even without explicitly focusing it."
+  (interactive)
+  (if (active-minibuffer-window)
+      (if (minibufferp)
+          (minibuffer-keyboard-quit)
+        (abort-recursive-edit))
+    (keyboard-quit)))
+
+(global-set-key [remap keyboard-quit] #'er-keyboard-quit)
+
+#+end_src
+
 
 * General Configurations
 :PROPERTIES:
