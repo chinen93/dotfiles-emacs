@@ -6,6 +6,9 @@ REM
 REM A central location where the windows functions should be called
 REM ==================================================================
 
+ECHO Setup Configuration
+CALL .\windows\config_windows.bat
+
 :menu
 ECHO --------------------------------------------------------
 ECHO Windows main menu for Emacs functions
@@ -28,17 +31,17 @@ REM Call real scripts here
 
 :update_git
 ECHO Update Git
-CALL ./windows/update_git_folder_windows.bat
+CALL .\windows\update_git_folder_windows.bat
 GOTO :end
 
 :tangle_emacs
 ECHO Tangle Emacs
-CALL ./windows/init_emacs_tangle_windows.bat
-GOTO :end
+CALL .\windows\init_emacs_tangle_windows.bat
+GOTO :install_emacs
 
 :install_emacs
 ECHO Install Emacs
-CALL ./windows/install_windows.bat
+CALL .\windows\install_windows.bat
 GOTO :end
 
 

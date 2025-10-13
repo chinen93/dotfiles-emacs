@@ -7,19 +7,21 @@ REM When cloning the dotfiles repository the files should be copied to APPDATA f
 REM so that Emacs program can see them and use without problems
 REM ================================================================================
 
-REM Change variables to point to the correct path.
-SET SUFIX=C:\Users\ehidped
-SET gitDirectory=%SUFIX%\Pedro\git\dotfiles-emacs\files
-SET initFile=%gitDirectory%\init-emacs.el
-
-SET emacsDirectory=%APPDATA%\.emacs.d\
+IF NOT DEFINED gitFolder (
+    echo Variable gitFolder is not defined.
+    goto :end
+)
+IF NOT DEFINED emacsProgramFolder (
+    echo Variable emacsProgramFolder is not defined.
+    goto :end
+)
 
 ECHO --------------------------------------------------------
 ECHO Installing Emacs Configuration
 ECHO Emacs Directory:
-ECHO   %emacsDirectory%
+ECHO   %emacsFilesFolder%
 ECHO Git Directory:
-ECHO   %gitDirectory%
+ECHO   %gitFolder%
 ECHO Init File:
 ECHO   %initFile%
 
@@ -49,30 +51,28 @@ IF NOT EXIST "%initFile%" (
 
 ECHO --------------------------------------------------------
 ECHO Moving Emacs Configuration Files Folder into Position
-IF EXIST %emacsDirectory%\init.el (
-   DEL %emacsDirectory%\init.el
+IF EXIST %emacsFilesFolder%\init.el (
+   DEL %emacsFilesFolder%\init.el
 )
+COPY /Y "%initFile%" %emacsFilesFolder%\init.el
 
-COPY /Y "%initFile%" %emacsDirectory%\init.el
 ECHO --------------------------------------------------------
 ECHO Moving Emacs Configuration Folder into Position
-IF EXIST %APPDATA%\emacsConfig (
-   RMDIR %APPDATA%\emacsConfig
+IF EXIST %emacsConfigFolder% (
+  RMDIR %emacsConfigFolder%
 )
+XCOPY "%emacsFilesFolder%\emacsConfig" %emacsConfigFolder% /E /I /H
 
-XCOPY "%gitDirectory%\emacsConfig" %APPDATA%\emacsConfig /E /I /H
-
-IF EXIST %APPDATA%\emacsSnippets (
-   RMDIR %APPDATA%\emacsSnippets
+IF EXIST %emacsSnippetsFolder% (
+  RMDIR %emacsSnippetsFolder%
 )
-
-XCOPY "%gitDirectory%\emacsSnippets" %APPDATA%\emacsSnippets /E /I /H
+XCOPY "%emacsFilesFolder%\emacsSnippets" %emacsSnippetsFolder% /E /I /H
 
 ECHO --------------------------------------------------------
-ECHO Remove read-only attribute from %emacsDirectory%
+ECHO Remove read-only attribute from %emacsFilesFolder%
 
-ATTRIB -R %emacsDirectory%
-
+ATTRIB -R %emacsFilesFolder%
+PAUSE
 ECHO --------------------------------------------------------
 ECHO Delete "%initFile%" from installation folder
 DEL "%initFile%"

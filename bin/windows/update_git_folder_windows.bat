@@ -8,10 +8,14 @@ REM the values are inside the APPDATA folder instead of the actual git
 REM file being versioned
 REM ==================================================================
 
-REM Change variables to point to the correct path.
-SET SUFIX=C:\Users\ehidped
-SET gitFolder=%SUFIX%\Pedro\git\dotfiles-emacs\files\
-SET emacsFolder=%APPDATA%
+IF NOT DEFINED gitFolder (
+    echo Variable gitFolder is not defined.
+    goto :end
+)
+IF NOT DEFINED emacsProgramFolder (
+    echo Variable emacsProgramFolder is not defined.
+    goto :end
+)
 
 ECHO --------------------------------------------------------
 ECHO Update git folder with changes on Windows

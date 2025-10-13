@@ -8,19 +8,23 @@ REM So if this script is not run, the changes on emacs config org files are not
 REM shown on.
 REM ================================================================================
 
-REM Change the lines below to the correct paths
-SET SUFIX=C:\Users\ehidped
-SET emacsProgram=%SUFIX%\Pedro\Programas\emacs-28.2\bin\runemacs.exe
-SET emacsFilesFolderOriginal=%SUFIX%\Pedro\git\dotfiles-emacs\files
+IF NOT DEFINED gitFolder (
+    echo Variable gitFolder is not defined.
+    goto :end
+)
+IF NOT DEFINED emacsProgramFolder (
+    echo Variable emacsProgramFolder is not defined.
+    goto :end
+)
 
 REM Windows uses backslash to separate directories change them to forward slashes
-SET emacsFilesFolderForwardSlash=%emacsFilesFolderOriginal:\=/%
+SET emacsFilesFolderForwardSlash=%emacsFilesFolder:\=/%
 SET emacsInitialOrg=%emacsFilesFolderForwardSlash%/init-emacs.org
 
 ECHO --------------------------------------------------------
 ECHO Tangle Emacs files
 ECHO Emacs path: %emacsProgram%
-ECHO Emacs files source path: %emacsFilesFolderOriginal%
+ECHO Emacs files source path: %emacsFilesFolder%
 ECHO Emacs files target path: %emacsInitialOrg%
 
 SET /p OPTION="Proceed? [y/N]: "
