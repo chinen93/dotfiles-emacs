@@ -37,8 +37,8 @@ REM Update
 :update
 ECHO --------------------------------------------------------
 ECHO Moving Emacs Configuration Folder into Position
-XCOPY %emacsFolder%\emacsConfig %gitFolder%\emacsConfig /E /I /H
-XCOPY %emacsFolder%\emacsSnippets %gitFolder%\emacsSnippets /E /I /H
+XCOPY %emacsConfigFolder% %emacsFilesFolder%\emacsConfig /E /I /H
+XCOPY %emacsSnippetsFolder% %emacsFilesFolder%\emacsSnippets /E /I /H
 ECHO --------------------------------------------------------
 
 ECHO Git folder updated, push changes to repository
