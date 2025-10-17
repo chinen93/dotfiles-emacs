@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2025-06-06 Fri]
+#+DATE-UPDATED: [2025-10-17 Fri]
 
 It doesn't need any external package. Just pure Elisp.
 
@@ -73,7 +73,7 @@ Creation of home folder and derivates from it
                  "Path to Dropbox Folder")
     ;; Windows's dropbox folder
     (my-defvar my/config-dropbox-folder
-               (concat "C:" (replace-regexp-in-string "\\\\" "/" (substitute-in-file-name  "$HOMEPATH/Pedro/Dropbox/") t t))
+               (concat "C:" (replace-regexp-in-string "\\\\" "/" (substitute-in-file-name  "$HOMEPATH/Dropbox/") t t))
                "Path to Dropbox Folder"))
 
   (my-defvar my/config-notes-folder
@@ -167,17 +167,13 @@ Creation of Organization files
 :PROPERTIES:
 :Created:  2023-10-04
 :END:
-Creation of folders derivated from dropbox/
-#+BEGIN_SRC emacs-lisp
-
-  (my-defvar my/bookmark-file
-             (concat my/config-dropbox-folder "emacsBookmark.el")
-             "Path to Bookmark File")
-
-#+END_SRC
 
 Creation of folders derivated from .emacs.d/
 #+BEGIN_SRC emacs-lisp
+
+  (my-defvar my/bookmark-file
+             (concat my/config-emacs.d-folder "emacsBookmark.el")
+             "Path to Bookmark File")
 
   (my-defvar my/backup-folder
              (concat my/config-emacs.d-folder "backups")
@@ -510,7 +506,6 @@ minibuffer, even without explicitly focusing it."
 (global-set-key [remap keyboard-quit] #'er-keyboard-quit)
 
 #+end_src
-
 
 * General Configurations
 :PROPERTIES:
