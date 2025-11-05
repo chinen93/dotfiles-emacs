@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2025-04-04 Fri]
+#+DATE-UPDATED: [2025-11-05 Wed]
 
 Emacs has a lot of keybindings, and I can't remember every one of
 them. For example each key in the keyboard is related to a command, if
@@ -57,24 +57,18 @@ some configurations on top of it.
   ;;; Hydra launcher BEGIN
   (defhydra hydra-launcher (:color amaranth :hint nil)
     "
-     ^Functions^         ^Favorites  ^
-    -^---------^---------^-----------^--
-     _V_: Bookmark Set   _b_: iBuffer
-     _c_: Capture        _v_: Bookmarks
-     _w_: Whitespace     _g_: Magit
-     _d_: Denote         _m_: Agenda
-     _n_: Elgrep Notes
+     ^Favorites^     ^Menus^       ^Functions^        
+    -^---------^-----^-----^-------^---------^--------^-^--------------------
+     _b_: iBuffer    _D_: Denote  _V_: Bookmark Set  _t_: Truncate Lines
+     _v_: Bookmarks  ^ ^          _c_: Capture       
+     _g_: Magit      ^ ^          _w_: Whitespace    
+     _m_: Agenda     ^ ^          _d_: Denote        
+     ^ ^             ^ ^          _n_: Elgrep Notes  
+
 
      _e_: Hydra Context
 
     "
-
-    ;; Functions
-    ("w" whitespace-mode :color blue)
-    ("V" bookmark-set :color blue)
-    ("c" org-capture :color blue)
-    ("d" denote :color blue)
-    ("n" my-elgrep-notes :color blue)
 
     ;; Favorites
     ("b" ibuffer :color blue)
@@ -83,6 +77,17 @@ some configurations on top of it.
     ("m" org-agenda :color blue)
 
     ("e" hydra-context-launcher :color blue)
+
+    ;; Menus
+    ("D" hydra-denote/body :color blue)
+
+    ;; Functions
+    ("w" whitespace-mode :color blue)
+    ("V" bookmark-set :color blue)
+    ("c" org-capture :color blue)
+    ("d" denote :color blue)
+    ("n" my-elgrep-notes :color blue)
+    ("t" toggle-truncate-lines :color blue)
 
     ;; Hidden letters and commands that can still be used when the Hydra is open.
     ("0" delete-window :color blue)
@@ -559,25 +564,26 @@ Hydra to easily insert greek letter and others math notations.
     "
        ^Denote^
 
-       ^Links^              ^Functions^
-      ^-^------------------^-^-----------
+      ^Functions^
+      ^---------^----------^-^---------------------------
       _l_: Link            _p_: Elgrep ID on Notes
-      _L_: Add Links       
+      _L_: Add Links       _o_: Open or Create Note
       _r_: Rename          _R_: Random Note
       _k_: Add Key         _n_: List Metanotes
       _K_: Remove Key      _c_: Get Custom ID Link
       _M_: Missing Links   _C_: Insert Custom ID Link
+
     "
-    ;; Base Denote Heads
+    ;; Functions
+
     ("l" denote-link)
     ("L" denote-add-links)
     ("r" denote-rename-file-using-front-matter)
     ("k" denote-keywords-add)
     ("K" denote-keywords-remove)
     ("M" denote-add-missing-links)
-
-    ;; Functions
     ("p" my-elgrep-denote-identifier-notes)
+    ("o" denote-open-or-create)
     ("R" my-denote-random-note)
     ("c" my-denote-link-get-or-create-custom-id)
     ("C" my-denote-link-with-custom-search)

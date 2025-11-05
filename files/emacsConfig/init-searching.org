@@ -1,7 +1,7 @@
 #+TITLE:        Searching Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2023-12-06 Wed]
-#+DATE-UPDATED: [2024-04-05 Fri]
+#+DATE-UPDATED: [2025-11-05 Wed]
 
 * Package: elgrep
 :PROPERTIES:
@@ -31,7 +31,7 @@
       "Search notes directory for REGEX"
       (interactive (list (read-regexp "Emacs regexp:" nil)))
 
-      (setq options (list :recursive nil
+      (setq options (list :recursive t
                           :interactive t
                           :depth 0
                           ))

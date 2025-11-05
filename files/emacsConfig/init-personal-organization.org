@@ -1,7 +1,7 @@
 #+TITLE:        Personal Organization Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2023-12-06 Wed]
-#+DATE-UPDATED: [2025-03-01 Sat]
+#+DATE-UPDATED: [2025-11-05 Wed]
 
 * Finances
 :PROPERTIES:
@@ -704,7 +704,7 @@ CLOSED: [2024-04-05 Fri 22:38]
   (defun my-denote-random-note ()
     "Open random denote note"
     (interactive)
-    (find-file (seq-random-elt (denote-all-files))))
+    (find-file (seq-random-elt (denote--directory-all-files-recursively))))
 #+end_src
 
 ***** Open Dired with Metanotes
@@ -712,10 +712,13 @@ CLOSED: [2024-04-05 Fri 22:38]
 :Created:  2023-10-25
 :END:
 #+begin_src emacs-lisp
-  (defun my-denote-find-metanotes ()
-    "Find Denote Metanote files"
-    (interactive)
-    (find-lisp-find-dired (car denote-dired-directories) "_metanote"))
+    (defun my-denote-find-metanotes ()
+      "Find Denote Metanote files"
+      (interactive)
+      (progn
+        (find-lisp-find-dired (car denote-dired-directories) "_metanote")
+  	(dired-hide-all)
+  	(dired-hide-all)))
 #+end_src
 
 **** Link with Custom ID

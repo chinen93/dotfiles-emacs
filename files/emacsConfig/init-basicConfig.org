@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2025-10-17 Fri]
+#+DATE-UPDATED: [2025-10-22 Wed]
 
 It doesn't need any external package. Just pure Elisp.
 
@@ -525,9 +525,13 @@ The ones that I like are:
 -H : follow symbolic links.
 --group-directories-first : directory before files.
 #+BEGIN_SRC emacs-lisp
-  ;;(setq dired-listing-switches "-alH --group-directories-first")
+  (setq dired-listing-switches "-alh --group-directories-first")
 
 #+END_SRC
+
+#+begin_src emacs-lisp
+  (setq ls-lisp-dirs-first t)
+#+end_src
 
 Don't show every information about files. Just its name.
 #+BEGIN_SRC emacs-lisp
