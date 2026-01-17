@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2025-10-22 Wed]
+#+DATE-UPDATED: [2025-11-05 Wed]
 
 It doesn't need any external package. Just pure Elisp.
 
@@ -78,7 +78,11 @@ Creation of home folder and derivates from it
 
   (my-defvar my/config-notes-folder
              (concat my/config-dropbox-folder "Notes/")
-             "path to Notes Folder")
+             "Path to Notes Folder")
+
+  (my-defvar my/config-life-folder
+  	   (concat my/config-notes-folder "05_LIFE_LOG/")
+  	   "Path to Life Log Folder")
 
 #+end_src
 
@@ -89,11 +93,35 @@ Creation of home folder and derivates from it
 Creation of Organization files
 
 #+begin_src emacs-lisp
+  ;; Blog Folder
 
   (my-defvar my/config-blog-folder
              (concat my/config-notes-folder "Blog/")
              "path to Blog Folder")
 
+  ;; Life Log Folder
+
+  (my-defvar my/notes-dates-filename
+             (concat my/config-life-folder "20230630T155534--datas-importantes.org")
+             "Personal Organization Important Dates Filename")
+
+  (my-defvar my/notes-routine-filename
+             (concat my/config-life-folder "20230630T185646--rotina__organization.org")
+             "Personal Organization Routine Filename")
+
+  (my-defvar my/notes-week-plans-filename
+             (concat my/config-life-folder "20230630T175849--planejamento-semanal__review.org")
+             "Personal Organization Weekly Plans Filename")
+
+  (my-defvar my/notes-diary-filename
+             (concat my/config-life-folder "diary")
+             "Personal Organization Diary Filename")
+
+  (my-defvar my/notes-gtd-inbox-filename
+             (concat my/config-life-folder "20230630T164926--gtd-inbox__gtd.org")
+             "Personal Organization Get Things Done Inbox Filename")
+
+  ;; Others
 
   (my-defvar my/notes-plans-filename
              (concat my/config-notes-folder "20230630T180038--planos__planos_metanote.org")
@@ -102,26 +130,6 @@ Creation of Organization files
   (my-defvar my/notes-projects-filename
              (concat my/config-notes-folder "20230630T180635--projetos__metanote_projetos.org")
              "Personal Organization Project Filename")
-
-  (my-defvar my/notes-dates-filename
-             (concat my/config-notes-folder "20230630T155534--datas-importantes.org")
-             "Personal Organization Important Dates Filename")
-
-  (my-defvar my/notes-routine-filename
-             (concat my/config-notes-folder "20230630T185646--rotina__organization.org")
-             "Personal Organization Routine Filename")
-
-  (my-defvar my/notes-week-plans-filename
-             (concat my/config-notes-folder "20230630T175849--planejamento-semanal__review.org")
-             "Personal Organization Weekly Plans Filename")
-
-  (my-defvar my/notes-diary-filename
-             (concat my/config-notes-folder "diary")
-             "Personal Organization Diary Filename")
-
-  (my-defvar my/notes-gtd-inbox-filename
-             (concat my/config-notes-folder "20230630T164926--gtd-inbox__gtd.org")
-             "Personal Organization Get Things Done Inbox Filename")
 
   (my-defvar my/notes-daily-diary-filename
              (concat my/config-notes-folder "20231119T214733--daily-diary__daily.org")
