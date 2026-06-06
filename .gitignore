@@ -10,3 +10,5 @@ dotfiles-emacs_old
 files/emacsConfig/elisp/*.el
 files/init-emacs.el
 
+# MacOS files
+*/.DS_Store
