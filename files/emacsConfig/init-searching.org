@@ -1,7 +1,7 @@
 #+TITLE:        Searching Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2023-12-06 Wed]
-#+DATE-UPDATED: [2025-11-05 Wed]
+#+DATE-UPDATED: [2026-01-26 Mon]
 
 * Package: elgrep
 :PROPERTIES:
@@ -27,20 +27,39 @@
 #+begin_src emacs-lisp
   (when (featurep 'elgrep)
 
-    (defun my-elgrep-notes (regex)
-      "Search notes directory for REGEX"
-      (interactive (list (read-regexp "Emacs regexp:" nil)))
-
-      (setq options (list :recursive t
-                          :interactive t
-                          :depth 0
-                          ))
-      (setq options (elgrep-intern-plist-keys options))
-
-      (let* ((dir (directory-file-name my/config-notes-folder))
+    (defun my--elgrep-common (dir regex)
+      "Run elgrep on DIR searching for REGEX"
+      (let* ((options (list :recursive t
+                            :interactive t
+                            :depth 0))
+             (options (elgrep-intern-plist-keys options))
              (file-name-re "\.org")
              (search-result (apply #'elgrep-search dir file-name-re regex options)))
         (apply #'elgrep-show search-result dir file-name-re regex options)))
+
+
+      
+
+
+    (defun my-elgrep-notes (regex)
+  "Search notes directory for REGEX."
+  (interactive
+   (let* ((dir (file-name-nondirectory (directory-file-name my/config-notes-folder)))
+          (prompt (format "Search on %s - Emacs regexp: " dir)))
+     (list (read-regexp prompt nil))))
+  (let* ((dir (directory-file-name my/config-notes-folder)))
+    (my--elgrep-common dir regex)))
+
+
+    (defun my-elgrep-from-here (regex)
+  "Search current directory for REGEX."
+  (interactive
+   (let* ((dir (file-name-nondirectory (directory-file-name default-directory)))
+          (prompt (format "Search on %s - Emacs regexp: " dir)))
+     (list (read-regexp prompt nil))))
+  (let* ((dir (directory-file-name default-directory)))
+    (my--elgrep-common dir regex)))
+
 
     )
 #+end_src
