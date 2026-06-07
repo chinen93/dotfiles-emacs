@@ -1,7 +1,7 @@
 #+TITLE:        Global KeyBinding Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-22 Sat]
-#+DATE-UPDATED: [2025-04-07 Mon]
+#+DATE-UPDATED: [2026-06-06 Sat]
 
 * My Keymap
 :PROPERTIES:
@@ -232,6 +232,7 @@ keybindings is consistent throughout Emacs.
 
 #+END_SRC
 
+
 *** Function
 :PROPERTIES:
 :ID:       73b01cc9-e042-4017-af5b-e1f531d301df
@@ -430,13 +431,16 @@ keybindings is consistent throughout Emacs.
 :END:
 
 #+begin_src emacs-lisp
-    (when (equal system-type 'darwin)
-      (message "MAC KeyBindings Configuration")
-      (define-key my/keymap (kbd "M-SPC") 'set-mark-command)
-      (define-key my/keymap (kbd "<home>") 'move-beginning-of-line)
-      (define-key my/keymap (kbd "<end>") 'move-end-of-line)
-      (global-set-key (kbd "s-x") nil)
-      )
+  (when (equal system-type 'darwin)
+    (message "MAC KeyBindings Configuration")
+
+    (setq mac-command-modifier 'meta)
+
+    (define-key my/keymap (kbd "M-SPC") 'set-mark-command)
+    (define-key my/keymap (kbd "<home>") 'move-beginning-of-line)
+    (define-key my/keymap (kbd "<end>") 'move-end-of-line)
+    (global-set-key (kbd "s-x") nil)
+    )
 
 #+end_src
 
