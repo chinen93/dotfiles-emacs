@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2025-11-05 Wed]
+#+DATE-UPDATED: [2026-06-06 Sat]
 
 It doesn't need any external package. Just pure Elisp.
 
@@ -69,7 +69,7 @@ Creation of home folder and derivates from it
 
   (if (not (eq system-type 'windows-nt))
       (my-defvar my/config-dropbox-folder
-                 (concat my/config-home-folder "Pedro/Dropbox/")
+                 (concat my/config-home-folder "Dropbox/")
                  "Path to Dropbox Folder")
     ;; Windows's dropbox folder
     (my-defvar my/config-dropbox-folder
@@ -272,6 +272,20 @@ that I made by hitting *C-x C-c* by accident.
   (setq confirm-kill-emacs 'yes-or-no-p)
 
 #+END_SRC
+
+** Show Directory and Filename on Frame Title
+:PROPERTIES:
+:Created:  2026-06-06
+:END:
+
+https://emacs.stackexchange.com/questions/46013/show-file-names-with-the-full-path-in-the-frame-title
+
+
+#+begin_src emacs-lisp
+(setq frame-title-format
+      `((buffer-file-name "%f" "%b")
+        ,(format " - GNU Emacs %s" emacs-version)))
+#+end_src
 
 * System Information
 :PROPERTIES:
@@ -551,7 +565,10 @@ Don't show every information about files. Just its name.
 
 #+begin_src emacs-lisp
   (when (string= system-type "darwin")       
-    (setq dired-use-ls-dired nil))
+    (setq dired-use-ls-dired nil)
+    (setq ls-lisp-use-insert-directory-program nil)
+    (set-face-attribute 'default nil :font "Courier New" :height 140)
+    )
 #+end_src
 
 ** Backup
