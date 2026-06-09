@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2025-05-02 Fri]
+#+DATE-UPDATED: [2026-06-08 Mon]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -119,6 +119,11 @@ Agenda Prefix Format
 
   (setq org-agenda-prefix-format "%t %s")
 
+#+end_src
+
+Agenda Filter Tags
+#+begin_src emacs-lisp
+  (setq org-agenda-tag-filter-preset '("-archive"))
 #+end_src
 
 ** Custom Commands
