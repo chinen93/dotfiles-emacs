@@ -1,7 +1,7 @@
 #+TITLE:        Org Mode Configurations
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-24 Mon]
-#+DATE-UPDATED: [2026-06-08 Mon]
+#+DATE-UPDATED: [2026-06-10 Wed]
 
 [[https://orgmode.org/][Org Mode]]
 
@@ -162,7 +162,7 @@ Got the main idea from https://www.philnewton.net/blog/org-agenda-monthly-goals/
       (tags ":organization:todo_daily:"
             ((org-agenda-overriding-header "Atividades do Dia")
              (org-agenda-files `(,my/notes-routine-filename))))
-      (tags "gtd"
+      (tags-todo "gtd"
             ((org-agenda-overriding-header "\nCaptures\n")
              (org-agenda-files `(,my/notes-gtd-inbox-filename))))
       (agenda ""
