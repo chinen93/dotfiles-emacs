@@ -1,7 +1,7 @@
 #+TITLE:        Basic Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2018-09-21 Fri]
-#+DATE-UPDATED: [2026-06-06 Sat]
+#+DATE-UPDATED: [2026-06-11 Thu]
 
 It doesn't need any external package. Just pure Elisp.
 
@@ -120,6 +120,10 @@ Creation of Organization files
   (my-defvar my/notes-gtd-inbox-filename
              (concat my/config-life-folder "20230630T164926--gtd-inbox__gtd.org")
              "Personal Organization Get Things Done Inbox Filename")
+
+  (my-defvar my/notes-dashboard-filename
+             (concat my/config-life-folder "20260608T204759--main-dashboard.org")
+             "Personal Organization Main Dashboard Filename")
 
   ;; Others
 
