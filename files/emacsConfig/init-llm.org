@@ -1,0 +1,34 @@
+#+TITLE:        Init Large Language Model
+#+AUTHOR:       Pedro Chinen
+#+DATE-CREATED: [2026-06-20 Sat]
+#+DATE-UPDATED: [2026-06-20 Sat]
+
+
+* Package: gptel
+:PROPERTIES:
+:Created:  2026-06-20
+:END:
+
+#+begin_src emacs-lisp
+
+  (use-package gptel
+    :ensure t
+    :config
+    (setq gptel-model 'gemma4:e4b
+  	gptel-backend (gptel-make-ollama "Ollama"
+  					 :host "localhost:11434"
+  					 :stream t
+  					 :models '(gemma4:e4b))))
+
+#+end_src
+
+* Provide File
+:PROPERTIES:
+:Created:  2026-06-20
+:END:
+
+#+begin_src emacs-lisp
+
+  (provide 'init-llm)
+
+#+end_src
