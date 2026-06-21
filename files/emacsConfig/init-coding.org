@@ -1,7 +1,7 @@
 #+TITLE:        Coding Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2023-12-06 Wed]
-#+DATE-UPDATED: [2024-04-05 Fri]
+#+DATE-UPDATED: [2026-06-20 Sat]
 
 
 * Packages
@@ -288,26 +288,22 @@ https://prettier.io
     (add-to-list 'auto-mode-alist '("screens\\/.*\\.js\\'" . rjsx-mode)))
 
 #+END_SRC
-** CANCELED Markdown
+** Markdown
 :PROPERTIES:
 :ID:       c6a8a6e0-5624-42c1-82aa-780002ae8a9c
 :END:
 
-*** CANCELED Load Package: Markdown Mode
+*** Load Package: Markdown Mode
 :PROPERTIES:
 :ID:       d1f1779a-d6a5-44a3-b63c-c27fb67d5a0a
 :END:
 #+BEGIN_SRC emacs-lisp
   (use-package markdown-mode
-    :ensure t)
-
-  (when (featurep 'markdown-mode)
-    ;; :commands (markdown-mode gfm-mode)
-    ;; :mode (("README\\.md\\'" . gfm-mode)
-    ;;        ("\\.md\\'" . markdown-mode)
-    ;;        ("\\.markdown\\'" . markdown-mode))
-    ;; :init (setq markdown-command "multimarkdown"))
-  )
+    :ensure t
+    :mode (("README\\.md\\'" . gfm-mode)
+           ("\\.md\\'" . markdown-mode)
+           ("\\.markdown\\'" . markdown-mode))
+    :init (setq markdown-command "multimarkdown"))
 
 #+END_SRC
 ** CANCELED CSS
