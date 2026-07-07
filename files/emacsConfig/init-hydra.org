@@ -1,7 +1,7 @@
 #+TITLE:        Hydra Configuration
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2016-06-29 Wed]
-#+DATE-UPDATED: [2025-11-05 Wed]
+#+DATE-UPDATED: [2026-07-06 Mon]
 
 Emacs has a lot of keybindings, and I can't remember every one of
 them. For example each key in the keyboard is related to a command, if
@@ -57,13 +57,13 @@ some configurations on top of it.
   ;;; Hydra launcher BEGIN
   (defhydra hydra-launcher (:color amaranth :hint nil)
     "
-     ^Favorites^     ^Menus^       ^Functions^        
-    -^---------^-----^-----^-------^---------^--------^-^--------------------
-     _b_: iBuffer    _D_: Denote  _V_: Bookmark Set  _t_: Truncate Lines
-     _v_: Bookmarks  ^ ^          _c_: Capture       
-     _g_: Magit      ^ ^          _w_: Whitespace    
-     _m_: Agenda     ^ ^          _d_: Denote        
-     ^ ^             ^ ^          _n_: Elgrep Notes  
+     ^Favorites^     ^Menus^         ^Functions^        
+    -^---------^-----^-----^---------^---------^--------^-^--------------------
+     _b_: iBuffer    _D_: Denote     _V_: Bookmark Set  _t_: Truncate Lines
+     _v_: Bookmarks  _Y_: YASnippets _c_: Capture       
+     _g_: Magit      ^ ^             _w_: Whitespace    
+     _m_: Agenda     ^ ^             _d_: Denote        
+     ^ ^             _A_ All Hydra   _n_: Elgrep Notes  
 
 
      _e_: Hydra Context
@@ -79,7 +79,9 @@ some configurations on top of it.
     ("e" hydra-context-launcher :color blue)
 
     ;; Menus
+    ("A" hydra-all/body :color blue)
     ("D" hydra-denote/body :color blue)
+    ("Y" hydra-yasnippet/body :color blue)
 
     ;; Functions
     ("w" whitespace-mode :color blue)
@@ -88,7 +90,7 @@ some configurations on top of it.
     ("d" denote :color blue)
     ("n" my-elgrep-notes :color blue)
     ("t" toggle-truncate-lines :color blue)
-
+    
     ;; Hidden letters and commands that can still be used when the Hydra is open.
     ("0" delete-window :color blue)
     ("1" delete-other-windows :color blue)
@@ -109,6 +111,48 @@ some configurations on top of it.
 #+END_SRC
 
 * Hydras Menus
+
+** All Hydra Menus
+:PROPERTIES:
+:Created:  2026-07-06
+:END:
+
+#+begin_src emacs-lisp
+
+  (defhydra hydra-all (:color amaranth :hint nil)
+    "
+     ^All Hydra Menus^
+    -^-^----------------------^-^-----------------------------------
+     _1_: Narrow/Widen        _q_: Denote
+     _2_: Zoom                _w_: Bookmark
+     _3_: Smerge              _e_: Personal Directories
+     _4_: Help                _r_: My Functions
+     _5_: Custom Functions    _t_: Flycheck
+     _6_: Yasnippet           ^ ^
+     _7_: Macro               ^ ^
+     _8_: Rectangle           ^ ^
+     _9_: Math                ^ ^
+     _0_: Projectile          ^ ^
+    "
+    ("1" hydra-narrow-widen/body :color blue)
+    ("2" hydra-zoom/body :color blue)
+    ("3" hydra-smerge-mode/body :color blue)
+    ("4" hydra-help/body :color blue)
+    ("5" hydra-functions/body :color blue)
+    ("6" hydra-yasnippet/body :color blue)
+    ("7" hydra-macro/body :color blue)
+    ("8" hydra-rectangle/body :color blue)
+    ("9" hydra-math/body :color blue)
+    ("0" hydra-projectile/body :color blue)
+    ("q" hydra-denote/body :color blue)
+    ("w" hydra-bookmark/body :color blue)
+    ("e" hydra-personal-files/body :color blue)
+    ("r" hydra-my-functions/body :color blue)
+    ("t" hydra-flycheck/body :color blue)
+
+    ("q" nil "cancel" :color blue))
+
+#+end_src
 
 ** Narrow Widen Indirect Buffer
 :PROPERTIES:
