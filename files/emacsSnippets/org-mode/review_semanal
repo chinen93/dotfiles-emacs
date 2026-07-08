@@ -3,11 +3,15 @@
 # key: review_semanal
 # --
 
-Apartamento
-
-========================================
-
-Trabalho
+#+begin_text
+  - Do que tenho orgulho essa semana?
+  - Qual foi o meu maior desafio?
+  - O que consumiu mais tempo que deveria?
+  - O que devo continuar fazendo?
+  - O que devo parar de fazer?
+  - O que devo começar a fazer?
+  - O que está ocupando espaço na minha mente?
+#+end_text
 
 ========================================
 
@@ -15,8 +19,18 @@ Pessoal
 
 ========================================
 
+Trabalho
+
+========================================
+
 Projetos
 
-(progn (next-line) (my-denote-working-projects-org-table))
+========================================
+
+Eventos Inesperados
+
+========================================
+
+Ideais
 
 ========================================

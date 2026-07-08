@@ -39,6 +39,7 @@
                           "init-writing.org"
                           "init-appearance.org"
                           "init-evil.org"
+                          "init-llm.org"
                           "init-tests.org")
   "Initial order of configurations to be loaded because they have
       dependencies among the others")

@@ -1,7 +1,7 @@
 #+TITLE:        Init Emacs
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2019-09-10 ter]
-#+DATE-UPDATED: [2026-06-20 Sat]
+#+DATE-UPDATED: [2026-07-06 Mon]
 #+PROPERTY: header-args :tangle yes
 
 * Starting of Configuration
@@ -92,7 +92,7 @@ to happen before they are called.
                             "init-appearance.org"
                             "init-evil.org"
                             "init-llm.org"
-                            "Init-tests.org")
+                            "init-tests.org")
     "Initial order of configurations to be loaded because they have
         dependencies among the others")
 
