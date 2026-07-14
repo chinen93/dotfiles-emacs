@@ -18,12 +18,9 @@ IF NOT DEFINED emacsProgramFolder (
 
 ECHO --------------------------------------------------------
 ECHO Installing Emacs Configuration
-ECHO Emacs Directory:
-ECHO   %emacsFilesFolder%
-ECHO Git Directory:
-ECHO   %gitFolder%
-ECHO Init File:
-ECHO   %initFile%
+ECHO Emacs Directory: %emacsFilesFolder%
+ECHO Git Directory:   %gitFolder%
+ECHO Init File:       %initFile%
 
 SET /p OPTION="Proceed? [y/N]: "
 
@@ -51,10 +48,11 @@ IF NOT EXIST "%initFile%" (
 
 ECHO --------------------------------------------------------
 ECHO Moving Emacs Configuration Files Folder into Position
-IF EXIST %emacsFilesFolder%\init.el (
-   DEL %emacsFilesFolder%\init.el
+IF EXIST %emacsInitFile% (
+   ECHO "%emacsInitFile%" already exists, deleting it
+   DEL %emacsInitFile%
 )
-COPY /Y "%initFile%" %emacsFilesFolder%\init.el
+COPY /Y "%initFile%" %emacsInitFile%
 
 ECHO --------------------------------------------------------
 ECHO Moving Emacs Configuration Folder into Position

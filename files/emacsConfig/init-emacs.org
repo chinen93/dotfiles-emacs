@@ -1,7 +1,7 @@
 #+TITLE:        Init Emacs
 #+AUTHOR:       Pedro Chinen
 #+DATE-CREATED: [2019-09-10 ter]
-#+DATE-UPDATED: [2026-07-14 Tue]
+#+DATE-UPDATED: [2026-07-06 Mon]
 #+PROPERTY: header-args :tangle yes
 
 * Starting of Configuration
@@ -135,6 +135,37 @@ Finally find all configuration files and put them into the sequence.
 
 
 #+END_SRC
+
+* Load Tests
+:PROPERTIES:
+:Created:  2024-07-09
+:END:
+
+#+begin_src emacs-lisp
+
+  (defvar my/emacs-config-tests-dir "~/emacsConfig/tests/"
+    "Directory where configuration tests are stored")
+
+  (add-to-list 'load-path (expand-file-name my/emacs-config-tests-dir))
+
+  (defun my-tests-load-emacs-config-tests ()
+    "Load my emacs configuration tests"
+    (interactive)
+
+    (let ((load-it (lambda (f)
+                     (load-file (concat (file-name-as-directory my/emacs-config-tests-dir) f)))
+                   ))
+      (mapc load-it (directory-files my/emacs-config-tests-dir nil "\\.el$"))))
+
+  (my-tests-load-emacs-config-tests)
+
+  (defun my-tests-ert-all-tests ()
+    "Run all ert available tests"
+    (interactive)
+
+    (ert t))
+
+#+end_src
 
 * Code to Tangle .org to .el Files
 :PROPERTIES:
@@ -274,43 +305,6 @@ The parsing part happens when:
    )
 
 #+END_SRC
-
-* Load Tests
-:PROPERTIES:
-:Created:  2024-07-09
-:END:
-
-#+begin_src emacs-lisp
-
-  (defvar my/emacs-config-tests-dir "~/emacsConfig/tests/"
-    "Directory where configuration tests are stored")
-
-  (add-to-list 'load-path (expand-file-name my/emacs-config-tests-dir))
-
-  (defun my-tests-load-emacs-config-tests ()
-    "Load my emacs configuration tests"
-    (interactive)
-
-    (let ((load-it (lambda (f)
-                     (load-file (concat (file-name-as-directory my/emacs-config-tests-dir) f)))
-                   ))
-      (mapc load-it (directory-files my/emacs-config-tests-dir nil "\\.el$"))))
-
-  (my-tests-load-emacs-config-tests)
-
-  (defun my-tests-ert-all-tests ()
-    "Run all ert available tests"
-    (interactive)
-
-    (ert t))
-
-  (add-hook 'emacs-startup-hook
-          (lambda ()
-            (interactive)
-            (require 'ert)
-            (ert t)))
-
-#+end_src
 
 * Ending of Configuration
 :PROPERTIES:

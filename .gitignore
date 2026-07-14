@@ -7,7 +7,7 @@ dotfiles-emacs_old
 *.elc
 
 # compiled configuration files
-files/emacsConfig/elisp/*.el
+files/emacsConfig/elisp/init-*.el
 files/init-emacs.el
 
 # MacOS files

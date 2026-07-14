@@ -21,6 +21,9 @@ REM Windows uses backslash to separate directories change them to forward slashe
 SET emacsFilesFolderForwardSlash=%emacsFilesFolder:\=/%
 SET emacsInitialOrg=%emacsFilesFolderForwardSlash%/init-emacs.org
 
+REM Tangled File with the path with Windows backslash format
+SET emacsInitialElisp=%emacsFilesFolder%\init-emacs.el
+
 ECHO --------------------------------------------------------
 ECHO Tangle Emacs files
 ECHO Emacs path: %emacsProgram%
@@ -40,7 +43,10 @@ REM Tangle
 :tangle
 "%emacsProgram%" -q -nw --eval "(progn (require 'org)(org-babel-tangle-file \"%emacsInitialOrg%\" ))"
 
+TIMEOUT /t 4
+REN "%emacsInitialElisp%" init.el
 ECHO Initial file tangled to an .el file
+
 
 REM ==================================================================
 

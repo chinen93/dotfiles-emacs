@@ -15,10 +15,11 @@ SET emacsProgram=%emacsProgramFolder%\runemacs.exe
 
 REM Emacs basic configurations
 SET emacsFolder=%emacsBaseFolder%\.emacs.d\
+SET emacsInitFile=%emacsBaseFolder%\.emacs.d\init.el
 
 REM Git files
 SET emacsFilesFolder=%gitFolder%\dotfiles-emacs\files
-SET initFile=%emacsFilesFolder%\init-emacs.el
+SET initFile=%emacsFilesFolder%\init.el
 SET emacsConfigFolder=%emacsBaseFolder%\emacsConfig
 SET emacsSnippetsFolder=%emacsBaseFolder%\emacsSnippets
 
