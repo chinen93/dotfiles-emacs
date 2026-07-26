@@ -1,52 +1,110 @@
 ;; test-helper-functions.el                    -*- lexical-binding: t; -*-
 
-(ert-deftest my-test--test-get-full-path-filename ()
-  "Test get full path filename"
-  :tags '(my-test-functions)
+;;;; ============================================================================
+;;;; my-with-test-buffer
+;;;; ============================================================================
 
-  (let* ((filename "filename")
-         (filepath (my--test-get-fullpath-filename filename)))
-    (should (file-name-absolute-p filepath))))
+(ert-deftest my-test-with-test-buffer--contents ()
+  "Buffer should contain the provided contents."
+  (my-with-test-buffer
+      "Hello World"
+    (should (equal (buffer-string) "Hello World"))))
 
-(ert-deftest my-test--test-create-file ()
-  "Test Creation of Test File
+(ert-deftest my-test-with-test-buffer--point-at-beginning ()
+  "Point should start at the beginning of the buffer."
+  (my-with-test-buffer
+      "Hello"
+    (should (= (point) (point-min)))))
 
-  Delete test file after checking"
-  :tags '(my-test-functions)
+(ert-deftest my-test-with-test-buffer--fundamental-mode ()
+  "Temporary buffers should default to Fundamental mode."
+  (my-with-test-buffer
+      ""
+    (should (eq major-mode 'fundamental-mode))))
 
-  (let* ((filename "filename")
-         (filepath (my--test-get-fullpath-filename filename)))
-    (unwind-protect
-        (progn 
-          (should (not (file-exists-p filepath)))
-          (my-test-create-file filename)
-          (should (file-exists-p filepath)))
+;;;; ============================================================================
+;;;; my-with-test-org-buffer
+;;;; ============================================================================
 
-      (my-test-delete-file filename filepath))
+(ert-deftest my-test-with-test-org-buffer--major-mode ()
+  "Temporary Org buffer should be in Org mode."
+  (my-with-test-org-buffer
+      "#+title: Test"
+    (should (eq major-mode 'org-mode))))
 
-    (should (not (file-exists-p filepath)))))
+(ert-deftest my-test-with-test-org-buffer--contents ()
+  "Org buffer should contain inserted text."
+  (my-with-test-org-buffer
+      "#+title: Test"
+    (should
+     (equal (buffer-string)
+            "#+title: Test"))))
 
-(ert-deftest my-test--test-create-file--with-body ()
-  "Test Creation of Test File
+;;;; ============================================================================
+;;;; my-with-test-file
+;;;; ============================================================================
 
-  Delete test file after checking"
-  :tags '(my-test-functions)
+(ert-deftest my-test-with-test-file--creates-file ()
+  "Temporary file should exist during the body."
+  (my-with-test-file
+      "abc"
+    (should buffer-file-name)
+    (should (file-exists-p buffer-file-name))
+    (should (equal (buffer-string) "abc"))))
 
-  (let* ((filename "filename")
-         (filepath (my--test-get-fullpath-filename filename))
-         (body "TEST\nBODY"))
+(ert-deftest my-test-with-test-file--point-at-beginning ()
+  "Point should be at beginning."
+  (my-with-test-file
+      "abc"
+    (should (= (point) (point-min)))))
 
-    (unwind-protect
-        (progn
-          (should (not (file-exists-p filepath)))
-          (my-test-create-file filename body)
-          (should (file-exists-p filepath))
-          (with-current-buffer filename
-            (should (string-match-p body (buffer-string)))))
+(ert-deftest my-test-with-test-file--cleanup ()
+  "Temporary file should be removed afterwards."
+  (let (filename)
+    (my-with-test-file
+        "abc"
+      (setq filename buffer-file-name)
+      (should (file-exists-p filename)))
+    (should-not (file-exists-p filename))))
 
-      (my-test-delete-file filename filepath))
+;;;; ============================================================================
+;;;; my-with-test-org-file
+;;;; ============================================================================
 
-    (should (not (file-exists-p filepath)))))
+(ert-deftest my-test-with-test-org-file--major-mode ()
+  "Temporary file should be in Org mode."
+  (my-with-test-org-file
+      "#+title: Test"
+    (should (eq major-mode 'org-mode))))
+
+(ert-deftest my-test-with-test-org-file--visited-file ()
+  "Org test file should visit a file."
+  (my-with-test-org-file
+      "#+title: Test"
+    (should buffer-file-name)
+    (should (file-exists-p buffer-file-name))))
+
+(ert-deftest my-test-with-test-org-file--org-parsing ()
+  "Org APIs should work normally."
+  (my-with-test-org-file
+      "#+title: Test\n\n* Heading"
+    (goto-char (point-min))
+    (should
+     (equal
+      (cadar (org-collect-keywords '("TITLE")))
+      "Test"))))
+
+;;;; ============================================================================
+;;;; should-equal
+;;;; ============================================================================
+
+(ert-deftest my-test-should-equal--equal ()
+  "should-equal should succeed on equal values."
+  (should-equal '(1 2 3) '(1 2 3)))
+
+(ert-deftest my-test-should-equal--string ()
+  "should-equal should compare strings using `equal'."
+  (should-equal "abc" (concat "a" "bc")))
 
 ;; ========================
 

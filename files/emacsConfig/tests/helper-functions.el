@@ -1,52 +1,58 @@
 ;; helper-functions.el                    -*- lexical-binding: t; -*-
 
-(defun my-test-create-file (filename &optional body)
-  "Create file for tests on .emacs.d directory"
+;; ============ Buffer ============
 
-  (let* ((file (my--test-get-fullpath-filename filename))
-         (buffer (find-file-noselect file 'nowarn))
-         (body (or body "")))
-    (with-current-buffer buffer
-      (org-mode)
-      (point-min)
-      (insert body)
-      (write-file file nil))))
+(defmacro my-with-test-buffer (contents &rest body)
+  "Execute BODY in a temporary buffer with CONTENTS."
+  (declare (indent 1) (debug t))
 
-(defun my-test-delete-file (filename filepath)
-  "Delete file and buffer"
+  `(with-temp-buffer
+     (insert ,contents)
+     (goto-char (point-min))
+     ,@body))
 
-  (ignore-errors
-    (kill-buffer filename)
-    (delete-file filepath)))
+(defmacro my-with-test-org-buffer (contents &rest body)
+  "Execute BODY in a temporary Org buffer containing CONTENTS."
+  `(my-with-test-buffer ,contents
+			(delay-mode-hooks
+			  (org-mode))
+			,@body))
 
-(defmacro my-with-test-file (filename body &rest rest)
-  "Create FILENAME with BODY and then evaluate REST"
-  `(let* ((buffer-name ,filename)
-          (buffer (my-test-create-file buffer-name ,body))
-          (filepath (my--test-get-fullpath-filename buffer-name)))
-     (with-current-buffer buffer-name
-       (unwind-protect
-           (progn 
-             ,@rest)
-	 (my-test-delete-file buffer-name filepath)
-	 ))))
+;; ============ File ============
 
-(defmacro my-with-test-org-file (filename body &rest rest)
-  "Create Org Mode FILENAME with BODY and then evaluate REST"
-  `(my-with-test-file ,filename
-		      ,body
-		      (org-mode)
-		      ,@rest))
+(defmacro my-with-test-file (contents &rest body)
+  "Execute BODY in a temporary file containing CONTENTS."
+  (declare (indent 1) (debug t))
 
-(defmacro should-eq (first second)
+  `(let* ((file (make-temp-file "my-test-" nil))
+          (buffer (find-file-noselect file t)))
+     (unwind-protect
+         (with-current-buffer buffer
+           (erase-buffer)
+           (insert ,contents)
+           (basic-save-buffer)
+           (goto-char (point-min))
+           ,@body)
+       (when (buffer-live-p buffer)
+         (set-buffer-modified-p nil)
+         (kill-buffer buffer))
+       (when (file-exists-p file)
+         (delete-file file)))))
+
+(defmacro my-with-test-org-file (contents &rest body)
+  "Execute BODY in a temporary Org file containing CONTENTS."
+  (declare (indent 1) (debug (form body)))
+
+  `(my-with-test-file ,contents
+     (delay-mode-hooks
+       (org-mode))
+     ,@body))
+
+;; ============ Assert Functions ============
+
+(defmacro should-equal (first second)
   "Macro to shorten (should (equal )) common command to test"
   `(should (equal ,first ,second)))
-
-;; ============ Private Functions ============
-
-(defun my--test-get-fullpath-filename (filename)
-  "Get fullpath filename"
-  (concat my/config-emacs.d-folder "tests/" filename))
 
 ;; ========================
 

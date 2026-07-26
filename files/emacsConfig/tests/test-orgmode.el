@@ -84,100 +84,92 @@
   "Test if my--get-org-get-closed-timestamp works properly"
   :tags '(orgmode)
 
-  (my-with-test-org-file my-test/orgmode-filename
-			 my-test/orgmode-header
-			 (beginning-of-buffer)
-			 (search-forward my-test/orgmode-heading-1-title)
-			 (should-eq (my--org-get-closed-timestamp) ""))
+  (my-with-test-org-buffer my-test/orgmode-header
+			   (beginning-of-buffer)
+			   (search-forward my-test/orgmode-heading-1-title)
+			   (should-equal (my--org-get-closed-timestamp) ""))
 
-  (my-with-test-org-file my-test/orgmode-filename
-			 my-test/orgmode-header
-			 (beginning-of-buffer)
-			 (search-forward my-test/orgmode-heading-2-title)
-			 (should-eq (my--org-get-closed-timestamp)
-				    my-test/orgmode-heading-2-closed-timestamp)))
+  (my-with-test-org-buffer my-test/orgmode-header
+			   (beginning-of-buffer)
+			   (search-forward my-test/orgmode-heading-2-title)
+			   (should-equal (my--org-get-closed-timestamp)
+					 my-test/orgmode-heading-2-closed-timestamp)))
 
 
 (ert-deftest my-test--org-get-plan-update-string ()
   "Test if my-org-get-plan-update-string works properly"
   :tags '(orgmode)
 
-  (my-with-test-org-file my-test/orgmode-filename
-			 my-test/orgmode-header
-			 (beginning-of-buffer)
-			 (search-forward my-test/orgmode-heading-1-title)
-			 (my-org-get-plan-update-string)
-			 (save-buffer)
-			 (should-eq my/project-update
-				    my-test/orgmode-heading-1-plan-update-string)))
+  (my-with-test-org-file my-test/orgmode-header
+    (beginning-of-buffer)
+    (search-forward my-test/orgmode-heading-1-title)
+    (my-org-get-plan-update-string)
+    (save-buffer)
+    (should-equal my/project-update
+		  my-test/orgmode-heading-1-plan-update-string)))
 
 
 (ert-deftest my-test--org-custom-id-generate-id ()
   "Test if my--org-custom-id-generate-id works properly"
   :tags '(orgmode)
 
-  (my-with-test-org-file my-test/orgmode-filename
-			 my-test/orgmode-header
-			 (beginning-of-buffer)
-			 (search-forward my-test/orgmode-heading-2-title)
-			 (should (string-prefix-p "customID" (my--org-custom-id-generate-id)))
-			 (save-buffer))
+  (my-with-test-org-file my-test/orgmode-header
+    (beginning-of-buffer)
+    (search-forward my-test/orgmode-heading-2-title)
+    (should (string-prefix-p "customID" (my--org-custom-id-generate-id)))
+    (save-buffer))
 
-  (my-with-test-org-file my-test/orgmode-filename
-			 my-test/orgmode-header
-			 (beginning-of-buffer)
-			 (search-forward my-test/orgmode-heading-3-title)
-			 (should-eq (my--org-custom-id-generate-id)
-				    (concat "customID-"	my-test/orgmode-heading-3-id))
-			 (save-buffer)))
+  (my-with-test-org-file my-test/orgmode-header
+    (beginning-of-buffer)
+    (search-forward my-test/orgmode-heading-3-title)
+    (should-equal (my--org-custom-id-generate-id)
+		  (concat "customID-"	my-test/orgmode-heading-3-id))
+    (save-buffer)))
 
 
 (ert-deftest my-test--org-custom-id-get-or-create ()
   "Test if my--org-custom-id-get-or-create works properly"
   :tags '(orgmode)
 
-  (my-with-test-org-file my-test/orgmode-filename
-			 my-test/orgmode-header
-			 (beginning-of-buffer)
-			 (search-forward my-test/orgmode-heading-2-title)
-			 
-			 (should (string-prefix-p "customID" (my-org-custom-id-get-or-create)))
-			 (save-buffer))
+  (my-with-test-org-file my-test/orgmode-header
+    (beginning-of-buffer)
+    (search-forward my-test/orgmode-heading-2-title)
+    
+    (should (string-prefix-p "customID" (my-org-custom-id-get-or-create)))
+    (save-buffer))
 
-  (my-with-test-org-file my-test/orgmode-filename
-			 my-test/orgmode-header
-			 (beginning-of-buffer)
-			 (search-forward my-test/orgmode-heading-3-title)
-			 (should-eq (my-org-custom-id-get-or-create)
-				    (concat "customID-"	my-test/orgmode-heading-3-id))
-			 (save-buffer)))
+  (my-with-test-org-file  my-test/orgmode-header
+    (beginning-of-buffer)
+    (search-forward my-test/orgmode-heading-3-title)
+    (should-equal (my-org-custom-id-get-or-create)
+		  (concat "customID-"	my-test/orgmode-heading-3-id))
+    (save-buffer)))
 
 
 (ert-deftest my-test--org-custom-id-get-headlines ()
   "Test if my--org-custom-id-get-headlines works properly"
   :tags '(orgmode)
 
-  (my-with-test-org-file my-test/orgmode-filename
-			 my-test/orgmode-header
-			 (beginning-of-buffer)
-			 (search-forward my-test/orgmode-heading-1-title)
-			 (org-narrow-to-subtree)
-			 (should-eq (my--org-custom-id-get-headlines)
-				    `((,my-test/orgmode-heading-1-title
-				       (:title . ,my-test/orgmode-heading-1-title)
-				       (:id)
-				       (:custom-id . ,my-test/orgmode-heading-1-id))))))
+  (my-with-test-org-buffer my-test/orgmode-header
+			   (beginning-of-buffer)
+			   (search-forward my-test/orgmode-heading-1-title)
+			   (org-narrow-to-subtree)
+			   (should-equal (my--org-custom-id-get-headlines)
+					 `((,my-test/orgmode-heading-1-title
+					    (:title . ,my-test/orgmode-heading-1-title)
+					    (:id)
+					    (:custom-id . ,my-test/orgmode-heading-1-id))))))
 
 
 (ert-deftest my-test--org-custom-id-parse-link-location ()
   "Test if my--org-custom-id-parse-link-location works properly"
   :tags '(orgmode)
 
-  (should-eq (my--org-custom-id-parse-link-location `(,my-test/orgmode-heading-1-title
-						      (:title . ,my-test/orgmode-heading-1-title)
-						      (:id)
-						      (:custom-id . ,my-test/orgmode-heading-1-id)))
-	     (concat "#" my-test/orgmode-heading-1-id)))
+  (should-equal (my--org-custom-id-parse-link-location `(,my-test/orgmode-heading-1-title
+							 (:title . ,my-test/orgmode-heading-1-title)
+							 (:id)
+							 (:custom-id . ,my-test/orgmode-heading-1-id)))
+		(concat "#" my-test/orgmode-heading-1-id)))
 
 
 ;; ========================
